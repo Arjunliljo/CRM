@@ -1,0 +1,161 @@
+@use "../abstract/variables" as variables;
+@use "../base/responive" as responsive;
+
+.home {
+  height: 100vh;
+  background-image: url("UpdatedUIsky-16.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  @include responsive.respond(smallPhone) {
+    height: 155vh;
+    background-size: cover;
+  }
+  @include responsive.respond(tablets) {
+    height: 100vh;
+  }
+
+  &-text {
+    height: 35rem;
+    width: 40rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Inter", serif;
+    font-weight: 300;
+    line-height: 1;
+    font-size: 6.5rem;
+    color: variables.$color-blue;
+
+    @include responsive.respond(smallPhone) {
+      height: 10rem;
+      width: 24rem;
+      font-size: 2.5rem;
+      padding-left: 8rem;
+      padding-top: 7.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    @include responsive.respond(tablets) {
+      width: 40rem;
+    }
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    @include responsive.respond(smallPhone) {
+      flex-direction: column;
+      height: auto;
+    }
+
+    &-top {
+      display: flex;
+      flex: 2.5;
+
+      @include responsive.respond(smallPhone) {
+        flex-direction: column;
+      }
+
+      &-left {
+        flex: 1;
+
+        @include responsive.respond(smallPhone) {
+          flex: none;
+        }
+
+        & img {
+          height: 100%;
+          width: 100%;
+          height: 40rem;
+          transform: translate(5rem, 5rem);
+
+          @include responsive.respond(smallPhone) {
+            height: 22rem;
+            transform: translate(-2rem, 5rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          @include responsive.respond(tablets) {
+            height: 100%;
+            width: 100%;
+            height: 40rem;
+            transform: translate(5rem, 5rem);
+          }
+        }
+      }
+      &-right {
+        flex: 1;
+        display: flex;
+        align-items: end;
+        justify-content: start;
+
+        @include responsive.respond(smallPhone) {
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+    &-bottom {
+      display: flex;
+      flex: 1;
+
+      @include responsive.respond(smallPhone) {
+        flex-direction: column;
+        padding-top: 10rem;
+      }
+    }
+  }
+}
+
+.mobile-only-arrow {
+  display: none;
+
+  @include responsive.respond(smallPhone) {
+    display: block;
+    font-size: 2rem;
+    margin-left: -7px;
+    align-self: flex-start;
+  }
+}
+
+.homeGlobeImage {
+  @include responsive.respond(tablets) {
+    height: 400px !important;
+    width: 400px !important;
+  }
+}
+
+.home-content-top {
+  @include responsive.respond(tablets) {
+    flex-direction: column;
+    align-items: center;
+
+    &-left {
+      img {
+        transform: translate(0, 2rem);
+        margin-top: 2rem;
+        margin-left: -20rem !important;
+      }
+    }
+
+    &-right {
+      align-items: center;
+      justify-content: center;
+
+      .home-text {
+        span {
+          margin-top: -5rem;
+          margin-left: 3rem;
+        }
+      }
+    }
+  }
+}

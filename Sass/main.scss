@@ -1,0 +1,21 @@
+@use "abstract/variables";
+@use "abstract/mixins";
+
+@use "base/base";
+
+@use "base/typo";
+@use "utils/utils";
+@use "layout/navbar";
+@use "layout/footer";
+
+@use "page/home";
+@use "components/counter";
+@use "page/about";
+@use "page/study";
+@use "page/testimonial";
+@use "page/scrollcard";
+@use "page/mainSwiper";
+@use "page/bottom";
+@use "components/scrollcardBox";
+@use "components/enquiry";
+@use "base/responive";

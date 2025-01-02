@@ -1,0 +1,119 @@
+@use "../abstract/variables" as variables;
+@use "../base/responive" as responsive;
+
+.testmonial {
+  height: 100vh;
+  padding-top: 10rem;
+  padding-bottom: 5rem;
+
+  @include responsive.respond(smallPhone) {
+    padding-top: 0rem;
+    margin-top: -12rem;
+    height: 75vh;
+  }
+  @include responsive.respond(tablets) {
+    padding-top: 0rem;
+    margin-top: -7rem;
+  }
+
+  &-head {
+    height: 10rem;
+    width: 100%;
+    margin: 0 auto;
+    cursor: pointer;
+    @include responsive.respond(smallPhone) {
+      width: 100%;
+    }
+    @include responsive.respond(tablets) {
+      margin-top: -15rem;
+      height: 14rem;
+    }
+    @include responsive.respond(bigTablets) {
+      margin-top: -22rem;
+      height: 20rem;
+    }
+
+    & h2 {
+      font-size: 3rem;
+      font-weight: 500;
+      margin: 0 auto;
+      width: 50%;
+      color: variables.$color-blue;
+      text-align: center;
+
+      @include responsive.respond(smallPhone) {
+        font-size: 1.5rem;
+        font-weight: 600;
+        width: 95%;
+        padding: 3px;
+      }
+      @include responsive.respond(tablets) {
+        width: 98%;
+        padding: 3rem;
+      }
+    }
+  }
+
+  &-body {
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+
+    @include responsive.respond(tablets) {
+      margin-top: 5rem;
+    }
+    @include responsive.respond(bigTablets) {
+      width: 150%;
+    }
+    &-item {
+      border-radius: 1rem;
+
+      & span {
+        border: 1px solid variables.$color-blue;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 85%;
+        border-radius: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+        overflow: hidden;
+
+        @include responsive.respond(tablets) {
+          background-color: white;
+          width: 75%;
+          height: 40%;
+        }
+
+        img {
+          width: 100%;
+          object-fit: contain;
+
+          @include responsive.respond(tablets) {
+            width: 70%;
+          }
+        }
+      }
+    }
+  }
+}
+.title-animate {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+@media (min-width: 800px) and (max-width: 900px) {
+  .testmonial-body {
+    width: 80rem;
+  }
+}
