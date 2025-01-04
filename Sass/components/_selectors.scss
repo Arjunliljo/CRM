@@ -1,0 +1,24 @@
+@use "../abstract/variables";
+.select-container {
+  margin: 1rem 0;
+
+  .custom-select {
+    width: 100%;
+    padding: 0.6rem 0.9rem;
+    font-size: 15px;
+    color: variables.$color-black;
+    background-color: white;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgb(216, 216, 216);
+    }
+    option {
+      color: black;
+      background-color: white;
+    }
+  }
+}
