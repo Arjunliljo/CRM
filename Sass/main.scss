@@ -7,15 +7,6 @@
 @use "utils/utils";
 @use "layout/navbar";
 @use "layout/footer";
-
-@use "page/home";
-@use "components/counter";
-@use "page/about";
-@use "page/study";
-@use "page/testimonial";
-@use "page/scrollcard";
-@use "page/mainSwiper";
-@use "page/bottom";
-@use "components/scrollcardBox";
-@use "components/enquiry";
+@use "layout/mainBody";
 @use "base/responive";
+@use "components/buttons";

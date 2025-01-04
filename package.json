@@ -7,11 +7,16 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sass": "sass --watch --poll --no-source-map sass/main.scss:styles/styles.css"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.3.0",
     "@reduxjs/toolkit": "^2.5.0",
     "@tanstack/react-query": "^5.62.11",
+    "axios": "^1.7.9",
     "framer-motion": "^11.15.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

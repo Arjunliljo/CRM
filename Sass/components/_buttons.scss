@@ -1,0 +1,16 @@
+@use "../abstract/variables";
+
+.btn {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 5rem;
+  padding: 0.5rem 1rem;
+  height: variables.$btn-height;
+}
+
+.btn-auto {
+  background-color: variables.$color-black;
+  color: variables.$color-white;
+}

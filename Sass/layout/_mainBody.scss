@@ -1,0 +1,42 @@
+@use "../abstract/variables" as variables;
+
+.main-body {
+  display: grid;
+  grid-template-rows: minmax(8rem, auto) 1fr;
+  gap: 1rem;
+  height: calc(100vh - variables.$body-start-margin);
+  width: calc(100% - variables.$body-start-margin);
+  margin-left: variables.$body-start-margin;
+  margin-top: variables.$body-start-margin;
+
+  & .main-body-head {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &-left {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      height: 100%;
+
+      &-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      &-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+    }
+  }
+
+  & .main-body-box {
+    background-color: variables.$color-black;
+  }
+}

@@ -1,5 +1,15 @@
+import BodyBg from "./components/utils/BodyBg";
+import Navbar from "./layout/Navbar";
+import { Outlet } from "react-router-dom";
+
 function App() {
-  return <></>;
+  return (
+    <div className="App">
+      <BodyBg />
+      <Navbar />
+      <Outlet />
+    </div>
+  );
 }
 
 export default App;
