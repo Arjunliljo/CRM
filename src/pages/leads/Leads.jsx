@@ -8,6 +8,7 @@ import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import AllLeads from "../../components/buttons/AllLeads";
 import { setAutoLeadsAssign, setCurLead } from "../../../global/leadsSlice";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
+import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 
 const lead = {
   num: 3,
@@ -46,6 +47,7 @@ export default function Leads() {
   const ISelectorFour = <Selector />;
   const ISelectorFive = <Selector />;
   const IProfileCard = <ProfileCard />;
+  const IStartApplication = <StartApplication />;
 
   const TopLeft = [
     <div key="search-bar">{ISearchBar}</div>,
@@ -73,6 +75,7 @@ export default function Leads() {
       BottomLeft={BottomLeft}
       BottomRight={BottomRight}
       ProfileCard={IProfileCard}
+      StartApplication={IStartApplication}
     />
   );
 }

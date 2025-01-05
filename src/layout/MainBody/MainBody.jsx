@@ -7,7 +7,8 @@ export default function MainBody({
   switching = false,
   BottomLeft = [],
   BottomRight = [],
-  ProfileCard = {},
+  ProfileCard = <></>,
+  StartApplication = <></>,
 }) {
   return (
     <main className="main-body leads">
@@ -52,6 +53,7 @@ export default function MainBody({
           style={switching ? { width: "50%" } : { width: "0%" }}
         >
           {ProfileCard}
+          {StartApplication}
         </div>
       </div>
     </main>
