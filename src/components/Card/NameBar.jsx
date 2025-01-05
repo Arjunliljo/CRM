@@ -1,16 +1,16 @@
 import whatsapp from "../../assets/Icons/whatsapp.png";
 
-export default function NameBar({ info }) {
+export default function NameBar({ lead }) {
   return (
     <div className="name-bar">
       <div className="name-bar-img">
-        <img src={info.img} alt={info.name} />
+        <img src={lead.img} alt={lead.name} />
       </div>
       <div className="name-bar-name name-small">
-        <div>{info.name}</div>
+        <div>{lead.name}</div>
         <div className="name-bar-name-whatsapp">
-          <img src={whatsapp} alt={info.title} className="icon" />
-          <span className="card-number">{info.number}</span>
+          <img src={whatsapp} alt={lead.title} className="icon" />
+          <span className="card-number">{lead.number}</span>
         </div>
       </div>
     </div>

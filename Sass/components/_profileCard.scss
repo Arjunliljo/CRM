@@ -1,0 +1,34 @@
+@use "../abstract/variables" as variables;
+
+.profileCard {
+  height: fit-content;
+  width: 100%;
+  padding: variables.$general-gap;
+  display: flex;
+  flex-direction: column;
+  gap: variables.$general-gap;
+  &-head {
+    background-color: transparent;
+
+    &-info {
+      background-color: variables.$color-white;
+      height: 7.5rem;
+    }
+  }
+  &-journy {
+    background-color: variables.$color-white;
+    height: 7.5rem;
+  }
+
+  &-boxes {
+    display: flex;
+    gap: variables.$general-gap;
+  }
+
+  &-box {
+    background-color: variables.$color-white;
+    flex: 1;
+    height: 30rem;
+    border-radius: variables.$radius-md;
+  }
+}

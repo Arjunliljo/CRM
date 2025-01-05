@@ -1,3 +1,5 @@
+import BodyBg from "../../components/utils/BodyBg";
+
 export default function MainBody({
   TopLeft = [],
   TopRight = [],
@@ -5,6 +7,7 @@ export default function MainBody({
   switching = false,
   BottomLeft = [],
   BottomRight = [],
+  ProfileCard = {},
 }) {
   return (
     <main className="main-body leads">
@@ -47,7 +50,9 @@ export default function MainBody({
         <div
           className="main-body-box-right"
           style={switching ? { width: "50%" } : { width: "0%" }}
-        ></div>
+        >
+          {ProfileCard}
+        </div>
       </div>
     </main>
   );

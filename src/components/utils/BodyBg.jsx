@@ -1,3 +1,3 @@
-export default function BodyBg() {
-  return <div className="body-bg"></div>;
+export default function BodyBg({ isRotate = false }) {
+  return <div className={`body-bg ${isRotate ? "rotate" : ""}`}></div>;
 }

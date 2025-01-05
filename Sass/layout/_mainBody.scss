@@ -72,7 +72,11 @@
     }
     &-right {
       transition: all 0.5s ease-in-out;
-      background-color: variables.$color-black;
+      border-radius: variables.$radius-md;
+      overflow: scroll;
+      @include mixins.removeScrollbar;
+      border: 1px solid variables.$color-blue;
+      background: variables.$bg-rotate;
     }
   }
 

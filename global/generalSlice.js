@@ -6,12 +6,12 @@ const generalSlice = createSlice({
     autoLeadsAssign: true,
   },
   reducers: {
-    setAutoLeadsAssign: (state, action) => {
+    test: (state, action) => {
       state.autoLeadsAssign = action.payload;
     },
   },
 });
 
-export const { setAutoLeadsAssign } = generalSlice.actions;
+export const { test } = generalSlice.actions;
 
 export default generalSlice.reducer;

@@ -2,20 +2,41 @@ import AutoBtn from "../../components/buttons/AutoBtn";
 import LeadCard from "../../components/Card/LeadCard";
 import SearchBar from "../../components/smallComponents/SearchBar";
 import { useSelector } from "react-redux";
-import { setAutoLeadsAssign } from "../../../global/generalSlice";
 import MainBody from "../../layout/MainBody/MainBody";
 import Selector from "../../components/Selectors/Selector";
 import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import AllLeads from "../../components/buttons/AllLeads";
+import { setAutoLeadsAssign, setCurLead } from "../../../global/leadsSlice";
+import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
+
+const lead = {
+  num: 3,
+  name: "John Doe",
+  img: "https://via.placeholder.com/150",
+  number: 1234567890,
+  status: "Interested",
+  statusColor: "red",
+  remark:
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+  applications: 2,
+  attempts: 1,
+  country: "Germany",
+  count: 3,
+};
+const arr = [...Array(50)].map((_, i) => {
+  const obj = { ...lead, _id: i };
+  return obj;
+});
 
 export default function Leads() {
-  const { autoLeadsAssign } = useSelector((state) => state.general);
-
-  const arr = [...Array(50)];
+  const { autoLeadsAssign, curLead } = useSelector((state) => state.leads);
 
   const ISearchBar = <SearchBar />;
   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
-  const IContents = arr?.map((_, index) => <LeadCard key={index} />);
+  const IContents = arr?.map((lead, index) => (
+    <LeadCard key={index} onSet={setCurLead} set={curLead} lead={lead} />
+  ));
+
   const ISelector = <Selector />;
   const IPrimaryBttn = <PrimaryBttn />;
   const IAllLeads = <AllLeads />;
@@ -24,10 +45,25 @@ export default function Leads() {
   const ISelectorThree = <Selector />;
   const ISelectorFour = <Selector />;
   const ISelectorFive = <Selector />;
-  const TopLeft = [ISearchBar, IAutoBtn, ISelector];
-  const TopRight = [IPrimaryBttn];
-  const BottomLeft = [IAllLeads, ISelectorOne, ISelectorTwo, ISelectorThree];
-  const BottomRight = [ISelectorFour, ISelectorFive];
+  const IProfileCard = <ProfileCard />;
+
+  const TopLeft = [
+    <div key="search-bar">{ISearchBar}</div>,
+    <div key="auto-btn">{IAutoBtn}</div>,
+    <div key="selector">{ISelector}</div>,
+  ];
+  const TopRight = [<div key="primary-btn">{IPrimaryBttn}</div>];
+  const BottomLeft = [
+    <div key="all-leads">{IAllLeads}</div>,
+    <div key="selector-one">{ISelectorOne}</div>,
+    <div key="selector-two">{ISelectorTwo}</div>,
+    <div key="selector-three">{ISelectorThree}</div>,
+  ];
+  const BottomRight = [
+    <div key="selector-four">{ISelectorFour}</div>,
+    <div key="selector-five">{ISelectorFive}</div>,
+  ];
+
   return (
     <MainBody
       TopLeft={TopLeft}
@@ -36,48 +72,7 @@ export default function Leads() {
       switching={autoLeadsAssign}
       BottomLeft={BottomLeft}
       BottomRight={BottomRight}
+      ProfileCard={IProfileCard}
     />
   );
 }
-
-// import AutoBtn from "../../components/buttons/AutoBtn";
-// import LeadCard from "../../components/Card/LeadCard";
-// import SearchBar from "../../components/smallComponents/SearchBar";
-// import { useSelector } from "react-redux";
-// import { setAutoLeadsAssign } from "../../../global/generalSlice";
-
-// export default function Leads() {
-//   const { autoLeadsAssign } = useSelector((state) => state.general);
-
-//   const arr = [...Array(50)];
-
-//   return (
-//     <main className="main-body leads">
-//       <div className="main-body-head">
-//         <div className="main-body-head-left">
-//           <div className="main-body-head-left-top">
-//             <SearchBar />
-//             <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />
-//           </div>
-//           <div className="main-body-head-left-bottom"></div>
-//         </div>
-//       </div>
-//       <div className="main-body-box">
-//         <div
-//           className={`main-body-box-left`}
-//           style={autoLeadsAssign ? { width: "50%" } : { width: "100%" }}
-//         >
-//           <div className="main-body-scroll-container">
-//             {arr?.map((_, index) => (
-//               <LeadCard key={index} />
-//             ))}
-//           </div>
-//         </div>
-//         <div
-//           className="main-body-box-right"
-//           style={autoLeadsAssign ? { width: "50%" } : { width: "0%" }}
-//         ></div>
-//       </div>
-//     </main>
-//   );
-// }

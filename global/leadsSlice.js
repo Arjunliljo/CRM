@@ -1,15 +1,29 @@
-import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const leadsSlice = createSlice({
   name: "leads",
-  initialState: {},
+  initialState: {
+    autoLeadsAssign: true,
+    curLead: {},
+  },
   reducers: {
-    setUser: (state, action) => {
-      state.user = action.payload;
+    setAutoLeadsAssign: (state, action) => {
+      state.autoLeadsAssign = action.payload;
+
+      if (!action.payload) {
+        state.curLead = {};
+      }
+    },
+    setCurLead(state, action) {
+      state.curLead = action.payload;
+
+      if (action.payload) {
+        state.autoLeadsAssign = true;
+      }
     },
   },
 });
 
-export const { setUser } = leadsSlice.actions;
+export const { setAutoLeadsAssign, setCurLead } = leadsSlice.actions;
 
 export default leadsSlice.reducer;

@@ -3,37 +3,54 @@ import InfoBtn from "../buttons/InfoBtn";
 import CountryBtn from "../buttons/CountryBtn";
 import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useInView } from "framer-motion";
 
-const info = {
-  num: 3,
-  name: "John Doe",
-  img: "https://via.placeholder.com/150",
-  number: 1234567890,
-  status: "Interested",
-  statusColor: "red",
-  remark:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-  applications: 2,
-  attempts: 1,
-  country: "Germany",
-  count: 3,
-};
+export default function LeadCard({ lead, set, onSet }) {
+  const [isSelected, setIsSelected] = useState(lead?._id === set?._id);
+  const targetRef = useRef(null);
+  const isInView = useInView(targetRef, { amount: 1 });
 
-export default function LeadCard() {
+  useEffect(() => {
+    setIsSelected(lead?._id === set?._id);
+  }, [set, lead]);
+
+  const dispatch = useDispatch();
+  const handleLeadSelect = () => {
+    dispatch(onSet(lead));
+    setTimeout(() => {
+      if (isInView) return;
+      targetRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }, 300);
+  };
+
   return (
-    <div className="card">
+    <div
+      className={`card ${isSelected ? "selectedCard" : ""}`}
+      onClick={handleLeadSelect}
+      id={`${lead?._id}`}
+      ref={targetRef}
+    >
       <div className="card-head">
-        <Mover num={info.num} />
+        <Mover num={lead.num} />
       </div>
       <div className="card-body">
         <div className="card-body-top">
-          <NameBar info={info} />
+          <NameBar lead={lead} />
           <InfoBtn color="white" bgcl="green">
             Interested
           </InfoBtn>
         </div>
         <div className="card-body-mid">
-          <textarea type="text" placeholder="Add a remark" />
+          <textarea
+            type="text"
+            placeholder="Add a remark"
+            onClick={(e) => e.preventDefault()}
+          />
         </div>
 
         <div className="card-body-bottom">
@@ -44,7 +61,7 @@ export default function LeadCard() {
                 color="#00b100"
                 style={{ transform: "rotate(270deg)" }}
               />
-              <p>{info.applications} Applications</p>
+              <p>{lead.applications} Applications</p>
             </div>
             <div className="card-body-bottom-icons-item">
               <HomeIcon
@@ -52,13 +69,13 @@ export default function LeadCard() {
                 color="#0075fc"
                 style={{ transform: "rotate(270deg)" }}
               />
-              <p>{info.attempts} Attempts</p>
+              <p>{lead.attempts} Attempts</p>
             </div>
           </div>
         </div>
 
         <div className="card-body-bottom-country">
-          <CountryBtn>{info.country}</CountryBtn>
+          <CountryBtn>{lead.country}</CountryBtn>
           <div className="card-body-bottom-country-count">3</div>
         </div>
       </div>
