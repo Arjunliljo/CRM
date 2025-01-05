@@ -1,15 +1,17 @@
-import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const generalSlice = createSlice({
   name: "general",
-  initialState: {},
+  initialState: {
+    autoLeadsAssign: true,
+  },
   reducers: {
-    setUser: (state, action) => {
-      state.user = action.payload;
+    setAutoLeadsAssign: (state, action) => {
+      state.autoLeadsAssign = action.payload;
     },
   },
 });
 
-export const { setUser } = generalSlice.actions;
+export const { setAutoLeadsAssign } = generalSlice.actions;
 
 export default generalSlice.reducer;

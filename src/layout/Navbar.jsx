@@ -1,4 +1,3 @@
-import React from "react";
 import HomeIcon from "../components/utils/Icons/HomeIcon";
 
 export default function Navbar() {

@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
-export default function AutoBtn({ style, onClick }) {
-  const [isActive, setIsActive] = useState(false);
-
+export default function AutoBtn({ style, set, onSet }) {
+  const dispatch = useDispatch();
   const handleClick = () => {
-    setIsActive((prev) => !prev);
+    dispatch(onSet(!set));
   };
+
   return (
     <button
       style={style}
       onClick={handleClick}
-      className={`btn btn-auto ${isActive ? "btn-auto-on" : ""}`}
+      className={`btn btn-auto ${set ? "btn-auto-on" : ""}`}
     >
-      <span style={{ marginLeft: "1rem" }}>Auto Assign</span>
-      <span className="btn-auto-off">{isActive ? "On" : "Off"}</span>
+      <span>Auto Assign</span>
+      <span className="btn-auto-off">{set ? "On" : "Off"}</span>
     </button>
   );
 }

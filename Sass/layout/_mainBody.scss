@@ -25,7 +25,26 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: variables.$head-gap;
+      }
+      &-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         gap: 1rem;
+      }
+    }
+    &-right {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      height: 100%;
+
+      &-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: variables.$head-gap;
       }
       &-bottom {
         display: flex;
@@ -54,11 +73,10 @@
 
   &-scroll-container {
     width: 100%;
-    min-height: 200vh;
-    background-color: variables.$color-white;
+    background-color: variables.$color-red;
     overflow-y: scroll;
-    gap: 1rem;
     display: grid;
-    grid-template-columns: repeat(auto-fill, 22rem);
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
   }
 }

@@ -6,8 +6,7 @@
   background-color: transparent;
   cursor: pointer;
   border-radius: 5rem;
-  padding: 1rem 0.5rem;
-
+  padding: 0.5rem 1rem;
   height: variables.$btn-height;
 
   &-on {
@@ -18,13 +17,22 @@
   }
 }
 
+.primary-btn {
+  background-color: variables.$color-blue;
+  color: variables.$color-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .btn-auto {
   background-color: variables.$color-black;
   color: variables.$color-white;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 1rem;
+  height: variables.$btn-height;
 
   &-off {
     background-color: variables.$color-red;
@@ -37,15 +45,4 @@
     background-color: variables.$color-prime;
     color: variables.$color-black;
   }
-}
-.primarybtn {
-  background-color: variables.$color-blue;
-  height: variables.$btn-height;
-  color: variables.$color-white;
-  border: none;
-  border-radius: 1.5rem;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

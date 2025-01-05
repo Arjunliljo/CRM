@@ -1,56 +1,72 @@
-import { useState } from "react";
 import AutoBtn from "../../components/buttons/AutoBtn";
-import PrimryBtn from "../../components/buttons/AllLeads";
 import LeadCard from "../../components/Card/LeadCard";
 import SearchBar from "../../components/smallComponents/SearchBar";
-import AllLeads from "../../components/buttons/AllLeads";
-import PrimaryBttn from "../../components/buttons/PrimaryBttn";
+import { useSelector } from "react-redux";
+import { setAutoLeadsAssign } from "../../../global/generalSlice";
+import MainBody from "../../layout/MainBody/MainBody";
 import Selector from "../../components/Selectors/Selector";
-import Status from "../../components/smallComponents/Status";
-import Country from "../../components/smallComponents/Country";
-import SecondryBtn from "../../components/buttons/SecondryBtn";
+import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 
 export default function Leads() {
-  const [isLeads, setIsLeads] = useState(true);
+  const { autoLeadsAssign } = useSelector((state) => state.general);
+
+  const arr = [...Array(50)];
+
+  const ISearchBar = <SearchBar />;
+  const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
+  const IContents = arr?.map((_, index) => <LeadCard key={index} />);
+  const ISelector = <Selector />;
+  const IPrimaryBttn = <PrimaryBttn />;
+  const TopLeft = [ISearchBar, IAutoBtn, ISelector];
+  const TopRight = [IPrimaryBttn];
   return (
-    <main className="main-body leads">
-      <div className="main-body-head">
-        <div className="main-body-head-left">
-          <div className="main-body-head-left-top">
-            <SearchBar />
-            <AutoBtn>Auto Assign</AutoBtn>
-            {/* <AllLeads>All Leads</AllLeads> */}
-            {/* <PrimaryBttn>Add Leads</PrimaryBttn> */}
-            {/* <Selector></Selector> */}
-            {/* <Status /> */}
-            {/* <Country /> */}
-            {/* <SecondryBtn /> */}
-          </div>
-          <div className="main-body-head-left-bottom"></div>
-        </div>
-      </div>
-      <div className="main-body-box">
-        <div
-          className="main-body-box-left"
-          style={isLeads ? { width: "60%" } : { width: "100%" }}
-        >
-          <div className="main-body-scroll-container">
-            <LeadCard />
-            <LeadCard />
-            <LeadCard />
-            <LeadCard />
-            <LeadCard />
-            <LeadCard />
-            <LeadCard />
-            <LeadCard />
-            <LeadCard />
-          </div>
-        </div>
-        <div
-          className="main-body-box-right"
-          style={isLeads ? { width: "40%" } : { width: "0%" }}
-        ></div>
-      </div>
-    </main>
+    <MainBody
+      TopLeft={TopLeft}
+      TopRight={TopRight}
+      IContents={IContents}
+      switching={autoLeadsAssign}
+    />
   );
 }
+
+// import AutoBtn from "../../components/buttons/AutoBtn";
+// import LeadCard from "../../components/Card/LeadCard";
+// import SearchBar from "../../components/smallComponents/SearchBar";
+// import { useSelector } from "react-redux";
+// import { setAutoLeadsAssign } from "../../../global/generalSlice";
+
+// export default function Leads() {
+//   const { autoLeadsAssign } = useSelector((state) => state.general);
+
+//   const arr = [...Array(50)];
+
+//   return (
+//     <main className="main-body leads">
+//       <div className="main-body-head">
+//         <div className="main-body-head-left">
+//           <div className="main-body-head-left-top">
+//             <SearchBar />
+//             <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />
+//           </div>
+//           <div className="main-body-head-left-bottom"></div>
+//         </div>
+//       </div>
+//       <div className="main-body-box">
+//         <div
+//           className={`main-body-box-left`}
+//           style={autoLeadsAssign ? { width: "50%" } : { width: "100%" }}
+//         >
+//           <div className="main-body-scroll-container">
+//             {arr?.map((_, index) => (
+//               <LeadCard key={index} />
+//             ))}
+//           </div>
+//         </div>
+//         <div
+//           className="main-body-box-right"
+//           style={autoLeadsAssign ? { width: "50%" } : { width: "0%" }}
+//         ></div>
+//       </div>
+//     </main>
+//   );
+// }
