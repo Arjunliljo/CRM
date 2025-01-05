@@ -1,3 +1,8 @@
+import ActivityLog from "./ActivityLog";
+import EligiableCourses from "./EligiableCourses";
+import PersonalDetails from "./PersonalDetails";
+import ProfileCardStatus from "./ProfileCardStatus";
+
 export default function ProfileCard() {
   return (
     <div className="profileCard">
@@ -6,9 +11,11 @@ export default function ProfileCard() {
       </div>
       <div className="profileCard-journy"></div>
       <div className="profileCard-boxes">
-        <div className="profileCard-box"></div>
-        <div className="profileCard-box"></div>
+        <PersonalDetails />
+        <ProfileCardStatus />
       </div>
+      <EligiableCourses />
+      <ActivityLog />
     </div>
   );
 }

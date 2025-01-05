@@ -433,6 +433,30 @@ main {
   border-radius: 1rem;
 }
 
+.personal-status {
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.personal-details {
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.personal-log {
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 30rem;
+  border-radius: 1rem;
+}
+
 .start-application {
   position: sticky;
   bottom: 0;
@@ -445,6 +469,16 @@ main {
   align-items: end;
   padding-bottom: 3rem;
   font-weight: 500;
+}
+
+.eligiable-courses {
+  background-color: #f9f9f9;
+  min-height: 30rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
 }
 
 /*

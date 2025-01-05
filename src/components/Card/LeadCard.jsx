@@ -10,7 +10,6 @@ import { useInView } from "framer-motion";
 export default function LeadCard({ lead, set, onSet }) {
   const [isSelected, setIsSelected] = useState(lead?._id === set?._id);
   const targetRef = useRef(null);
-  const isInView = useInView(targetRef, { amount: 1 });
 
   useEffect(() => {
     setIsSelected(lead?._id === set?._id);
@@ -20,12 +19,11 @@ export default function LeadCard({ lead, set, onSet }) {
   const handleLeadSelect = () => {
     dispatch(onSet(lead));
     setTimeout(() => {
-      if (isInView) return;
       targetRef.current.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
       });
-    }, 300);
+    }, 500);
   };
 
   return (

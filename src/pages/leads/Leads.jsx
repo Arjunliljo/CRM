@@ -24,7 +24,7 @@ const lead = {
   country: "Germany",
   count: 3,
 };
-const arr = [...Array(50)].map((_, i) => {
+const arr = [...Array(500)].map((_, i) => {
   const obj = { ...lead, _id: i };
   return obj;
 });

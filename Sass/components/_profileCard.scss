@@ -34,6 +34,35 @@
   }
 }
 
+// add styling
+.personal {
+  &-status {
+    background-color: variables.$color-gray-light;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-details {
+    background-color: variables.$color-gray-light;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-log {
+    background-color: variables.$color-gray-light;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 30rem;
+    border-radius: variables.$radius-md;
+  }
+}
+
 .start-application {
   position: sticky;
   bottom: 0;
@@ -47,4 +76,14 @@
   align-items: end;
   padding-bottom: 3rem;
   font-weight: 500;
+}
+
+.eligiable-courses {
+  background-color: variables.$color-white;
+  min-height: 30rem;
+  border-radius: variables.$radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: variables.$general-gap;
 }
