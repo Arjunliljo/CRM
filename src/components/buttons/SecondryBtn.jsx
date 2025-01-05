@@ -1,5 +1,5 @@
-function SecondryBtn() {
-  return <div className="secondarybtn">Start Application</div>;
+function SecondryBtn({ children }) {
+  return <div className="secondarybtn">{children}</div>;
 }
 
 export default SecondryBtn;

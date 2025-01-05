@@ -1,22 +1,47 @@
 $color-prime: #cff3a6;
+$color-red-light: #fd6363;
 $color-red: #e53838;
+$color-green: #00b100;
 $color-blue: #0075fc;
-$color-gray: #7a7a7a;
+$color-light-blue: #60bdff;
+$color-gray: #e8e8e8;
+$color-gray-mid: #dadada;
 $color-gray-max: #2b2b2b;
 $color-gray-dark: #4c4c4c;
 $color-gray-light: #f9f9f9;
+$color-text-gray: #757575;
 
-$color-white: #ffffff;
+$color-white: #f9f9f9;
 $color-black: #000000;
 
 $color-bg1: #b3e7f5;
 $color-bg2: #c4ecf7;
 
-$navbar-margin: 1rem;
+//default variables
+$font-size: 1rem;
+$font-size-small: 0.8rem;
+$font-bold: 500;
 
+//paddings & margins
+$padding-sm: 0.5rem;
+$padding-md: 1rem;
+$padding-lg: 1.5rem;
+
+$margin-sm: 0.5rem;
+$margin-md: 1rem;
+$margin-lg: 1.5rem;
+
+//radius
+$radius-sm: 0.5rem;
+$radius-md: 1rem;
+$radius-lg: 1.5rem;
+
+// measurements
+$navbar-margin: 1rem;
 $navbar-width: 3rem;
 $body-start-margin: calc($navbar-margin * 3);
 $header-height: 7rem;
-$head-gap: 0.5rem;
-
+$general-gap: 1.2rem;
+$head-gap: 0.8rem;
 $btn-height: 2.5rem;
+$card-height: 18rem;

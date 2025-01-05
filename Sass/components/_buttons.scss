@@ -6,8 +6,13 @@
   background-color: transparent;
   cursor: pointer;
   border-radius: 5rem;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   height: variables.$btn-height;
+  font-weight: variables.$font-bold;
+  font-size: variables.$font-size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &-on {
     background-color: variables.$color-prime;
@@ -24,6 +29,11 @@
   align-items: center;
   justify-content: center;
 }
+.info-btn {
+  padding: 5px 20px;
+  height: fit-content;
+  font-size: variables.$font-size-small;
+}
 
 .btn-auto {
   background-color: variables.$color-black;
@@ -33,9 +43,10 @@
   justify-content: space-between;
   gap: 1rem;
   height: variables.$btn-height;
+  padding-left: 1.5rem;
 
   &-off {
-    background-color: variables.$color-red;
+    background-color: variables.$color-red-light;
     color: variables.$color-black;
     border-radius: 15px;
     padding: 5px 20px;
@@ -45,4 +56,10 @@
     background-color: variables.$color-prime;
     color: variables.$color-black;
   }
+}
+.countrybtn {
+  background-color: variables.$color-gray-dark;
+  color: variables.$color-white;
+  padding: 5px 20px;
+  height: fit-content;
 }

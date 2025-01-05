@@ -6,6 +6,7 @@ import { setAutoLeadsAssign } from "../../../global/generalSlice";
 import MainBody from "../../layout/MainBody/MainBody";
 import Selector from "../../components/Selectors/Selector";
 import PrimaryBttn from "../../components/buttons/PrimaryBttn";
+import AllLeads from "../../components/buttons/AllLeads";
 
 export default function Leads() {
   const { autoLeadsAssign } = useSelector((state) => state.general);
@@ -17,14 +18,24 @@ export default function Leads() {
   const IContents = arr?.map((_, index) => <LeadCard key={index} />);
   const ISelector = <Selector />;
   const IPrimaryBttn = <PrimaryBttn />;
+  const IAllLeads = <AllLeads />;
+  const ISelectorOne = <Selector />;
+  const ISelectorTwo = <Selector />;
+  const ISelectorThree = <Selector />;
+  const ISelectorFour = <Selector />;
+  const ISelectorFive = <Selector />;
   const TopLeft = [ISearchBar, IAutoBtn, ISelector];
   const TopRight = [IPrimaryBttn];
+  const BottomLeft = [IAllLeads, ISelectorOne, ISelectorTwo, ISelectorThree];
+  const BottomRight = [ISelectorFour, ISelectorFive];
   return (
     <MainBody
       TopLeft={TopLeft}
       TopRight={TopRight}
       IContents={IContents}
       switching={autoLeadsAssign}
+      BottomLeft={BottomLeft}
+      BottomRight={BottomRight}
     />
   );
 }

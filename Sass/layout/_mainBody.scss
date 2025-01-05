@@ -1,9 +1,10 @@
 @use "../abstract/variables" as variables;
+@use "../abstract/mixins" as mixins;
 
 .main-body {
   display: grid;
-  grid-template-rows: minmax(8rem, auto) 1fr;
-  gap: 1rem;
+  grid-template-rows: minmax(fit-content, auto) 1fr;
+  gap: variables.$general-gap;
   height: calc(100vh - variables.$body-start-margin);
   width: calc(100% - variables.$body-start-margin);
   margin-left: variables.$body-start-margin;
@@ -17,10 +18,11 @@
 
     &-left {
       display: flex;
+      flex-direction: column;
       align-items: start;
-      justify-content: space-between;
+      justify-content: flex-start;
       height: 100%;
-
+      gap: variables.$general-gap;
       &-top {
         display: flex;
         align-items: center;
@@ -31,13 +33,15 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 1rem;
+        gap: variables.$head-gap;
       }
     }
     &-right {
       display: flex;
-      align-items: start;
+      align-items: end;
+      flex-direction: column;
       justify-content: space-between;
+
       height: 100%;
 
       &-top {
@@ -50,20 +54,21 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 1rem;
+        gap: variables.$head-gap;
       }
     }
   }
 
   & .main-body-box {
     display: flex;
-    transition: all 1s ease-in-out;
+
     overflow: hidden;
 
     &-left {
       transition: all 0.5s ease-in-out;
-      background-color: variables.$color-blue;
+
       overflow: scroll;
+      @include mixins.removeScrollbar;
     }
     &-right {
       transition: all 0.5s ease-in-out;
@@ -73,10 +78,11 @@
 
   &-scroll-container {
     width: 100%;
-    background-color: variables.$color-red;
     overflow-y: scroll;
     display: grid;
-    gap: 1rem;
+    gap: variables.$head-gap;
     grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+
+    @include mixins.removeScrollbar;
   }
 }
