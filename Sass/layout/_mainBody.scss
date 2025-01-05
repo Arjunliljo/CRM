@@ -37,6 +37,28 @@
   }
 
   & .main-body-box {
-    background-color: variables.$color-black;
+    display: flex;
+    transition: all 1s ease-in-out;
+    overflow: hidden;
+
+    &-left {
+      transition: all 0.5s ease-in-out;
+      background-color: variables.$color-blue;
+      overflow: scroll;
+    }
+    &-right {
+      transition: all 0.5s ease-in-out;
+      background-color: variables.$color-black;
+    }
+  }
+
+  &-scroll-container {
+    width: 100%;
+    min-height: 200vh;
+    background-color: variables.$color-white;
+    overflow-y: scroll;
+    gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 22rem);
   }
 }
