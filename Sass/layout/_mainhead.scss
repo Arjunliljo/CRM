@@ -1,0 +1,46 @@
+@use "../abstract/variables" as variables;
+.logocontainer {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 5rem;
+  overflow: hidden;
+  padding: variables.$padding-md;
+
+  &-rightlogo {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: variables.$color-white;
+    object-fit: cover;
+  }
+
+  &-leftlead {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+
+    h2 {
+      font-size: 1rem;
+    }
+
+    &-bell {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: variables.$color-white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-photo {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+}
