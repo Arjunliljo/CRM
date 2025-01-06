@@ -1,5 +1,3 @@
-import BodyBg from "../../components/utils/BodyBg";
-
 export default function MainBody({
   TopLeft = [],
   TopRight = [],
@@ -16,20 +14,20 @@ export default function MainBody({
         {/* Left side of the header */}
         <div className="main-body-head-left">
           <div className="main-body-head-left-top">
-            {TopLeft?.map((item, index) => item)}
+            {TopLeft?.map((item) => item)}
           </div>
           <div className="main-body-head-left-bottom">
-            {BottomLeft?.map((item, index) => item)}
+            {BottomLeft?.map((item) => item)}
           </div>
         </div>
 
         {/* Right side of the header */}
         <div className="main-body-head-right">
           <div className="main-body-head-right-top">
-            {TopRight?.map((item, index) => item)}
+            {TopRight?.map((item) => item)}
           </div>
           <div className="main-body-head-right-bottom">
-            {BottomRight?.map((item, index) => item)}
+            {BottomRight?.map((item) => item)}
           </div>
         </div>
       </div>
