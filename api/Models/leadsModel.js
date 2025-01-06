@@ -16,7 +16,6 @@ const leadSchema = mongoose.Schema(
     phone: {
       type: String,
       required: [true, "Lead must have an email"],
-
       validate: {
         validator: function (value) {
           return value.length >= 10 && value.length <= 13;
@@ -28,6 +27,35 @@ const leadSchema = mongoose.Schema(
     campaign: {
       type: String,
       required: [true, "Lead must have a campaign"],
+    },
+    status: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Status",
+    },
+    remark: {
+      type: String,
+      maxlength: [100, "Remark should be less than 100 characters"],
+      minlength: [3, "Remark should be greater than 3 characters"],
+    },
+    counsellor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    previousCounsellors: {
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+    },
+    countries: {
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Country",
+        },
+      ],
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
