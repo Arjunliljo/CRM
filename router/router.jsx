@@ -3,6 +3,7 @@ import App from "../src/App";
 import Leads from "../src/pages/leads/Leads";
 import ProfileForm from "../src/pages/ProfilePage/ProfilePage";
 import UserCard from "../src/components/Card/UserCard";
+import Profilepage from "../src/pages/ProfilePage/ProfilePage";
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "my-profile",
-        element: <ProfileForm />,
+        element: <Profilepage />,
       },
       {
         path: "user-card",

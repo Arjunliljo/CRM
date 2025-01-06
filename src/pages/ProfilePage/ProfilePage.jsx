@@ -1,7 +1,7 @@
 import LeftRound from "./LeftRound";
 import ProfileRight from "./ProfileRight";
 
-function ProfileForm() {
+function Profilepage() {
   return (
     <div className="profile-page">
       <LeftRound />
@@ -13,4 +13,4 @@ function ProfileForm() {
   );
 }
 
-export default ProfileForm;
+export default Profilepage;
