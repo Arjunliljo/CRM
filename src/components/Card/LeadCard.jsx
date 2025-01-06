@@ -5,7 +5,6 @@ import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useInView } from "framer-motion";
 
 export default function LeadCard({ lead, set, onSet }) {
   const [isSelected, setIsSelected] = useState(lead?._id === set?._id);
