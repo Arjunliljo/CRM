@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcrypt";
-import { otpToEmail } from "../Utilities/otpGenerate.js";
 
 const userSchema = mongoose.Schema(
   {
@@ -85,17 +84,6 @@ userSchema.methods.checkPassword = async function (
   hashedPassword
 ) {
   return await bcrypt.compare(loginPassword, hashedPassword);
-};
-
-// password Reset
-userSchema.methods.createPasswordResetOtp = async function (email) {
-  const [response, status, otp] = await otpToEmail(email);
-
-  if (status !== "OK" || !otp)
-    return next(new AppError("Failed to generate otp please try again..", 500));
-
-  this.passwordResetOtp = otp;
-  this.otpExpires = Date.now() + 10 * 60 * 1000;
 };
 
 const User = mongoose.model("User", userSchema);

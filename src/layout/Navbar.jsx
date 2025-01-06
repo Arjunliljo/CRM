@@ -1,31 +1,48 @@
+import { NavLink } from "react-router-dom";
 import HomeIcon from "../components/utils/Icons/HomeIcon";
 
 export default function Navbar() {
   return (
     <nav className="navbar">
       <li>
-        <HomeIcon path="home" />
+        <NavLink to="/">
+          <HomeIcon path="home" />
+        </NavLink>
       </li>
       <li>
-        <HomeIcon path="hat" />
+        <NavLink to="/leads">
+          <HomeIcon path="hat" />
+        </NavLink>
       </li>
       <li>
-        <HomeIcon path="group" />
+        <NavLink to="/students">
+          <HomeIcon path="group" />
+        </NavLink>
       </li>
       <li>
-        <HomeIcon path="doc" />
+        <NavLink to="/documents">
+          <HomeIcon path="doc" />
+        </NavLink>
       </li>
       <li>
-        <HomeIcon path="tick" />
+        <NavLink to="/tick">
+          <HomeIcon path="tick" />
+        </NavLink>
       </li>
       <li>
-        <HomeIcon path="wifi" />
+        <NavLink to="/wifi">
+          <HomeIcon path="wifi" />
+        </NavLink>
       </li>
       <li>
-        <HomeIcon path="contact" />
+        <NavLink to="/contact">
+          <HomeIcon path="contact" />
+        </NavLink>
       </li>
       <li>
-        <HomeIcon path="settings" />
+        <NavLink to="/settings">
+          <HomeIcon path="settings" />
+        </NavLink>
       </li>
     </nav>
   );
