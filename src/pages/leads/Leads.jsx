@@ -55,6 +55,7 @@ export default function Leads() {
     <div key="selector">{ISelector}</div>,
   ];
   const TopRight = [<div key="primary-btn">{IPrimaryBttn}</div>];
+
   const BottomLeft = [
     <div key="all-leads">{IAllLeads}</div>,
     <div key="selector-one">{ISelectorOne}</div>,

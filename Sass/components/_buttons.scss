@@ -70,3 +70,19 @@
   padding: 10px 20px;
   height: fit-content;
 }
+.allbttn {
+  background-color: variables.$color-black;
+  color: variables.$color-white;
+  padding: 10px 40px;
+  border-radius: variables.$radius-md;
+  height: fit-content;
+  border: none;
+}
+.headBttns {
+  background-color: variables.$color-white;
+  color: variables.$color-black;
+  padding: 10px 40px;
+  border-radius: variables.$radius-md;
+  height: fit-content;
+  border: none;
+}
