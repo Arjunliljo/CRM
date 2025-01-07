@@ -13,6 +13,10 @@ const statusSchema = mongoose.Schema(
       enum: classes,
       default: classes[0],
     },
+    isRoute: {
+      type: Boolean,
+      default: false,
+    },
     description: {
       type: String,
       maxlength: [100, "Description should be less than 100 characters"],
