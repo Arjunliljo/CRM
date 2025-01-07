@@ -42,7 +42,7 @@ export default function User() {
   ));
 
   //   const ISelector = <Selector />;
-  const IPrimaryBttn = <PrimaryBttn />;
+  const IPrimaryBttn = <PrimaryBttn>Add User</PrimaryBttn>;
   const IAll = <All />;
   const IButtonOne = <NormalButton>Counsilor</NormalButton>;
   const IButtonTwo = <NormalButton>SRM</NormalButton>;
@@ -81,7 +81,7 @@ export default function User() {
       TopLeft={TopLeft}
       TopRight={TopRight}
       IContents={IContents}
-      //   switching={autoLeadsAssign}
+      switching={autoUserAssign}
       BottomLeft={BottomLeft}
       BottomRight={BottomRight}
       ProfileCard={IProfileCard}

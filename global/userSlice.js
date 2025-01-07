@@ -11,7 +11,7 @@ const userSlice = createSlice({
       state.autoUserAssign = action.payload;
 
       if (!action.payload) {
-        state.curLead = {};
+        state.curUser = {};
       }
     },
     setCurUser(state, action) {

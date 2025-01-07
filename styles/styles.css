@@ -170,12 +170,7 @@ main {
   overflow: scroll;
   scrollbar-width: none;
   border: 1px solid #0075fc;
-  background: linear-gradient(
-    to bottom,
-    rgba(249, 249, 249, 0.5),
-    #c4ecf7,
-    #b3e7f5
-  );
+  background: linear-gradient(to bottom, rgba(249, 249, 249, 0.5), #c4ecf7, #b3e7f5);
   position: relative;
 }
 .main-body .main-body-box-right::-webkit-scrollbar {
@@ -530,20 +525,23 @@ main {
   gap: 15px;
 }
 .logocontainer-leftlead h2 {
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 .logocontainer-leftlead-bell {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
-  background-color: #f9f9f9;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+.logocontainer-leftlead-bell-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
 .logocontainer-leftlead-photo {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   object-fit: cover;
 }

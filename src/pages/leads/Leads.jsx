@@ -39,7 +39,7 @@ export default function Leads() {
   ));
 
   const ISelector = <Selector />;
-  const IPrimaryBttn = <PrimaryBttn />;
+  const IPrimaryBttn = <PrimaryBttn>Add Leads</PrimaryBttn>;
   const IAllLeads = <AllLeads />;
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;

@@ -8,7 +8,7 @@ function Mainhead() {
       <div className="logocontainer-leftlead">
         <h2>Leads</h2>
         <div className="logocontainer-leftlead-bell">
-          <CiBellOn />
+          <CiBellOn className="logocontainer-leftlead-bell-icon" />
         </div>
         <img src={profile} alt="" className="logocontainer-leftlead-photo" />
       </div>
