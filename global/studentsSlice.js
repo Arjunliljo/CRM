@@ -14,7 +14,7 @@ const studentsSlice = createSlice({
         state.curStudent = {};
       }
     },
-    setCurUser(state, action) {
+    setCurStudent(state, action) {
       state.curStudent = action.payload;
 
       if (action.payload) {

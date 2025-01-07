@@ -15,7 +15,7 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/students">
+        <NavLink to="/student">
           <HomeIcon path="group" />
         </NavLink>
       </li>
@@ -35,7 +35,7 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/contact">
+        <NavLink to="/user">
           <HomeIcon path="contact" />
         </NavLink>
       </li>
