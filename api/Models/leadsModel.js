@@ -28,16 +28,21 @@ const leadSchema = mongoose.Schema(
       type: String,
       required: [true, "Lead must have a campaign"],
     },
+    branch: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Branch",
+    },
     status: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Status",
+      required: [true, "Lead must have a status"],
     },
     remark: {
       type: String,
       maxlength: [100, "Remark should be less than 100 characters"],
       minlength: [3, "Remark should be greater than 3 characters"],
     },
-    counsellor: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },

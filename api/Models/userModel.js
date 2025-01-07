@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import validator from "validator";
-import bcrypt from "bcrypt";
 
 const userSchema = mongoose.Schema(
   {
@@ -17,15 +15,10 @@ const userSchema = mongoose.Schema(
       maxlength: [30, "Email should be less than 30 characters"],
       minlength: [3, "Email should be greater than 3 characters"],
       lowercase: true,
-      validate: {
-        validator: validator.isEmail,
-        message: "Please provide a valid email",
-      },
     },
     phone: {
       type: String,
-
-      // required: [true, "User must have a phone number"],
+      required: [true, "User must have a phone number"],
       validate: {
         validator: function (value) {
           return value.length >= 10 && value.length <= 13;
@@ -40,8 +33,8 @@ const userSchema = mongoose.Schema(
       minlength: [1, "Password must have at least 8 characters"],
     },
     role: {
-      type: String,
-      default: "accountant",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Role",
     },
     count: {
       type: String,
@@ -57,34 +50,6 @@ const userSchema = mongoose.Schema(
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
-
-userSchema.pre("save", async function (next) {
-  try {
-    // Ensure this middleware doesn't affect updated users unnecessarily
-    if (!this.isNew) return next();
-
-    // Get the total count of User documents in the database
-    const totalUsers = await this.constructor.countDocuments();
-    this.count = totalUsers + 1;
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
-userSchema.pre("save", async function (next) {
-  //check the password is modified or not for when we update
-  if (!this.isModified("password")) return next();
-
-  this.password = await bcrypt.hash(this.password, 10);
-  this.changePasswordDate = Date.now();
-});
-
-userSchema.methods.checkPassword = async function (
-  loginPassword,
-  hashedPassword
-) {
-  return await bcrypt.compare(loginPassword, hashedPassword);
-};
 
 const User = mongoose.model("User", userSchema);
 
