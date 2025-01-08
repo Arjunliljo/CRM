@@ -38,6 +38,9 @@
         background-color: variables.$color-gray;
       }
     }
+    &-center {
+      flex: none;
+    }
     &-bottom {
       flex: 1;
 

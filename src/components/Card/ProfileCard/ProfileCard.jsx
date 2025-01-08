@@ -15,21 +15,21 @@ export default function ProfileCard() {
     <div className="profileCard">
       <div className="profileCard-head">
         <div className="profileCard-head-info">
-            <div className="profileCard-head-info-details">
-              <div>
-                <img src={lead.img} alt={lead.name} />
-              </div>
-              <div className="name-bar-name name-small">
-                <div>{lead.name}</div>
-                <div className="profileCard-head-info-location-card">
-                  <span className="profileCard-head-info-location">
-                    {lead.location}
-                  </span>
-                  <span className="profileCard-head-info-underline"></span>
-                </div>
-                <button className="hot-btn">Hot</button>
-              </div>
+          <div className="profileCard-head-info-details">
+            <div>
+              <img src={lead.img} alt={lead.name} />
             </div>
+            <div className="name-bar-name name-small">
+              <div>{lead.name}</div>
+              <div className="profileCard-head-info-location-card">
+                <span className="profileCard-head-info-location">
+                  {lead.location}
+                </span>
+                <span className="profileCard-head-info-underline"></span>
+              </div>
+              <button className="hot-btn">Hot</button>
+            </div>
+          </div>
           <div className="profileCard-head-info-right-card">
             <div className="card-number profileCard-head-info-keys">
               <span>Counsellor</span>

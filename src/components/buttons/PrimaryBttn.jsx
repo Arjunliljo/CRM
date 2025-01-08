@@ -1,7 +1,7 @@
-function PrimaryBttn({ style }) {
+function PrimaryBttn({ style, children }) {
   return (
     <button style={style} className="btn primary-btn">
-      Add Leads
+      {children}
     </button>
   );
 }
