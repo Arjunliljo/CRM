@@ -3,6 +3,7 @@ import generalSlice from "./generalSlice";
 import leadsSlice from "./leadsSlice";
 import userSlice from "./userSlice";
 import studentsSlice from "./studentsSlice";
+import universitySlice from "./universitySlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     leads: leadsSlice,
     user: userSlice,
     students: studentsSlice,
+    universitys: universitySlice,
   },
 });
 

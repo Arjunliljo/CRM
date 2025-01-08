@@ -25,7 +25,7 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/tick">
+        <NavLink to="/university">
           <HomeIcon path="tick" />
         </NavLink>
       </li>

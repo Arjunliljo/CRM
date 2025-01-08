@@ -6,6 +6,7 @@ import UserCard from "../src/components/Card/UserCard";
 import Profilepage from "../src/pages/ProfilePage/ProfilePage";
 import User from "../src/pages/User/User";
 import Students from "../src/pages/Students/Students";
+import University from "../src/pages/Universities/University";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "student",
         element: <Students />,
+      },
+      {
+        path: "university",
+        element: <University />,
       },
     ],
   },
