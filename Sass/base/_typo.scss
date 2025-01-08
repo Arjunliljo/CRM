@@ -9,3 +9,25 @@
   font-weight: 400;
   color: variables.$color-text-gray;
 }
+
+.icons {
+  color: variables.$color-text-gray;
+  font-size: variables.$icon-size;
+}
+
+.whatsapp-icon {
+  font-size: 2rem;
+  color: variables.$color-green;
+}
+
+textarea::placeholder {
+  font-size: 1rem;
+  font-weight: 400;
+  color: variables.$color-text-gray;
+}
+
+.chat-text{
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: variables.$color-black;
+}
