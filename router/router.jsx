@@ -5,6 +5,7 @@ import ProfileForm from "../src/pages/ProfilePage/ProfilePage";
 import UserCard from "../src/components/Card/UserCard";
 import Profilepage from "../src/pages/ProfilePage/ProfilePage";
 import User from "../src/pages/User/User";
+import Error from "../src/layout/Error";
 
 export const router = createBrowserRouter([
   {
@@ -20,12 +21,12 @@ export const router = createBrowserRouter([
         element: <Profilepage />,
       },
       {
-        path: "user-card",
-        element: <UserCard />,
-      },
-      {
         path: "user",
         element: <User />,
+      },
+      {
+        path: "*",
+        element: <Error />,
       },
     ],
   },

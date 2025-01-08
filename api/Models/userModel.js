@@ -44,9 +44,6 @@ const userSchema = mongoose.Schema(
       default:
         "https://cbbstwltufvzpsqvnahz.supabase.co/storage/v1/object/public/avatars/public/logoipsum.png",
     },
-    changePasswordDate: Date,
-    passwordResetOtp: String,
-    otpExpires: Date,
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

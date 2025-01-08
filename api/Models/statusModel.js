@@ -17,6 +17,10 @@ const statusSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    subStatus: {
+      type: [String],
+      default: [],
+    },
     description: {
       type: String,
       maxlength: [100, "Description should be less than 100 characters"],
