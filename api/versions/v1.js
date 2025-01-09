@@ -2,20 +2,35 @@ import express from "express";
 
 const router = express.Router();
 
+const VERIFY_TOKEN = "qwertyuiopasdfghjkkl";
+
 router.get("/webhook", (req, res) => {
-  const VERIFY_TOKEN = "my-verification-token";
   const mode = req.query["hub.mode"];
-  const token = req.query["qwertyuiopasdfghjkkl"];
+  const token = req.query["hub.verify_token"];
   const challenge = req.query["hub.challenge"];
 
   if (mode === "subscribe" && token === VERIFY_TOKEN) {
-    console.log("Webhook verified.");
+    console.log("Webhook verified!");
 
-    // Respond with the exact challenge value
     res.status(200).send(challenge);
   } else {
-    console.log("Webhook verification failed.");
-    res.status(403).send("Verification failed.");
+    console.error("Verification failed. Token mismatch or invalid mode.");
+    res.sendStatus(403); // Forbidden
+  }
+});
+
+router.get("/add-account", (req, res) => {
+  const mode = req.query["hub.mode"];
+  const token = req.query["hub.verify_token"];
+  const challenge = req.query["hub.challenge"];
+
+  if (mode === "subscribe" && token === VERIFY_TOKEN) {
+    console.log("Webhook verified!");
+
+    res.status(200).send(challenge);
+  } else {
+    console.error("Verification failed. Token mismatch or invalid mode.");
+    res.sendStatus(403); // Forbidden
   }
 });
 
