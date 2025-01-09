@@ -1,4 +1,6 @@
 import Branch from "../Models/branchModel.js";
+import { connectToUserAdminDb } from "../middlewares/dynamicDbContext.js";
+// import { getBranchModel } from "../Models/branchModel.js";
 import Country from "../Models/countriesModel.js";
 import Role from "../Models/roleModel.js";
 import User from "../Models/userModel.js";
@@ -53,6 +55,8 @@ const createRole = async (req, res) => {
 const createBranch = async (req, res, next) => {
   try {
     let { name } = req.body;
+    let db = req.db;
+    console.log(db);
 
     // Sanitize
     name = sanitizeInput(name);
@@ -270,6 +274,48 @@ const changePasswordByAdmin = async (req, res) => {
     });
   }
 };
+
+// const createBranch = async (req, res, next) => {
+//   try {
+//     let { name } = req.body;
+//     const dbConnection = await connectToUserAdminDb(adminId);
+//     const Branch = getBranchModel(dbConnection);
+
+//     // Sanitize
+//     name = sanitizeInput(name);
+
+//     // Validate
+//     if (!isValidString(name, { min: 2, max: 50 })) {
+//       return res.status(400).json({
+//         success: false,
+//         message:
+//           "Branch name must be at least 3 characters long and contain no unsafe characters.",
+//       });
+//     }
+
+//     // Check if the branch already exists
+//     const existingBranch = await Branch.findOne({ name });
+//     if (existingBranch) {
+//       return res.status(400).json({
+//         success: false,
+//         message: `Branch with the name ${name} already exists.`,
+//       });
+//     }
+
+//     const newBranch = await Branch.create({ name });
+//     res.status(201).json({
+//       success: true,
+//       message: "Branch created successfully",
+//       data: newBranch,
+//     });
+//   } catch (err) {
+//     return res.status(500).json({
+//       success: false,
+//       message: "An error occurred while creating the branch",
+//       error: err.message,
+//     });
+//   }
+// };
 
 export {
   createRole,

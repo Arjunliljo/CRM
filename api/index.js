@@ -1,40 +1,51 @@
-/* eslint-disable no-console */
-
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import app from "./app.js";
+import Admin from "./Models/adminModel.js";
+import { connectToUserAdminDb } from "./middlewares/dynamicDbContext.js";
 
 dotenv.config();
 
-/* global process */
-// const dbConnectionString = process.env.PRIMERY_STR || "";
 const dbConnectionString = "mongodb://localhost:27017/CRM" || "";
-
 const PORT = process.env.PORT || 3000;
 
-// Use a global variable to maintain a MongoDB connection across invocations
 let isConnected = false;
-
-// Declare server variable in the outer scope
 let server;
 
-// Function to connect to the database
-export async function connectToDatabase() {
+const dbConnections = []; // to store active db
+
+// to connect primary database (CRM)
+async function connectToDatabase() {
   if (isConnected) {
-    console.log("Using existing database connection");
+    console.log("Using existing primary database connection");
     return;
   }
 
   try {
-    // Connect to the database
     const dbConnection = await mongoose.connect(dbConnectionString);
-
-    // Set connection state
     isConnected = dbConnection.connections[0].readyState === 1;
-    console.log("Connected to Database");
+    console.log("Connected to Primary Database (CRM)");
   } catch (err) {
-    console.error("Error connecting to database:", err.message);
-    throw new Error("Failed to connect to the databases");
+    console.error("Error connecting to primary database:", err.message);
+    throw new Error("Failed to connect to primary database");
+  }
+}
+
+// Function to connect to admin-specific db dynamically
+async function connectToUserAdminDatabases() {
+  try {
+    const admins = await Admin.find(); // Fetch all admin users
+
+    for (const admin of admins) {
+      const { _id, databaseName } = admin;
+
+      // Create connection to each admin's db
+      const userAdminDbConnection = await connectToUserAdminDb(_id);
+      dbConnections.push(userAdminDbConnection);
+      console.log(`Connected to User Admin Database: ${databaseName}`);
+    }
+  } catch (err) {
+    console.error("Error connecting to user-admin databases:", err.message);
   }
 }
 
@@ -49,10 +60,12 @@ const gracefulShutdown = async (signal) => {
       console.log("Server closed");
     }
 
-    // Close database connection
-    if (mongoose.connection.readyState === 1) {
-      await mongoose.connection.close();
-      console.log("Database connection closed");
+    // Close all database connections (including admin db's)
+    for (const connection of dbConnections) {
+      if (connection.readyState === 1) {
+        await connection.close();
+        console.log("Database connection closed");
+      }
     }
 
     console.log("Graceful shutdown completed");
@@ -63,8 +76,9 @@ const gracefulShutdown = async (signal) => {
   }
 };
 
-// Connect to database and start the server
+// Connect to databases and start the server
 connectToDatabase()
+  .then(() => connectToUserAdminDatabases()) // Connect to all userAdmin databases
   .then(() => {
     // Assign to the outer scope server variable
     server = app.listen(PORT, () => {
@@ -87,4 +101,3 @@ connectToDatabase()
     console.error("Failed to start server:", err);
     process.exit(1);
   });
-

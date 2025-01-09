@@ -8,6 +8,7 @@ import {
   createCountries,
   createRole,
 } from "../Controllers/adminController.js";
+import { signin, signup } from "../Controllers/adminAuthController.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -19,6 +20,10 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
+//admin auth routes
+router.post("/signup", signup);
+router.post("/signin", signin);
 
 router.post("/createRole", createRole);
 router.post("/createBranch", createBranch);

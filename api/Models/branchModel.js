@@ -5,7 +5,10 @@ const branchSchema = mongoose.Schema(
     name: {
       type: String,
       required: [true, "Branch must have a name"],
-      unique: true,
+    },
+    description: {
+      type: String,
+      maxlength: [200, "Description should not exceed 200 characters"],
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
