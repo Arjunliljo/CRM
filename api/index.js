@@ -7,7 +7,9 @@ import app from "./app.js";
 dotenv.config();
 
 /* global process */
-const dbConnectionString = process.env.PRIMERY_STR || "";
+// const dbConnectionString = process.env.PRIMERY_STR || "";
+const dbConnectionString = "mongodb://localhost:27017/CRM" || "";
+
 const PORT = process.env.PORT || 3000;
 
 // Use a global variable to maintain a MongoDB connection across invocations
@@ -85,3 +87,4 @@ connectToDatabase()
     console.error("Failed to start server:", err);
     process.exit(1);
   });
+
