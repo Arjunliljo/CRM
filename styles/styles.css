@@ -2550,7 +2550,6 @@ F .log .message-area-textarea-container {
 
 .profile-page {
   border-radius: 8px;
-  display: flex;
   gap: 6rem;
   height: 100vh;
   width: 80vw;
@@ -2586,6 +2585,166 @@ F .log .message-area-textarea-container {
   border: none;
   padding: 0.5rem;
   font-size: 14px;
+}
+
+.profileUpdate-main {
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  height: 80vh;
+  width: 90vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.profile-edit-container {
+  background-color: #e8e8e8;
+  border-radius: 12px;
+  padding: 1rem;
+  width: 90vw;
+  /* Flexbox for form-left and form-right */
+}
+.profile-edit-container .profile-nav {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #60bdff;
+}
+.profile-edit-container .profile-nav .nav-item {
+  padding: 1rem;
+  border: none;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  background: none;
+  cursor: pointer;
+  font-weight: 500;
+  color: #000000;
+}
+.profile-edit-container .profile-nav .nav-item.active {
+  background: #9c9c9c;
+  color: #333;
+}
+.profile-edit-container .profile-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 20px;
+  width: 50%;
+}
+.profile-edit-container .profile-content .content-section {
+  flex: 1;
+  min-width: 320px;
+}
+.profile-edit-container .profile-content .content-section h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
+}
+.profile-edit-container .profile-content .upload-btn {
+  background-color: #4c4c4c;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 1rem;
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+.profile-edit-container .profile-content .upload-btn:hover {
+  background-color: #dadada;
+}
+.profile-edit-container .form-left,
+.profile-edit-container .form-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  min-width: 320px;
+}
+.profile-edit-container .form-left h2,
+.profile-edit-container .form-right h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
+}
+.profile-edit-container .form-left .form-group,
+.profile-edit-container .form-right .form-group {
+  display: flex;
+  flex-direction: column; /* Stack label and input */
+  gap: 8px; /* Spacing between label and input */
+}
+.profile-edit-container .form-left .form-group input,
+.profile-edit-container .form-left .form-group select,
+.profile-edit-container .form-right .form-group input,
+.profile-edit-container .form-right .form-group select {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1); /* Add subtle shadow for inputs */
+}
+.profile-edit-container .form-left .form-group.auto-assign,
+.profile-edit-container .form-right .form-group.auto-assign {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #d8bf32;
+  border-radius: 1rem;
+  border: 1px solid #ddd;
+}
+.profile-edit-container .form-left .form-group.auto-assign span,
+.profile-edit-container .form-right .form-group.auto-assign span {
+  font-size: 0.8rem;
+  color: #333;
+}
+.profile-edit-container .form-left .form-group.auto-assign button,
+.profile-edit-container .form-right .form-group.auto-assign button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.profile-edit-container .form-left .form-group.auto-assign button .toggle-slider,
+.profile-edit-container .form-right .form-group.auto-assign button .toggle-slider {
+  width: 24px;
+  height: 12px;
+  background: #ff6b6b;
+  border-radius: 6px;
+  position: relative;
+}
+.profile-edit-container .toggle-btn {
+  width: 48px;
+  height: 24px;
+  background: #ff6b6b;
+  border-radius: 12px;
+  position: relative;
+  border: none;
+  cursor: pointer;
+}
+.profile-edit-container .button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px;
+}
+.profile-edit-container .button-group button {
+  padding: 1rem;
+  border-radius: 1rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+.profile-edit-container .button-group button.btn-cancel {
+  background: #dadada;
+  color: #000000;
+}
+.profile-edit-container .button-group button.btn-cancel:hover {
+  background: #e9ecef;
+}
+.profile-edit-container .button-group button.btn-next {
+  background: #0075fc;
+  color: #f9f9f9;
 }
 
 /*

@@ -7,6 +7,8 @@ import Profilepage from "../src/pages/ProfilePage/ProfilePage";
 import User from "../src/pages/User/User";
 import Students from "../src/pages/Students/Students";
 import University from "../src/pages/Universities/University";
+import ProfileEdit from "../src/pages/profileEdit/ProfileUpdateUser";
+import ProfileUpdateUser from "../src/pages/profileEdit/ProfileUpdateUser";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "university",
         element: <University />,
+      },
+      {
+        path: "profileEdit",
+        element: <ProfileUpdateUser />,
       },
     ],
   },

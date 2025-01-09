@@ -1,0 +1,172 @@
+@use "../abstract/variables";
+
+.profileUpdate-main {
+  background-color: variables.$color-white;
+  padding: variables.$padding-lg;
+  border-radius: variables.$radius-md;
+  height: 80vh;
+  width: 90vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.profile-edit-container {
+  background-color: variables.$color-gray;
+  border-radius: 12px;
+  padding: variables.$padding-md;
+  width: 90vw;
+
+  .profile-nav {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid variables.$color-light-blue;
+
+    .nav-item {
+      padding: variables.$padding-md;
+      border: none;
+      border-top-left-radius: variables.$radius-md;
+      border-top-right-radius: variables.$radius-md;
+      background: none;
+      cursor: pointer;
+      font-weight: 500;
+      color: variables.$color-black;
+
+      &.active {
+        background: #9c9c9c;
+        color: #333;
+      }
+    }
+  }
+
+  .profile-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 20px;
+    width: 50%;
+
+    .content-section {
+      flex: 1;
+      min-width: 320px;
+      h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #333;
+      }
+    }
+
+    .upload-btn {
+      background-color: variables.$color-gray-dark;
+      border: none;
+      padding: 10px 20px;
+      border-radius: variables.$radius-md;
+      margin-bottom: 24px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: variables.$color-gray-mid;
+      }
+    }
+  }
+
+  /* Flexbox for form-left and form-right */
+  .form-left,
+  .form-right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    min-width: 320px;
+    h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column; /* Stack label and input */
+      gap: 8px; /* Spacing between label and input */
+
+      input,
+      select {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: variables.$radius-sm;
+        font-size: variables.$font-size-small;
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1); /* Add subtle shadow for inputs */
+      }
+
+      &.auto-assign {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px;
+        background: #d8bf32;
+        border-radius: variables.$radius-md;
+        border: 1px solid #ddd;
+
+        span {
+          font-size: variables.$font-size-small;
+          color: #333;
+        }
+
+        button {
+          background: none;
+          border: none;
+          cursor: pointer;
+
+          .toggle-slider {
+            width: 24px;
+            height: 12px;
+            background: #ff6b6b;
+            border-radius: 6px;
+            position: relative;
+          }
+        }
+      }
+    }
+  }
+
+  .toggle-btn {
+    width: 48px;
+    height: 24px;
+    background: #ff6b6b;
+    border-radius: 12px;
+    position: relative;
+    border: none;
+    cursor: pointer;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 20px;
+
+    button {
+      padding: variables.$padding-md;
+      border-radius: variables.$radius-md;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+
+      &.btn-cancel {
+        background: variables.$color-gray-mid;
+        color: variables.$color-black;
+
+        &:hover {
+          background: #e9ecef;
+        }
+      }
+
+      &.btn-next {
+        background: variables.$color-blue;
+        color: variables.$color-white;
+      }
+    }
+  }
+}
