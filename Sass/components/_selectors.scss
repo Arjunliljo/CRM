@@ -1,4 +1,5 @@
 @use "../abstract/variables";
+
 .select-container {
   padding: 0rem 1rem;
   height: variables.$btn-height;
@@ -25,4 +26,26 @@
       background-color: variables.$color-gray-light;
     }
   }
+}
+
+.selector-btn {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 5rem;
+  height: variables.$btn-height;
+  font-weight: variables.$font-bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selector-style {
+  background-color: variables.$color-gray-dark;
+  color: variables.$color-white;
+  padding: 3px 20px;
+  font-size: variables.$font-size;
+  height: fit-content;
+  border-radius: 5rem;
 }

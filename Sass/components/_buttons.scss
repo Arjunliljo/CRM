@@ -70,6 +70,74 @@
   padding: 10px 20px;
   height: fit-content;
 }
+
+.hot-btn {
+  background-color: variables.$color-red;
+  color: variables.$color-white;
+  border-radius: variables.$radius-sm;
+  border: none;
+  padding: 5px 10px;
+  font-size: variables.$font-size;
+  height: fit-content;
+}
+
+.arrow-btn {
+  background-color: variables.$color-text-gray;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-element {
+    font-size: variables.$icon-size;
+    color: variables.$color-white;
+  }
+}
+
+.select-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: start;
+  height: 2rem;
+}
+
+.selector-with-icon {
+  border-radius: 7px;
+  border-width: 1.8px;
+  border-style: solid;
+  border-color: variables.$color-gray-mid;
+  height: 2.1rem;
+  width: 100%;
+  font-size: variables.$font-size;
+  font-weight: 400;
+  padding-left: 2.5rem;
+}
+
+.select-icon {
+  position: absolute;
+  left: 1.5rem;
+  font-size: 1.5rem;
+  color: variables.$color-blue;
+  pointer-events: none;
+}
+
+.eligible-head {
+  display: flex;
+  justify-content: center;
+  &-btn {
+    background-color: variables.$color-blue;
+    color: variables.$color-white;
+    font-size: variables.$font-size;
+    border-radius: variables.$radius-lg;
+    border: none;
+    padding: 4px;
+    width: 50%;
+  }
+}
 .allbttn {
   background-color: variables.$color-black;
   color: variables.$color-white;

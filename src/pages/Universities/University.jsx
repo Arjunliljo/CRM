@@ -1,3 +1,5 @@
+import AutoBtn from "../../components/buttons/AutoBtn";
+import LeadCard from "../../components/Card/LeadCard";
 import SearchBar from "../../components/smallComponents/SearchBar";
 import { useSelector } from "react-redux";
 import MainBody from "../../layout/MainBody/MainBody";
@@ -6,13 +8,10 @@ import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import AllLeads from "../../components/buttons/AllLeads";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
-import UserCard from "../../components/Card/UserCard";
-import { setCurUser } from "../../../global/userSlice";
-import All from "../../components/buttons/All";
-import Counsellor from "../../components/buttons/NormalButton";
-import NormalButton from "../../components/buttons/NormalButton";
+import { setCurStudent } from "../../../global/studentsSlice";
+import StudentsCard from "../../components/Card/StudentsCard";
 
-const user = {
+const student = {
   num: 3,
   name: "John Doe",
   img: "https://via.placeholder.com/150",
@@ -21,56 +20,61 @@ const user = {
   statusColor: "red",
   remark:
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-  applications: "8 Payments",
-  payments: 5,
-  ongoing: "88 ongoing",
-  state: "Kochi",
+  applications: 2,
+  attempts: 1,
+  country: "Germany",
   count: 3,
 };
 const arr = [...Array(500)].map((_, i) => {
-  const obj = { ...user, _id: i };
+  const obj = { ...student, _id: i };
   return obj;
 });
 
-export default function User() {
-  const { autoUserAssign, curUser } = useSelector((state) => state.user);
+export default function University() {
+  const { autoStudentsAssign, curStudent } = useSelector(
+    (state) => state.students
+  );
 
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
-  const IContents = arr?.map((user, index) => (
-    <UserCard key={index} onSet={setCurUser} set={curUser} user={user} />
+  const IContents = arr?.map((student, index) => (
+    <StudentsCard
+      key={index}
+      onSet={setCurStudent}
+      set={curStudent}
+      student={student}
+    />
   ));
 
   //   const ISelector = <Selector />;
-  const IPrimaryBttn = <PrimaryBttn>Add User</PrimaryBttn>;
-  const IAll = <All />;
+  const IPrimaryBttn = <PrimaryBttn>Add Students</PrimaryBttn>;
+  const IAllLeads = <AllLeads />;
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
   const IProfileCard = <ProfileCard />;
   const IStartApplication = <StartApplication />;
 
-  const TopLeft = [
-    <div key="search-bar">{ISearchBar}</div>,
-    // <div key="auto-btn">{IAutoBtn}</div>,
-    // <div key="selector">{ISelector}</div>,
-  ];
+  const TopLeft = [<div key="search-bar">{ISearchBar}</div>];
   const TopRight = [<div key="primary-btn">{IPrimaryBttn}</div>];
 
   const BottomLeft = [
-    <div key="all">{IAll}</div>,
+    <div key="all-leads">{IAllLeads}</div>,
     <div key="selector-one">{ISelectorOne}</div>,
     <div key="selector-two">{ISelectorTwo}</div>,
     <div key="selector-three">{ISelectorThree}</div>,
   ];
-  const BottomRight = [];
+  const BottomRight = [
+    // <div key="selector-four">{ISelectorFour}</div>,
+    // <div key="selector-five">{ISelectorFive}</div>,
+  ];
 
   return (
     <MainBody
       TopLeft={TopLeft}
       TopRight={TopRight}
       IContents={IContents}
-      switching={autoUserAssign}
+      switching={autoStudentsAssign}
       BottomLeft={BottomLeft}
       BottomRight={BottomRight}
       ProfileCard={IProfileCard}

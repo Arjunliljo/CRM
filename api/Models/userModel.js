@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -43,6 +42,37 @@ const userSchema = mongoose.Schema(
       type: String,
       default:
         "https://cbbstwltufvzpsqvnahz.supabase.co/storage/v1/object/public/avatars/public/logoipsum.png",
+    },
+    changePasswordDate: Date,
+    passwordResetOtp: String,
+    otpExpires: Date,
+    employeeId: {
+      type: String,
+      required: [true, "User must have a employee ID"],
+      maxlength: [20, "Employee ID should be less than 20 characters"],
+      minlength: [3, "Employee ID should be greater than 3 characters"],
+    },
+    Address: {
+      type: String,
+      required: [true, "User must have a address"],
+      maxlength: [50, "User address should be less than 50 characters"],
+      minlength: [4, "User address should be greater than 4 characters"],
+    },
+    autoAssign: {
+      type: Boolean,
+      default: false,
+    },
+    status: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Status",
+    },
+    branch: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Branch",
+    },
+    country: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Country",
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
