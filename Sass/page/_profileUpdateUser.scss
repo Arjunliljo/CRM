@@ -27,7 +27,7 @@
       cursor: pointer;
       font-weight: 500;
 
-      &.btn-cancel {
+      & .btn-cancel {
         background: variables.$color-gray-mid;
         color: variables.$color-black;
 
@@ -115,7 +115,7 @@
     flex-direction: column;
     gap: 10px;
     flex: 1;
-    width: 265px;
+    width: 50%;
     h2 {
       font-size: 18px;
       margin-bottom: 62px;
@@ -141,35 +141,33 @@
         border-radius: variables.$radius-sm;
         font-size: variables.$font-size-small;
       }
+    }
+  }
+  .auto-assign {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: variables.$color-white;
+    border-radius: variables.$radius-md;
+    border: 1px solid #ddd;
+    background-color: yellow;
+    .span-assign {
+      font-size: variables.$font-size-small;
+      color: #333;
+    }
 
-      &.auto-assign {
-        display: flex;
-        justify-content: space-between;
-        align-items: start;
-        padding: 12px;
-        background: variables.$color-white;
-        border-radius: variables.$radius-md;
-        border: 1px solid #ddd;
-        width: 80%;
+    .button-off {
+      background: variables.$color-red-light;
+      border: 1px solid variables.$color-gray-mid;
+      border-radius: variables.$radius-sm;
+      cursor: pointer;
+      padding: 5px 10px;
+      font-size: variables.$font-size-small;
+      color: variables.$color-black;
 
-        .span-assign {
-          font-size: variables.$font-size-small;
-          color: #333;
-        }
-
-        .button-off {
-          background: variables.$color-red-light;
-          border: 1px solid variables.$color-gray-mid;
-          border-radius: variables.$radius-sm;
-          cursor: pointer;
-          padding: 5px 10px;
-          font-size: variables.$font-size-small;
-          color: variables.$color-black;
-
-          &:hover {
-            background: variables.$color-gray-light;
-          }
-        }
+      &:hover {
+        background: variables.$color-gray-light;
       }
     }
   }

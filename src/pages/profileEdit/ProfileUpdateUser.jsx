@@ -82,7 +82,7 @@ function ProfileUpdateUser() {
                 </option>
               </select>
             </div>
-            <div className="form-group auto-assign">
+            <div className="auto-assign">
               <span className="span-assign">Auto Assign</span>
               <button className="button-off">off</button>
             </div>

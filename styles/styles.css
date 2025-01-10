@@ -2614,13 +2614,13 @@ F .log .message-area-textarea-container {
   cursor: pointer;
   font-weight: 500;
 }
-.profileUpdate-main .action-buttons .btn-cancel.btn-cancel,
-.profileUpdate-main .action-buttons .btn-next.btn-cancel {
+.profileUpdate-main .action-buttons .btn-cancel .btn-cancel,
+.profileUpdate-main .action-buttons .btn-next .btn-cancel {
   background: #dadada;
   color: #000000;
 }
-.profileUpdate-main .action-buttons .btn-cancel.btn-cancel:hover,
-.profileUpdate-main .action-buttons .btn-next.btn-cancel:hover {
+.profileUpdate-main .action-buttons .btn-cancel .btn-cancel:hover,
+.profileUpdate-main .action-buttons .btn-next .btn-cancel:hover {
   background: #e9ecef;
 }
 .profileUpdate-main .action-buttons .btn-cancel.btn-next,
@@ -2692,7 +2692,7 @@ F .log .message-area-textarea-container {
   flex-direction: column;
   gap: 10px;
   flex: 1;
-  width: 265px;
+  width: 50%;
 }
 .profile-edit-container .form-left h2,
 .profile-edit-container .form-right h2 {
@@ -2723,24 +2723,21 @@ F .log .message-area-textarea-container {
   border-radius: 0.5rem;
   font-size: 0.8rem;
 }
-.profile-edit-container .form-left .form-group.auto-assign,
-.profile-edit-container .form-right .form-group.auto-assign {
+.profile-edit-container .auto-assign {
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: center;
   padding: 12px;
   background: #f9f9f9;
   border-radius: 1rem;
   border: 1px solid #ddd;
-  width: 80%;
+  background-color: yellow;
 }
-.profile-edit-container .form-left .form-group.auto-assign .span-assign,
-.profile-edit-container .form-right .form-group.auto-assign .span-assign {
+.profile-edit-container .auto-assign .span-assign {
   font-size: 0.8rem;
   color: #333;
 }
-.profile-edit-container .form-left .form-group.auto-assign .button-off,
-.profile-edit-container .form-right .form-group.auto-assign .button-off {
+.profile-edit-container .auto-assign .button-off {
   background: #fd6363;
   border: 1px solid #dadada;
   border-radius: 0.5rem;
@@ -2749,8 +2746,7 @@ F .log .message-area-textarea-container {
   font-size: 0.8rem;
   color: #000000;
 }
-.profile-edit-container .form-left .form-group.auto-assign .button-off:hover,
-.profile-edit-container .form-right .form-group.auto-assign .button-off:hover {
+.profile-edit-container .auto-assign .button-off:hover {
   background: #f9f9f9;
 }
 
