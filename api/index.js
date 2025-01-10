@@ -23,7 +23,9 @@ async function connectToDatabase() {
 
   try {
     const dbConnection = await mongoose.connect(dbConnectionString);
+
     isConnected = dbConnection.connections[0].readyState === 1;
+
     console.log("Connected to Primary Database (CRM)");
   } catch (err) {
     console.error("Error connecting to primary database:", err.message);
