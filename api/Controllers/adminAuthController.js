@@ -1,4 +1,3 @@
-import { connectToUserAdminDb } from "../middlewares/dynamicDbContext.js";
 import Admin from "../Models/adminModel.js";
 import bcrypt from "bcrypt";
 import catchAsync from "../Utilities/catchAsync.js";
@@ -6,14 +5,13 @@ import { generateToken } from "../Utilities/jwt.js";
 
 const signup = async (req, res, next) => {
   try {
-    const { name, email, phone, password, databaseName } = req.body;
+    const { name, email, phone, password, databaseName, location } = req.body;
 
     // Check if the user already exists
     const existingUserAdmin = await Admin.findOne({ email });
     if (existingUserAdmin) {
       return res
         .status(400)
-
         .json({ message: "An admin with this email already exists" });
     }
     // Calculate the count of existing documents
@@ -22,26 +20,24 @@ const signup = async (req, res, next) => {
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 12);
 
+    // Get the image filename from the uploaded file
+    const logo = req.file ? req.file.filename : null;
+
     const user = new Admin({
       name,
       email,
       phone,
       password: hashedPassword,
       databaseName,
-      count: existingCount + 1, //and assigned the count as identifier
+      count: existingCount + 1, // Assigned the count as identifier
+      logo,
+      location: location,
     });
 
     await user.save();
 
-    // Create the school-specific database connection
-    // await connectToUserAdminDb(user._id);
-
-    // Generate JWT token
-    // const token = generateToken(user._id, user.role);
-
     res.status(201).json({
       message: `Admin for ${name} created successfully`,
-      //   token,
       userId: user._id,
     });
   } catch (error) {

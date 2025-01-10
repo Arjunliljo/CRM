@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 //admin auth routes
-router.post("/signup", signup);
+router.post("/signup",upload.single("logo"), signup);
 router.post("/signin", signin);
 
 router.post("/createRole", createRole);

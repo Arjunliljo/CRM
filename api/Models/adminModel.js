@@ -2,13 +2,28 @@ import mongoose from "mongoose";
 
 const adminSchema = mongoose.Schema(
   {
-    //name to show in panel
     name: {
       type: String,
       required: [true, "Admin must have a name"],
       maxlength: [30, "Name should be less than 30 characters"],
     },
-    // logo need ?
+    logo: {
+      type: String,
+    },
+    location: {
+      state: {
+        type: String,
+        required: [true, "State is required"],
+      },
+      country: {
+        type: String,
+        required: [true, "Country is required"],
+      },
+      address: {
+        type: String,
+        required: [true, "Address is required"],
+      },
+    },
     email: {
       type: String,
       unique: true,
