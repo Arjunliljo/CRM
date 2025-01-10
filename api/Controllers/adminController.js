@@ -9,7 +9,7 @@ import {
   sanitizeInput,
   validateObjectId,
 } from "../Utilities/validation.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 const createRole = async (req, res) => {
   try {
