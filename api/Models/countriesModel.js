@@ -14,11 +14,16 @@ const countrySchema = mongoose.Schema(
     },
     flag: {
       type: String,
+      default:
+        "https://cbbstwltufvzpsqvnahz.supabase.co/storage/v1/object/public/avatars/public/logoipsum.png",
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-const Country = mongoose.model("Country", countrySchema);
+// return the Country model using the provided database connection
+const getCountryModel = (dbConnection) => {
+  return dbConnection.model("Country", countrySchema);
+};
 
-export default Country;
+export default getCountryModel;

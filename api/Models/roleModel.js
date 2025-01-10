@@ -15,6 +15,9 @@ const roleSchema = mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-const Role = mongoose.model("Role", roleSchema);
+// Return the Role model using the provided database connection
+const getRoleModel = (dbConnection) => {
+  return dbConnection.model("Role", roleSchema);
+};
 
-export default Role;
+export default getRoleModel;

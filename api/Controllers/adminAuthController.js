@@ -5,7 +5,8 @@ import { generateToken } from "../Utilities/jwt.js";
 
 const signup = async (req, res, next) => {
   try {
-    const { name, email, phone, password, databaseName, location } = req.body;
+    const { name, email, phone, password, databaseName, location, logo } =
+      req.body;
 
     // Check if the user already exists
     const existingUserAdmin = await Admin.findOne({ email });
@@ -21,7 +22,6 @@ const signup = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     // Get the image filename from the uploaded file
-    const logo = req.file ? req.file.filename : null;
 
     const user = new Admin({
       name,

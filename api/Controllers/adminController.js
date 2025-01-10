@@ -1,9 +1,3 @@
-import Branch from "../Models/branchModel.js";
-import { connectToUserAdminDb } from "../middlewares/dynamicDbContext.js";
-// import { getBranchModel } from "../Models/branchModel.js";
-import Country from "../Models/countriesModel.js";
-import Role from "../Models/roleModel.js";
-import User from "../Models/userModel.js";
 import {
   isValidString,
   sanitizeInput,
@@ -11,12 +5,15 @@ import {
 } from "../Utilities/validation.js";
 import bcrypt from "bcryptjs";
 import getBranchModel from "../Models/branchModel.js";
+import getCountryModel from "../Models/countriesModel.js";
+import getRoleModel from "../Models/roleModel.js";
+import getUserModel from "../Models/userModel.js";
 
 const createRole = async (req, res) => {
   try {
     let { name, description } = req.body;
 
-    // Inputs sanitization and validation
+    // Sanitize and validate inputs
     name = sanitizeInput(name);
     description = sanitizeInput(description);
 
@@ -24,24 +21,38 @@ const createRole = async (req, res) => {
       return res.status(400).json({
         success: false,
         message:
-          "Invalid name: must be at least 3 characters long and not contain malicious content.",
+          "Invalid name: must be at least 2 characters long and not contain malicious content.",
       });
     }
 
-    // Create a new role instance
-    const newRole = new Role({
-      name,
-      description,
-    });
+    if (!isValidString(description, { min: 3, max: 100 })) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Invalid description: must be between 3 and 100 characters long.",
+      });
+    }
 
-    // Save the role to the database
-    const savedRole = await newRole.save();
+    // Dynamically get the Role model for the current database connection
+    const Role = getRoleModel(req.db);
+
+    // Check if role already exists in the specified database
+    const existingRole = await Role.findOne({ name });
+    if (existingRole) {
+      return res.status(400).json({
+        success: false,
+        message: `Role with the name "${name}" already exists.`,
+      });
+    }
+
+    // Create a new role in the correct database
+    const newRole = await Role.create({ name, description });
 
     // Send a success response
     return res.status(201).json({
       success: true,
       message: "Role created successfully",
-      data: savedRole,
+      data: newRole,
     });
   } catch (error) {
     // Handle errors and send a response
@@ -53,52 +64,10 @@ const createRole = async (req, res) => {
   }
 };
 
-// const createBranch = async (req, res, next) => {
-//   try {
-//     let { name } = req.body;
-//     let db = req.db;
-//     console.log(db);
-
-//     // Sanitize
-//     name = sanitizeInput(name);
-
-//     // Validate
-//     if (!isValidString(name, { min: 2, max: 50 })) {
-//       return res.status(400).json({
-//         success: false,
-//         message:
-//           "Branch name must be at least 3 characters long and contain no unsafe characters.",
-//       });
-//     }
-
-//     // Check if the branch already exists
-//     const existingBranch = await Branch.findOne({ name });
-//     if (existingBranch) {
-//       return res.status(400).json({
-//         success: false,
-//         message: `Branch with the name ${name} already exists.`,
-//       });
-//     }
-
-//     const newBranch = await Branch.create({ name });
-//     res.status(201).json({
-//       success: true,
-//       message: "Branch created successfully",
-//       data: newBranch,
-//     });
-//   } catch (err) {
-//     return res.status(500).json({
-//       success: false,
-//       message: "An error occurred while creating the branch",
-//       error: err.message,
-//     });
-//   }
-// };
-
 const createBranch = async (req, res) => {
   try {
     const { name } = req.body;
-    console.log(req.db.dbName, "db");
+    console.log(name);
 
     // Validate and sanitize input
     const sanitizedName = sanitizeInput(name);
@@ -134,10 +103,10 @@ const createBranch = async (req, res) => {
   }
 };
 
-const createCountries = async (req, res, next) => {
+const createCountry = async (req, res, next) => {
   try {
-    let { name, code } = req.body;
-    const flag = req.file ? req.file.filename : null;
+    let { name, code, flag } = req.body;
+
     // Sanitize
     name = sanitizeInput(name);
     code = sanitizeInput(code);
@@ -158,12 +127,16 @@ const createCountries = async (req, res, next) => {
       });
     }
 
-    // Check if the country already exists
+    // Dynamically get the Country model for the current database connection
+    const Country = getCountryModel(req.db);
+
+    // Check if the country already exists in the specified database
     const existingCountry = await Country.findOne({ name });
     if (existingCountry) {
       return res.status(400).json({
         success: false,
         message: `This country already exists.`,
+        db: req.db.dbName,
       });
     }
 
@@ -197,22 +170,22 @@ const addUser = async (req, res) => {
       status,
       branch,
       country,
+      image,
     } = req.body;
-    let image = req.file.filename;
-    // Sanitize inputs and validations are done in db schema
+
+    // Sanitize inputs
     const sanitizedData = {
       name: sanitizeInput(name),
       email: sanitizeInput(email),
       phone: sanitizeInput(phone),
       password: sanitizeInput(password),
       count: sanitizeInput(count),
-      image: sanitizeInput(image),
       employeeId: sanitizeInput(employeeId),
       Address: sanitizeInput(Address),
       autoAssign: sanitizeInput(autoAssign),
     };
 
-    // Validate ObjectId fields (role, status, etc.)
+    // Validate ObjectId fields (role, status, branch, country)
     if (role && !validateObjectId(role)) {
       return res.status(400).send({ message: "Invalid role ID format" });
     }
@@ -226,6 +199,9 @@ const addUser = async (req, res) => {
       return res.status(400).send({ message: "Invalid country ID format" });
     }
 
+    // Dynamically retrieve User model based on the database connection
+    const User = getUserModel(req.db);
+
     // Create the user
     const newUser = new User({
       name: sanitizedData.name,
@@ -233,14 +209,14 @@ const addUser = async (req, res) => {
       phone: sanitizedData.phone,
       password: sanitizedData.password,
       count: sanitizedData.count,
-      image: image,
       employeeId: sanitizedData.employeeId,
       Address: sanitizedData.Address,
-      autoAssign,
-      // status,
+      autoAssign: sanitizedData.autoAssign,
+      status,
       branch,
       country,
       role,
+      image,
     });
 
     // Save to database
@@ -261,7 +237,7 @@ const addUser = async (req, res) => {
   }
 };
 
-const changePasswordByAdmin = async (req, res) => {
+const changeUserPassword = async (req, res) => {
   let userId = req.params.id;
   const { newPassword } = req.body;
   try {
@@ -272,6 +248,7 @@ const changePasswordByAdmin = async (req, res) => {
         message: "User ID and new password are required",
       });
     }
+    const User = getUserModel(req.db);
 
     const user = await User.findById(userId);
     if (!user) {
@@ -315,52 +292,29 @@ const changePasswordByAdmin = async (req, res) => {
   }
 };
 
-// const createBranch = async (req, res, next) => {
-//   try {
-//     let { name } = req.body;
-//     const dbConnection = await connectToUserAdminDb(adminId);
-//     const Branch = getBranchModel(dbConnection);
+const getBranch = async (req, res) => {
+  try {
+    const Branch = getBranchModel(req.db);
+    const roles = await Branch.find();
+    return res.status(200).json({
+      success: true,
+      message: "got data",
+      data: roles,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-//     // Sanitize
-//     name = sanitizeInput(name);
 
-//     // Validate
-//     if (!isValidString(name, { min: 2, max: 50 })) {
-//       return res.status(400).json({
-//         success: false,
-//         message:
-//           "Branch name must be at least 3 characters long and contain no unsafe characters.",
-//       });
-//     }
 
-//     // Check if the branch already exists
-//     const existingBranch = await Branch.findOne({ name });
-//     if (existingBranch) {
-//       return res.status(400).json({
-//         success: false,
-//         message: `Branch with the name ${name} already exists.`,
-//       });
-//     }
-
-//     const newBranch = await Branch.create({ name });
-//     res.status(201).json({
-//       success: true,
-//       message: "Branch created successfully",
-//       data: newBranch,
-//     });
-//   } catch (err) {
-//     return res.status(500).json({
-//       success: false,
-//       message: "An error occurred while creating the branch",
-//       error: err.message,
-//     });
-//   }
-// };
 
 export {
   createRole,
   createBranch,
-  createCountries,
+  createCountry,
   addUser,
-  changePasswordByAdmin,
+  changeUserPassword,
+  getBranch,
+
 };

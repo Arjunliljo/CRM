@@ -7,8 +7,11 @@ const adminSchema = mongoose.Schema(
       required: [true, "Admin must have a name"],
       maxlength: [30, "Name should be less than 30 characters"],
     },
+
     logo: {
       type: String,
+      default:
+        "https://cbbstwltufvzpsqvnahz.supabase.co/storage/v1/object/public/avatars/public/logoipsum.png",
     },
     location: {
       state: {

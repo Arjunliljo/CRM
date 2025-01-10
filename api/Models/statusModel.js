@@ -1,21 +1,29 @@
 import mongoose from "mongoose";
-import { classes } from "../serverdata/serverdatas";
+import { classes } from "../serverdata/serverdatas.js";
 
 const statusSchema = mongoose.Schema(
   {
-    name: {
+    status: {
       type: String,
       required: [true, "Status must have a name"],
+    },
+    subStatus: {
+      type: [String],
+      required: true,
+      validate: {
+        validator: (v) => Array.isArray(v),
+        message: "Sub-status must be an array",
+      },
+    },
+    isTab: {
+      type: Boolean,
+      default: false,
     },
     class: {
       type: String,
       required: [true, "Status must have a class"],
       enum: classes,
       default: classes[0],
-    },
-    isRoute: {
-      type: Boolean,
-      default: false,
     },
     description: {
       type: String,
@@ -26,6 +34,9 @@ const statusSchema = mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-const Status = mongoose.model("Status", statusSchema);
+// Return the Status model using the provided database connection
+const getStatusModel = (dbConnection) => {
+  return dbConnection.model("Status", statusSchema);
+};
 
-export default Status;
+export default getStatusModel;
