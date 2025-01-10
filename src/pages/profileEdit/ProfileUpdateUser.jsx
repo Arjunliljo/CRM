@@ -15,22 +15,46 @@ function ProfileUpdateUser() {
 
             <div className="form-left">
               <div className="form-group">
-                <input type="text" placeholder="Name" />
+                <input
+                  type="text"
+                  placeholder="Name"
+                  className="input-formGroup"
+                />
               </div>
               <div className="form-group">
-                <input type="tel" placeholder="Contact Number" />
+                <input
+                  type="tel"
+                  placeholder="Contact Number"
+                  className="input-formGroup"
+                />
               </div>
               <div className="form-group">
-                <input type="text" placeholder="Employee ID" />
+                <input
+                  type="text"
+                  placeholder="Employee ID"
+                  className="input-formGroup"
+                />
               </div>
               <div className="form-group">
-                <input type="email" placeholder="Email" />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="input-formGroup"
+                />
               </div>
               <div className="form-group">
-                <input type="text" placeholder="Address" />
+                <input
+                  type="text"
+                  placeholder="Address"
+                  className="input-formGroup"
+                />
               </div>
               <div className="form-group">
-                <input type="text" placeholder="Address" />
+                <input
+                  type="text"
+                  placeholder="Address"
+                  className="input-formGroup"
+                />
               </div>
             </div>
           </div>
@@ -38,39 +62,37 @@ function ProfileUpdateUser() {
           <div className="form-right">
             <h2>Roles</h2>
             <div className="form-group">
-              <select>
+              <select className="select-formGroup">
                 <option value="" disabled selected>
                   Role
                 </option>
               </select>
             </div>
             <div className="form-group">
-              <select>
+              <select className="select-formGroup">
                 <option value="" disabled selected>
                   Branch
                 </option>
               </select>
             </div>
             <div className="form-group">
-              <select>
+              <select className="select-formGroup">
                 <option value="" disabled selected>
                   Country
                 </option>
               </select>
             </div>
             <div className="form-group auto-assign">
-              <span>Auto Assign</span>
-              <button>
-                <span className="toggle-slider"></span>
-              </button>
+              <span className="span-assign">Auto Assign</span>
+              <button className="button-off">off</button>
             </div>
           </div>
-
-          {/* <div className="button-group">
-            <button className="btn-cancel">Cancel</button>
-            <button className="btn-next">Next</button>
-          </div> */}
         </div>
+      </div>
+
+      <div className="action-buttons">
+        <button className="btn-cancel">Cancel</button>
+        <button className="btn-next">Next</button>
       </div>
     </div>
   );
