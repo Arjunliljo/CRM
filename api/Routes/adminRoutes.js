@@ -9,6 +9,7 @@ import {
   createRole,
 } from "../Controllers/adminController.js";
 import { signin, signup } from "../Controllers/adminAuthController.js";
+import { protect } from "../middlewares/auth.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -26,7 +27,7 @@ router.post("/signup", signup);
 router.post("/signin", signin);
 
 router.post("/createRole", createRole);
-router.post("/createBranch", createBranch);
+router.post("/createBranch", protect, createBranch);
 router.post("/createCountries", upload.single("flag"), createCountries);
 router.post("/createUser", upload.single("image"), addUser);
 // router.post("/createStatus", upload.single("image"), addStatus);

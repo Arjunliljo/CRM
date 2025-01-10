@@ -60,7 +60,7 @@ const signin = catchAsync(async (req, res) => {
       .json({ message: "Invalid email or password. Admin not found." });
   }
 
-  // Check if the password is correct
+  // Validate password
   const isPasswordValid = await bcrypt.compare(
     password,
     existingAdmin.password
@@ -69,20 +69,16 @@ const signin = catchAsync(async (req, res) => {
     return res.status(400).json({ message: "Invalid email or password." });
   }
 
-  // Ensure the admin's database is connected
-  const adminDbConnection = await connectToUserAdminDb(existingAdmin._id);
-  if (!adminDbConnection) {
-    return res.status(500).json({
-      message: "Failed to connect to the admin's database. Please try again.",
-    });
-  }
-
-  // Generate JWT token
-  const token = generateToken(existingAdmin._id, existingAdmin.role);
+  // Generate JWT with admin's database name
+  const token = generateToken(
+    existingAdmin._id,
+    "admin",
+    existingAdmin.databaseName
+  );
 
   res.status(200).json({
     message: `Welcome back, ${existingAdmin.name}!`,
-      token,
+    token,
     userId: existingAdmin._id,
   });
 });

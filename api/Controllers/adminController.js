@@ -10,6 +10,7 @@ import {
   validateObjectId,
 } from "../Utilities/validation.js";
 import bcrypt from "bcrypt";
+import getBranchModel from "../Models/branchModel.js";
 
 const createRole = async (req, res) => {
   try {
@@ -52,47 +53,88 @@ const createRole = async (req, res) => {
   }
 };
 
-const createBranch = async (req, res, next) => {
+// const createBranch = async (req, res, next) => {
+//   try {
+//     let { name } = req.body;
+//     let db = req.db;
+//     console.log(db);
+
+//     // Sanitize
+//     name = sanitizeInput(name);
+
+//     // Validate
+//     if (!isValidString(name, { min: 2, max: 50 })) {
+//       return res.status(400).json({
+//         success: false,
+//         message:
+//           "Branch name must be at least 3 characters long and contain no unsafe characters.",
+//       });
+//     }
+
+//     // Check if the branch already exists
+//     const existingBranch = await Branch.findOne({ name });
+//     if (existingBranch) {
+//       return res.status(400).json({
+//         success: false,
+//         message: `Branch with the name ${name} already exists.`,
+//       });
+//     }
+
+//     const newBranch = await Branch.create({ name });
+//     res.status(201).json({
+//       success: true,
+//       message: "Branch created successfully",
+//       data: newBranch,
+//     });
+//   } catch (err) {
+//     return res.status(500).json({
+//       success: false,
+//       message: "An error occurred while creating the branch",
+//       error: err.message,
+//     });
+//   }
+// };
+
+
+const createBranch = async (req, res) => {
   try {
-    let { name } = req.body;
-    let db = req.db;
-    console.log(db);
+    const { name } = req.body;
+    console.log(req.db.dbName, "db");
 
-    // Sanitize
-    name = sanitizeInput(name);
-
-    // Validate
-    if (!isValidString(name, { min: 2, max: 50 })) {
+    // Validate and sanitize input
+    const sanitizedName = sanitizeInput(name);
+    if (!isValidString(sanitizedName, { min: 2, max: 50 })) {
       return res.status(400).json({
-        success: false,
-        message:
-          "Branch name must be at least 3 characters long and contain no unsafe characters.",
+        message: "Branch name must be valid and at least 2 characters long.",
       });
     }
 
-    // Check if the branch already exists
-    const existingBranch = await Branch.findOne({ name });
+    // Dynamically get the Branch model for the current database connection
+    const Branch = getBranchModel(req.db);
+
+    // Check if branch already exists in the specified database
+    const existingBranch = await Branch.findOne({ name: sanitizedName });
     if (existingBranch) {
       return res.status(400).json({
-        success: false,
-        message: `Branch with the name ${name} already exists.`,
+        message: `Branch with the name "${sanitizedName}" already exists.`,
       });
     }
 
-    const newBranch = await Branch.create({ name });
+    // Create new branch in the correct database
+    const newBranch = await Branch.create({ name: sanitizedName });
+
     res.status(201).json({
-      success: true,
       message: "Branch created successfully",
       data: newBranch,
     });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "An error occurred while creating the branch",
-      error: err.message,
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to create branch",
+      error: error.message,
     });
   }
 };
+
 
 const createCountries = async (req, res, next) => {
   try {

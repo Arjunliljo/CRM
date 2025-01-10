@@ -6,7 +6,7 @@ import { connectToUserAdminDb } from "./middlewares/dynamicDbContext.js";
 
 dotenv.config();
 
-const dbConnectionString = "mongodb://localhost:27017/CRM" || "";
+const dbConnectionString = process.env.PRIMARY_STR || "";
 const PORT = process.env.PORT || 3000;
 
 let isConnected = false;
