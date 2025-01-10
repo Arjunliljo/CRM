@@ -1,6 +1,6 @@
 import { connectToUserAdminDb } from "../middlewares/dynamicDbContext.js";
 import Admin from "../Models/adminModel.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import catchAsync from "../Utilities/catchAsync.js";
 import { generateToken } from "../Utilities/jwt.js";
 

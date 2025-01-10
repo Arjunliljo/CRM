@@ -9,7 +9,7 @@ import {
   sanitizeInput,
   validateObjectId,
 } from "../Utilities/validation.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import getBranchModel from "../Models/branchModel.js";
 
 const createRole = async (req, res) => {
@@ -95,7 +95,6 @@ const createRole = async (req, res) => {
 //   }
 // };
 
-
 const createBranch = async (req, res) => {
   try {
     const { name } = req.body;
@@ -134,7 +133,6 @@ const createBranch = async (req, res) => {
     });
   }
 };
-
 
 const createCountries = async (req, res, next) => {
   try {
