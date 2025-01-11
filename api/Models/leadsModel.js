@@ -2,6 +2,26 @@ import mongoose from "mongoose";
 
 const leadSchema = mongoose.Schema(
   {
+    leadId: {
+      type: String,
+      unique: true,
+      sparse: true, // Allows null/undefined values to not trigger unique constraint
+    },
+    leadSource: {
+      type: String,
+      enum: ["META", "MANUAL", "OTHER"],
+      default: "MANUAL",
+    },
+    metaData: {
+      type: Map,
+      of: String,
+      default: new Map(), // Stores additional meta fields from Facebook
+    },
+    leadStatus: {
+      type: String,
+      enum: ["NEW", "CONTACTED", "QUALIFIED", "CONVERTED", "LOST"],
+      default: "NEW",
+    },
     name: {
       type: String,
       required: [true, "Lead must have a name"],
