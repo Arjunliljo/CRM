@@ -2,7 +2,7 @@
 
 .cardUser {
   background-color: variables.$color-white;
-  height: variables.$card-height;
+  height: variables.$card-minheight;
   border-radius: variables.$radius-md;
   padding: variables.$padding-md;
   transition: all 0.3s ease-in-out;

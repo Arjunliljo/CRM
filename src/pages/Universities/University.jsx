@@ -16,7 +16,7 @@ import UniversityCard from "../../components/Card/UniversityCard";
 
 const university = {
   num: 3,
-  Uname: "University of United Kingdom",
+  Uname: "University Of United Kingdom",
   img: "https://via.placeholder.com/150",
   number: 1234567890,
   status: "Interested",
