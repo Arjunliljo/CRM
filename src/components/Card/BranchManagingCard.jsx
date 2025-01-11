@@ -10,10 +10,10 @@ function BranchManagingCard({ branchmanage, set, onSet }) {
 
   useEffect(() => {
     setIsSelected(branchmanage?._id === set?._id);
-  }, [set, user]);
+  }, [set, branchmanage]);
 
   const dispatch = useDispatch();
-  const handleUserSelect = () => {
+  const handleBranchmanageSelect = () => {
     dispatch(onSet(branchmanage));
     setTimeout(() => {
       targetRef.current.scrollIntoView({
@@ -24,22 +24,22 @@ function BranchManagingCard({ branchmanage, set, onSet }) {
   };
   return (
     <div
-      className={`cardUser ${isSelected ? "selectedCard" : ""}`}
-      onClick={handleUserSelect}
-      id={`${user?._id}`}
+      className={`cardBranchmanage ${isSelected ? "selectedCard" : ""}`}
+      onClick={handleBranchmanageSelect}
+      id={`${branchmanage?._id}`}
       ref={targetRef}
     >
-      <div className="cardUser-body">
-        <div className="cardUser-body-top">
+      <div className="cardBranchmanage-body">
+        <div className="cardBranchmanage-body-top">
           <NameBar lead={branchmanage} />
           {/* <InfoBtn color="white" bgcl="green">
               Interested
             </InfoBtn> */}
         </div>
 
-        <div className="cardUser-body-center">
-          <div className="cardUser-body-bottom-icons">
-            <div className="cardUser-body-bottom-icons-item">
+        <div className="cardBranchmanage-body-center">
+          <div className="cardBranchmanage-body-bottom-icons">
+            <div className="cardBranchmanage-body-bottom-icons-item">
               <HomeIcon
                 path="u-turn"
                 color="#00b100"
@@ -47,7 +47,7 @@ function BranchManagingCard({ branchmanage, set, onSet }) {
               />
               <p>{branchmanage.applications}</p>
             </div>
-            <div className="cardUser-body-bottom-icons-item">
+            <div className="cardBranchmanage-body-bottom-icons-item">
               <HomeIcon
                 path="retry"
                 color="#0075fc"
@@ -58,7 +58,7 @@ function BranchManagingCard({ branchmanage, set, onSet }) {
           </div>
         </div>
 
-        <div className="cardUser-body-bottom-country">
+        <div className="cardBranchmanage-body-bottom-country">
           <CountryBtn>{branchmanage.state}</CountryBtn>
         </div>
       </div>

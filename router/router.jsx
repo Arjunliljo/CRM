@@ -11,6 +11,7 @@ import ProfileEdit from "../src/pages/profileEdit/ProfileUpdateUser";
 import ProfileUpdateUser from "../src/pages/profileEdit/ProfileUpdateUser";
 import OfferLetter from "../src/pages/offerLetter/OfferLetter";
 import Payments from "../src/pages/Payment/Payments";
+import Branchmanage from "../src/pages/branchmanage/Branchmanage";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
       {
         path: "payment",
         element: <Payments />,
+      },
+      {
+        path: "branchmanaging",
+        element: <Branchmanage />,
       },
     ],
   },
