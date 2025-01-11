@@ -9,6 +9,8 @@ import Students from "../src/pages/Students/Students";
 import University from "../src/pages/Universities/University";
 import ProfileEdit from "../src/pages/profileEdit/ProfileUpdateUser";
 import ProfileUpdateUser from "../src/pages/profileEdit/ProfileUpdateUser";
+import OfferLetter from "../src/pages/offerLetter/OfferLetter";
+import Payments from "../src/pages/Payment/Payments";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +44,14 @@ export const router = createBrowserRouter([
       {
         path: "profileEdit",
         element: <ProfileUpdateUser />,
+      },
+      {
+        path: "offerletter",
+        element: <OfferLetter />,
+      },
+      {
+        path: "payment",
+        element: <Payments />,
       },
     ],
   },

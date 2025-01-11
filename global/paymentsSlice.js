@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const paymentsSlice = createSlice({
-  name: "payment",
+  name: "payments",
   initialState: {
     autoPaymentsAssign: true,
     curPayment: {},

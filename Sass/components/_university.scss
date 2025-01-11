@@ -1,11 +1,12 @@
 @use "../abstract/variables" as variables;
 
-.cardUser {
+.cardUniversity {
   background-color: variables.$color-white;
-  height: variables.$card-height;
+  height: variables.$card-maxheight;
   border-radius: variables.$radius-md;
   padding: variables.$padding-md;
   transition: all 0.3s ease-in-out;
+
   cursor: pointer;
 
   &-body {
@@ -42,6 +43,13 @@
     &-bottom {
       flex: 1;
 
+      &-iconsUniversity {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+      }
+
       &-icons {
         display: flex;
         align-items: center;
@@ -57,11 +65,17 @@
         }
       }
 
-      &-country {
+      &-countryEligible {
         display: flex;
         align-items: end;
         justify-content: space-between;
-        margin-bottom: 0.5rem;
+        margin-bottom: 3rem;
+
+        //   &-country {
+        //     display: flex;
+        //     align-items: end;
+        //     justify-content: space-between;
+        //     margin-bottom: 0.5rem;
 
         &-count {
           background-color: variables.$color-blue;
@@ -130,4 +144,8 @@
       gap: 0.5rem;
     }
   }
+}
+.cardHead {
+  font-weight: 500;
+  width: 8rem;
 }

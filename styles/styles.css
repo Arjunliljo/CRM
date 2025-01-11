@@ -416,7 +416,7 @@ textarea::placeholder {
 
 .card {
   background-color: #f9f9f9;
-  min-height: 19rem;
+  height: 19rem;
   border-radius: 1rem;
   padding: 1rem;
   transition: all 0.3s ease-in-out;
@@ -452,17 +452,8 @@ textarea::placeholder {
   outline: none;
   background-color: #e8e8e8;
 }
-.card-body-center {
-  flex: none;
-}
 .card-body-bottom {
   flex: 1;
-}
-.card-body-bottom-iconsUniversity {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: start;
 }
 .card-body-bottom-icons {
   display: flex;
@@ -476,12 +467,6 @@ textarea::placeholder {
   align-items: center;
   gap: 0.5rem;
   font-weight: 500;
-}
-.card-body-bottom-countryEligible {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  margin-bottom: 1rem;
 }
 .card-body-bottom-country {
   display: flex;
@@ -545,10 +530,6 @@ textarea::placeholder {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.cardHead {
-  font-weight: 500;
 }
 
 .profileCard {
@@ -2502,6 +2483,253 @@ F .log .message-area-textarea-container {
   padding-right: 1.5rem;
   margin-left: auto;
   width: calc(50% + 2rem);
+}
+
+.cardUser {
+  background-color: #f9f9f9;
+  height: 19rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.cardUser-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  gap: 0.71em;
+}
+.cardUser-body-top {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  height: 3.5rem;
+}
+.cardUser-body-mid {
+  flex: 2;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgb(206, 206, 206);
+  margin-top: 0.71em;
+}
+.cardUser-body-mid textarea {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  color: #757575;
+  border: none;
+  outline: none;
+  background-color: #e8e8e8;
+}
+.cardUser-body-bottom {
+  flex: 1;
+}
+.cardUser-body-bottom-icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  gap: 0.71em;
+}
+.cardUser-body-bottom-icons-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+.cardUser-body-bottom-country {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.cardUser-body-bottom-country-count {
+  background-color: #0075fc;
+  color: #f9f9f9;
+  border-radius: 5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mover {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+}
+.mover-item {
+  flex: 1;
+  height: 0.6rem;
+  background-color: #60bdff;
+  border-radius: 1.5rem;
+}
+.mover-gray {
+  background-color: #e8e8e8;
+}
+
+.name-bar {
+  display: flex;
+  align-items: start;
+  gap: 1rem;
+  height: 100%;
+}
+.name-bar-img {
+  background-color: #e8e8e8;
+  height: 120%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.name-bar-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.name-bar-name {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  height: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.name-bar-name-whatsapp {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cardUniversity {
+  background-color: #f9f9f9;
+  height: 23rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.cardUniversity-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  gap: 0.71em;
+}
+.cardUniversity-body-top {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  height: 3.5rem;
+}
+.cardUniversity-body-mid {
+  flex: 2;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgb(206, 206, 206);
+  margin-top: 0.71em;
+}
+.cardUniversity-body-mid textarea {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  color: #757575;
+  border: none;
+  outline: none;
+  background-color: #e8e8e8;
+}
+.cardUniversity-body-bottom {
+  flex: 1;
+}
+.cardUniversity-body-bottom-iconsUniversity {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+}
+.cardUniversity-body-bottom-icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  gap: 0.71em;
+}
+.cardUniversity-body-bottom-icons-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+.cardUniversity-body-bottom-countryEligible {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+.cardUniversity-body-bottom-countryEligible-count {
+  background-color: #0075fc;
+  color: #f9f9f9;
+  border-radius: 5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mover {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+}
+.mover-item {
+  flex: 1;
+  height: 0.6rem;
+  background-color: #60bdff;
+  border-radius: 1.5rem;
+}
+.mover-gray {
+  background-color: #e8e8e8;
+}
+
+.name-bar {
+  display: flex;
+  align-items: start;
+  gap: 1rem;
+  height: 100%;
+}
+.name-bar-img {
+  background-color: #e8e8e8;
+  height: 120%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.name-bar-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.name-bar-name {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  height: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.name-bar-name-whatsapp {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cardHead {
+  font-weight: 500;
+  width: 8rem;
 }
 
 .logocontainer {

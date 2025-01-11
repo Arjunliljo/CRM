@@ -31,23 +31,23 @@ function UniversityCard({ university, set, onSet }) {
 
   return (
     <div
-      className={`card ${isSelected ? "selectedCard" : ""}`}
+      className={`cardUniversity ${isSelected ? "selectedCard" : ""}`}
       onClick={handleStudentSelect}
       id={`${university?._id}`}
       ref={targetRef}
     >
-      <div className="card-head">
+      <div className="cardUniversity-head">
         <p className="cardHead">{university.Uname}</p>
         {/* <Mover num={university.num} /> */}
       </div>
-      <div className="card-body">
+      <div className="cardUniversity-body">
         {/* <div className="card-body-top">
           <NameBar lead={university} />
           <InfoBtn color="white" bgcl="green">
             Interested
           </InfoBtn>
         </div> */}
-        <div className="card-body-mid">
+        <div className="cardUniversity-body-mid">
           <textarea
             type="text"
             placeholder="Add a remark"
@@ -55,9 +55,9 @@ function UniversityCard({ university, set, onSet }) {
           />
         </div>
 
-        <div className="card-body-bottom">
-          <div className="card-body-bottom-iconsUniversity">
-            <div className="card-body-bottom-icons-item">
+        <div className="cardUniversity-body-bottom">
+          <div className="cardUniversity-body-bottom-iconsUniversity">
+            <div className="cardUniversity-body-bottom-icons-item">
               <HomeIcon
                 path="u-turn"
                 color="#00b100"
@@ -65,7 +65,7 @@ function UniversityCard({ university, set, onSet }) {
               />
               <p> Stayback: {university.year} Years</p>
             </div>
-            <div className="card-body-bottom-icons-item">
+            <div className="cardUniversity-body-bottom-icons-item">
               <HomeIcon
                 path="retry"
                 color="#0075fc"
@@ -76,7 +76,7 @@ function UniversityCard({ university, set, onSet }) {
           </div>
         </div>
 
-        <div className="card-body-bottom-countryEligible">
+        <div className="cardUniversity-body-bottom-countryEligible">
           <CountryBtn>{university.eligibility}</CountryBtn>
           <CountryBtn style={{ backgroundColor: "#0075fc" }}>
             {university.country}
