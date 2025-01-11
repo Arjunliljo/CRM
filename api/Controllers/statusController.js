@@ -1,4 +1,5 @@
 import getStatusModel from "../Models/statusModel.js";
+import { isValidString, sanitizeInput } from "../Utilities/validation.js";
 
 const receiveAllStatus = async (req, res) => {
   try {
@@ -28,23 +29,10 @@ const createStatus = async (req, res) => {
     const { status, isTab, subStatus, statusClass, description } = req.body;
 
     // Validate and sanitize input
-    const sanitizedName = sanitizeInput(name);
-    if (!isValidString(sanitizedName, { min: 2, max: 50 })) {
+    const sanitizedStatus = sanitizeInput(status);
+    if (!isValidString(sanitizedStatus, { min: 2, max: 50 })) {
       return res.status(400).json({
         message: "Status name must be valid and at least 2 characters long.",
-      });
-    }
-
-    // Validate status array
-    if (
-      !Array.isArray(status) ||
-      !status.every((substatus) =>
-        isValidString(substatus, { min: 1, max: 50 })
-      )
-    ) {
-      return res.status(400).json({
-        message:
-          "Each substatus must be a valid string and at least 1 character long.",
       });
     }
 
@@ -58,17 +46,16 @@ const createStatus = async (req, res) => {
     // Dynamically get the Status model for the current database connection
     const Status = getStatusModel(req.db);
 
-    const existingStatus = await Status.findOne({ name: sanitizedName });
+    const existingStatus = await Status.findOne({ name: sanitizedStatus });
     if (existingStatus) {
       return res.status(400).json({
-        message: `Status with the name "${sanitizedName}" already exists.`,
+        message: `Status with the name "${sanitizedStatus}" already exists.`,
       });
     }
 
     // Create new status in the correct database
     const newStatus = await Status.create({
-      name: sanitizedName,
-      status,
+      status: sanitizedStatus,
       isTab,
       class: statusClass,
       subStatus,

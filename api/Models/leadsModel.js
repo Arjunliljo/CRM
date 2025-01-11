@@ -15,7 +15,7 @@ const leadSchema = mongoose.Schema(
     },
     phone: {
       type: String,
-      required: [true, "Lead must have an email"],
+      required: [true, "Lead must have a phone number"],
       validate: {
         validator: function (value) {
           return value.length >= 10 && value.length <= 13;
@@ -66,6 +66,9 @@ const leadSchema = mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-const Lead = mongoose.model("Lead", leadSchema);
+// Dynamically get the Lead model for the specified database connection
+const getLeadModel = (dbConnection) => {
+  return dbConnection.model("Lead", leadSchema);
+};
 
-export default Lead;
+export default getLeadModel;

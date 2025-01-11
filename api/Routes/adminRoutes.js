@@ -11,6 +11,7 @@ import {
 import { signin, signup } from "../Controllers/adminAuthController.js";
 import { protect } from "../middlewares/auth.js";
 import { createStatus, receiveAllStatus } from "../Controllers/statusController.js";
+import { createLead } from "../Controllers/leadController.js";
 
 //admin auth routes
 router.post("/signup", signup);
@@ -42,13 +43,13 @@ router.put("/changeUserPassword/:id", protect, changeUserPassword);
 // router.delete("/dropUser", protect, dropUser);
 
 // Status cruds - admin only will do
-router.post("/createStatus", createStatus);
+router.post("/createStatus",protect, createStatus);
 router.get("/receiveAllStatus", protect, receiveAllStatus);
 // router.put("/updateStatus", protect, updateStatus);
 // router.delete("/dropStatus", protect, dropStatus);
 
 // Lead cruds - admin only will do
-// router.post("/createLead", protect, createLead);
+router.post("/createLead", protect, createLead);
 // router.get("/receiveLeads", protect, receiveLeads);
 // router.put("/updateLead", protect, updateLead);
 // router.delete("/dropLead", protect, dropLead);
