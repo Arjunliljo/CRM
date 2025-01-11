@@ -2854,6 +2854,124 @@ F .log .message-area-textarea-container {
   gap: 0.5rem;
 }
 
+.cardGeneral {
+  background-color: #f9f9f9;
+  height: 19rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.cardGeneral-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  gap: 0.71em;
+}
+.cardGeneral-body-top {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  height: 3.5rem;
+}
+.cardGeneral-body-mid {
+  flex: 2;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgb(206, 206, 206);
+  margin-top: 0.71em;
+}
+.cardGeneral-body-mid textarea {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  color: #757575;
+  border: none;
+  outline: none;
+  background-color: #e8e8e8;
+}
+.cardGeneral-body-bottom {
+  flex: 1;
+}
+.cardGeneral-body-bottom-icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  gap: 0.71em;
+}
+.cardGeneral-body-bottom-icons-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+.cardGeneral-body-bottom-country {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.cardGeneral-body-bottom-country-count {
+  background-color: #0075fc;
+  color: #f9f9f9;
+  border-radius: 5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mover {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+}
+.mover-item {
+  flex: 1;
+  height: 0.6rem;
+  background-color: #60bdff;
+  border-radius: 1.5rem;
+}
+.mover-gray {
+  background-color: #e8e8e8;
+}
+
+.name-bar {
+  display: flex;
+  align-items: start;
+  gap: 1rem;
+  height: 100%;
+}
+.name-bar-img {
+  background-color: #e8e8e8;
+  height: 120%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.name-bar-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.name-bar-name {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  height: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.name-bar-name-whatsapp {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .logocontainer {
   display: flex;
   justify-content: space-between;

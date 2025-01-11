@@ -12,6 +12,17 @@ import ProfileUpdateUser from "../src/pages/profileEdit/ProfileUpdateUser";
 import OfferLetter from "../src/pages/offerLetter/OfferLetter";
 import Payments from "../src/pages/Payment/Payments";
 import Branchmanage from "../src/pages/branchmanage/Branchmanage";
+import General from "../src/pages/General/General";
+import { useSelector } from "react-redux";
+
+const tabs = ["offerletter", "students", "payments"];
+
+const DynamicRoutes = () => {
+  return tabs.map((tab) => ({
+    path: tab,
+    element: <General />,
+  }));
+};
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +69,8 @@ export const router = createBrowserRouter([
         path: "branchmanaging",
         element: <Branchmanage />,
       },
+
+      ...DynamicRoutes(),
     ],
   },
 ]);
