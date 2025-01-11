@@ -50,7 +50,7 @@ function UniversityCard({ university, set, onSet }) {
         <div className="cardUniversity-body-mid">
           <textarea
             type="text"
-            placeholder="Add a remark"
+            placeholder="About:"
             onClick={(e) => e.preventDefault()}
           />
         </div>
@@ -63,7 +63,10 @@ function UniversityCard({ university, set, onSet }) {
                 color="#00b100"
                 style={{ transform: "rotate(270deg)" }}
               />
-              <p> Stayback: {university.year} Years</p>
+              <p>
+                <span style={{ color: "gray" }}>Stayback:</span>
+                <span style={{ color: "black" }}> {university.year} Years</span>
+              </p>
             </div>
             <div className="cardUniversity-body-bottom-icons-item">
               <HomeIcon
@@ -71,7 +74,10 @@ function UniversityCard({ university, set, onSet }) {
                 color="#0075fc"
                 style={{ transform: "rotate(270deg)" }}
               />
-              <p>Fee: {university.fee}$ </p>
+              <p>
+                {" "}
+                <span style={{ color: "gray" }}>Fee:</span> {university.fee}${" "}
+              </p>
             </div>
           </div>
         </div>
