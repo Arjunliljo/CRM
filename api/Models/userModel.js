@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -29,7 +30,7 @@ const userSchema = mongoose.Schema(
     password: {
       type: String,
       required: [true, "User must have a password"],
-      minlength: [1, "Password must have at least 8 characters"],
+      minlength: [8, "Password must have at least 8 characters"],
     },
     role: {
       type: mongoose.Schema.Types.ObjectId,
@@ -48,13 +49,13 @@ const userSchema = mongoose.Schema(
     otpExpires: Date,
     employeeId: {
       type: String,
-      required: [true, "User must have a employee ID"],
+      required: [true, "User must have an employee ID"],
       maxlength: [20, "Employee ID should be less than 20 characters"],
       minlength: [3, "Employee ID should be greater than 3 characters"],
     },
     Address: {
       type: String,
-      required: [true, "User must have a address"],
+      required: [true, "User must have an address"],
       maxlength: [50, "User address should be less than 50 characters"],
       minlength: [4, "User address should be greater than 4 characters"],
     },
@@ -78,6 +79,8 @@ const userSchema = mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-const User = mongoose.model("User", userSchema);
+const getUserModel = (dbConnection) => {
+  return dbConnection.model("User", userSchema);
+};
 
-export default User;
+export default getUserModel;

@@ -1,5 +1,3 @@
-import AutoBtn from "../../components/buttons/AutoBtn";
-import LeadCard from "../../components/Card/LeadCard";
 import SearchBar from "../../components/smallComponents/SearchBar";
 import { useSelector } from "react-redux";
 import MainBody from "../../layout/MainBody/MainBody";

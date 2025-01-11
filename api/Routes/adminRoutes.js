@@ -1,36 +1,56 @@
 import express from "express";
 const router = express.Router();
-import multer from "multer";
 import {
   addUser,
-  changePasswordByAdmin,
+  changeUserPassword,
   createBranch,
-  createCountries,
+  createCountry,
   createRole,
+  getBranch,
 } from "../Controllers/adminController.js";
 import { signin, signup } from "../Controllers/adminAuthController.js";
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/"); // stored temporarily
-  },
-  filename: function (req, file, cb) {
-    cb(null, `${Date.now()}-${file.originalname}`); // Unique filename
-  },
-});
-
-const upload = multer({ storage: storage });
+import { protect } from "../middlewares/auth.js";
+import { createStatus, receiveAllStatus } from "../Controllers/statusController.js";
 
 //admin auth routes
 router.post("/signup", signup);
 router.post("/signin", signin);
 
-router.post("/createRole", createRole);
-router.post("/createBranch", createBranch);
-router.post("/createCountries", upload.single("flag"), createCountries);
-router.post("/createUser", upload.single("image"), addUser);
-// router.post("/createStatus", upload.single("image"), addStatus);
+// Role cruds - admin only will do
+router.post("/createRole", protect, createRole);
+// router.get("/receiveRoles", protect, receiveRoles);
+// router.put("/updateRole", protect, updateRole);
+// router.delete("/dropRole", protect, dropRole);
 
-router.post("/changePassword/:id", changePasswordByAdmin);
+// Branch cruds - admin only will do
+router.post("/createBranch", protect, createBranch);
+// router.get("/receiveBranches", protect, receiveBranches);
+// router.put("/updateBranch", protect, updateBranch);
+// router.delete("/dropBranch", protect, dropBranch);
+
+// Countries cruds - admin only will do
+router.post("/createCountry", protect, createCountry);
+// router.get("/receiveCountries", protect, receiveCountries);
+// router.put("/updateCountry", protect, updateCountry);
+// router.delete("/dropCountry", protect, dropCountry);
+
+// User or staff cruds - admin only will do
+router.post("/createUser", protect, addUser);
+router.put("/changeUserPassword/:id", protect, changeUserPassword);
+// router.get("/receiveUsers", protect, receiveUsers);
+// router.put("/updateUser", protect, updateUser);
+// router.delete("/dropUser", protect, dropUser);
+
+// Status cruds - admin only will do
+router.post("/createStatus", createStatus);
+router.get("/receiveAllStatus", protect, receiveAllStatus);
+// router.put("/updateStatus", protect, updateStatus);
+// router.delete("/dropStatus", protect, dropStatus);
+
+// Lead cruds - admin only will do
+// router.post("/createLead", protect, createLead);
+// router.get("/receiveLeads", protect, receiveLeads);
+// router.put("/updateLead", protect, updateLead);
+// router.delete("/dropLead", protect, dropLead);
 
 export default router;

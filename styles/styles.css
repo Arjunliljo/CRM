@@ -192,12 +192,7 @@ textarea::placeholder {
   overflow: scroll;
   scrollbar-width: none;
   border: 1px solid #0075fc;
-  background: linear-gradient(
-    to bottom,
-    rgba(249, 249, 249, 0.5),
-    #c4ecf7,
-    #b3e7f5
-  );
+  background: linear-gradient(to bottom, rgba(249, 249, 249, 0.5), #c4ecf7, #b3e7f5);
   position: relative;
 }
 .main-body .main-body-box-right::-webkit-scrollbar {
@@ -285,24 +280,6 @@ textarea::placeholder {
   height: fit-content;
 }
 
-.allbttn {
-  background-color: #000000;
-  color: #f9f9f9;
-  padding: 10px 40px;
-  border-radius: 1rem;
-  height: fit-content;
-  border: none;
-}
-
-.headBttns {
-  background-color: #f9f9f9;
-  color: #000000;
-  padding: 10px 40px;
-  border-radius: 1rem;
-  height: 2.5rem;
-  border: none;
-}
-
 .hot-btn {
   background-color: #e53838;
   color: #f9f9f9;
@@ -368,6 +345,24 @@ textarea::placeholder {
   border: none;
   padding: 4px;
   width: 50%;
+}
+
+.allbttn {
+  background-color: #000000;
+  color: #f9f9f9;
+  padding: 10px 40px;
+  border-radius: 1rem;
+  height: fit-content;
+  border: none;
+}
+
+.headBttns {
+  background-color: #f9f9f9;
+  color: #000000;
+  padding: 10px 40px;
+  border-radius: 1rem;
+  height: 2.5rem;
+  border: none;
 }
 
 .select-container {

@@ -1,17 +1,36 @@
-import { verifyToken } from "../Utilities/jwt";
+import mongoose from "mongoose";
+import { verifyToken } from "../Utilities/jwt.js";
 
-export const protect = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1]; // Get the token from Authorization header
+const dbConnections = {};
 
+const protect = async (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
-    return res.status(401).json({ message: 'Not authorized, no token' });
+    return res.status(401).json({ message: "Authentication token missing" });
   }
 
   try {
-    const decoded = verifyToken(token);
-    req.user = decoded;
+    // Decode the token to get user and database information
+    const { adminId, dbName, role } = verifyToken(token);
+    console.log(adminId, dbName, role);
+
+    const mongoUri =
+      process.env.DB_DYNAMIC_URL || `mongodb://localhost:27017/${dbName}`;
+    // Connect to the database if not already connected
+    if (!dbConnections[dbName]) {
+      console.log(`Connecting to database: ${dbName}`);
+      dbConnections[dbName] = mongoose.createConnection(mongoUri);
+    }
+    // Attach the database connection and user details to the request
+    req.db = dbConnections[dbName];
+    req.db.dbName = dbName;
+    req.user = { adminId, role, dbName };
+
     next();
   } catch (error) {
-    return res.status(401).json({ message: 'Not authorized, invalid token' });
+    console.error("Authentication failed:", error.message);
+    res.status(401).json({ message: "Authentication failed" });
   }
 };
+
+export { protect };

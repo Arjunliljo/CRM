@@ -6,14 +6,13 @@ const branchSchema = mongoose.Schema(
       type: String,
       required: [true, "Branch must have a name"],
     },
-    description: {
-      type: String,
-      maxlength: [200, "Description should not exceed 200 characters"],
-    },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-const Branch = mongoose.model("Branch", branchSchema);
+// return the Branch model using the provided database connection
+const getBranchModel = (dbConnection) => {
+  return dbConnection.model("Branch", branchSchema);
+};
 
-export default Branch;
+export default getBranchModel;
