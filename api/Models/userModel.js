@@ -36,9 +36,6 @@ const userSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Role",
     },
-    count: {
-      type: String,
-    },
     image: {
       type: String,
       default:
@@ -63,14 +60,20 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isLeadsAssign: {
+      type: Boolean,
+      default: false,
+    },
     status: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Status",
     },
-    branch: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Branch",
-    },
+    branch: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Branch",
+      },
+    ],
     country: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Country",

@@ -32,27 +32,30 @@ const leadSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Branch",
     },
-    status: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Status",
-      required: [true, "Lead must have a status"],
+    status: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Status", //not required because meta will not have status
+      },
+    ],
+    // to check student or leads (become student when they assigned to branch )
+    isStudent: {
+      type: Boolean,
+      default: false,
+    },
+    // to check student shared to users
+    isSharedToUsers: {
+      type: Boolean,
+      default: false,
     },
     remark: {
       type: String,
       maxlength: [100, "Remark should be less than 100 characters"],
       minlength: [3, "Remark should be greater than 3 characters"],
     },
-    user: {
+    helpers: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-    },
-    previousCounsellors: {
-      type: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-        },
-      ],
     },
     countries: {
       type: [

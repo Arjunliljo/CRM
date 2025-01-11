@@ -1,29 +1,6 @@
 import getStatusModel from "../Models/statusModel.js";
 import { isValidString, sanitizeInput } from "../Utilities/validation.js";
 
-const receiveAllStatus = async (req, res) => {
-  try {
-    // Dynamically get the Status model for the current database connection
-    const Status = getStatusModel(req.db);
-
-    // Fetch all statuses from the database
-    const statuses = await Status.find();
-
-    // Return the fetched statuses in the response
-    return res.status(200).json({
-      success: true,
-      message: "Statuses retrieved successfully",
-      data: statuses,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Failed to retrieve statuses",
-      error: error.message,
-    });
-  }
-};
-
 const createStatus = async (req, res) => {
   try {
     const { status, isTab, subStatus, statusClass, description } = req.body;
@@ -46,14 +23,18 @@ const createStatus = async (req, res) => {
     // Dynamically get the Status model for the current database connection
     const Status = getStatusModel(req.db);
 
-    const existingStatus = await Status.findOne({ name: sanitizedStatus });
+    // Check for an existing status with the same name (case-insensitive)
+    const existingStatus = await Status.findOne({
+      status: { $regex: `^${sanitizedStatus}$`, $options: "i" }, // Case-insensitive match
+    });
+
     if (existingStatus) {
       return res.status(400).json({
         message: `Status with the name "${sanitizedStatus}" already exists.`,
       });
     }
 
-    // Create new status in the correct database
+    // Create a new status in the database
     const newStatus = await Status.create({
       status: sanitizedStatus,
       isTab,
@@ -69,6 +50,29 @@ const createStatus = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Failed to create status",
+      error: error.message,
+    });
+  }
+};
+
+const receiveAllStatus = async (req, res) => {
+  try {
+    // Dynamically get the Status model for the current database connection
+    const Status = getStatusModel(req.db);
+
+    // Fetch all statuses from the database
+    const statuses = await Status.find();
+
+    // Return the fetched statuses in the response
+    return res.status(200).json({
+      success: true,
+      message: "Statuses retrieved successfully",
+      data: statuses,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to retrieve statuses",
       error: error.message,
     });
   }

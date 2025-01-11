@@ -7,7 +7,7 @@ const generateToken = (adminId, role, dbName) => {
     dbName, // Add the database name or identifier here
   };
 
-  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
 
 const verifyToken = (token) => {

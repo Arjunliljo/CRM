@@ -1,23 +1,28 @@
+import getLeadModel from "../Models/leadsModel.js";
+import getStatusModel from "../Models/statusModel.js";
+import getUserModel from "../Models/userModel.js";
+import { isValidString, sanitizeInput } from "../Utilities/validation.js";
+
 const createLead = async (req, res) => {
   try {
-    let {
-      name,
-      email,
-      phone,
-      campaign,
-      branch,
-      status,
-      remark,
-      user,
-      previousCounsellors,
-      countries,
-    } = req.body;
+    let { name, email, phone, campaign, countries } = req.body;
 
     // Sanitize inputs
     name = sanitizeInput(name);
     email = sanitizeInput(email);
     phone = sanitizeInput(phone);
     campaign = sanitizeInput(campaign);
+
+    // Determine remark based on whether a country is specified
+    let remark =
+      "Lead interested in abroad but has not specified a country. Follow-up needed for more details.";
+
+    if (countries && countries.length > 0) {
+      remark = `Lead interested in abroad with preference for the countries: ${countries.join(
+        ", "
+      )}. Follow-up needed for more details.`;
+    }
+
     remark = remark ? sanitizeInput(remark) : remark;
 
     // Validate inputs
@@ -29,7 +34,6 @@ const createLead = async (req, res) => {
       });
     }
 
-  
     if (!isValidString(campaign, { min: 2, max: 50 })) {
       return res.status(400).json({
         success: false,
@@ -46,10 +50,10 @@ const createLead = async (req, res) => {
       });
     }
 
-    // Dynamically get the Lead model for the current database connection
     const Lead = getLeadModel(req.db);
+    const Status = getStatusModel(req.db);
 
-    // Check if a lead with the same email or phone already exists
+    // Check if a lead with the same email already exists
     const existingLead = await Lead.findOne({ email });
     if (existingLead) {
       return res.status(400).json({
@@ -58,18 +62,26 @@ const createLead = async (req, res) => {
       });
     }
 
-    // Create a new lead in the correct database
+    // Get the first status from the Status schema
+    const statuses = await Status.find({});
+    if (statuses.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No statuses found in the system.",
+      });
+    }
+    const firstStatusId = statuses[0]._id; // First status ID
+
+    // Create a new lead with the first status ID included
     const newLead = await Lead.create({
       name,
       email,
       phone,
       campaign,
-      branch,
-      status,
       remark,
-      user,
-      previousCounsellors,
       countries,
+      isStudent: false,
+      status: [firstStatusId],
     });
 
     // Send a success response
@@ -88,4 +100,181 @@ const createLead = async (req, res) => {
   }
 };
 
-export { createLead };
+const receiveLeads = async (req, res) => {
+  try {
+    const Lead = getLeadModel(req.db);
+
+    // Fetch leads and populate all status IDs
+    const leads = await Lead.find({})
+      .populate("status") // Populates the `status` array
+      .populate("branch") // Populate other fields as needed
+      .populate("helpers")
+      .populate("countries");
+
+    return res.status(200).json({
+      success: true,
+      message: "Leads fetched successfully",
+      data: leads,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while fetching leads",
+      error: error.message,
+    });
+  }
+};
+
+const branchLeadAssignment = async (req, res) => {
+  try {
+    const User = getUserModel(req.db);
+    const Lead = getLeadModel(req.db);
+    const Status = getStatusModel(req.db);
+
+    // Get the second status from the Status schema
+    const statuses = await Status.find({});
+    if (statuses.length < 2) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Not enough statuses found to assign to leads, create some status",
+      });
+    }
+    const secondStatusId = statuses[1]._id; // Second status ID
+
+    // Get all eligible users with `isLeadsAssign` set to true and only one branch
+    const eligibleUsers = await User.find({
+      isLeadsAssign: true,
+    })
+      .populate("branch")
+      .exec();
+
+    const singleBranchUsers = eligibleUsers.filter(
+      (user) => Array.isArray(user.branch) && user.branch.length === 1
+    );
+
+    if (singleBranchUsers.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "No eligible users were found for lead assignment. Ensure that there are users with the ability to receive leads",
+      });
+    }
+
+    // Get all leads with `isStudent` set to true
+    const leadsToAssign = await Lead.find({ isStudent: true });
+
+    if (leadsToAssign.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No leads available for assignment.",
+      });
+    }
+
+    // Distribute leads among eligible users
+    const userCount = singleBranchUsers.length;
+    for (let i = 0; i < leadsToAssign.length; i++) {
+      const lead = leadsToAssign[i];
+      const user = singleBranchUsers[i % userCount]; // Cycle through users
+
+      // Update lead details
+      lead.isStudent = false;
+      lead.branch = user.branch[0]._id; // Assign the user's single branch
+      lead.status = lead.status || [];
+      lead.status.push(secondStatusId); // Add second status to the status array
+
+      // Save the updated lead
+      await lead.save();
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Leads have been successfully distributed among users.",
+    });
+  } catch (error) {
+    // Handle errors and send a response
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while distributing leads.",
+      error: error.message,
+    });
+  }
+};
+
+const assignLeadsToUsers = async (req, res) => {
+  try {
+    const User = getUserModel(req.db);
+    const Lead = getLeadModel(req.db);
+    const Status = getStatusModel(req.db);
+
+    // Get the second status from the Status schema
+    const statuses = await Status.find({});
+    if (statuses.length < 2) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Not enough statuses found to assign to leads, create some status",
+      });
+    }
+    const secondStatusId = statuses[1]._id; // Second status ID
+
+    // Get all eligible users with `isLeadsAssign` set to true and only one branch
+    const eligibleUsers = await User.find({
+      isLeadsAssign: true,
+    })
+      .populate("branch")
+      .exec();
+
+    const singleBranchUsers = eligibleUsers.filter(
+      (user) => Array.isArray(user.branch) && user.branch.length === 1
+    );
+
+    if (singleBranchUsers.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "No eligible users were found for lead assignment. Ensure that there are users with the ability to receive leads",
+      });
+    }
+
+    // Get all leads with `isLead` set to true
+    const leadsToAssign = await Lead.find({ isLead: true });
+
+    if (leadsToAssign.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No leads available for assignment.",
+      });
+    }
+
+    // Distribute leads among eligible users
+    const userCount = singleBranchUsers.length;
+    for (let i = 0; i < leadsToAssign.length; i++) {
+      const lead = leadsToAssign[i];
+      const user = singleBranchUsers[i % userCount]; // Cycle through users
+
+      // Update lead details
+      lead.isLead = false;
+      lead.branch = user.branch[0]._id; // Assign the user's single branch
+      lead.status = lead.status || [];
+      lead.status.push(secondStatusId); // Add second status to the status array
+
+      // Save the updated lead
+      await lead.save();
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Leads have been successfully distributed among users.",
+    });
+  } catch (error) {
+    // Handle errors and send a response
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while distributing leads.",
+      error: error.message,
+    });
+  }
+};
+
+export { createLead, receiveLeads, branchLeadAssignment, assignLeadsToUsers };
