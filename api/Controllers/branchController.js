@@ -1,44 +1,38 @@
 import getBranchModel from "../Models/branchModel.js";
+import AppError from "../Utilities/appError.js";
+import catchAsync from "../Utilities/catchAsync.js";
 import { isValidString, sanitizeInput } from "../Utilities/validation.js";
 
-const createBranch = async (req, res) => {
-  try {
-    const { name } = req.body;
-    console.log(name);
+const createBranch = catchAsync(async  (req, res, next) => {
 
-    // Validate and sanitize input
-    const sanitizedName = sanitizeInput(name);
-    if (!isValidString(sanitizedName, { min: 2, max: 50 })) {
-      return res.status(400).json({
-        message: "Branch name must be valid and at least 2 characters long.",
-      });
-    }
+  const { name } = req.body;
 
-    // Dynamically get the Branch model for the current database connection
-    const Branch = getBranchModel(req.db);
 
-    // Check if branch already exists in the specified database
-    const existingBranch = await Branch.findOne({ name: sanitizedName });
-    if (existingBranch) {
-      return res.status(400).json({
-        message: `Branch with the name "${sanitizedName}" already exists.`,
-      });
-    }
-
-    // Create new branch in the correct database
-    const newBranch = await Branch.create({ name: sanitizedName });
-
-    res.status(201).json({
-      message: "Branch created successfully",
-      data: newBranch,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Failed to create branch",
-      error: error.message,
-    });
+  // Validate and sanitize input
+  const sanitizedName = sanitizeInput(name);
+  if (!isValidString(sanitizedName, { min: 2, max: 50 })) {
+ return next(new AppError("", 401))
   }
-};
+
+  // Dynamically get the Branch model for the current database connection
+  const Branch = getBranchModel(req.db);
+
+  // Check if branch already exists in the specified database
+  const existingBranch = await Branch.findOne({ name: sanitizedName });
+  if (existingBranch) {
+ return next(new AppError(`"Branch with the name "${sanitizedName}" already exists."`,400))
+  }
+  console.log(existingBranch,"existingBranch");
+
+  // Create new branch in the correct database
+  const newBranch = await Branch.create({ name: sanitizedName });
+
+  res.status(201).json({
+    message: "Branch created successfully",
+    data: newBranch,
+  });
+
+});
 
 const receiveBranches = async (req, res) => {
   try {

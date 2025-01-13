@@ -1,10 +1,11 @@
+/* global process */
 import jwt from "jsonwebtoken";
 
 const generateToken = (adminId, role, dbName) => {
   const payload = {
     adminId,
     role,
-    dbName, // Add the database name or identifier here
+    dbName,
   };
 
   return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d" });

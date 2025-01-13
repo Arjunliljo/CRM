@@ -2,7 +2,6 @@ import express from "express";
 import AppError from "./Utilities/appError.js";
 import versionOne from "./versions/v1.js";
 import globalErrorHandler from "./Utilities/globalErrorhandler.js";
-import adminRoutes from "./Routes/adminRoute.js";
 import { addDbNameToRequest } from "./middlewares/dynamicDbContext.js";
 
 const app = express();

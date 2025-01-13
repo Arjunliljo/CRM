@@ -1,5 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
+/* global process */
+
 
 import mongoose from "mongoose";
 import app from "./app.js";

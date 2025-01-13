@@ -146,10 +146,12 @@ const branchLeadAssignment = async (req, res) => {
       throw new Error("No branches available to assign leads.");
     }
 
-    // Fetch all leads that are not yet assigned to branches and where isStudent is false
+    // Fetch all leads that are
+    // * not yet assigned to branches
+    // * and where isStudent is false
     const unassignedLeads = await Lead.find({ branch: null, isStudent: false });
-    console.log(unassignedLeads,"unassignedLeads");
-    
+    console.log(unassignedLeads, "unassignedLeads");
+
     if (!unassignedLeads.length) {
       throw new Error("No unassigned leads available.");
     }
