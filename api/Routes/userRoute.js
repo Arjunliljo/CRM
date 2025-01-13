@@ -16,6 +16,6 @@ router.get("/", receiveUsers);
 // router.put("/", updateUser);
 router.delete("/:id", dropUser);
 
-router.post("/userGroup", userGroup); // to group users by leader
+router.post("/userGroup", userGroup); // to group users by leader or branch manager
 
 export default router;

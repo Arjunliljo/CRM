@@ -1,5 +1,8 @@
+import getBranchModel from "../Models/branchModel.js";
+import getCountryModel from "../Models/countriesModel.js";
 import getLeadModel from "../Models/leadsModel.js";
 import getStatusModel from "../Models/statusModel.js";
+import getGroupModel from "../Models/userGroupModel.js";
 import getUserModel from "../Models/userModel.js";
 import { isValidString, sanitizeInput } from "../Utilities/validation.js";
 
@@ -102,7 +105,13 @@ const createLead = async (req, res) => {
 
 const receiveLeads = async (req, res) => {
   try {
-    const Lead = getLeadModel(req.db);
+    const dbConnection = req.db;
+    const Lead = getLeadModel(dbConnection);
+    // Register models with the current database connection if not already registered
+    getStatusModel(dbConnection);
+    getBranchModel(dbConnection);
+    getGroupModel(dbConnection);
+    getCountryModel(dbConnection);
 
     // Fetch leads and populate all status IDs
     const leads = await Lead.find({})
@@ -127,11 +136,25 @@ const receiveLeads = async (req, res) => {
 
 const branchLeadAssignment = async (req, res) => {
   try {
-    const User = getUserModel(req.db);
+    const Branch = getBranchModel(req.db);
     const Lead = getLeadModel(req.db);
     const Status = getStatusModel(req.db);
 
-    // Get the second status from the Status schema
+    // Fetch all branches
+    const branches = await Branch.find();
+    if (!branches.length) {
+      throw new Error("No branches available to assign leads.");
+    }
+
+    // Fetch all leads that are not yet assigned to branches and where isStudent is false
+    const unassignedLeads = await Lead.find({ branch: null, isStudent: false });
+    console.log(unassignedLeads,"unassignedLeads");
+    
+    if (!unassignedLeads.length) {
+      throw new Error("No unassigned leads available.");
+    }
+
+    // Fetch the second status
     const statuses = await Status.find({});
     if (statuses.length < 2) {
       return res.status(400).json({
@@ -142,62 +165,32 @@ const branchLeadAssignment = async (req, res) => {
     }
     const secondStatusId = statuses[1]._id; // Second status ID
 
-    // Get all eligible users with `isLeadsAssign` set to true and only one branch
-    const eligibleUsers = await User.find({
-      isLeadsAssign: true,
-    })
-      .populate("branch")
-      .exec();
+    // Distribute leads among branches
+    let branchIndex = 0;
+    for (const lead of unassignedLeads) {
+      // Assign the lead to the next branch in the list
+      const branch = branches[branchIndex];
+      lead.branch = branch._id;
 
-    const singleBranchUsers = eligibleUsers.filter(
-      (user) => Array.isArray(user.branch) && user.branch.length === 1
-    );
+      // Push the second status into the status array
+      if (!lead.status.includes(secondStatusId._id)) {
+        lead.status.push(secondStatusId._id);
+      }
 
-    if (singleBranchUsers.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message:
-          "No eligible users were found for lead assignment. Ensure that there are users with the ability to receive leads",
-      });
-    }
-
-    // Get all leads with `isStudent` set to true
-    const leadsToAssign = await Lead.find({ isStudent: true });
-
-    if (leadsToAssign.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: "No leads available for assignment.",
-      });
-    }
-
-    // Distribute leads among eligible users
-    const userCount = singleBranchUsers.length;
-    for (let i = 0; i < leadsToAssign.length; i++) {
-      const lead = leadsToAssign[i];
-      const user = singleBranchUsers[i % userCount]; // Cycle through users
-
-      // Update lead details
-      lead.isStudent = false;
-      lead.branch = user.branch[0]._id; // Assign the user's single branch
-      lead.status = lead.status || [];
-      lead.status.push(secondStatusId); // Add second status to the status array
+      // Update other fields
+      lead.isStudent = true;
+      lead.remark = "Leads are assigned to each branch";
 
       // Save the updated lead
       await lead.save();
+
+      // Move to the next branch
+      branchIndex = (branchIndex + 1) % branches.length;
     }
 
-    return res.status(200).json({
-      success: true,
-      message: "Leads have been successfully distributed among users.",
-    });
+    console.log("Leads successfully assigned to branches.");
   } catch (error) {
-    // Handle errors and send a response
-    return res.status(500).json({
-      success: false,
-      message: "An error occurred while distributing leads.",
-      error: error.message,
-    });
+    console.error("Error in branchLeadAssignment:", error.message);
   }
 };
 
