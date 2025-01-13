@@ -13,6 +13,7 @@ import StudentsCard from "../../components/Card/StudentsCard";
 import All from "../../components/buttons/All";
 import { setCurUniversity } from "../../../global/universitySlice";
 import UniversityCard from "../../components/Card/UniversityCard";
+import UniversityProfile from "../../components/Card/UniversityRight/UniversityProfile";
 
 const university = {
   num: 3,
@@ -56,8 +57,7 @@ export default function University() {
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
-  const IProfileCard = <ProfileCard />;
-  const IStartApplication = <StartApplication />;
+  const IProfileCard = <UniversityProfile />;
 
   const TopLeft = [<div key="search-bar">{ISearchBar}</div>];
   const TopRight = [<div key="primary-btn">{IPrimaryBttn}</div>];
@@ -82,7 +82,6 @@ export default function University() {
       BottomLeft={BottomLeft}
       BottomRight={BottomRight}
       ProfileCard={IProfileCard}
-      StartApplication={IStartApplication}
     />
   );
 }

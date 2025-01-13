@@ -11,6 +11,7 @@ import { setCurUser } from "../../../global/userSlice";
 import All from "../../components/buttons/All";
 import Counsellor from "../../components/buttons/NormalButton";
 import NormalButton from "../../components/buttons/NormalButton";
+import UserRight from "../../components/Card/UserRight/UserRight";
 
 const user = {
   num: 3,
@@ -47,8 +48,7 @@ export default function User() {
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
-  const IProfileCard = <ProfileCard />;
-  const IStartApplication = <StartApplication />;
+  const IProfileCard = <UserRight />;
 
   const TopLeft = [
     <div key="search-bar">{ISearchBar}</div>,
@@ -74,7 +74,6 @@ export default function User() {
       BottomLeft={BottomLeft}
       BottomRight={BottomRight}
       ProfileCard={IProfileCard}
-      StartApplication={IStartApplication}
     />
   );
 }
