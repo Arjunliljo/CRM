@@ -4,7 +4,7 @@ import Admin from "../Models/adminModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import AppError from "../Utilities/appError.js";
 
-const getClusterUrlByDatabaseName = (databaseName) => {
+export const getClusterUrlByDatabaseName = (databaseName) => {
   switch (databaseName) {
     case 'marketlube':
       return process.env.CLUSTER_URL_1;

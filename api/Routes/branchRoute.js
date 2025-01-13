@@ -1,5 +1,4 @@
 import express from "express";
-import { protect } from "../middlewares/auth.js";
 import {
   createBranch,
   receiveBranches,
