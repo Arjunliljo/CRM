@@ -7,7 +7,6 @@ const generateToken = (adminId, role, dbName) => {
     role,
     dbName,
   };
-
   return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
 

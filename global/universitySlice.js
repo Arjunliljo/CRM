@@ -1,29 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const studentsSlice = createSlice({
+const universitySlice = createSlice({
   name: "university",
   initialState: {
-    autoStudentsAssign: true,
-    curStudent: {},
+    autoUniversitysAssign: true,
+    curUniversity: {},
   },
   reducers: {
-    setAutoStudentsAssign: (state, action) => {
-      state.autoStudentsAssign = action.payload;
+    setAutoUniversitysAssign: (state, action) => {
+      state.autoUniversitysAssign = action.payload;
 
       if (!action.payload) {
-        state.curStudent = {};
+        state.curUniversity = {};
       }
     },
-    setCurStudent(state, action) {
-      state.curStudent = action.payload;
+    setCurUniversity(state, action) {
+      state.curUniversity = action.payload;
 
       if (action.payload) {
-        state.autoStudentsAssign = true;
+        state.autoUniversitysAssign = true;
       }
     },
   },
 });
 
-export const { setAutoStudentsAssign, setCurStudent } = studentsSlice.actions;
+export const { setAutoUniversitysAssign, setCurUniversity } =
+  universitySlice.actions;
 
-export default studentsSlice.reducer;
+export default universitySlice.reducer;

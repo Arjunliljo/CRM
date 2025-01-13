@@ -1,5 +1,4 @@
 import express from "express";
-import adminRoutes from "../Routes/adminRoute.js";
 import roleRoute from "../Routes/roleRoute.js";
 import branchRoute from "../Routes/branchRoute.js";
 import countryRoute from "../Routes/countryRoute.js";
@@ -34,10 +33,7 @@ const router = express.Router();
 
 router.use("/user", userRoute);
 
-
-
 // Nest admin routes under /api/v2/admin
-router.use("/", adminRoutes);
 router.use("/branch", branchRoute);
 router.use("/country", countryRoute);
 router.use("/lead", leadRoute);

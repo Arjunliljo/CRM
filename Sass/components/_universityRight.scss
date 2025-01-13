@@ -1,6 +1,6 @@
 @use "../abstract/variables" as variables;
 
-.profileCard {
+.UniversityRightCard {
   height: fit-content;
   width: 100%;
   padding: variables.$general-gap;
@@ -12,7 +12,7 @@
     background-color: transparent;
 
     &-info {
-      background-color: variables.$color-white;
+      //   background-color: variables.$color-white;
       height: 7.5rem;
       display: flex;
       justify-content: space-between;
@@ -25,6 +25,7 @@
         align-items: start;
         height: 100%;
         padding: variables.$padding-md;
+        gap: 1.5rem;
       }
 
       &-person-data {
@@ -37,11 +38,11 @@
       }
 
       img {
-        width: 80%;
+        width: 93%;
         height: 80%;
         object-fit: cover;
         background-color: variables.$color-gray;
-        border-radius: 50%;
+        border-radius: 23%;
         overflow: hidden;
       }
 
@@ -61,16 +62,16 @@
 
       &-right-card {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 45%;
+        align-items: start;
+        justify-content: start;
+        // width: 45%;
         display: flex;
-        padding: 10px 20px;
-        border-radius: variables.$radius-md;
-        border-width: 1px;
-        border-style: solid;
-        border-color: variables.$color-text-gray;
-        height: min-content;
+        // padding: 10px 20px;
+        // border-radius: variables.$radius-md;
+        // border-width: 1px;
+        // border-style: solid;
+        // border-color: variables.$color-text-gray;
+        // height: min-content;
       }
 
       &-keys {

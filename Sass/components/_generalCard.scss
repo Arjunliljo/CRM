@@ -1,6 +1,6 @@
 @use "../abstract/variables" as variables;
 
-.card {
+.cardGeneral {
   background-color: variables.$color-white;
   height: variables.$card-height;
   border-radius: variables.$radius-md;

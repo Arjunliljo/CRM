@@ -5,91 +5,85 @@ import getGroupModel from "../Models/userGroupModel.js";
 import getBranchModel from "../Models/branchModel.js";
 import getRoleModel from "../Models/roleModel.js";
 import getStatusModel from "../Models/statusModel.js";
+import catchAsync from "../Utilities/catchAsync.js";
+import mongoose from "mongoose";
 
-const addUser = async (req, res) => {
-  try {
-    const {
-      name,
-      email,
-      phone,
-      password,
-      role,
-      employeeId,
-      Address,
-      autoAssign,
-      status,
-      branch,
-      country,
-      image,
-    } = req.body;
+const addUser = catchAsync(async (req, res) => {
+  const {
+    name,
+    email,
+    phone,
+    password,
+    role,
+    employeeId,
+    Address,
+    autoAssign,
+    status,
+    branch,
+    country,
+    image,
+  } = req.body;
 
-    // Sanitize inputs
-    const sanitizedData = {
-      name: sanitizeInput(name),
-      email: sanitizeInput(email),
-      phone: sanitizeInput(phone),
-      employeeId: sanitizeInput(employeeId),
-      Address: sanitizeInput(Address),
-    };
+  // Sanitize inputs
+  const sanitizedData = {
+    name: sanitizeInput(name),
+    email: sanitizeInput(email),
+    phone: sanitizeInput(phone),
+    employeeId: sanitizeInput(employeeId),
+    Address: sanitizeInput(Address),
+  };
 
-    // Validate ObjectId fields (role, status, branch, country)
-    if (role && !validateObjectId(role)) {
-      return res.status(400).send({ message: "Invalid role ID format" });
-    }
-    if (status && !validateObjectId(status)) {
-      return res.status(400).send({ message: "Invalid status ID format" });
-    }
+  // Validate ObjectId fields (role, status, branch, country)
+  if (role && !validateObjectId(role)) {
+    return res.status(400).send({ message: "Invalid role ID format" });
+  }
+  if (status && !validateObjectId(status)) {
+    return res.status(400).send({ message: "Invalid status ID format" });
+  }
 
-    if (country && !validateObjectId(country)) {
-      return res.status(400).send({ message: "Invalid country ID format" });
-    }
+  if (country && !validateObjectId(country)) {
+    return res.status(400).send({ message: "Invalid country ID format" });
+  }
 
-    // To avoid confusing leads about which branch they belong to.
-    // Check if autoAssign is true and branch length is more than 1
-    if (autoAssign === true && branch.length > 1) {
-      return res.status(400).send({
-        message: "autoAssign can only be true when branch length is 1.",
-      });
-    }
-
-    // Dynamically retrieve User model based on the database connection
-    const User = getUserModel(req.db);
-
-    // Create the user
-    const newUser = new User({
-      name: sanitizedData.name,
-      email: sanitizedData.email.toLowerCase(),
-      phone: sanitizedData.phone,
-      password: password,
-      employeeId: sanitizedData.employeeId,
-      Address: sanitizedData.Address,
-      autoAssign: autoAssign,
-      status,
-      branch,
-      country,
-      role,
-      image,
-    });
-
-    // Save to database
-    const savedUser = await newUser.save();
-
-    // Respond with success
-    return res.status(201).json({
-      success: true,
-      message: "User added successfully.",
-      data: savedUser,
-    });
-  } catch (error) {
-    console.error("Error adding user:", error);
-    return res.status(500).json({
-      success: false,
-      message: "An error occurred while adding the user.",
+  // To avoid confusing leads about which branch they belong to.
+  // Check if autoAssign is true and branch length is more than 1
+  if (autoAssign === true && branch.length > 1) {
+    return res.status(400).send({
+      message: "autoAssign can only be true when branch length is 1.",
     });
   }
-};
 
-const changeUserPassword = async (req, res) => {
+  // Dynamically retrieve User model based on the database connection
+  const User = getUserModel(req.db);
+
+  // Create the user
+  const newUser = new User({
+    name: sanitizedData.name,
+    email: sanitizedData.email.toLowerCase(),
+    phone: sanitizedData.phone,
+    password: password,
+    employeeId: sanitizedData.employeeId,
+    Address: sanitizedData.Address,
+    autoAssign: autoAssign,
+    status,
+    branch,
+    country,
+    role,
+    image,
+  });
+
+  // Save to database
+  const savedUser = await newUser.save();
+
+  // Respond with success
+  return res.status(201).json({
+    success: true,
+    message: "User added successfully.",
+    data: savedUser,
+  });
+});
+
+const changeUserPassword = catchAsync(async (req, res) => {
   let userId = req.params.id;
   const { newPassword } = req.body;
   try {
@@ -136,15 +130,14 @@ const changeUserPassword = async (req, res) => {
       data: updatedUser,
     });
   } catch (error) {
-    console.error("Error changing password:", error);
     return res.status(500).json({
       success: false,
       message: `Failed to change password: ${error.message}`,
     });
   }
-};
+});
 
-const userGroup = async (req, res) => {
+const userGroup = catchAsync(async (req, res) => {
   try {
     const { name, description, branch, users, createdBy } = req.body;
 
@@ -192,73 +185,58 @@ const userGroup = async (req, res) => {
       message: "An error occurred while creating the group.",
     });
   }
-};
+});
 
-const receiveUsers = async (req, res) => {
-  try {
-    // Create a database connection for User and Branch models
-    const dbConnection = req.db;
+const receiveUsers = catchAsync(async (req, res) => {
+  // Create a database connection for User and Branch models
+  const dbConnection = req.db;
 
-    // Register models with the current database connection if not already registered
-    getUserModel(dbConnection);
-    getBranchModel(dbConnection);
-    getRoleModel(dbConnection);
-    getStatusModel(dbConnection);
+  // Register models with the current database connection if not already registered
+  getUserModel(dbConnection);
+  getBranchModel(dbConnection);
+  getRoleModel(dbConnection);
+  getStatusModel(dbConnection);
 
-    const User = getUserModel(dbConnection); // Use the dbConnection
+  const User = getUserModel(dbConnection); // Use the dbConnection
 
-    // Fetch users and populate the related fields
-    const users = await User.find({})
-      .populate("role") // Populate the `role` field
-      .populate("branch") // Populate the `branch` field (array of branches)
-      .populate("status") // Populate the `status` field
-      .populate("country"); // Populate the `country` field
+  // Fetch users and populate the related fields
+  const users = await User.find({})
+    .populate("role") // Populate the `role` field
+    .populate("branch") // Populate the `branch` field (array of branches)
+    .populate("status") // Populate the `status` field
+    .populate("country"); // Populate the `country` field
 
-    return res.status(200).json({
-      success: true,
-      message: "Users fetched successfully",
-      data: users,
-    });
-  } catch (error) {
-    return res.status(500).json({
+  return res.status(200).json({
+    success: true,
+    message: "Users fetched successfully",
+    data: users,
+  });
+});
+
+const dropUser = catchAsync(async (req, res) => {
+  const userId = req.params.id; // Get user ID from the URL params
+
+  // Create a database connection
+  const dbConnection = req.db || mongoose.connection;
+
+  // Register the User model with the current database connection if not already registered
+  const User = getUserModel(dbConnection);
+
+  // Find and delete the user by their ID
+  const deletedUser = await User.findByIdAndDelete(userId);
+
+  if (!deletedUser) {
+    return res.status(404).json({
       success: false,
-      message: "An error occurred while fetching users",
-      error: error.message,
+      message: "User not found",
     });
   }
-};
 
-const dropUser = async (req, res) => {
-  try {
-    const userId = req.params.id; // Get user ID from the URL params
+  return res.status(200).json({
+    success: true,
+    message: "User deleted successfully",
+    data: deletedUser,
+  });
+});
 
-    // Create a database connection
-    const dbConnection = req.db || mongoose.connection;
-
-    // Register the User model with the current database connection if not already registered
-    const User = getUserModel(dbConnection);
-
-    // Find and delete the user by their ID
-    const deletedUser = await User.findByIdAndDelete(userId);
-
-    if (!deletedUser) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: "User deleted successfully",
-      data: deletedUser,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "An error occurred while deleting the user",
-      error: error.message,
-    });
-  }
-};
 export { addUser, changeUserPassword, userGroup, receiveUsers, dropUser };

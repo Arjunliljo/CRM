@@ -6,80 +6,83 @@ import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import AllLeads from "../../components/buttons/AllLeads";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
-import { setCurStudent } from "../../../global/studentsSlice";
-import StudentsCard from "../../components/Card/StudentsCard";
-import All from "../../components/buttons/All";
-import { setCurUniversity } from "../../../global/universitySlice";
-import UniversityCard from "../../components/Card/UniversityCard";
-import UniversityProfile from "../../components/Card/UniversityRight/UniversityProfile";
 
-const university = {
+import All from "../../components/buttons/All";
+import Counsellor from "../../components/buttons/NormalButton";
+import NormalButton from "../../components/buttons/NormalButton";
+import { setCurBranchmanage } from "../../../global/branchSlice";
+import BranchManagingCard from "../../components/Card/BranchManagingCard";
+
+const branchmanage = {
   num: 3,
-  Uname: "University Of United Kingdom",
+  name: "John Doe",
   img: "https://via.placeholder.com/150",
   number: 1234567890,
   status: "Interested",
   statusColor: "red",
   remark:
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-  year: 2,
-  fee: 1000,
-  eligibility: "Eligibility",
-  country: "Germany",
+  applications: "8 Payments",
+  payments: 5,
+  ongoing: "88 ongoing",
+  state: "Kochi",
   count: 3,
 };
 const arr = [...Array(500)].map((_, i) => {
-  const obj = { ...university, _id: i };
+  const obj = { ...branchmanage, _id: i };
   return obj;
 });
 
-export default function University() {
-  const { autoUniversitysAssign, curUniversity } = useSelector(
-    (state) => state.universitys
+export default function Branchmanage() {
+  const { autoBranchmanageAssign, curBranchmanage } = useSelector(
+    (state) => state.branchmanage
   );
 
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
-  const IContents = arr?.map((university, index) => (
-    <UniversityCard
+  const IContents = arr?.map((branchmanage, index) => (
+    <BranchManagingCard
       key={index}
-      onSet={setCurUniversity}
-      set={curUniversity}
-      university={university}
+      onSet={setCurBranchmanage}
+      set={curBranchmanage}
+      branchmanage={branchmanage}
     />
   ));
 
   //   const ISelector = <Selector />;
-  const IPrimaryBttn = <PrimaryBttn>Add Students</PrimaryBttn>;
+  const IPrimaryBttn = <PrimaryBttn>Add User</PrimaryBttn>;
   const IAll = <All />;
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
-  const IProfileCard = <UniversityProfile />;
+  const IProfileCard = <ProfileCard />;
+  const IStartApplication = <StartApplication />;
 
-  const TopLeft = [<div key="search-bar">{ISearchBar}</div>];
+  const TopLeft = [
+    <div key="search-bar">{ISearchBar}</div>,
+    // <div key="auto-btn">{IAutoBtn}</div>,
+    // <div key="selector">{ISelector}</div>,
+  ];
   const TopRight = [<div key="primary-btn">{IPrimaryBttn}</div>];
 
   const BottomLeft = [
-    <div key="all-leads">{IAll}</div>,
+    <div key="all">{IAll}</div>,
     <div key="selector-one">{ISelectorOne}</div>,
     <div key="selector-two">{ISelectorTwo}</div>,
     <div key="selector-three">{ISelectorThree}</div>,
   ];
-  const BottomRight = [
-    // <div key="selector-four">{ISelectorFour}</div>,
-    // <div key="selector-five">{ISelectorFive}</div>,
-  ];
+  const BottomRight = [];
 
   return (
     <MainBody
       TopLeft={TopLeft}
       TopRight={TopRight}
       IContents={IContents}
-      switching={autoUniversitysAssign}
+      switching={autoBranchmanageAssign}
       BottomLeft={BottomLeft}
       BottomRight={BottomRight}
       ProfileCard={IProfileCard}
+      StartApplication={IStartApplication}
     />
   );
 }

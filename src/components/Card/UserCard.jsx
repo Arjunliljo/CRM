@@ -27,22 +27,22 @@ function UserCard({ user, set, onSet }) {
 
   return (
     <div
-      className={`card ${isSelected ? "selectedCard" : ""}`}
+      className={`cardUser ${isSelected ? "selectedCard" : ""}`}
       onClick={handleUserSelect}
       id={`${user?._id}`}
       ref={targetRef}
     >
-      <div className="card-body">
-        <div className="card-body-top">
+      <div className="cardUser-body">
+        <div className="cardUser-body-top">
           <NameBar lead={user} />
           {/* <InfoBtn color="white" bgcl="green">
             Interested
           </InfoBtn> */}
         </div>
 
-        <div className="card-body-center">
-          <div className="card-body-bottom-icons">
-            <div className="card-body-bottom-icons-item">
+        <div className="cardUser-body-center">
+          <div className="cardUser-body-bottom-icons">
+            <div className="cardUser-body-bottom-icons-item">
               <HomeIcon
                 path="u-turn"
                 color="#00b100"
@@ -50,7 +50,7 @@ function UserCard({ user, set, onSet }) {
               />
               <p>{user.applications}</p>
             </div>
-            <div className="card-body-bottom-icons-item">
+            <div className="cardUser-body-bottom-icons-item">
               <HomeIcon
                 path="retry"
                 color="#0075fc"
@@ -61,7 +61,7 @@ function UserCard({ user, set, onSet }) {
           </div>
         </div>
 
-        <div className="card-body-bottom-country">
+        <div className="cardUser-body-bottom-country">
           <CountryBtn>{user.state}</CountryBtn>
         </div>
       </div>
