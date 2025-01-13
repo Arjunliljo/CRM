@@ -8,6 +8,88 @@
   flex-direction: column;
   gap: variables.$general-gap;
 
+  &-head {
+    background-color: transparent;
+
+    &-info {
+      //   background-color: variables.$color-white;
+      height: 7.5rem;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+      padding: 0rem variables.$padding-md;
+
+      &-details {
+        display: flex;
+        align-items: start;
+        height: 100%;
+        padding: variables.$padding-md;
+        gap: 0.5rem;
+
+        img {
+          width: 80%;
+          height: 80%;
+          object-fit: cover;
+          background-color: variables.$color-gray;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+      }
+
+      &-person-data {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        height: 100%;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      &-location-card {
+        display: flex;
+        flex-direction: column;
+      }
+      &-location {
+        color: variables.$color-text-gray;
+        font-size: variables.$font-size;
+      }
+      &-underline {
+        height: 1px;
+        width: 100%;
+        background-color: variables.$color-light-blue;
+      }
+
+      &-right-card {
+        display: flex;
+        align-items: start;
+        justify-content: start;
+        // width: 45%;
+        display: flex;
+        // padding: 10px 20px;
+        // border-radius: variables.$radius-md;
+        // border-width: 1px;
+        // border-style: solid;
+        // border-color: variables.$color-text-gray;
+        // height: min-content;
+      }
+
+      &-keys {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+
+      &-assigners {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        color: variables.$color-black;
+        font-weight: variables.$font-bold;
+      }
+    }
+  }
+
   &-boxes {
     display: flex;
     gap: variables.$general-gap;

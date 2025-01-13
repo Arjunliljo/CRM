@@ -3546,9 +3546,324 @@ F .log .message-area-textarea-container {
   flex-direction: column;
   gap: 1.2rem;
 }
+.UserRightCard-head {
+  background-color: transparent;
+}
+.UserRightCard-head-info {
+  height: 7.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  padding: 0rem 1rem;
+}
+.UserRightCard-head-info-details {
+  display: flex;
+  align-items: start;
+  height: 100%;
+  padding: 1rem;
+  gap: 0.5rem;
+}
+.UserRightCard-head-info-details img {
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
+  background-color: #e8e8e8;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.UserRightCard-head-info-person-data {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  height: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.UserRightCard-head-info-location-card {
+  display: flex;
+  flex-direction: column;
+}
+.UserRightCard-head-info-location {
+  color: #757575;
+  font-size: 1rem;
+}
+.UserRightCard-head-info-underline {
+  height: 1px;
+  width: 100%;
+  background-color: #60bdff;
+}
+.UserRightCard-head-info-right-card {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  display: flex;
+}
+.UserRightCard-head-info-keys {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.UserRightCard-head-info-assigners {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: #000000;
+  font-weight: 500;
+}
 .UserRightCard-boxes {
   display: flex;
   gap: 1.2rem;
+}
+
+.profileCardEdituser {
+  height: fit-content;
+  width: 100%;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.profileCardEdituser-head {
+  background-color: transparent;
+}
+.profileCardEdituser-head-info {
+  background-color: #f9f9f9;
+  height: 7.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  padding: 0rem 1rem;
+}
+.profileCardEdituser-head-info-details {
+  display: flex;
+  align-items: start;
+  height: 100%;
+  padding: 1rem;
+}
+.profileCardEdituser-head-info-person-data {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  height: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.profileCardEdituser-head-info img {
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
+  background-color: #e8e8e8;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.profileCardEdituser-head-info-location-card {
+  display: flex;
+  flex-direction: column;
+}
+.profileCardEdituser-head-info-location {
+  color: #757575;
+  font-size: 1rem;
+}
+.profileCardEdituser-head-info-underline {
+  height: 1px;
+  width: 100%;
+  background-color: #60bdff;
+}
+.profileCardEdituser-head-info-right-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 45%;
+  display: flex;
+  padding: 10px 20px;
+  border-radius: 1rem;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #757575;
+  height: min-content;
+}
+.profileCardEdituser-head-info-keys {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.profileCardEdituser-head-info-assigners {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: #000000;
+  font-weight: 500;
+}
+.profileCardEdituser-journy {
+  background-color: #f9f9f9;
+  height: 7.5rem;
+}
+.profileCardEdituser-boxes {
+  display: flex;
+  gap: 1.2rem;
+}
+.profileCardEdituser-box {
+  background-color: #f9f9f9;
+  flex: 1;
+  height: 30rem;
+  border-radius: 1rem;
+}
+
+.personalUserEdit-status {
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 2rem;
+  height: fit-content;
+}
+.personalUserEdit-status-bottom-set {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.personalUserEdit-status-elements {
+  display: flex;
+  flex-direction: column;
+}
+.personalUserEdit-status-html-for {
+  font-size: 1rem;
+  font-weight: 400;
+  height: 1.5rem;
+  margin: 0.5rem 1rem;
+  color: #757575;
+}
+.personalUserEdit-status-selectors {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #757575;
+}
+.personalUserEdit-details {
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 2rem;
+  height: fit-content;
+}
+.personalUserEdit-details-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.personalUserEdit-details-editable-detail {
+  height: 10px;
+}
+.personalUserEdit-details-mark-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 1.5rem;
+  gap: 1rem;
+  align-items: center;
+  justify-content: start;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #0075fc #f9f9f9;
+}
+.personalUserEdit-details-mark-container::-webkit-scrollbar {
+  width: 8px;
+}
+.personalUserEdit-details-mark-container::-webkit-scrollbar-thumb {
+  background-color: #0075fc;
+  border-radius: 10px;
+}
+.personalUserEdit-details-mark-container::-webkit-scrollbar-track {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+.personalUserEdit-details-green-card {
+  background-color: #cff3a6;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  gap: 1rem;
+}
+.personalUserEdit-details-green-card-add-btn {
+  background-color: #e8e8e8;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.personalUserEdit-details-green-card-plus {
+  font-size: 1.5rem;
+  color: #000000;
+}
+.personalUserEdit-details-green-card-text {
+  text-align: center;
+}
+.personalUserEdit-details-green-card-percentage {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  font-weight: 600;
+}
+.personalUserEdit-details-subset {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0rem;
+}
+.personalUserEdit-details-subset-with-wtsp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.personalUserEdit-details-key-value {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.personalUserEdit-details-edit-input {
+  border: 1px solid #dadada;
+  border-radius: 5px;
+  padding: 3px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.personalUserEdit-details-edit-input:focus {
+  border-color: #dadada;
+  outline: none;
+}
+.personalUserEdit-details-group-icons {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+.personalUserEdit-details-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  padding-top: 2rem;
+  gap: 2rem;
+}
+
+.start-application {
+  position: sticky;
+  bottom: 0;
+  height: 15rem;
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  padding-bottom: 3rem;
+  font-weight: 500;
 }
 
 /*
