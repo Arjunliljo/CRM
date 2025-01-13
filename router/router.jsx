@@ -21,10 +21,6 @@ export const router = createBrowserRouter([
         element: <Profilepage />,
       },
       {
-        path: "user-card",
-        element: <UserCard />,
-      },
-      {
         path: "user",
         element: <User />,
       },

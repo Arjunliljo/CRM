@@ -20,7 +20,7 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/documents">
+        <NavLink to="/user">
           <HomeIcon path="doc" />
         </NavLink>
       </li>

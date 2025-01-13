@@ -1,12 +1,13 @@
 import dotenv from "dotenv";
+dotenv.config({ path: "./.env" });
+
 import mongoose from "mongoose";
 import app from "./app.js";
 import Admin from "./Models/adminModel.js";
 import { connectToUserAdminDb } from "./middlewares/dynamicDbContext.js";
 
-dotenv.config();
-
 const dbConnectionString = process.env.PRIMARY_STR || "";
+
 const PORT = process.env.PORT || 3000;
 
 let isConnected = false;

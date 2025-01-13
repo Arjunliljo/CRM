@@ -192,12 +192,7 @@ textarea::placeholder {
   overflow: scroll;
   scrollbar-width: none;
   border: 1px solid #0075fc;
-  background: linear-gradient(
-    to bottom,
-    rgba(249, 249, 249, 0.5),
-    #c4ecf7,
-    #b3e7f5
-  );
+  background: linear-gradient(to bottom, rgba(249, 249, 249, 0.5), #c4ecf7, #b3e7f5);
   position: relative;
 }
 .main-body .main-body-box-right::-webkit-scrollbar {
@@ -285,24 +280,6 @@ textarea::placeholder {
   height: fit-content;
 }
 
-.allbttn {
-  background-color: #000000;
-  color: #f9f9f9;
-  padding: 10px 40px;
-  border-radius: 1rem;
-  height: fit-content;
-  border: none;
-}
-
-.headBttns {
-  background-color: #f9f9f9;
-  color: #000000;
-  padding: 10px 40px;
-  border-radius: 1rem;
-  height: fit-content;
-  border: none;
-}
-
 .hot-btn {
   background-color: #e53838;
   color: #f9f9f9;
@@ -368,6 +345,24 @@ textarea::placeholder {
   border: none;
   padding: 4px;
   width: 50%;
+}
+
+.allbttn {
+  background-color: #000000;
+  color: #f9f9f9;
+  padding: 10px 40px;
+  border-radius: 1rem;
+  height: fit-content;
+  border: none;
+}
+
+.headBttns {
+  background-color: #f9f9f9;
+  color: #000000;
+  padding: 10px 40px;
+  border-radius: 1rem;
+  height: 2.5rem;
+  border: none;
 }
 
 .select-container {
@@ -2575,6 +2570,76 @@ F .log .message-area-textarea-container {
   border: none;
   padding: 0.5rem;
   font-size: 14px;
+}
+
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #f9f9f9, #c4ecf7, #b3e7f5);
+  padding: 1rem;
+}
+
+.error-content {
+  text-align: center;
+  background-color: rgba(249, 249, 249, 0.5);
+  padding: 3rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  max-width: 550px;
+  width: 100%;
+  position: relative;
+}
+.error-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #0075fc;
+}
+
+.error-title {
+  font-size: 7rem;
+  color: #0075fc;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.error-subtitle {
+  font-size: 1.8rem;
+  color: #2b2b2b;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.error-text {
+  color: #757575;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.error-button {
+  display: inline-block;
+  background-color: #0075fc;
+  color: #f9f9f9;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 1rem;
+}
+.error-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 117, 252, 0.2);
 }
 
 /*
