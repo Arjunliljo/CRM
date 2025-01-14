@@ -2,10 +2,9 @@ import dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 /* global process */
 
-
 import mongoose from "mongoose";
 import app from "./app.js";
-import Admin from "./Models/adminModel.js";
+import Client from "./Models/clientModel.js";
 import { connectToUserAdminDb } from "./middlewares/dynamicDbContext.js";
 
 const dbConnectionString = process.env.PRIMARY_STR || "";
@@ -39,13 +38,13 @@ async function connectToDatabase() {
 // Function to connect to admin-specific db dynamically
 async function connectToUserAdminDatabases() {
   try {
-    const admins = await Admin.find(); // Fetch all admin users
+    const admins = await Client.find(); // Fetch all admin users
 
     for (const admin of admins) {
       const { _id, databaseName } = admin;
 
       // Create connection to each admin's db
-      const userAdminDbConnection = await connectToUserAdminDb(_id);
+      const userAdminDbConnection = await connectToUserAdminDb(admin);
       dbConnections.push(userAdminDbConnection);
       console.log(`Connected to User Admin Database: ${databaseName}`);
     }

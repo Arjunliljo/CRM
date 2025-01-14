@@ -1,39 +1,32 @@
 /* global process */
 import mongoose from "mongoose";
-import Admin from "../Models/adminModel.js";
+import Admin from "../Models/clientModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
-import AppError from "../Utilities/appError.js";
 
-export const getClusterUrlByDatabaseName = (databaseName) => {
-  switch (databaseName) {
-    case "marketlube":
-      return process.env.CLUSTER_URL_1;
-    case "skymark":
-      return process.env.CLUSTER_URL_2;
-    default:
-      throw new Error(`Cluster URL for ${databaseName} not found`);
-  }
+export const getClusterUrlByDatabaseName = (count = 1) => {
+  const url = process.env.arr.split(",,,,,,,")[count];
+  console.log(url, "urlwdww");
+  const clusterUrl = url[count];
+  return clusterUrl;
 };
 
-export const connectToUserAdminDb = async (adminId) => {
+export const connectToUserAdminDb = async (admin) => {
   try {
     // Fetch the admin document
-    const admin = await Admin.findById(adminId);
+
     if (!admin) {
       throw new Error("Admin not found");
     }
 
-    const { databaseName } = admin;
+    const { databaseName, count } = admin;
 
     // Get the corresponding cluster URL based on the databaseName
-    const clusterUrl = getClusterUrlByDatabaseName(databaseName);
+    const clusterUrl = await getClusterUrlByDatabaseName(count);
 
     // Create a connection to the corresponding admin's database
-    const connection = await mongoose.createConnection(
-      `${clusterUrl}/${databaseName}`
-    );
+    const connection = await mongoose.createConnection(`${clusterUrl}`);
 
-    console.log(`Successfully connected to the ${databaseName} database`);
+    console.log(`Successfully connected to the database`);
 
     return connection;
   } catch (error) {
