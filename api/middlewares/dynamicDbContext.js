@@ -1,13 +1,18 @@
 /* global process */
 import mongoose from "mongoose";
-import Admin from "../Models/clientModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
 
-export const getClusterUrlByDatabaseName = (count = 1) => {
-  const url = process.env.arr.split(",,,,,,,")[count];
-  console.log(url, "urlwdww");
-  const clusterUrl = url[count];
-  return clusterUrl;
+export const getClusterUrlByDatabaseName = (count) => {
+  const defaultUrl = process.env.PRIMARY_STR;
+  const urls = process.env.CLUSTER_URLS.split(",,,,,,,");
+  const url = urls[count] || defaultUrl;
+  console.log(count,":",url);
+
+  if (!url.startsWith('mongodb://') && !url.startsWith('mongodb+srv://')) {
+    return defaultUrl;
+  }
+
+  return url;
 };
 
 export const connectToUserAdminDb = async (admin) => {
@@ -18,9 +23,9 @@ export const connectToUserAdminDb = async (admin) => {
       throw new Error("Admin not found");
     }
 
-    const { databaseName, count } = admin;
+    const { count } = admin;
 
-    // Get the corresponding cluster URL based on the databaseName
+    // Get the corresponding cluster URL based on the database count
     const clusterUrl = await getClusterUrlByDatabaseName(count);
 
     // Create a connection to the corresponding admin's database

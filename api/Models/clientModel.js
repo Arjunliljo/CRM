@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-const adminSchema = mongoose.Schema(
+const clientSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Admin must have a name"],
+      required: [true, "Client must have a name"],
       maxlength: [30, "Name should be less than 30 characters"],
     },
 
@@ -30,28 +30,24 @@ const adminSchema = mongoose.Schema(
     email: {
       type: String,
       unique: true,
-      required: [true, "Admin must have an email"],
+      required: [true, "Client must have an email"],
     },
     password: {
       type: String,
-      required: [true, "Admin must have a password"],
+      required: [true, "Client must have a password"],
     },
     phone: {
       type: String,
-      required: [true, "Admin must have a phone number"],
+      required: [true, "Client must have a phone number"],
     },
     count: {
       type: Number,
     },
-    databaseName: {
-      type: String,
-      unique: true,
-      required: [true, "Database name is required for the admin"],
-    },
+
   },
   { timestamps: true }
 );
 
-const Admin = mongoose.model("Admin", adminSchema);
+const Client = mongoose.model("Client", clientSchema);
 
-export default Admin;
+export default Client;

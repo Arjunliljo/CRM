@@ -41,12 +41,12 @@ async function connectToUserAdminDatabases() {
     const admins = await Client.find(); // Fetch all admin users
 
     for (const admin of admins) {
-      const { _id, databaseName } = admin;
+      const { name } = admin;
 
       // Create connection to each admin's db
       const userAdminDbConnection = await connectToUserAdminDb(admin);
       dbConnections.push(userAdminDbConnection);
-      console.log(`Connected to User Admin Database: ${databaseName}`);
+      console.log(`Connected to User Admin Database: ${name}`);
     }
   } catch (err) {
     console.error("Error connecting to user-admin databases:", err.message);
