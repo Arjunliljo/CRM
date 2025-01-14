@@ -2,13 +2,11 @@ import { sanitizeInput, validateObjectId } from "../Utilities/validation.js";
 import bcrypt from "bcryptjs";
 import getUserModel from "../Models/userModel.js";
 import getGroupModel from "../Models/userGroupModel.js";
-import getBranchModel from "../Models/branchModel.js";
-import getRoleModel from "../Models/roleModel.js";
-import getStatusModel from "../Models/statusModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import mongoose from "mongoose";
+import AppError from "../Utilities/appError.js";
 
-const addUser = catchAsync(async (req, res) => {
+const addUser = catchAsync(async (req, res, next) => {
   const {
     name,
     email,
@@ -75,6 +73,8 @@ const addUser = catchAsync(async (req, res) => {
   // Save to database
   const savedUser = await newUser.save();
 
+  if (!savedUser) return next(new AppError("Failed to create user", 400));
+
   // Respond with success
   return res.status(201).json({
     success: true,
@@ -83,128 +83,104 @@ const addUser = catchAsync(async (req, res) => {
   });
 });
 
-const changeUserPassword = catchAsync(async (req, res) => {
+const changeUserPassword = catchAsync(async (req, res, next) => {
   let userId = req.params.id;
   const { newPassword } = req.body;
-  try {
-    // Input validation
-    if (!userId || !newPassword) {
-      return res.status(400).json({
-        success: false,
-        message: "User ID and new password are required",
-      });
-    }
-    const User = getUserModel(req.db);
 
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
-
-    // encrypt password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(newPassword, salt);
-
-    // Update password and change password date
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      {
-        password: hashedPassword,
-        changePasswordDate: new Date(),
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-
-    // Remove sensitive info before returning
-    updatedUser.password = undefined;
-
-    return res.status(200).json({
-      success: true,
-      message: "Password updated successfully",
-      data: updatedUser,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: `Failed to change password: ${error.message}`,
-    });
+  // Input validation
+  if (!userId || !newPassword) {
+    return next(new AppError("User ID and new password are required", 400));
   }
+  const User = getUserModel(req.db);
+
+  const user = await User.findById(userId);
+  if (!user) {
+    return next(new AppError("User not found", 404));
+  }
+
+  // encrypt password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+  // Update password and change password date
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      password: hashedPassword,
+      changePasswordDate: new Date(),
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  // Remove sensitive info before returning
+  updatedUser.password = undefined;
+
+  if (!updatedUser) return next(new AppError("Failed to update password", 400));
+
+  return res.status(200).json({
+    success: true,
+    message: "Password updated successfully",
+    data: updatedUser,
+  });
 });
 
-const userGroup = catchAsync(async (req, res) => {
-  try {
-    const { name, description, branch, users, createdBy } = req.body;
+const userGroup = catchAsync(async (req, res, next) => {
+  const { name, description, branch, users, createdBy } = req.body;
 
-    // Dynamically get the Group model based on the db connection
-    const Group = getGroupModel(req.db);
+  // Dynamically get the Group model based on the db connection
+  const Group = getGroupModel(req.db);
+  if (!Group) return next(new AppError("Failed to get group model", 400));
 
-    // to validate user branches
-    const User = getUserModel(req.db);
+  // to validate user branches
+  const User = getUserModel(req.db);
+  if (!User) return next(new AppError("Failed to get user model", 400));
 
-    // checking the branch
-    const usersData = await User.find({ _id: { $in: users } });
+  // checking the branch
+  const usersData = await User.find({ _id: { $in: users } });
 
-    // Check if all users are from the same branch
-    const areSameBranch = usersData.every(
-      (user) => user.branch.toString() === branch.toString()
+  // Check if all users are from the same branch
+  const areSameBranch = usersData.every(
+    (user) => user.branch.toString() === branch.toString()
+  );
+
+  if (!areSameBranch) {
+    return next(
+      new AppError(
+        "All users must belong to the same branch as the group.",
+        400
+      )
     );
-
-    if (!areSameBranch) {
-      return res.status(400).json({
-        success: false,
-        message: "All users must belong to the same branch as the group.",
-      });
-    }
-
-    const newGroup = new Group({
-      name,
-      description,
-      branch,
-      users,
-      createdBy,
-    });
-
-    // Save the group
-    const savedGroup = await newGroup.save();
-
-    return res.status(201).json({
-      success: true,
-      message: "Group created successfully.",
-      data: savedGroup,
-    });
-  } catch (error) {
-    console.error("Error creating group:", error);
-    return res.status(500).json({
-      success: false,
-      message: "An error occurred while creating the group.",
-    });
   }
+
+  const newGroup = new Group({
+    name,
+    description,
+    branch,
+    users,
+    createdBy,
+  });
+
+  // Save the group
+  const savedGroup = await newGroup.save();
+
+  return res.status(201).json({
+    success: true,
+    message: "Group created successfully.",
+    data: savedGroup,
+  });
 });
 
-const receiveUsers = catchAsync(async (req, res) => {
+const getUsers = catchAsync(async (req, res) => {
   // Create a database connection for User and Branch models
   const dbConnection = req.db;
-
-  // Register models with the current database connection if not already registered
-  getUserModel(dbConnection);
-  getBranchModel(dbConnection);
-  getRoleModel(dbConnection);
-  getStatusModel(dbConnection);
 
   const User = getUserModel(dbConnection); // Use the dbConnection
 
   // Fetch users and populate the related fields
-  const users = await User.find({})
-    .populate("role") // Populate the `role` field
-    .populate("branch") // Populate the `branch` field (array of branches)
-    .populate("status") // Populate the `status` field
-    .populate("country"); // Populate the `country` field
+  const users = await User.find({});
 
   return res.status(200).json({
     success: true,
@@ -213,7 +189,7 @@ const receiveUsers = catchAsync(async (req, res) => {
   });
 });
 
-const dropUser = catchAsync(async (req, res) => {
+const dropUser = catchAsync(async (req, res, next) => {
   const userId = req.params.id; // Get user ID from the URL params
 
   // Create a database connection
@@ -226,10 +202,7 @@ const dropUser = catchAsync(async (req, res) => {
   const deletedUser = await User.findByIdAndDelete(userId);
 
   if (!deletedUser) {
-    return res.status(404).json({
-      success: false,
-      message: "User not found",
-    });
+    return next(new AppError("User not found", 404));
   }
 
   return res.status(200).json({
@@ -239,4 +212,25 @@ const dropUser = catchAsync(async (req, res) => {
   });
 });
 
-export { addUser, changeUserPassword, userGroup, receiveUsers, dropUser };
+const updateUser = catchAsync(async (req, res, next) => {
+  const userId = req.params.id; // Get user ID from the URL params
+
+  // Create a database connection
+  const dbConnection = req.db || mongoose.connection;
+
+  // Register the User model with the current database connection if not already registered
+  const User = getUserModel(dbConnection);
+  const user = await User.findByIdAndUpdate(userId, req.body, { new: true });
+
+  if (!user) return next(new AppError("User not found", 404));
+  return res.status(200).json({ success: true, data: user });
+});
+
+export {
+  addUser,
+  changeUserPassword,
+  userGroup,
+  getUsers,
+  dropUser,
+  updateUser,
+};

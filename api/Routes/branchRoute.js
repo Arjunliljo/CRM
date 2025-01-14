@@ -1,14 +1,13 @@
 import express from "express";
-import { protect } from "../middlewares/auth.js";
 import {
   createBranch,
-  receiveBranches,
+  getAllBranches,
 } from "../Controllers/branchController.js";
 const router = express.Router();
 
 // Branch cruds - admin only will do
 router.post("/", createBranch);
-router.get("/", receiveBranches);
+router.get("/", getAllBranches);
 
 // router.put("/", updateBranch);
 // router.delete("/", dropBranch);

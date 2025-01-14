@@ -1,29 +1,14 @@
 import getRoleModel from "../Models/roleModel.js";
+import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
-import { isValidString, sanitizeInput } from "../Utilities/validation.js";
+import { sanitizeInput } from "../Utilities/validation.js";
 
-const createRole = catchAsync(async (req, res) => {
+const createRole = catchAsync(async (req, res, next) => {
   let { name, description } = req.body;
 
   // Sanitize and validate inputs
   name = sanitizeInput(name);
   description = sanitizeInput(description);
-
-  if (!isValidString(name, { min: 2, max: 50 })) {
-    return res.status(400).json({
-      success: false,
-      message:
-        "Invalid name: must be at least 2 characters long and not contain malicious content.",
-    });
-  }
-
-  if (!isValidString(description, { min: 2, max: 100 })) {
-    return res.status(400).json({
-      success: false,
-      message:
-        "Invalid description: must be between 3 and 100 characters long.",
-    });
-  }
 
   // Dynamically get the Role model for the current database connection
   const Role = getRoleModel(req.db);
@@ -31,10 +16,9 @@ const createRole = catchAsync(async (req, res) => {
   // Check if role already exists in the specified database
   const existingRole = await Role.findOne({ name });
   if (existingRole) {
-    return res.status(400).json({
-      success: false,
-      message: `Role with the name "${name}" already exists.`,
-    });
+    return next(
+      new AppError(`Role with the name "${name}" already exists.`, 401)
+    );
   }
 
   // Create a new role in the correct database
