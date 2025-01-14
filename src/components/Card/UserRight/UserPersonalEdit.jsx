@@ -177,7 +177,7 @@ function UserPersonalEdit() {
       <div className="personalUserEdit-details-buttons">
         <PrimaryBttn
           style={{
-            backgroundColor: "gray",
+            backgroundColor: "#dadada",
             paddingLeft: "2rem",
             paddingRight: "2rem",
             color: "black",
