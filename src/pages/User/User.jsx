@@ -15,9 +15,9 @@ import UserRight from "../../components/Card/UserRight/UserRight";
 
 const user = {
   num: 3,
-  name: "John Doe",
+  name: "David Martin",
   img: "https://via.placeholder.com/150",
-  number: 1234567890,
+  role: "Counsellor",
   status: "Interested",
   statusColor: "red",
   remark:

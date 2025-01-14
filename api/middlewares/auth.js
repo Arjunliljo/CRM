@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { verifyToken } from "../Utilities/jwt.js";
+import { getClusterUrlByDatabaseName } from "./dynamicDbContext.js";
 
 const dbConnections = {};
 
@@ -12,15 +13,32 @@ const protect = async (req, res, next) => {
   try {
     // Decode the token to get user and database information
     const { adminId, dbName, role } = verifyToken(token);
-    console.log(adminId, dbName, role);
 
-    const mongoUri =
-      process.env.DB_DYNAMIC_URL || `mongodb://localhost:27017/${dbName}`;
+    if (!dbName) {
+      return res
+        .status(401)
+        .json({ message: "Database name missing in token" });
+    }
+
+    // Get the correct cluster URL for the dbName
+    const mongoUri = getClusterUrlByDatabaseName(dbName);
+
     // Connect to the database if not already connected
     if (!dbConnections[dbName]) {
       console.log(`Connecting to database: ${dbName}`);
       dbConnections[dbName] = mongoose.createConnection(mongoUri);
+      // Handle connection errors
+      dbConnections[dbName].on("error", (err) => {
+        console.error(`Error connecting to ${dbName}:`, err.message);
+        delete dbConnections[dbName]; // Remove invalid connection from cache
+      });
+
+      // Connection success log
+      dbConnections[dbName].once("open", () => {
+        console.log(`Successfully connected to database: ${dbName}`);
+      });
     }
+
     // Attach the database connection and user details to the request
     req.db = dbConnections[dbName];
     req.db.dbName = dbName;
@@ -28,7 +46,7 @@ const protect = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error("Authentication failed:", error.message);
+    console.error("Authentication error:", error.message);
     res.status(401).json({ message: "Authentication failed" });
   }
 };
