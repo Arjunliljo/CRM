@@ -32,6 +32,7 @@ const createBranch = catchAsync(async (req, res, next) => {
     data: newBranch,
   });
 });
+
 const getAllBranches = catchAsync(async (req, res, next) => {
   // Dynamically get the Branch model for the current database connection
   const Branch = getBranchModel(req.db);
