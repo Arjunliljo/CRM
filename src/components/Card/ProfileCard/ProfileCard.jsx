@@ -1,3 +1,4 @@
+import Tracker from "../../smallComponents/Tracker";
 import ActivityLog from "./ActivityLog";
 import EligiableCourses from "./EligiableCourses";
 import PersonalDetails from "./PersonalDetails";
@@ -44,7 +45,9 @@ export default function ProfileCard() {
           </div>
         </div>
       </div>
-      <div className="profileCard-journy"></div>
+      <div className="profileCard-journy">
+        <Tracker completedStep={3} />
+      </div>
       <div className="profileCard-boxes">
         <PersonalDetails />
         <ProfileCardStatus />

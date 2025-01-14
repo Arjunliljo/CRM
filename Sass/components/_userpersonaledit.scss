@@ -113,7 +113,7 @@
     display: flex;
     flex-direction: column;
     padding: variables.$padding-lg 2rem;
-    height: fit-content;
+    height: 28rem;
 
     &-bottom-set {
       padding: variables.$margin-md;
@@ -129,7 +129,7 @@
       font-size: 1rem;
       font-weight: 400;
       height: 1.5rem;
-      margin: variables.$margin-sm variables.$margin-md;
+      margin: variables.$margin-sm 0;
       color: variables.$color-text-gray;
     }
     &-selectors {
@@ -144,7 +144,7 @@
     display: flex;
     flex-direction: column;
     padding: variables.$padding-lg 2rem;
-    height: fit-content;
+    height: 28rem;
 
     &-heading {
       display: flex;
@@ -256,6 +256,7 @@
       justify-content: space-between;
     }
     &-buttons {
+      height: 5rem;
       display: flex;
       align-items: center;
       justify-content: center;
