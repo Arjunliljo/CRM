@@ -14,7 +14,6 @@ router.post("/", addUser);
 router.get("/", getUsers);
 router.patch("/", updateUser);
 router.delete("/:id", dropUser);
-
 router.post("/userGroup", userGroup);
 
 export default router;
