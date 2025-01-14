@@ -32,7 +32,7 @@ const createRole = catchAsync(async (req, res, next) => {
   });
 });
 
-const receiveRoles = catchAsync(async (req, res) => {
+const getAllRoles = catchAsync(async (req, res) => {
   const Role = getRoleModel(req.db);
   const roles = await Role.find({});
 
@@ -42,4 +42,38 @@ const receiveRoles = catchAsync(async (req, res) => {
     data: roles,
   });
 });
-export { createRole, receiveRoles };
+
+const updateRole = catchAsync(async (req, res) => {
+  const Role = getRoleModel(req.db);
+  const role = await Role.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+
+  return res.status(200).json({
+    success: true,
+    message: "Roles fetched successfully",
+    data: role,
+  });
+});
+
+const getRole = catchAsync(async (req, res) => {
+  const Role = getRoleModel(req.db);
+  const role = await Role.findById(req.params.id);
+
+  return res.status(200).json({
+    success: true,
+    message: "Role fetched successfully",
+    data: role,
+  });
+});
+const deleteRole = catchAsync(async (req, res) => {
+  const Role = getRoleModel(req.db);
+  const role = await Role.findByIdAndDelete(req.params.id);
+
+  return res.status(200).json({
+    success: true,
+    message: "Role deleted successfully",
+    data: role,
+  });
+});
+export { createRole, getAllRoles, getRole, updateRole, deleteRole };

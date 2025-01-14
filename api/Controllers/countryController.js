@@ -10,14 +10,6 @@ const createCountry = catchAsync(async (req, res, next) => {
   name = sanitizeInput(name);
   code = sanitizeInput(code);
 
-  // Check if the country code is valid
-  if (!/^\d+$/.test(code.trim())) {
-    return res.status(400).json({
-      success: false,
-      message: "Country code must be a valid number.",
-    });
-  }
-
   // Dynamically get the Country model for the current database connection
   const Country = getCountryModel(req.db);
 
@@ -32,8 +24,39 @@ const createCountry = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     success: true,
-    data: newCountry,
     message: "New country created successfully",
+    data: newCountry,
   });
 });
-export { createCountry };
+
+const getAllCountries = catchAsync(async (req, res) => {
+  const Country = getCountryModel(req.db);
+  const countries = await Country.find({});
+  return res.status(200).json({
+    success: true,
+    message: "Countries fetched successfully",
+    data: countries,
+  });
+});
+
+const getCountry = catchAsync(async (req, res) => {
+  const Country = getCountryModel(req.db);
+  const country = await Country.findById(req.params.id);
+  return res.status(200).json({
+    success: true,
+    message: "Country fetched successfully",
+    data: country,
+  });
+});
+
+const deleteCountry = catchAsync(async (req, res) => {
+  const Country = getCountryModel(req.db);
+  const country = await Country.findByIdAndDelete(req.params.id);
+  return res.status(200).json({
+    success: true,
+    message: "Country deleted successfully",
+    data: country,
+  });
+});
+
+export { createCountry, getAllCountries, getCountry, deleteCountry };

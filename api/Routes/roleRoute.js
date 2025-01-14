@@ -1,13 +1,16 @@
 import express from "express";
-import { protect } from "../middlewares/auth.js";
-import { createRole, receiveRoles } from "../Controllers/roleController.js";
+
+import { createRole } from "../Controllers/roleController.js";
+import { getAllRoles } from "../Controllers/roleController.js";
+import { getRole } from "../Controllers/roleController.js";
+import { updateRole } from "../Controllers/roleController.js";
+import { deleteRole } from "../Controllers/roleController.js";
 const router = express.Router();
 
-router.use(protect);
-
-// Role cruds - admin only will do
+router.get("/", getAllRoles);
+router.get("/:id", getRole);
 router.post("/", createRole);
-router.get("/", receiveRoles);
-// router.put("/", protect, updateRole);
-// router.delete("/", protect, dropRole);
+router.patch("/:id", updateRole);
+router.delete("/:id", deleteRole);
+
 export default router;

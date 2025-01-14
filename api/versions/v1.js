@@ -33,7 +33,6 @@ const router = express.Router();
 
 router.use("/user", userRoute);
 
-// Nest admin routes under /api/v2/admin
 router.use("/branch", branchRoute);
 router.use("/country", countryRoute);
 router.use("/lead", leadRoute);

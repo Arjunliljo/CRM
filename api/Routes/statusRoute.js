@@ -1,11 +1,20 @@
 import express from "express";
 import { protect } from "../middlewares/auth.js";
-import { createStatus, getAllStatus } from "../Controllers/statusController.js";
+import {
+  createStatus,
+  deleteStatus,
+  getAllStatus,
+  getStatus,
+  updateStatus,
+} from "../Controllers/statusController.js";
 const router = express.Router();
 
 router.use(protect);
 
-router.post("/", createStatus);
 router.get("/", getAllStatus);
+router.get("/:id", getStatus);
+router.post("/", createStatus);
+router.patch("/:id", updateStatus);
+router.delete("/:id", deleteStatus);
 
 export default router;

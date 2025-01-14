@@ -22,7 +22,6 @@ const createBranch = catchAsync(async (req, res, next) => {
       )
     );
   }
-
   // Create new branch in the correct database
   const newBranch = await Branch.create({ name: sanitizedName });
 
@@ -33,7 +32,6 @@ const createBranch = catchAsync(async (req, res, next) => {
     data: newBranch,
   });
 });
-
 const getAllBranches = catchAsync(async (req, res, next) => {
   // Dynamically get the Branch model for the current database connection
   const Branch = getBranchModel(req.db);
@@ -50,4 +48,44 @@ const getAllBranches = catchAsync(async (req, res, next) => {
   });
 });
 
-export { createBranch, getAllBranches };
+const getBranch = catchAsync(async (req, res, next) => {
+  // Dynamically get the Branch model for the current database connection
+  const Branch = getBranchModel(req.db);
+
+  // Fetch all branches from the database
+  const branch = await Branch.findById(req.params.id);
+
+  if (!branch) return next(new AppError("Cannot find branch", 404));
+
+  return res.status(200).json({
+    success: true,
+    message: "Branch retrieved successfully",
+    data: branch,
+  });
+});
+const updateBranch = catchAsync(async (req, res, next) => {
+  const Branch = getBranchModel(req.db);
+  const branch = await Branch.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+  if (!branch) return next(new AppError("Cannot find branch", 404));
+  return res.status(200).json({
+    success: true,
+    message: "Branch updated successfully",
+    data: branch,
+  });
+});
+const deleteBranch = catchAsync(async (req, res, next) => {
+  const Branch = getBranchModel(req.db);
+  const branch = await Branch.findByIdAndDelete(req.params.id);
+
+  if (!branch) return next(new AppError("Cannot find branch", 404));
+
+  return res.status(200).json({
+    success: true,
+    message: "Branch deleted successfully",
+    data: branch,
+  });
+});
+
+export { createBranch, getAllBranches, getBranch, deleteBranch, updateBranch };
