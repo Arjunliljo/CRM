@@ -1,0 +1,78 @@
+.progress-tracker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f3fcff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  &__steps {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+
+    &__step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+
+      &:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        width: calc(100% - 40px);
+        height: 2px;
+        background-color: #00aaff;
+        top: 9px;
+        left: 50%;
+        transform: translateX(0);
+        z-index: -1;
+      }
+
+      &__indicator {
+        width: 20px;
+        height: 20px;
+        background-color: #00aaff;
+        border-radius: 50%;
+      }
+
+      &__label {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #333;
+        text-align: center;
+      }
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    margin-top: 20px;
+
+    &__university {
+      font-size: 16px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    &__all-applications {
+      background-color: #00aaff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #0088cc;
+      }
+    }
+  }
+}

@@ -18,6 +18,36 @@ function UserRight() {
   };
   return (
     <div className="UserRightCard">
+      <div className="UserRightCard-head-info-details">
+        <div>
+          <img src={lead.img} alt={lead.name} />
+        </div>
+        <div className="name-bar-name name-small">
+          <div>
+            {lead.name}
+            <br></br>
+            <p style={{ fontSize: "1rem", color: "gray" }}>{lead.location}</p>
+          </div>
+          <div className="UserRightCard-head-info-location-card">
+            <span className="UserRightCard-head-info-location"></span>
+          </div>
+          {/* <div className="UserRightCard-body-bottom-icons-item">
+            <HomeIcon
+              path="u-turn"
+              color="#00b100"
+              style={{ transform: "rotate(270deg)" }}
+            />
+            <p>
+              <span style={{ fontSize: "0.8rem", color: "gray" }}>
+                Stayback:{" "}
+              </span>
+              <span style={({ color: "black" }, { fontSize: "0.8rem" })}>
+                {lead.year} Years
+              </span>
+            </p>
+          </div> */}
+        </div>
+      </div>
       <div className="UserRightCard-boxes">
         <UserPersonalEdit />
         <UserPosition />

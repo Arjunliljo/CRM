@@ -3,8 +3,8 @@ import Mover from "../../features/Mover";
 import CountryBtn from "../buttons/CountryBtn";
 import InfoBtn from "../buttons/InfoBtn";
 import HomeIcon from "../utils/Icons/HomeIcon";
-import NameBar from "./NameBar";
 import { useDispatch } from "react-redux";
+import UserNamebar from "./UserRight/UserNamebar";
 
 function UserCard({ user, set, onSet }) {
   const [isSelected, setIsSelected] = useState(user?._id === set?._id);
@@ -34,7 +34,7 @@ function UserCard({ user, set, onSet }) {
     >
       <div className="cardUser-body">
         <div className="cardUser-body-top">
-          <NameBar lead={user} />
+          <UserNamebar user={user} />
           {/* <InfoBtn color="white" bgcl="green">
             Interested
           </InfoBtn> */}
@@ -62,7 +62,9 @@ function UserCard({ user, set, onSet }) {
         </div>
 
         <div className="cardUser-body-bottom-country">
-          <CountryBtn>{user.state}</CountryBtn>
+          <CountryBtn style={{ paddingLeft: "2rem", paddingRight: "2rem" }}>
+            {user.state}
+          </CountryBtn>
         </div>
       </div>
     </div>

@@ -9,6 +9,8 @@ import {
 import { FaRegUser, FaWhatsapp } from "react-icons/fa";
 import { GoHome } from "react-icons/go";
 import { IoAdd } from "react-icons/io5";
+import PrimaryBttn from "../../buttons/PrimaryBttn";
+import { color } from "framer-motion";
 
 function UserPersonalEdit() {
   const [isEditing, setIsEditing] = useState(false);
@@ -65,15 +67,15 @@ function UserPersonalEdit() {
   };
 
   return (
-    <div className="profileCard-box personal-details">
-      <div className="personal-details-heading">
+    <div className="profileCardEdituser-box personalUserEdit-details">
+      <div className="personalUserEdit-details-heading">
         <span className="name-small">Personal Details</span>
         {!isEditing ? (
           <span className="icons" onClick={handleOpenEdit}>
             <MdOutlineModeEdit />
           </span>
         ) : (
-          <div className="icons personal-details-group-icons">
+          <div className="icons personalUserEdit-details-group-icons">
             <span onClick={handleCloseEdit}>
               <MdOutlineClose />
             </span>
@@ -83,20 +85,20 @@ function UserPersonalEdit() {
           </div>
         )}
       </div>
-      <div className="personal-details-subset">
+      <div className="personalUserEdit-details-subset">
         <span className="icons">
           <FaRegUser />
         </span>
-        <div className="personal-details-key-value">
+        <div className="personalUserEdit-details-key-value">
           <span className="card-number">Name</span>
-          <div className="personal-details-editable-detail">
+          <div className="personalUserEdit-details-editable-detail">
             {isEditing ? (
               <input
                 type="text"
                 name="name"
                 value={details.name}
                 onChange={handleChange}
-                className="personal-details-edit-input"
+                className="personalUserEdit-details-edit-input"
               />
             ) : (
               <span>{details.name}</span>
@@ -104,21 +106,21 @@ function UserPersonalEdit() {
           </div>
         </div>
       </div>
-      <div className="personal-details-subset-with-wtsp">
-        <div className="personal-details-subset">
+      <div className="personalUserEdit-details-subset-with-wtsp">
+        <div className="personalUserEdit-details-subset">
           <span className="icons">
             <MdOutlineLocalPhone />
           </span>
-          <div className="personal-details-key-value">
+          <div className="personalUserEdit-details-key-value">
             <span className="card-number">Contact Number</span>
-            <div className="personal-details-editable-detail">
+            <div className="personalUserEdit-details-editable-detail">
               {isEditing ? (
                 <input
                   type="text"
                   name="contact"
                   value={details.contact}
                   onChange={handleChange}
-                  className="personal-details-edit-input"
+                  className="personalUserEdit-details-edit-input"
                 />
               ) : (
                 <span>{details.contact}</span>
@@ -130,20 +132,20 @@ function UserPersonalEdit() {
           <FaWhatsapp />
         </span>
       </div>
-      <div className="personal-details-subset">
+      <div className="personalUserEdit-details-subset">
         <span className="icons">
           <MdOutlineMailOutline />
         </span>
-        <div className="personal-details-key-value">
+        <div className="personalUserEdit-details-key-value">
           <span className="card-number">Email</span>
-          <div className="personal-details-editable-detail">
+          <div className="personalUserEdit-details-editable-detail">
             {isEditing ? (
               <input
                 type="email"
                 name="email"
                 value={details.email}
                 onChange={handleChange}
-                className="personal-details-edit-input"
+                className="personalUserEdit-details-edit-input"
               />
             ) : (
               <span>{details.email}</span>
@@ -151,26 +153,48 @@ function UserPersonalEdit() {
           </div>
         </div>
       </div>
-      <div className="personal-details-subset">
+      <div className="personalUserEdit-details-subset">
         <span className="icons">
           <GoHome />
         </span>
-        <div className="personal-details-key-value">
+        <div className="personalUserEdit-details-key-value">
           <span className="card-number">Address</span>
-          <div className="personal-details-editable-detail">
+          <div className="personalUserEdit-details-editable-detail">
             {isEditing ? (
               <input
                 type="text"
                 name="address"
                 value={details.address}
                 onChange={handleChange}
-                className="personal-details-edit-input"
+                className="personalUserEdit-details-edit-input"
               />
             ) : (
               <span>{details.address}</span>
             )}
           </div>
         </div>
+      </div>
+      <div className="personalUserEdit-details-buttons">
+        <PrimaryBttn
+          style={{
+            backgroundColor: "#dadada",
+            paddingLeft: "2rem",
+            paddingRight: "2rem",
+            color: "black",
+            fontWeight: "bold",
+          }}
+        >
+          Cancel
+        </PrimaryBttn>
+        <PrimaryBttn
+          style={{
+            paddingLeft: "2rem",
+            paddingRight: "2rem",
+            fontWeight: "bold",
+          }}
+        >
+          Submit
+        </PrimaryBttn>
       </div>
     </div>
   );

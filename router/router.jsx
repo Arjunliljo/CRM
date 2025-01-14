@@ -14,6 +14,7 @@ import Payments from "../src/pages/Payment/Payments";
 import Branchmanage from "../src/pages/branchmanage/Branchmanage";
 import General from "../src/pages/General/General";
 import { useSelector } from "react-redux";
+import Tracker from "../src/components/smallComponents/Tracker";
 
 const tabs = ["offerletter", "students", "payments"];
 
@@ -60,6 +61,10 @@ export const router = createBrowserRouter([
       {
         path: "payment",
         element: <Payments />,
+      },
+      {
+        path: "track",
+        element: <Tracker />,
       },
       {
         path: "branchmanaging",
