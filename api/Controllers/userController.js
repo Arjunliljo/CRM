@@ -228,6 +228,87 @@ const receiveUsers = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const {id } = req.params;
+    const {
+      name,
+      email,
+      phone,
+      password,
+      role,
+      employeeId,
+      Address,
+      autoAssign,
+      status,
+      branch,
+      country,
+      image,
+    } = req.body;
+
+    // Validate ObjectId fields (id, role, status, branch, country)
+    if (!validateObjectId(id)) {
+      return res.status(400).send({ message: "Invalid user ID format" });
+    }
+    if (role && !validateObjectId(role)) {
+      return res.status(400).send({ message: "Invalid role ID format" });
+    }
+    if (status && !validateObjectId(status)) {
+      return res.status(400).send({ message: "Invalid status ID format" });
+    }
+    if (country && !validateObjectId(country)) {
+      return res.status(400).send({ message: "Invalid country ID format" });
+    }
+
+    // Check if autoAssign is true and branch length is more than 1
+    if (autoAssign === true && branch.length > 1) {
+      return res.status(400).send({
+        message: "autoAssign can only be true when branch length is 1.",
+      });
+    }
+
+    // Dynamically retrieve User model based on the database connection
+    const User = getUserModel(req.db);
+
+    // Find the user by ID
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    // Update the user's fields with sanitized and validated data
+    if (name) user.name = sanitizeInput(name);
+    if (email) user.email = sanitizeInput(email.toLowerCase());
+    if (phone) user.phone = sanitizeInput(phone);
+    if (password) user.password = password; // Assume password is hashed elsewhere
+    if (employeeId) user.employeeId = sanitizeInput(employeeId);
+    if (Address) user.Address = sanitizeInput(Address);
+    if (autoAssign !== undefined) user.autoAssign = autoAssign;
+    if (status) user.status = status;
+    if (branch) user.branch = branch;
+    if (country) user.country = country;
+    if (role) user.role = role;
+    if (image) user.image = image;
+
+    // Save the updated user
+    const updatedUser = await user.save();
+
+    // Respond with success
+    return res.status(200).json({
+      success: true,
+      message: "User updated successfully.",
+      data: updatedUser,
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while updating the user.",
+    });
+  }
+};
+
+
 const dropUser = async (req, res) => {
   try {
     const userId = req.params.id; // Get user ID from the URL params
@@ -261,4 +342,4 @@ const dropUser = async (req, res) => {
     });
   }
 };
-export { addUser, changeUserPassword, userGroup, receiveUsers, dropUser };
+export { addUser, changeUserPassword, userGroup, receiveUsers, dropUser,updateUser };
