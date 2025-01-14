@@ -4,11 +4,11 @@ import Admin from "../Models/adminModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import AppError from "../Utilities/appError.js";
 
-const getClusterUrlByDatabaseName = (databaseName) => {
+export const getClusterUrlByDatabaseName = (databaseName) => {
   switch (databaseName) {
-    case 'marketlube':
+    case "marketlube":
       return process.env.CLUSTER_URL_1;
-    case 'skymark':
+    case "skymark":
       return process.env.CLUSTER_URL_2;
     default:
       throw new Error(`Cluster URL for ${databaseName} not found`);
@@ -30,8 +30,7 @@ export const connectToUserAdminDb = async (adminId) => {
 
     // Create a connection to the corresponding admin's database
     const connection = await mongoose.createConnection(
-      `${clusterUrl}/${databaseName}`,
-
+      `${clusterUrl}/${databaseName}`
     );
 
     console.log(`Successfully connected to the ${databaseName} database`);
