@@ -1,0 +1,213 @@
+@use "../abstract/variables";
+
+.profileUpdate-main {
+  background-color: variables.$color-white;
+  padding: variables.$padding-lg;
+  border-radius: variables.$radius-md;
+  height: 80vh;
+  width: 90vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5rem auto;
+  position: relative;
+
+  .action-buttons {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 12px;
+
+    .btn-cancel,
+    .btn-next {
+      padding: variables.$padding-sm 2rem;
+      border-radius: variables.$radius-md;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+
+      & .btn-cancel {
+        background: variables.$color-gray-mid;
+        color: variables.$color-black;
+
+        &:hover {
+          background: #e9ecef;
+        }
+      }
+
+      &.btn-next {
+        background: variables.$color-blue;
+        color: variables.$color-white;
+      }
+    }
+  }
+}
+
+.profile-edit-container {
+  background-color: variables.$color-gray;
+  border-radius: 12px;
+  padding: variables.$padding-md;
+  width: 90vw;
+
+  .profile-nav {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid variables.$color-light-blue;
+
+    .nav-item {
+      padding: variables.$padding-md;
+      border: none;
+      border-top-left-radius: variables.$radius-md;
+      border-top-right-radius: variables.$radius-md;
+      background: variables.$color-text-gray;
+      cursor: pointer;
+      color: variables.$color-white;
+      font-weight: variables.$font-bold;
+      width: 15rem;
+      display: flex;
+      align-items: start;
+      justify-content: start;
+
+      &.active {
+        background: variables.$color-gray-light;
+        color: variables.$color-black;
+      }
+    }
+  }
+
+  .profile-content {
+    display: flex;
+    // flex-wrap: wrap;
+    gap: 5px;
+    padding: 20px;
+    width: 50%;
+
+    .content-section {
+      flex: 1;
+      min-width: 320px;
+      h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #333;
+      }
+    }
+
+    .upload-btn {
+      background-color: variables.$color-text-gray;
+      color: variables.$color-white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: variables.$radius-md;
+      margin-bottom: 24px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: variables.$color-gray-mid;
+      }
+    }
+  }
+
+  .form-left,
+  .form-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    width: 50%;
+    h2 {
+      font-size: 18px;
+      margin-bottom: 62px;
+      color: #333;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .input-formGroup {
+        width: 100%;
+        height: 3rem;
+        padding: 12px;
+        border: none;
+        border-radius: variables.$radius-sm;
+        font-size: variables.$font-size-small;
+      }
+      .select-formGroup {
+        width: 80%;
+        padding: 12px;
+        border: none;
+        border-radius: variables.$radius-sm;
+        font-size: variables.$font-size-small;
+      }
+    }
+  }
+  .auto-assign {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: variables.$color-white;
+    border-radius: variables.$radius-md;
+    border: 1px solid #ddd;
+    background-color: yellow;
+    .span-assign {
+      font-size: variables.$font-size-small;
+      color: #333;
+    }
+
+    .button-off {
+      background: variables.$color-red-light;
+      border: 1px solid variables.$color-gray-mid;
+      border-radius: variables.$radius-sm;
+      cursor: pointer;
+      padding: 5px 10px;
+      font-size: variables.$font-size-small;
+      color: variables.$color-black;
+
+      &:hover {
+        background: variables.$color-gray-light;
+      }
+    }
+  }
+
+  // .toggle-btn {
+  //   width: 48px;
+  //   height: 24px;
+  //   background: #ff6b6b;
+  //   border-radius: 12px;
+  //   position: relative;
+  //   border: none;
+  //   cursor: pointer;
+  // }
+
+  // .button-group {
+  //   display: flex;
+  //   justify-content: flex-end;
+  //   gap: 12px;
+  //   padding: 20px;
+
+  //   button {
+  //     padding: variables.$padding-md;
+  //     border-radius: variables.$radius-md;
+  //     border: none;
+  //     cursor: pointer;
+  //     font-weight: 500;
+
+  //     &.btn-cancel {
+  //       background: variables.$color-gray-mid;
+  //       color: variables.$color-black;
+
+  //       &:hover {
+  //         background: #e9ecef;
+  //       }
+  //     }
+
+  //     &.btn-next {
+  //       background: variables.$color-blue;
+  //       color: variables.$color-white;
+  //     }
+  //   }
+  // }
+}

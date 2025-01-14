@@ -6,6 +6,23 @@ import UserCard from "../src/components/Card/UserCard";
 import Profilepage from "../src/pages/ProfilePage/ProfilePage";
 import User from "../src/pages/User/User";
 import Students from "../src/pages/Students/Students";
+import University from "../src/pages/Universities/University";
+import ProfileEdit from "../src/pages/profileEdit/ProfileUpdateUser";
+import ProfileUpdateUser from "../src/pages/profileEdit/ProfileUpdateUser";
+import OfferLetter from "../src/pages/offerLetter/OfferLetter";
+import Payments from "../src/pages/Payment/Payments";
+import Branchmanage from "../src/pages/branchmanage/Branchmanage";
+import General from "../src/pages/General/General";
+import { useSelector } from "react-redux";
+
+const tabs = ["offerletter", "students", "payments"];
+
+const DynamicRoutes = () => {
+  return tabs.map((tab) => ({
+    path: tab,
+    element: <General />,
+  }));
+};
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +45,28 @@ export const router = createBrowserRouter([
         path: "student",
         element: <Students />,
       },
+      {
+        path: "university",
+        element: <University />,
+      },
+      {
+        path: "profileEdit",
+        element: <ProfileUpdateUser />,
+      },
+      {
+        path: "offerletter",
+        element: <OfferLetter />,
+      },
+      {
+        path: "payment",
+        element: <Payments />,
+      },
+      {
+        path: "branchmanaging",
+        element: <Branchmanage />,
+      },
+
+      ...DynamicRoutes(),
     ],
   },
 ]);

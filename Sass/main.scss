@@ -15,11 +15,19 @@
 @use "components/profileCard";
 @use "components/eligibleCard";
 @use "components/activityLog";
-
+@use "components/userCard";
+@use "components/university";
+@use "components/branchmanage";
+@use "components/generalCard";
 @use "layout/mainhead";
 @use "profilePage/profilePage";
 @use "layout/error";
 
+@use "page/profileUpdateUser";
+@use "components/Requirements";
+@use "components/universityRight";
+@use "components/universityEligible";
+@use "components/userRight";
 /*
 *
 *
