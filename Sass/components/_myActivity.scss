@@ -1,0 +1,122 @@
+@use "../abstract/variables";
+
+.dashboard-card {
+    background-color: variables.$color-white;
+    border-radius: variables.$radius-lg;
+    padding: variables.$padding-lg 2rem;
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+
+        h1 {
+            font-size: 1.2rem;
+            color: #333;
+            font-weight: variables.$font-bold;
+        }
+
+
+    }
+
+    &-search-bar {
+        margin-bottom: 20px;
+
+        .search-input-container {
+            position: relative;
+            width: 100%;
+
+            .search-icon {
+                left: 4px;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                color: variables.$color-white;
+                background-color: variables.$color-blue;
+                border-radius: 50%;
+                width: 2.6rem;
+                height: 2.6rem;
+                font-size: variables.$font-size;
+                cursor: pointer;
+                z-index: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            input {
+                width: 100%;
+                border: 1px solid variables.$color-gray-mid;
+                border-radius: variables.$radius-lg;
+                padding: variables.$padding-md 4rem;
+                font-size: variables.$font-size-small;
+            }
+        }
+    }
+
+    .work-items {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .work-item {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+            &.green {
+                background-color: #eaffea;
+            }
+
+            &.blue {
+                background-color: #eaf3ff;
+            }
+
+            .work-item-content {
+                h2 {
+                    margin: 0;
+                    font-size: 1.2rem;
+                    color: #333;
+                }
+
+                p {
+                    margin: 5px 0;
+                    font-size: 0.9rem;
+
+                    &.program {
+                        font-weight: bold;
+                        color: #666;
+                    }
+
+                    &.status {
+                        font-size: 0.85rem;
+                        color: #999;
+                    }
+                }
+            }
+
+            .work-item-footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 10px;
+
+                p {
+                    margin: 0;
+                    font-size: 0.8rem;
+                    color: #666;
+                }
+
+                .comment-button {
+                    background: none;
+                    border: none;
+                    font-size: 1rem;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

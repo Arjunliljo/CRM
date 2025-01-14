@@ -14,6 +14,7 @@ import Payments from "../src/pages/Payment/Payments";
 import Branchmanage from "../src/pages/branchmanage/Branchmanage";
 import General from "../src/pages/General/General";
 import { useSelector } from "react-redux";
+import Dashboard from "../src/pages/dashboard/Dashboard";
 
 const tabs = ["offerletter", "students", "payments"];
 
@@ -28,7 +29,10 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    children: [
+    children: [{
+      path: "dashboard",
+      element: <Dashboard />,
+    },
       {
         path: "leads",
         element: <Leads />,
