@@ -5,7 +5,6 @@ import catchAsync from "../Utilities/catchAsync.js";
 
 export const getClusterUrlByDatabaseName = (count = 1) => {
   const url = process.env.arr.split(",,,,,,,")[count];
-  console.log(url, "urlwdww");
   const clusterUrl = url[count];
   return clusterUrl;
 };
