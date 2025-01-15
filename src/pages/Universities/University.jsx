@@ -11,7 +11,10 @@ import StartApplication from "../../components/Card/ProfileCard/StartApplication
 import { setCurStudent } from "../../../global/studentsSlice";
 import StudentsCard from "../../components/Card/StudentsCard";
 import All from "../../components/buttons/All";
-import { setCurUniversity } from "../../../global/universitySlice";
+import {
+  setAutoUniversitysAssign,
+  setCurUniversity,
+} from "../../../global/universitySlice";
 import UniversityCard from "../../components/Card/UniversityCard";
 import UniversityProfile from "../../components/Card/UniversityRight/UniversityProfile";
 
@@ -48,6 +51,8 @@ export default function University() {
       onSet={setCurUniversity}
       set={curUniversity}
       university={university}
+      istoggle={setAutoUniversitysAssign}
+      toggle={autoUniversitysAssign}
     />
   ));
 

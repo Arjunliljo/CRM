@@ -3,12 +3,13 @@ import Mover from "../../features/Mover";
 import CountryBtn from "../buttons/CountryBtn";
 import InfoBtn from "../buttons/InfoBtn";
 import HomeIcon from "../utils/Icons/HomeIcon";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UserNamebar from "./UserRight/UserNamebar";
 
-function UserCard({ user, set, onSet }) {
+function UserCard({ user, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(user?._id === set?._id);
   const targetRef = useRef(null);
+  const { autoLeadsAssign, curLead } = useSelector((state) => state.user);
 
   useEffect(() => {
     setIsSelected(user?._id === set?._id);
@@ -17,6 +18,7 @@ function UserCard({ user, set, onSet }) {
   const dispatch = useDispatch();
   const handleUserSelect = () => {
     dispatch(onSet(user));
+    dispatch(istoggle(!toggle));
     setTimeout(() => {
       targetRef.current.scrollIntoView({
         behavior: "smooth",

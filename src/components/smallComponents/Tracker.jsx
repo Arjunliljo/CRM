@@ -14,7 +14,7 @@ const Tracker = ({ completedStep }) => {
           <div
             className="progress-tracker__steps"
             style={{
-              "--completed-width": `${completedWidth}%`, // Pass the completed width dynamically
+              "--completed-width": `${completedWidth}%`,
             }}
           >
             {steps.map((step) => (
@@ -38,7 +38,10 @@ const Tracker = ({ completedStep }) => {
             </span>
           </div>
 
-          <button className="progress-tracker__all-apps">
+          <button
+            className="progress-tracker__all-apps"
+            style={{ textDecoration: "underline" }}
+          >
             All applications
           </button>
         </div>

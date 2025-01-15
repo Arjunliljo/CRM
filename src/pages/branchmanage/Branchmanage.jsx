@@ -10,7 +10,10 @@ import StartApplication from "../../components/Card/ProfileCard/StartApplication
 import All from "../../components/buttons/All";
 import Counsellor from "../../components/buttons/NormalButton";
 import NormalButton from "../../components/buttons/NormalButton";
-import { setCurBranchmanage } from "../../../global/branchSlice";
+import {
+  setAutoBranchmanageAssign,
+  setCurBranchmanage,
+} from "../../../global/branchSlice";
 import BranchManagingCard from "../../components/Card/BranchManagingCard";
 
 const branchmanage = {
@@ -46,6 +49,8 @@ export default function Branchmanage() {
       onSet={setCurBranchmanage}
       set={curBranchmanage}
       branchmanage={branchmanage}
+      istoggle={setAutoBranchmanageAssign}
+      toggle={autoBranchmanageAssign}
     />
   ));
 

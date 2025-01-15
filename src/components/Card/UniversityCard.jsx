@@ -10,7 +10,7 @@ import PrimaryBttn from "../buttons/PrimaryBttn";
 import EligibleBttn from "../buttons/EligibleBttn";
 import { color } from "framer-motion";
 
-function UniversityCard({ university, set, onSet }) {
+function UniversityCard({ university, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(university?._id === set?._id);
   const targetRef = useRef(null);
 
@@ -21,6 +21,7 @@ function UniversityCard({ university, set, onSet }) {
   const dispatch = useDispatch();
   const handleStudentSelect = () => {
     dispatch(onSet(university));
+    dispatch(istoggle(!toggle));
     setTimeout(() => {
       targetRef.current.scrollIntoView({
         behavior: "smooth",

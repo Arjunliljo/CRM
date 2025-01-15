@@ -24,7 +24,7 @@ const branchSlice = createSlice({
   },
 });
 
-export const { setAutoBranchmangeAssign, setCurBranchmanage } =
+export const { setAutoBranchmanageAssign, setCurBranchmanage } =
   branchSlice.actions;
 
 export default branchSlice.reducer;

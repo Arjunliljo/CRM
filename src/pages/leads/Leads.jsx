@@ -35,7 +35,14 @@ export default function Leads() {
   const ISearchBar = <SearchBar />;
   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
   const IContents = arr?.map((lead, index) => (
-    <LeadCard key={index} onSet={setCurLead} set={curLead} lead={lead} />
+    <LeadCard
+      key={index}
+      onSet={setCurLead}
+      set={curLead}
+      lead={lead}
+      istoggle={setAutoLeadsAssign}
+      toggle={autoLeadsAssign}
+    />
   ));
 
   const ISelector = <Selector />;

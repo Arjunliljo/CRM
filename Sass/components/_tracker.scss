@@ -5,7 +5,7 @@
 
   &__container {
     margin: 0 auto;
-    padding: 1rem;
+    padding: variables.$padding-md;
     display: flex;
     flex-direction: column;
   }
@@ -15,12 +15,12 @@
     justify-content: space-between;
     position: relative;
     // background-color: rgb(223, 215, 215); /* Default gray background */
-    border-radius: 1rem;
+    border-radius: variables.$radius-md;
     height: 90%;
 
     &::before {
       content: "";
-      border-radius: 1rem;
+      border-radius: variables.$radius-md;
       position: absolute;
       top: 0;
       left: 0;
@@ -40,7 +40,7 @@
 
   &__step {
     position: relative;
-    z-index: 1; /* Steps stay above the gradient background */
+    z-index: 1;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
@@ -50,8 +50,8 @@
   &__dot {
     width: 16px;
     height: 16px;
-    border-radius: 50%;
-    background-color: rgb(194, 166, 166); /* Default gray dot */
+    border-radius: variables.$radius-sm;
+    background-color: rgb(194, 166, 166);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -59,14 +59,14 @@
 
     &--completed {
       background-color: variables.$color-green;
-      box-shadow: 0 0 5px 2px rgba(0, 0, 255, 0.5);
+      box-shadow: 0 0 5px 2px rgba(25, 128, 38, 0.5);
       //   z-index: 1;
       //   ring: 3px solid variables.$color-green;
     }
   }
 
   &__label {
-    font-size: 0.75rem;
+    font-size: variables.$font-size-small;
     color: rgb(41, 41, 41);
     transform: translateY(-20px);
   }
@@ -80,12 +80,12 @@
     margin-top: 1rem;
     display: inline-flex;
     align-items: center;
-    border-radius: 1rem;
-    padding: 0.5rem 0.5rem;
+    border-radius: variables.$radius-md;
+    padding: variables.$margin-sm variables.$margin-sm;
     border: 1px solid rgb(119, 119, 119);
 
     &-name {
-      font-size: 0.8rem;
+      font-size: variables.$font-size-small;
       color: rgb(119, 119, 119);
     }
 
@@ -96,7 +96,7 @@
   }
 
   &__all-apps {
-    font-size: 0.8rem;
+    font-size: variables.$font-size-small;
     color: gray;
     background: none;
     border: none;
