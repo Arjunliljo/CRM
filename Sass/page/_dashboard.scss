@@ -1,5 +1,20 @@
 @use "../abstract/variables";
 
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 24px;
+  padding: 24px;
+
+  .first-column,
+  .second-column,
+  .third-column,
+  .fourth-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+}
 .welcome-card {
 font-size: 2rem;
 font-weight: 400;
@@ -86,7 +101,6 @@ flex-direction: column;
   background-color: variables.$color-white;
   border-radius: variables.$radius-lg;
   padding: variables.$padding-lg 2rem;
-  width: 120%;
 
   header {
       display: flex;

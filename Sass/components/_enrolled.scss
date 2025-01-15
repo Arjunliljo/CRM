@@ -1,0 +1,161 @@
+.enrollment-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1f36;
+  }
+  &__chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-bottom: 16px;
+
+    .chart-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+
+      .bar {
+        width: 24px;
+        background: #e6efff;
+        border-radius: 12px;
+        position: relative;
+        transition: height 0.3s ease;
+        &--active {
+          background: #4070ff;
+
+          .bar__badge {
+            background: #e8f0c6;
+            color: #82916a;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+        }
+      }
+
+      .month-label {
+        margin-top: 8px;
+        font-size: 12px;
+        color: #666;
+      }
+    }
+  }
+
+  .monthly-chart {
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  &__status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+
+    .percentage-badge {
+      background: #e8f5e9;
+      color: #4caf50;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-text {
+      color: #666;
+      font-size: 14px;
+    }
+  }
+
+  &__progress {
+    .progress-numbers {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+
+      .value {
+        font-size: 24px;
+        font-weight: 600;
+        display: block;
+      }
+
+      .label {
+        font-size: 14px;
+        color: #666;
+      }
+    }
+
+    .progress-bar {
+      height: 24px;
+      background: #f5f5f5;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 8px;
+
+      &__start-cap,
+      &__end-cap {
+        position: absolute;
+        top: -8px;
+        width: 3px;
+        height: 40px;
+        background: #000;
+        z-index: 2;
+      }
+
+      &__start-cap {
+        left: 0;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4070ff 0%, #63a4ff 100%);
+        position: relative;
+      }
+
+      .progress-remaining {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 78%;
+        background: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 2px,
+          rgba(133, 28, 127, 0.1) 2px,
+          rgba(70, 255, 64, 0.1) 4px
+        );
+      }
+    }
+
+    .target-difference {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+
+      span {
+        background: #f8f9fa;
+        padding: 6px 12px;
+        border-radius: 16px;
+      }
+    }
+  }
+}

@@ -1,34 +1,34 @@
-import Admin from "../Models/adminModel.js";
+
 import bcrypt from "bcryptjs";
 import catchAsync from "../Utilities/catchAsync.js";
 import { generateToken } from "../Utilities/jwt.js";
+import Client from "../Models/clientModel.js";
 
 const signup = async (req, res, next) => {
   try {
-    const { name, email, phone, password, databaseName, location, logo } =
+    const { name, email, phone, password, location, logo } =
       req.body;
 
     // Check if the user already exists
-    const existingUserAdmin = await Admin.findOne({ email });
-    if (existingUserAdmin) {
+    const existingUserClient = await Client.findOne({ email });
+    if (existingUserClient) {
       return res
         .status(400)
-        .json({ message: "An admin with this email already exists" });
+        .json({ message: "An Client with this email already exists" });
     }
     // Calculate the count of existing documents
-    const existingCount = await Admin.countDocuments();
+    const existingCount = await Client.countDocuments();
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 12);
 
     // Get the image filename from the uploaded file
 
-    const user = new Admin({
+    const user = new Client({
       name,
       email,
       phone,
       password: hashedPassword,
-      databaseName,
       count: existingCount + 1, // Assigned the count as identifier
       logo,
       location: location,
@@ -37,7 +37,7 @@ const signup = async (req, res, next) => {
     await user.save();
 
     res.status(201).json({
-      message: `Admin for ${name} created successfully`,
+      message: `Client for ${name} created successfully`,
       userId: user._id,
     });
   } catch (error) {
@@ -48,34 +48,34 @@ const signup = async (req, res, next) => {
 const signin = catchAsync(async (req, res) => {
   const { email, password } = req.body;
 
-  // Check if the admin exists
-  const existingAdmin = await Admin.findOne({ email });
-  if (!existingAdmin) {
+  // Check if the Client exists
+  const existingClient = await Client.findOne({ email });
+  if (!existingClient) {
     return res
       .status(400)
-      .json({ message: "Invalid email or password. Admin not found." });
+      .json({ message: "Invalid email or password. Client not found." });
   }
 
   // Validate password
   const isPasswordValid = await bcrypt.compare(
     password,
-    existingAdmin.password
+    existingClient.password
   );
   if (!isPasswordValid) {
     return res.status(400).json({ message: "Invalid email or password." });
   }
 
-  // Generate JWT with admin's database name
+  // Generate JWT with Client's database name
   const token = generateToken(
-    existingAdmin._id,
-    "admin",
-    existingAdmin.databaseName
+    existingClient._id,
+    "Client",
+    existingClient.databaseName
   );
 
   res.status(200).json({
-    message: `Welcome back, ${existingAdmin.name}!`,
+    message: `Welcome back, ${existingClient.name}!`,
     token,
-    userId: existingAdmin._id,
+    userId: existingClient._id,
   });
 });
 

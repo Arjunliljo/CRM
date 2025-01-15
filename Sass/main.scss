@@ -31,8 +31,9 @@
 @use "page/dashboard";
 @use "components/myActivity";
 @use "components/leaderboard";
-
-
+@use "components/messages";
+@use "components/performance";
+@use "components/enrolled";
 
 @use "components/userpersonaledit";
 @use "components/tracker";
