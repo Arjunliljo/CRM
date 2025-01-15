@@ -13,9 +13,9 @@
     color: variables.$color-black;
     margin-top: 15px;
   }
+
   &__chart {
     display: flex;
-    align-items: flex-end;
     justify-content: space-between;
     flex-direction: column;
     margin-bottom: 16px;
@@ -28,16 +28,17 @@
 
       .bar {
         width: 24px;
-        background: variables.$color-bar;
+        background: variables.$color-blue-shadow;
         border-radius: variables.$radius-sm;
         position: relative;
         transition: height 0.3s ease;
+
         &--active {
-          background: variables.$color-primary;
+          background: variables.$color-blue;
 
           .bar__badge {
-            background: variables.$color-badge;
-            color: variables.$color-badge-text;
+            background: variables.$color-prime;
+            color: variables.$color-black;
             font-size: variables.$font-size-sm;
             padding: 4px 8px;
             border-radius: 12px;
@@ -52,13 +53,13 @@
       .month-label {
         margin-top: 8px;
         font-size: variables.$font-size-sm;
-        color: variables.$color-text-secondary;
+        color: variables.$color-text-gray;
       }
     }
   }
 
   .monthly-chart {
-    height: 200px;
+    height: 9.5rem;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -69,12 +70,13 @@
   &__status {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     margin-bottom: 24px;
 
     .percentage-badge {
-      background: variables.$color-success-light;
-      color: variables.$color-success;
+      background: variables.$color-green;
+      color: variables.$color-white;
       padding: 4px 8px;
       border-radius: 12px;
       font-size: variables.$font-size-sm;
@@ -88,6 +90,8 @@
   }
 
   &__progress {
+    padding: 0rem 1rem;
+
     .progress-numbers {
       display: flex;
       justify-content: space-between;
@@ -106,9 +110,8 @@
     }
 
     .progress-bar {
-      height: 24px;
+      height: 2.5rem;
       background: #f5f5f5;
-      border-radius: 12px;
       overflow: hidden;
       position: relative;
       margin-bottom: 8px;
@@ -129,9 +132,12 @@
 
       .progress-fill {
         height: 100%;
-        background: linear-gradient(90deg, variables.$color-primary 0%, variables.$color-primary-light 100%);
+        background: linear-gradient(90deg, #dde1ee 0%, variables.$color-violet 100%);
+        transition: width 0.3s ease;
         position: relative;
+        border-radius: variables.$radius-xs;
       }
+
 
       .progress-remaining {
         position: absolute;
@@ -139,25 +145,30 @@
         right: 0;
         bottom: 0;
         left: 78%;
-        background: repeating-linear-gradient(
-          45deg,
-          transparent,
-          transparent 2px,
-          rgba(133, 28, 127, 0.1) 2px,
-          rgba(70, 255, 64, 0.1) 4px
-        );
+        background: repeating-linear-gradient(-45deg,
+            transparent 1px,
+            variables.$color-violet 4px,
+          );
+        border-radius: variables.$radius-xs;
       }
     }
 
     .target-difference {
-      text-align: center;
       font-size: 14px;
-      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: variables.$radius-xs;
+      border: 1px solid variables.$color-gray-mid;
+      margin: 0rem 2.8rem;
+      margin-top: 1rem;
+      color: variables.$color-text-gray;
 
       span {
-        background: #f8f9fa;
-        padding: 6px 12px;
-        border-radius: 16px;
+        background: variables.$color-gray-light;
+        color: variables.$color-text-gray;
+        padding-right: 0.5rem;
+        color: variables.$color-black;
       }
     }
   }

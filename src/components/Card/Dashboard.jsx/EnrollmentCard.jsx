@@ -84,7 +84,8 @@ export default function EnrollmentCard() {
           </div>
 
           <div className="target-difference">
-            <span>{difference} admissions away from target</span>
+            <span>{difference} </span>
+            admissions away from target
           </div>
         </div>
       </div>

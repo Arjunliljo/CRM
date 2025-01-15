@@ -1,11 +1,10 @@
 @use "../abstract/variables";
 
 .performance {
-  background: white;
-  border-radius: 20px;
-  padding: 24px;
+  background-color: variables.$color-white;
+  border-radius: variables.$radius-lg;
+  padding: variables.$padding-md 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-
 
     &__title {
       font-size: 18px;
@@ -17,10 +16,8 @@
     &__gauge {
         position: relative;
         width: 100%;
-        max-width: 300px;
+        max-width: 260px;
         margin: 0 auto;
-        padding: 20px 0;
-
         &-svg {
             width: 100%;
             height: auto;
@@ -52,6 +49,7 @@
             font-size: 48px;
             font-weight: 600;
             color: #1a1f36;
+            margin-bottom: 1.5rem;
         }
 
         &-total {
@@ -67,45 +65,49 @@
     }
 
     &__stats {
-        margin-top: 20px;
+        margin-top: 12px;
     }
 
+
     &__increase {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
 
-        &-value {
-            background-color: #ecfdf5;
-            color: #059669;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 500;
-        }
+      &-value {
+        background: variables.$color-green;
+        color: variables.$color-white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: variables.$font-size-sm;
+        font-weight: 500;
+      }
 
-        &-label {
-            font-size: 14px;
-            color: #6b7280;
-        }
+      &-label {
+        color: #666;
+        font-size: 14px;
+      }
     }
 
     &__applications {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background-color: #f3f4f6;
-        padding: 8px 12px;
-        border-radius: 8px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: variables.$radius-xs;
+      border: 1px solid variables.$color-gray-mid;
+      margin: 0rem 5rem;
+      margin-top: 1rem;
+      color: variables.$color-text-gray;
 
-        &-value {
-            font-weight: 500;
-            color: #1a1f36;
-        }
-
-        &-label {
-            color: #6b7280;
-        }
+      span {
+        background: variables.$color-gray-light;
+        color: variables.$color-text-gray;
+        padding-right: 0.5rem;
+        color: variables.$color-black;
+      }
     }
+
 }

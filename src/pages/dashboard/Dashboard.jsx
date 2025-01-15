@@ -30,6 +30,7 @@ export default function Dashboard() {
       </div>
     </div>,
   ];
+
   const TopLeft = [<div key="search-bar">{ITagWishCard}</div>];
 
   return <CustomBody TopLeft={TopLeft} IContents={IContents} />;

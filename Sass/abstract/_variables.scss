@@ -4,6 +4,7 @@ $color-red: #e53838;
 $color-green: #00b100;
 $color-blue: #0075fc;
 $color-light-blue: #60bdff;
+$color-violet: #4070ff;
 $color-blue-shadow: #d1e2f3;
 $color-gray: #e8e8e8;
 $color-gray-mid: #dadada;
@@ -12,7 +13,6 @@ $color-gray-dark: #4c4c4c;
 $color-gray-light: #f9f9f9;
 $color-text-gray: #757575;
 $selected: rgb(216, 255, 216);
-$color-blue-shadow: rgba(179, 213, 255, 0.3);
 
 $color-white: #f9f9f9;
 $color-black: #000000;
@@ -28,6 +28,11 @@ $bg-rotate: linear-gradient(
   $color-bg1
 
 );
+
+
+$color-success-light: #e8f5e9;
+$color-badge: #e8f0c6;
+
 
 //default variables
 $font-size: 1rem;
@@ -54,11 +59,11 @@ $margin-md: 1rem;
 $margin-lg: 1.5rem;
 
 //radius
+$radius-xs: 8px;
 $radius-sm: 0.5rem;
 $radius-md: 1rem;
 $radius-lg: 1.5rem;
 $radius-pill: 16px;
-$radius-sm: 12px;
 
 
 // measurements

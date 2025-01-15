@@ -1,16 +1,15 @@
 @use "../abstract/variables";
 
 .leaderboard {
-  background-color: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background-color: variables.$color-white;
+  border-radius: variables.$radius-lg;
+  padding: variables.$padding-md 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
   }
 
   &__title {
@@ -39,7 +38,8 @@
 
   &__content {
     display: flex;
-    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
     gap: 16px;
   }
 
@@ -94,16 +94,11 @@
   }
 
   &__score {
-    font-size: 12px;
-    color: #6b7280;
+    font-size: variables.$font-size-xs;
+    color: variables.$color-green;
     text-align: center;
   }
 
-  &__stats {
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid #f0f0f0;
-  }
 
   &__stat-item {
     display: flex;
@@ -113,8 +108,8 @@
 
     &--negative {
       .leaderboard__stat-value {
-        color: #ff4d4f;
-        background-color: #fff2f0;
+        background-color: variables.$color-red-light;
+        color: variables.$color-white;
         padding: 4px 8px;
         border-radius: 12px;
       }
@@ -122,8 +117,7 @@
   }
 
   &__stat-value {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: variables.$font-size-xs;
   }
 
   &__stat-label {

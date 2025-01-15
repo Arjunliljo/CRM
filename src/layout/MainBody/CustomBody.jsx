@@ -13,7 +13,7 @@ export default function CustomBody({
       <div className="main-body-head">
         {/* Left side of the header */}
         <div className="main-body-head-left">
-          <div className="main-body-head-left-top">
+          <div style={{ marginLeft: "10%", width: "100%" }} className="main-body-head-left-top">
             {TopLeft?.map((item) => item)}
           </div>
         </div>

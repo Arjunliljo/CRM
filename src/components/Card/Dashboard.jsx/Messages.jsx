@@ -1,3 +1,5 @@
+import HomeIcon from "../../utils/Icons/HomeIcon";
+
 export default function Messages() {
   const messages = [
     {
@@ -29,20 +31,20 @@ export default function Messages() {
       time: "9:30pm",
       avatar: "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
     },
-    {
-      id: 5,
-      name: "Arun",
-      message: "Hi Aswathi, I'd like to invite you to...",
-      time: "9:30pm",
-      avatar: "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
-    }
+
   ];
 
   return (
     <div className="messages">
       <div className="messages__header">
         <h2 className="messages__title">Messages</h2>
-        <button className="messages__add-btn">+</button>
+        <button className="messages__add-btn">
+          <HomeIcon
+            path="plus"
+            color="#fffffff8"
+            style={{ transform: "rotate(270deg)" }}
+          />
+        </button>
       </div>
 
       <div className="messages__search">

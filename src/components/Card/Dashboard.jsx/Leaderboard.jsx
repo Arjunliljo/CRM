@@ -1,3 +1,5 @@
+import HomeIcon from "../../utils/Icons/HomeIcon";
+
 export default function Leaderboard() {
   const leaders = [
     {
@@ -27,7 +29,13 @@ export default function Leaderboard() {
     <div className="leaderboard">
       <div className="leaderboard__header">
         <h2 className="leaderboard__title">Leaderboard</h2>
-        <button className="add-button">+</button>
+        <button className="add-button">
+          <HomeIcon
+            path="trophy  "
+            color="#000000f8"
+            style={{ transform: "rotate(270deg)" }}
+          />
+        </button>
       </div>
 
       <div className="leaderboard__content">
@@ -52,12 +60,10 @@ resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-use
         ))}
       </div>
 
-      <div className="leaderboard__stats">
-        <div className="leaderboard__stat-item leaderboard__stat-item--negative">
-          <span className="leaderboard__stat-value">-11.3%</span>
-          <span className="leaderboard__stat-label">From last week</span>
-        </div>
+      <div className="leaderboard__stat-item leaderboard__stat-item--negative">
+        <span className="leaderboard__stat-value">-11.3%</span>
+        <span className="leaderboard__stat-label">From last week</span>
       </div>
-    </div>
+    </div >
   );
 }

@@ -52,9 +52,10 @@ export default function Performance() {
           <span className="performance__increase-label">Leads you have attended last week</span>
         </div>
         <div className="performance__applications">
-          <span className="performance__applications-value">{applications}</span>
-          <span className="performance__applications-label">Applications so far</span>
+          <span>{applications} </span>
+          Applications so far
         </div>
+
       </div>
     </div>
   );
