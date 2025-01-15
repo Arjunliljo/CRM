@@ -12,28 +12,29 @@ function UserPosition() {
       </div>
       <form className="personalUserEdit-status-elements">
         <span className="personalUserEdit-status-html-for">Branch</span>
-        <div className="select-container">
-          <select className="selector-with-icon" name="Interested" id="">
+        <div className="select-user-container">
+          <select className="selector-with-icon-user" name="Interested" id="">
             <option value="Interested">Interested</option>
             <option value="Verified">Verified</option>
           </select>
         </div>
         <span className="personalUserEdit-status-html-for">Role</span>
-        <div className="select-container">
-          <select className="selector-with-icon" name="Interested" id="">
+        <div className="select-user-container">
+          <select className="selector-with-icon-user" name="Interested" id="">
             <option value="Interested">Interested</option>
             <option value="Verified">Verified</option>
           </select>
         </div>
         <span className="personalUserEdit-status-html-for">Permissions</span>
-        <div className="select-container">
-          <select className="selector-with-icon" name="Interested" id="">
+        <div className="select-user-container">
+          <select className="selector-with-icon-user" name="Interested" id="">
             <option value="Interested">Interested</option>
             <option value="Verified">Verified</option>
           </select>
         </div>
-        <div className="select-container">
-          <select className="selector-with-icon" name="Interested" id="">
+
+        <div className="select-user-container" style={{ marginTop: "0.5rem" }}>
+          <select className="selector-with-icon-user" name="Interested" id="">
             <option value="Interested">Interested</option>
             <option value="Verified">Verified</option>
           </select>
@@ -57,7 +58,7 @@ function UserPosition() {
               fontWeight: "bold",
             }}
           >
-            Submit
+            Add
           </PrimaryBttn>
         </div>
       </form>

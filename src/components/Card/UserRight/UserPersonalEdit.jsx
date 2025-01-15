@@ -174,7 +174,10 @@ function UserPersonalEdit() {
           </div>
         </div>
       </div>
-      <div className="personalUserEdit-details-buttons">
+      <div
+        className="personalUserEdit-details-buttons"
+        style={{ marginTop: "0.7rem" }}
+      >
         <PrimaryBttn
           style={{
             backgroundColor: "#dadada",
@@ -193,7 +196,7 @@ function UserPersonalEdit() {
             fontWeight: "bold",
           }}
         >
-          Submit
+          Add
         </PrimaryBttn>
       </div>
     </div>

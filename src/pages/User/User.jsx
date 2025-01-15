@@ -7,7 +7,7 @@ import AllLeads from "../../components/buttons/AllLeads";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import UserCard from "../../components/Card/UserCard";
-import { setCurUser } from "../../../global/userSlice";
+import { setAutoUserAssign, setCurUser } from "../../../global/userSlice";
 import All from "../../components/buttons/All";
 import Counsellor from "../../components/buttons/NormalButton";
 import NormalButton from "../../components/buttons/NormalButton";
@@ -39,7 +39,14 @@ export default function User() {
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
   const IContents = arr?.map((user, index) => (
-    <UserCard key={index} onSet={setCurUser} set={curUser} user={user} />
+    <UserCard
+      key={index}
+      onSet={setCurUser}
+      set={curUser}
+      user={user}
+      istoggle={setAutoUserAssign}
+      toggle={autoUserAssign}
+    />
   ));
 
   //   const ISelector = <Selector />;
