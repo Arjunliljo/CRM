@@ -6,9 +6,8 @@ export const getClusterUrlByDatabaseName = (count) => {
   const defaultUrl = process.env.PRIMARY_STR;
   const urls = process.env.CLUSTER_URLS.split(",,,,,,,");
   const url = urls[count] || defaultUrl;
-  console.log(count,":",url);
 
-  if (!url.startsWith('mongodb://') && !url.startsWith('mongodb+srv://')) {
+  if (!url.startsWith("mongodb://") && !url.startsWith("mongodb+srv://")) {
     return defaultUrl;
   }
 

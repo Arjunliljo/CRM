@@ -1,4 +1,3 @@
-
 import bcrypt from "bcryptjs";
 import catchAsync from "../Utilities/catchAsync.js";
 import { generateToken } from "../Utilities/jwt.js";
@@ -6,8 +5,7 @@ import Client from "../Models/clientModel.js";
 
 const signup = async (req, res, next) => {
   try {
-    const { name, email, phone, password, location, logo } =
-      req.body;
+    const { name, email, phone, password, location, logo } = req.body;
 
     // Check if the user already exists
     const existingUserClient = await Client.findOne({ email });
