@@ -3,7 +3,7 @@
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 24px;
+  gap: 16px;
   padding: 24px;
 
   .first-column,
@@ -12,7 +12,7 @@
   .fourth-column {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
   }
 }
 .welcome-card {
@@ -34,21 +34,22 @@ flex-direction: column;
 }
 
 .overview {
-  background-color: #fff;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background-color: variables.$color-white;
+  border-radius: variables.$radius-lg;
+  padding: variables.$padding-md 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 
   &__title {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
-    margin-bottom: 24px;
+    color: #1a1f36;
+    margin-top: 15px;
   }
 
   &__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 6px;
 
     @media (max-width: 768px) {
       grid-template-columns: repeat(1, 1fr);
@@ -58,9 +59,8 @@ flex-direction: column;
   &__item {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 12px;
     padding: variables.$padding-md variables.$padding-xs;
-    // border-radius: 12px;
     transition: transform 0.2s ease;
 
     &:hover {
@@ -100,7 +100,8 @@ flex-direction: column;
 .dashboard-leads {
   background-color: variables.$color-white;
   border-radius: variables.$radius-lg;
-  padding: variables.$padding-lg 2rem;
+  padding: variables.$padding-md 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 
   header {
       display: flex;
@@ -109,15 +110,16 @@ flex-direction: column;
       margin-bottom: 20px;
 
       h1 {
-          font-size: 1.5rem;
-          color: #333;
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a1f36;
       }
   }
 
   .lead-items {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 0.6rem;
       width: 100%;
 
       .lead-item {
@@ -133,7 +135,8 @@ flex-direction: column;
           .lead-count {
               display: flex;
               align-items: center;
-              justify-content: space-between;
+              justify-content: start;
+              gap: 2rem;
               width: 35%;
 
               .arrow {
@@ -153,11 +156,13 @@ flex-direction: column;
                   font-size: 2.5rem;
                   font-weight: variables.$font-size;
                   color: variables.$color-blue;
+                  width: 15%;
+                  text-align: start;
               }
           }
 
           .label {
-              width: 50%;
+              width: 45%;
               border-radius: 15px;
               padding: variables.$padding-xs;
               font-size: variables.$font-size-small;

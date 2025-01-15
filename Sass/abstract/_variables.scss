@@ -33,6 +33,12 @@ $bg-rotate: linear-gradient(
 $font-size: 1rem;
 $font-size-small: 0.8rem;
 $font-bold: 500;
+$font-size-xs: 0.7rem;
+$font-size-sm: 12px;
+$font-size-md: 14px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+
 
 //default icon size
 $icon-size: 1.5rem;
@@ -43,7 +49,6 @@ $padding-sm: 0.5rem;
 $padding-md: 1rem;
 $padding-lg: 1.5rem;
 
-
 $margin-sm: 0.5rem;
 $margin-md: 1rem;
 $margin-lg: 1.5rem;
@@ -52,6 +57,9 @@ $margin-lg: 1.5rem;
 $radius-sm: 0.5rem;
 $radius-md: 1rem;
 $radius-lg: 1.5rem;
+$radius-pill: 16px;
+$radius-sm: 12px;
+
 
 // measurements
 $navbar-margin: 1rem;

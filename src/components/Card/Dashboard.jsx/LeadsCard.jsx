@@ -1,3 +1,5 @@
+import HomeIcon from "../../utils/Icons/HomeIcon";
+
 export default function LeadsCard() {
   const leadData = [
     {
@@ -26,13 +28,25 @@ export default function LeadsCard() {
     <div className="dashboard-leads">
       <header>
         <h1>Leads</h1>
-        <button className="add-button">+</button>
+        <button className="add-button">
+          <HomeIcon
+            path="plus"
+            color="#000000f8"
+            style={{ transform: "rotate(270deg)" }}
+          />
+        </button>
       </header>
       <div className="lead-items">
         {leadData.map((item, index) => (
           <div key={index} className="lead-item">
             <div className="lead-count">
-              <span className="arrow">↗</span>
+              <span className="arrow">
+                <HomeIcon
+                  path="up-arrow"
+                  color="#fffffff9"
+                  style={{ transform: "rotate(270deg)" }}
+                />
+              </span>
               <span className="count">{item.count}</span>
             </div>
             <span className={`label ${item.color}`}>{item.label}</span>

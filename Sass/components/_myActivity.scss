@@ -4,6 +4,7 @@
     background-color: variables.$color-white;
     border-radius: variables.$radius-lg;
     padding: variables.$padding-lg 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 
     header {
         display: flex;
@@ -12,12 +13,10 @@
         margin-bottom: 20px;
 
         h1 {
-            font-size: 1.2rem;
-            color: #333;
-            font-weight: variables.$font-bold;
+            font-size: 18px;
+            font-weight: 600;
+            color: variables.$color-black;
         }
-
-
     }
 
     &-search-bar {
@@ -58,64 +57,86 @@
     .work-items {
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
 
         .work-item {
             display: flex;
             flex-direction: column;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: none;
 
             &.green {
-                background-color: #eaffea;
+                background-color: variables.$color-prime;
             }
 
             &.blue {
-                background-color: #eaf3ff;
+                background-color: variables.$color-blue-shadow;
             }
 
             .work-item-content {
+
                 h2 {
-                    margin: 0;
-                    font-size: 1.2rem;
-                    color: #333;
+                    font-size: 1rem;
+                    font-weight: 500;
+                    color: #1a1a1a;
+                    margin-bottom: 4px;
                 }
 
-                p {
-                    margin: 5px 0;
-                    font-size: 0.9rem;
 
-                    &.program {
-                        font-weight: bold;
-                        color: #666;
-                    }
+                &-program {
+                    font-size: variables.$font-size-xs;
+                    color: variables.$color-text-gray;
+                }
 
-                    &.status {
-                        font-size: 0.85rem;
-                        color: #999;
+
+                &-top {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    &-left {
+                        display: flex;
+                        justify-content: start;
+                        align-items: center;
+                        gap: 1rem;
                     }
                 }
+
+                &-name-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: -4px;
+                }
+
+                &-sm-bold {
+                    color: variables.$color-black;
+                    font-size: variables.$font-size-small;
+                    width: 80%;
+                }
+
+                // &-bottom {
+                //     display: flex;
+                //     flex-direction: column;
+                //     gap: 4px;
+                // }
             }
 
             .work-item-footer {
+                margin-top: 8px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-top: 10px;
 
                 p {
-                    margin: 0;
-                    font-size: 0.8rem;
                     color: #666;
+                    font-size: 0.75rem;
                 }
+&-date{
+    color: variables.$color-black;
+    font-size: variables.$font-size-small;
+}
 
-                .comment-button {
-                    background: none;
-                    border: none;
-                    font-size: 1rem;
-                    cursor: pointer;
-                }
             }
         }
     }

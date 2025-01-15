@@ -1,14 +1,17 @@
+@use "../abstract/variables";
+
 .enrollment-card {
-  background: white;
-  border-radius: 20px;
-  padding: 24px;
+  background-color: variables.$color-white;
+  border-radius: variables.$radius-lg;
+  padding: variables.$padding-md 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 
 
   &__title {
-    font-size: 18px;
+    font-size: variables.$font-size-lg;
     font-weight: 600;
-    color: #1a1f36;
+    color: variables.$color-black;
+    margin-top: 15px;
   }
   &__chart {
     display: flex;
@@ -25,17 +28,17 @@
 
       .bar {
         width: 24px;
-        background: #e6efff;
-        border-radius: 12px;
+        background: variables.$color-bar;
+        border-radius: variables.$radius-sm;
         position: relative;
         transition: height 0.3s ease;
         &--active {
-          background: #4070ff;
+          background: variables.$color-primary;
 
           .bar__badge {
-            background: #e8f0c6;
-            color: #82916a;
-            font-size: 12px;
+            background: variables.$color-badge;
+            color: variables.$color-badge-text;
+            font-size: variables.$font-size-sm;
             padding: 4px 8px;
             border-radius: 12px;
             position: absolute;
@@ -48,8 +51,8 @@
 
       .month-label {
         margin-top: 8px;
-        font-size: 12px;
-        color: #666;
+        font-size: variables.$font-size-sm;
+        color: variables.$color-text-secondary;
       }
     }
   }
@@ -70,11 +73,11 @@
     margin-bottom: 24px;
 
     .percentage-badge {
-      background: #e8f5e9;
-      color: #4caf50;
+      background: variables.$color-success-light;
+      color: variables.$color-success;
       padding: 4px 8px;
       border-radius: 12px;
-      font-size: 12px;
+      font-size: variables.$font-size-sm;
       font-weight: 500;
     }
 
@@ -126,7 +129,7 @@
 
       .progress-fill {
         height: 100%;
-        background: linear-gradient(90deg, #4070ff 0%, #63a4ff 100%);
+        background: linear-gradient(90deg, variables.$color-primary 0%, variables.$color-primary-light 100%);
         position: relative;
       }
 

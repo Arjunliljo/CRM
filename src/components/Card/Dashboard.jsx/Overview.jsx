@@ -1,3 +1,5 @@
+import HomeIcon from "../../utils/Icons/HomeIcon";
+
 export default function Overview() {
 
   const stats = [
@@ -17,8 +19,12 @@ export default function Overview() {
       <div className="overview__grid">
         {stats.map((item, index) => (
           <div key={index} className="overview__item">
-            <div className={`overview__icon overview__icon--${item.icon}`}>
-              {/* You'll need to import your icons here */}
+            <div className={`overview__icon`}>
+              <HomeIcon
+                path="retry"
+                color="#fffffff9"
+                style={{ transform: "rotate(270deg)" }}
+              />
             </div>
             <div className="overview__content">
               <span className="overview__count">{item.count}</span>

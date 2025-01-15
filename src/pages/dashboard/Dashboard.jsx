@@ -10,13 +10,6 @@ import CustomBody from "../../layout/MainBody/CustomBody";
 
 export default function Dashboard() {
   const ITagWishCard = <TagWishCard />;
-  const IMyWork = <MyWork />;
-  const ILeadsCard = <LeadsCard />;
-  const IOverview = <Overview />;
-  const ILeaderboard = <Leaderboard />;
-  const IMessages = <Messages />;
-  const IPerformance = <Performance />;
-  const IEnrolled = <EnrollmentCard />;
 
   const IContents = [
     <div key="dashboard-grid" className="dashboard-grid">
