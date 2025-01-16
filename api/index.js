@@ -4,9 +4,6 @@ dotenv.config({ path: "./.env" });
 
 import mongoose from "mongoose";
 import app from "./app.js";
-import Client from "./Models/clientModel.js";
-import { connectToUserAdminDb } from "./middlewares/dynamicDbContext.js";
-import { dbConnector } from "./Utilities/helper.js";
 const dbConnectionString = process.env.PRIMARY_STR || "";
 
 const PORT = process.env.PORT || 3000;
@@ -14,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 let isConnected = false;
 let server;
 
-const dbConnections = []; // to store active db
+const dbConnections = [];
 let primaryDbConnection;
 
 // to connect primary database (CRM)
@@ -25,8 +22,6 @@ async function connectToDatabase() {
   }
 
   try {
-    console.log("Attempting to connect to:", dbConnectionString); // Debug log
-
     primaryDbConnection = await mongoose.connect(dbConnectionString);
 
     dbConnections.push(primaryDbConnection);

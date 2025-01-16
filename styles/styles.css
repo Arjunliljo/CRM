@@ -196,12 +196,7 @@ textarea::placeholder {
   overflow: scroll;
   scrollbar-width: none;
   border: 1px solid #0075fc;
-  background: linear-gradient(
-    to bottom,
-    rgba(249, 249, 249, 0.5),
-    #c4ecf7,
-    #b3e7f5
-  );
+  background: linear-gradient(to bottom, rgba(249, 249, 249, 0.5), #c4ecf7, #b3e7f5);
   position: relative;
 }
 .main-body .main-body-box-right::-webkit-scrollbar {
@@ -373,6 +368,17 @@ textarea::placeholder {
   border-radius: 1rem;
   height: 2.5rem;
   border: none;
+}
+
+.selector-with-icon-user {
+  border-radius: 7px;
+  border-width: 1.8px;
+  border-style: solid;
+  border-color: #dadada;
+  height: 2.1rem;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 .select-container {
@@ -4271,8 +4277,7 @@ F .log .message-area-textarea-container {
   position: relative;
   margin-bottom: 8px;
 }
-.enrollment-card__progress .progress-bar__start-cap,
-.enrollment-card__progress .progress-bar__end-cap {
+.enrollment-card__progress .progress-bar__start-cap, .enrollment-card__progress .progress-bar__end-cap {
   position: absolute;
   top: -8px;
   width: 3px;
@@ -4569,73 +4574,111 @@ F .log .message-area-textarea-container {
 }
 
 .progress-tracker {
+  width: 100%;
+}
+.progress-tracker__container {
+  margin: 0 auto;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background-color: #f3fcff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 .progress-tracker__steps {
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  margin-bottom: 20px;
   position: relative;
+  border-radius: 1rem;
+  height: 90%;
 }
-.progress-tracker__steps__step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  position: relative;
-}
-.progress-tracker__steps__step:not(:last-child)::after {
+.progress-tracker__steps::before {
   content: "";
+  border-radius: 1rem;
   position: absolute;
-  width: calc(100% - 40px);
-  height: 2px;
-  background-color: #00aaff;
-  top: 9px;
-  left: 50%;
-  transform: translateX(0);
-  z-index: -1;
-}
-.progress-tracker__steps__step__indicator {
-  width: 20px;
-  height: 20px;
-  background-color: #00aaff;
-  border-radius: 50%;
-}
-.progress-tracker__steps__step__label {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #333;
-  text-align: center;
-}
-.progress-tracker__footer {
-  display: flex;
-  justify-content: space-between;
+  top: 0;
+  left: 0;
+  height: 30px;
   width: 100%;
+  background: linear-gradient(to right, #bdd9e4 0%, #a7d3e4 var(--completed-width, 0%), rgb(201, 201, 201) var(--completed-width, 0%), rgb(201, 201, 201) 100%);
+  z-index: 0;
+  transition: background 0.3s ease-in-out;
+}
+.progress-tracker__step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column-reverse;
   align-items: center;
-  margin-top: 20px;
 }
-.progress-tracker__footer__university {
-  font-size: 16px;
-  font-weight: bold;
-  color: #555;
+.progress-tracker__dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 0.5rem;
+  background-color: rgb(194, 166, 166);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-7px);
 }
-.progress-tracker__footer__all-applications {
-  background-color: #00aaff;
-  color: #fff;
-  padding: 10px 20px;
+.progress-tracker__dot--completed {
+  background-color: #00b100;
+  box-shadow: 0 0 5px 2px rgba(25, 128, 38, 0.5);
+}
+.progress-tracker__label {
+  font-size: 0.8rem;
+  color: rgb(41, 41, 41);
+  transform: translateY(-20px);
+}
+.progress-tracker__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.progress-tracker__university {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 1rem;
+  padding: 0.5rem 0.5rem;
+  border: 1px solid rgb(119, 119, 119);
+}
+.progress-tracker__university-name {
+  font-size: 0.8rem;
+  color: rgb(119, 119, 119);
+}
+.progress-tracker__university-button {
+  margin-left: 0.5rem;
+  color: #0075fc;
+}
+.progress-tracker__all-apps {
+  font-size: 0.8rem;
+  color: gray;
+  background: none;
   border: none;
-  border-radius: 5px;
+}
+
+.select-user-container {
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+  border-radius: 5rem;
+}
+.select-user-container .custom-user-select {
+  width: 100%;
+  font-size: 15px;
+  color: #000000;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  outline: none;
+  border: none;
   cursor: pointer;
 }
-.progress-tracker__footer__all-applications:hover {
-  background-color: #0088cc;
+.select-user-container .custom-user-select:hover {
+  background-color: #f9f9f9;
+}
+.select-user-container .custom-user-select option {
+  color: black;
+  background-color: #f9f9f9;
 }
 
 /*
