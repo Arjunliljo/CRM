@@ -9,7 +9,6 @@ const dbConnectionString = process.env.PRIMARY_STR || "";
 const PORT = process.env.PORT || 3000;
 
 let isConnected = false;
-let server;
 
 const dbConnections = [];
 let primaryDbConnection;
@@ -22,11 +21,11 @@ async function connectToDatabase() {
   }
 
   try {
-    primaryDbConnection = await mongoose.connect(dbConnectionString);
-
+    primaryDbConnection = mongoose.connect(dbConnectionString);
     dbConnections.push(primaryDbConnection);
 
     isConnected = true;
+
     console.log("Connected to Primary Database (CRM)");
     return primaryDbConnection;
   } catch (err) {
@@ -35,86 +34,13 @@ async function connectToDatabase() {
   }
 }
 
-// Function to connect to admin-specific db dynamically
-async function connectAllDatabases(primaryDbConnection) {
+(async () => {
   try {
-    // if (!primaryDbConnection || primaryDbConnection.readyState !== 1) {
-    //   throw new Error("Primary database connection not established");
-    // }
-    // const clients = await primaryDbConnection.model("Client").find();
-    // const connections = await Promise.all(
-    //   clients.map(async (client) => {
-    //     try {
-    //       const userAdminDbConnection = await connectToUserAdminDb(client);
-    //       console.log(
-    //         `Connected to User Admin Database: ${client.databaseName}`
-    //       );
-    //       return userAdminDbConnection;
-    //     } catch (err) {
-    //       console.error(
-    //         `Failed to connect to database for client ${client._id}:`,
-    //         err.message
-    //       );
-    //       return null;
-    //     }
-    //   })
-    // );
-  } catch (err) {
-    console.error("Error connecting to user-admin databases:", err.message);
-    throw err;
-  }
-}
-
-// Add graceful shutdown handler
-
-// Connect to databases and start the server
-connectToDatabase()
-  .then(() => connectAllDatabases(primaryDbConnection)) // Connect to all userAdmin databases
-  .then(() => {
-    // Assign to the outer scope server variable
-    server = app.listen(PORT, () => {
+    await connectToDatabase();
+    app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
-
-    // Handle various shutdown signals
-    process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
-    process.on("SIGINT", () => gracefulShutdown("SIGINT"));
-    process.on("uncaughtException", (err) => {
-      console.error("Uncaught Exception:", err);
-      gracefulShutdown("uncaughtException");
-    });
-    process.on("unhandledRejection", (reason, promise) => {
-      console.error("Unhandled Rejection at:", promise, "reason:", reason);
-      gracefulShutdown("unhandledRejection");
-    });
-  })
-  .catch((err) => {
-    console.error("Failed to start server:", err);
-    process.exit(1);
-  });
-
-const gracefulShutdown = async (signal) => {
-  console.log(`\n${signal} signal received. Starting graceful shutdown...`);
-
-  try {
-    // Close server first to stop accepting new connections
-    if (server) {
-      await new Promise((resolve) => server.close(resolve));
-      console.log("Server closed");
-    }
-
-    // Close all database connections (including admin db's)
-    for (const connection of dbConnections) {
-      if (connection.readyState === 1) {
-        await connection.close();
-        console.log("Database connection closed");
-      }
-    }
-
-    console.log("Graceful shutdown completed");
-    process.exit(0);
   } catch (err) {
-    console.error("Error during graceful shutdown:", err);
-    process.exit(1);
+    console.error("Failed to start server:", err.message);
   }
-};
+})();

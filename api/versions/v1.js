@@ -5,7 +5,6 @@ import countryRoute from "../Routes/countryRoute.js";
 import leadRoute from "../Routes/leadRoute.js";
 import statusRoute from "../Routes/statusRoute.js";
 import userRoute from "../Routes/userRoute.js";
-import clientRoute from "../Routes/clientRoute.js";
 
 const router = express.Router();
 
@@ -38,6 +37,5 @@ router.use("/country", countryRoute);
 router.use("/lead", leadRoute);
 router.use("/role", roleRoute);
 router.use("/status", statusRoute);
-router.use("/auth", clientRoute);
 
 export default router;
