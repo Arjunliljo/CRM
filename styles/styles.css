@@ -3688,23 +3688,8 @@ F .log .message-area-textarea-container {
 
 .dashboard-grid {
   display: grid;
+  grid-template-columns: 1fr 1fr 1.1fr 1fr;
   gap: 16px;
-  grid-template-columns: 1fr;
-}
-@media screen and (min-width: 768px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media screen and (min-width: 1024px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-@media screen and (min-width: 1280px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr 1fr 1.1fr 1fr;
-  }
 }
 .dashboard-grid .first-column,
 .dashboard-grid .second-column,
@@ -3713,8 +3698,7 @@ F .log .message-area-textarea-container {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  height: auto;
-  min-height: 45rem;
+  height: 45rem;
 }
 
 .welcome-card {
