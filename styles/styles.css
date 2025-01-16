@@ -4815,6 +4815,23 @@ F .log .message-area-textarea-container {
   align-items: center;
 }
 
+.dashbord-container {
+  background-color: rgb(223, 176, 176);
+  margin-top: 3rem;
+  margin-left: 3rem;
+  height: calc(100vh - 3rem);
+  width: calc(100vw - 3rem);
+}
+.dashbord-container-cards {
+  background-color: yellow;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+}
+
 /*
 *
 *

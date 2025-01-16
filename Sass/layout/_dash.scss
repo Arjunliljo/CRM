@@ -1,0 +1,17 @@
+@use "../abstract/variables" as variables;
+.dashbord-container {
+  background-color: rgb(223, 176, 176);
+  margin-top: variables.$body-start-margin;
+  margin-left: variables.$body-start-margin;
+  height: calc(100vh - variables.$body-start-margin);
+  width: calc(100vw - variables.$body-start-margin);
+  &-cards {
+    background-color: yellow;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+  }
+}
