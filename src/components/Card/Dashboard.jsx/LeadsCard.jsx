@@ -44,7 +44,6 @@ export default function LeadsCard() {
                 <HomeIcon
                   path="up-arrow"
                   color="#fffffff9"
-                  style={{ transform: "rotate(270deg)" }}
                 />
               </span>
               <span className="count">{item.count}</span>

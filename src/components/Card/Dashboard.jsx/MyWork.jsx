@@ -59,7 +59,6 @@ export default function MyWork() {
                         <HomeIcon
                             path="search"
                             color="#fffffff8"
-                            style={{ transform: "rotate(270deg)" }}
                         />
                     </span>
                     <input type="text" placeholder="Search" />
@@ -85,7 +84,6 @@ export default function MyWork() {
                                 <HomeIcon
                                     path="message"
                                     color="#9a9e9a"
-                                    style={{ transform: "rotate(270deg)" }}
                                 />
                             </div>
                             {/* <div className="work-item-content-bottom"> */}

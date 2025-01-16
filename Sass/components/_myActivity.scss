@@ -58,6 +58,23 @@
         display: flex;
         flex-direction: column;
         gap: 12px;
+        height: 560px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: variables.$color-blue variables.$color-white;
+
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: variables.$color-white;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: variables.$color-blue;
+            border-radius: 4px;
+        }
 
         .work-item {
             display: flex;

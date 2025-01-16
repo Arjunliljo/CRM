@@ -6,7 +6,7 @@ function Mainhead() {
     <div className="logocontainer">
       <img src={icon} alt="" className="logocontainer-rightlogo" />
       <div className="logocontainer-leftlead">
-        <h2>Leads</h2>
+        <h2>Dashboard</h2>
         <div className="logocontainer-leftlead-bell">
           <CiBellOn className="logocontainer-leftlead-bell-icon" />
         </div>

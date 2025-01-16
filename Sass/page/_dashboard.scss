@@ -2,9 +2,25 @@
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 16px;
-  padding: 24px;
+
+  // Mobile first approach
+  grid-template-columns: 1fr;
+
+  // Tablet (768px and up)
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  // Small desktop (1024px and up)
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  // Large desktop (1280px and up)
+  @media screen and (min-width: 1280px) {
+    grid-template-columns: 1fr 1fr 1.1fr 1fr;
+  }
 
   .first-column,
   .second-column,
@@ -13,23 +29,27 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    height: auto;
+    min-height: 45rem;
   }
 }
+
 .welcome-card {
-font-size: 2rem;
-font-weight: 400;
-display: flex;
-flex-direction: column;
-  &-name{
-  color: black;
+  font-size: 2rem;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+
+  &-name {
+    color: black;
   }
 
-  &-wish{
+  &-wish {
     color: gray;
   }
 }
 
-.workLead-wrapper{
+.workLead-wrapper {
   display: flex;
 }
 
@@ -104,82 +124,82 @@ flex-direction: column;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 
   header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 
-      h1 {
-        font-size: 18px;
-        font-weight: 600;
-        color: #1a1f36;
-      }
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1f36;
+    }
   }
 
   .lead-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
+
+    .lead-item {
       display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: variables.$padding-xs;
+      padding-right: variables.$padding-md;
+      border: 1px solid variables.$color-gray-mid;
+      border-radius: 4rem;
+      font-size: variables.$font-size-small;
 
-      .lead-item {
+      .lead-count {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 2rem;
+        width: 35%;
+
+        .arrow {
+          background-color: variables.$color-blue;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          font-size: 1.2rem;
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           align-items: center;
-          padding-left: variables.$padding-xs;
-          padding-right: variables.$padding-md;
-          border: 1px solid variables.$color-gray-mid;
-          border-radius: 4rem;
-          font-size: variables.$font-size-small;
+          width: 2.6rem;
+          height: 2.6rem;
+        }
 
-          .lead-count {
-              display: flex;
-              align-items: center;
-              justify-content: start;
-              gap: 2rem;
-              width: 35%;
-
-              .arrow {
-                  background-color: variables.$color-blue;
-                  color: white;
-                  border: none;
-                  border-radius: 50%;
-                  font-size: 1.2rem;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  width: 2.6rem;
-                  height: 2.6rem;
-              }
-
-              .count {
-                  font-size: 2.5rem;
-                  font-weight: variables.$font-size;
-                  color: variables.$color-blue;
-                  width: 15%;
-                  text-align: start;
-              }
-          }
-
-          .label {
-              width: 45%;
-              border-radius: 15px;
-              padding: variables.$padding-xs;
-              font-size: variables.$font-size-small;
-              font-weight: bold;
-              text-align: center;
-
-              &.green {
-                  background-color: variables.$color-prime;
-                  color: variables.$color-gray-dark;
-              }
-
-              &.blue {
-                  background-color: variables.$color-blue-shadow;
-                  color: variables.$color-gray-dark;
-              }
-          }
+        .count {
+          font-size: 2.5rem;
+          font-weight: variables.$font-size;
+          color: variables.$color-blue;
+          width: 15%;
+          text-align: start;
+        }
       }
+
+      .label {
+        width: 45%;
+        border-radius: 15px;
+        padding: variables.$padding-xs;
+        font-size: variables.$font-size-small;
+        font-weight: bold;
+        text-align: center;
+
+        &.green {
+          background-color: variables.$color-prime;
+          color: variables.$color-gray-dark;
+        }
+
+        &.blue {
+          background-color: variables.$color-blue-shadow;
+          color: variables.$color-gray-dark;
+        }
+      }
+    }
   }
 }
 
@@ -190,5 +210,5 @@ flex-direction: column;
   height: 3.5rem;
   font-size: 1.2rem;
   cursor: pointer;
-background-color: variables.$color-white;
+  background-color: variables.$color-white;
 }

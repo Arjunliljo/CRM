@@ -31,9 +31,8 @@ export default function Leaderboard() {
         <h2 className="leaderboard__title">Leaderboard</h2>
         <button className="add-button">
           <HomeIcon
-            path="trophy  "
+            path="trophy"
             color="#000000f8"
-            style={{ transform: "rotate(270deg)" }}
           />
         </button>
       </div>
