@@ -165,3 +165,34 @@
   font-size: variables.$font-size;
   font-weight: 400;
 }
+
+.action-buttons {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  gap: 12px;
+
+  & .btn-cancel,
+  & .btn-next {
+    padding: variables.$padding-sm 2rem;
+    border-radius: variables.$radius-md;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+
+    & .btn-cancel {
+      background: variables.$color-gray-mid;
+      color: variables.$color-black;
+
+      &:hover {
+        background: #e9ecef;
+      }
+    }
+
+    &.btn-next {
+      background: variables.$color-blue;
+      color: variables.$color-white;
+    }
+  }
+}
