@@ -1,13 +1,11 @@
+import ActionButtons from "./ActionButtons";
+import ProfileSwitchNav from "./ProfileSwitchNav";
+
 function ProfileUpdateUser() {
   return (
     <div className="profileUpdate-main">
+      <ProfileSwitchNav />
       <div className="profile-edit-container">
-        <div className="profile-nav">
-          <button className="nav-item active">Profile</button>
-          <button className="nav-item">Status</button>
-          <button className="nav-item">Dashboard</button>
-        </div>
-
         <div className="profile-content">
           <div className="content-section">
             <h2>Personal Details</h2>
@@ -89,11 +87,7 @@ function ProfileUpdateUser() {
           </div>
         </div>
       </div>
-
-      <div className="action-buttons">
-        <button className="btn-cancel">Cancel</button>
-        <button className="btn-next">Next</button>
-      </div>
+      <ActionButtons />
     </div>
   );
 }
