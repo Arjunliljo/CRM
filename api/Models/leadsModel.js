@@ -65,6 +65,9 @@ const leadSchema = mongoose.Schema(
         },
       ],
     },
+    documents: {
+      type: [String],
+    },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
