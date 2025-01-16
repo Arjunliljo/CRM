@@ -4,44 +4,69 @@ import HomeIcon from "../components/utils/Icons/HomeIcon";
 export default function Navbar() {
   return (
     <nav className="navbar">
-      <li>
+      <li className="learn-more">
         <NavLink to="/">
-          <HomeIcon path="home" />
+          <span className="circle" aria-hidden="true">
+            <HomeIcon path="home" />
+          </span>
+          <span className="li-text">Dashboard</span>
         </NavLink>
       </li>
-      <li>
+
+      <li className="learn-more">
         <NavLink to="/leads">
-          <HomeIcon path="hat" />
+          <span className="circle" aria-hidden="true">
+            <HomeIcon path="hat" />
+          </span>
+          <span className="li-text">Leads</span>
         </NavLink>
       </li>
-      <li>
+      <li className="learn-more">
         <NavLink to="/student">
-          <HomeIcon path="group" />
+          <span className="circle" aria-hidden="true">
+            <HomeIcon path="group" />
+          </span>
+          <span className="li-text">Students</span>
         </NavLink>
       </li>
-      <li>
+      <li className="learn-more">
         <NavLink to="/user">
-          <HomeIcon path="doc" />
+          <span className="circle" aria-hidden="true">
+            <HomeIcon path="doc" />
+          </span>
+          <span className="li-text">Documents</span>
         </NavLink>
       </li>
-      <li>
+      <li className="learn-more">
         <NavLink to="/university">
-          <HomeIcon path="tick" />
+          <span className="circle" aria-hidden="true">
+            <HomeIcon path="tick" />
+          </span>
+          <span className="li-text">University</span>
         </NavLink>
       </li>
-      <li>
+      <li className="learn-more">
         <NavLink to="/wifi">
-          <HomeIcon path="wifi" />
+          <span className="circle" aria-hidden="true">
+            <HomeIcon path="wifi" />
+          </span>
+          <span className="li-text">Network</span>
         </NavLink>
       </li>
-      <li>
+      <li className="learn-more">
         <NavLink to="/user">
-          <HomeIcon path="contact" />
+          <span className="circle" aria-hidden="true">
+            <HomeIcon path="contact" />
+          </span>
+          <span className="li-text">Users</span>
         </NavLink>
       </li>
-      <li>
+      <li className="learn-more">
         <NavLink to="/settings">
-          <HomeIcon path="settings" />
+          <span className="circle" aria-hidden="true">
+            <HomeIcon path="settings" />
+          </span>
+          <span className="li-text">Settings</span>
         </NavLink>
       </li>
     </nav>

@@ -21,13 +21,70 @@
     list-style: none;
     padding: 0.4rem;
     border-radius: 50%;
-    // background-color: variables.$color-gray-max;
-    cursor: pointer;
-    color: white;
-    justify-content: space-between;
-    display: flex;
-    align-items: center;
     gap: 0.5rem;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    border: 0;
+    vertical-align: middle;
+    margin-left: 8.5rem;
+  }
+
+  li.learn-more {
+    width: 12rem;
+    height: auto;
+  }
+
+  li.learn-more .circle {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: relative;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding-left: 10px;
+    margin: 0;
+    width: 2.8rem;
+    height: 2.8rem;
     background-color: variables.$color-black;
+    border-radius: 1.625rem;
+  }
+
+  li.learn-more a.active .circle {
+    background-color: variables.$color-gray-max;
+  }
+
+  li.learn-more .li-text {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 0 0 1.85rem;
+    line-height: 1.6;
+    text-align: center;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  li:hover .circle {
+    width: 100%;
+    transition-delay: 0s;
+    padding-left: 10px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-color: variables.$color-gray-max;
+  }
+
+
+  li:hover .li-text {
+    color: variables.$color-white;
+    opacity: 1;
+    transition-delay: 0.1s;
+
   }
 }
