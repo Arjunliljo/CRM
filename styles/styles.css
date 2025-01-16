@@ -3054,8 +3054,8 @@ F .log .message-area-textarea-container {
 }
 .profile-page__icon-camera {
   position: absolute;
-  top: -0.9rem;
-  right: -0.5rem;
+  top: -0.2rem;
+  right: 0.5rem;
   background-color: #fd6363;
   color: #f9f9f9;
   border-radius: 50%;
