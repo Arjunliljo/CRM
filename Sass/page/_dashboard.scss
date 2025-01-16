@@ -43,10 +43,12 @@
   }
 
   &-wish {
+  &-wish {
     color: gray;
   }
 }
 
+.workLead-wrapper {
 .workLead-wrapper {
   display: flex;
 }
@@ -125,7 +127,16 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1f36;
+    }
     h1 {
       font-size: 18px;
       font-weight: 600;
@@ -138,7 +149,20 @@
     flex-direction: column;
     gap: 0.6rem;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
 
+    .lead-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: variables.$padding-xs;
+      padding-right: variables.$padding-md;
+      border: 1px solid variables.$color-gray-mid;
+      border-radius: 4rem;
+      font-size: variables.$font-size-small;
     .lead-item {
       display: flex;
       justify-content: space-between;
@@ -155,7 +179,25 @@
         justify-content: start;
         gap: 2rem;
         width: 35%;
+      .lead-count {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 2rem;
+        width: 35%;
 
+        .arrow {
+          background-color: variables.$color-blue;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          font-size: 1.2rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 2.6rem;
+          height: 2.6rem;
+        }
         .arrow {
           background-color: variables.$color-blue;
           color: white;
@@ -177,7 +219,22 @@
           text-align: start;
         }
       }
+        .count {
+          font-size: 2.5rem;
+          font-weight: variables.$font-size;
+          color: variables.$color-blue;
+          width: 15%;
+          text-align: start;
+        }
+      }
 
+      .label {
+        width: 45%;
+        border-radius: 15px;
+        padding: variables.$padding-xs;
+        font-size: variables.$font-size-small;
+        font-weight: bold;
+        text-align: center;
       .label {
         width: 45%;
         border-radius: 15px;
@@ -190,7 +247,17 @@
           background-color: variables.$color-prime;
           color: variables.$color-gray-dark;
         }
+        &.green {
+          background-color: variables.$color-prime;
+          color: variables.$color-gray-dark;
+        }
 
+        &.blue {
+          background-color: variables.$color-blue-shadow;
+          color: variables.$color-gray-dark;
+        }
+      }
+    }
         &.blue {
           background-color: variables.$color-blue-shadow;
           color: variables.$color-gray-dark;
@@ -207,5 +274,6 @@
   height: 3.5rem;
   font-size: 1.2rem;
   cursor: pointer;
+  background-color: variables.$color-white;
   background-color: variables.$color-white;
 }

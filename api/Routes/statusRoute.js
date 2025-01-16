@@ -1,5 +1,5 @@
 import express from "express";
-import { protect } from "../middlewares/auth.js";
+// import { protect } from "../middlewares/auth.js";
 import {
   createStatus,
   deleteStatus,
@@ -9,7 +9,7 @@ import {
 } from "../Controllers/statusController.js";
 const router = express.Router();
 
-router.use(protect);
+// router.use(protect);
 
 router.get("/", getAllStatus);
 router.get("/:id", getStatus);

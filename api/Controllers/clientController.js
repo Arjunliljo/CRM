@@ -9,11 +9,13 @@ const signup = async (req, res, next) => {
 
     // Check if the user already exists
     const existingUserClient = await Client.findOne({ email });
+
     if (existingUserClient) {
       return res
         .status(400)
         .json({ message: "An Client with this email already exists" });
     }
+
     // Calculate the count of existing documents
     const existingCount = await Client.countDocuments();
 
@@ -21,13 +23,12 @@ const signup = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     // Get the image filename from the uploaded file
-
     const user = new Client({
       name,
       email,
       phone,
       password: hashedPassword,
-      count: existingCount + 1, // Assigned the count as identifier
+      count: existingCount + 1,
       logo,
       location: location,
     });
