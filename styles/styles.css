@@ -196,12 +196,7 @@ textarea::placeholder {
   overflow: scroll;
   scrollbar-width: none;
   border: 1px solid #0075fc;
-  background: linear-gradient(
-    to bottom,
-    rgba(249, 249, 249, 0.5),
-    #c4ecf7,
-    #b3e7f5
-  );
+  background: linear-gradient(to bottom, rgba(249, 249, 249, 0.5), #c4ecf7, #b3e7f5);
   position: relative;
 }
 .main-body .main-body-box-right::-webkit-scrollbar {
@@ -372,24 +367,6 @@ textarea::placeholder {
   padding: 10px 40px;
   border-radius: 1rem;
   height: 2.5rem;
-  border: none;
-}
-
-.allbttn {
-  background-color: #000000;
-  color: #f9f9f9;
-  padding: 10px 40px;
-  border-radius: 1rem;
-  height: fit-content;
-  border: none;
-}
-
-.headBttns {
-  background-color: #f9f9f9;
-  color: #000000;
-  padding: 10px 40px;
-  border-radius: 1rem;
-  height: fit-content;
   border: none;
 }
 
@@ -3071,6 +3048,24 @@ F .log .message-area-textarea-container {
   border: 1px solid #818181;
   border-radius: 50%;
   background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-page__icon-camera {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  background-color: #ff4b4b;
+  color: #f9f9f9;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
 }
 .profile-page__content {
   display: flex;
