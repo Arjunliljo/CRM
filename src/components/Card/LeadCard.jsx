@@ -18,7 +18,7 @@ export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
   const dispatch = useDispatch();
   const handleLeadSelect = () => {
     dispatch(onSet(lead));
-
+    dispatch(istoggle(!toggle));
     setTimeout(() => {
       targetRef.current.scrollIntoView({
         behavior: "smooth",

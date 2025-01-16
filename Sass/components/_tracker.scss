@@ -30,11 +30,11 @@
         to right,
         #bdd9e4 0%,
         #a7d3e4 var(--completed-width, 0%),
-        rgb(201, 201, 201) var(--completed-width, 0%),
-        rgb(201, 201, 201) 100%
+        rgba(167, 211, 228, 0) calc(var(--completed-width, 0%) + 4%)
       );
       z-index: 0;
       transition: background 0.3s ease-in-out;
+      box-shadow: 5px 8px 6px rgba(0, 0, 0, 0.05);
     }
   }
 

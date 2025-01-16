@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <li>
-        <NavLink to="/">
+        <NavLink to="/dashboard">
           <HomeIcon path="home" />
         </NavLink>
       </li>
@@ -15,7 +15,7 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/student">
+        <NavLink to="/branchmanaging">
           <HomeIcon path="group" />
         </NavLink>
       </li>
