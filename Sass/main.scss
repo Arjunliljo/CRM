@@ -21,11 +21,20 @@
 @use "components/generalCard";
 @use "layout/mainhead";
 @use "profilePage/profilePage";
+@use "layout/error";
+
 @use "page/profileUpdateUser";
 @use "components/Requirements";
 @use "components/universityRight";
 @use "components/universityEligible";
 @use "components/userRight";
+@use "page/dashboard";
+@use "components/myActivity";
+@use "components/leaderboard";
+@use "components/messages";
+@use "components/performance";
+@use "components/enrolled";
+
 @use "components/userpersonaledit";
 @use "components/tracker";
 @use "components/userSelector";

@@ -27,15 +27,9 @@ async function connectToDatabase() {
   try {
     console.log("Attempting to connect to:", dbConnectionString); // Debug log
 
-    primaryDbConnection = mongoose.createConnection(dbConnectionString);
-
-    // Wait for the connection to be ready
-    await dbConnector(primaryDbConnection);
+    primaryDbConnection = await mongoose.connect(dbConnectionString);
 
     dbConnections.push(primaryDbConnection);
-
-    // Bind the Client model to the primary connection
-    Client.init(primaryDbConnection);
 
     isConnected = true;
     console.log("Connected to Primary Database (CRM)");
@@ -49,12 +43,10 @@ async function connectToDatabase() {
 // Function to connect to admin-specific db dynamically
 async function connectAllDatabases(primaryDbConnection) {
   try {
-    if (!primaryDbConnection || primaryDbConnection.readyState !== 1) {
-      throw new Error("Primary database connection not established");
-    }
-
+    // if (!primaryDbConnection || primaryDbConnection.readyState !== 1) {
+    //   throw new Error("Primary database connection not established");
+    // }
     // const clients = await primaryDbConnection.model("Client").find();
-
     // const connections = await Promise.all(
     //   clients.map(async (client) => {
     //     try {
