@@ -12,37 +12,37 @@ const protect = async (req, res, next) => {
 
   try {
     // Decode the token to get user and database information
-    const { adminId, dbName, role } = verifyToken(token);
+    const { adminId, count, role } = verifyToken(token);
 
-    if (!dbName) {
+    if (!count) {
       return res
         .status(401)
         .json({ message: "Database name missing in token" });
     }
 
-    // Get the correct cluster URL for the dbName
-    const mongoUri = getClusterUrlByDatabaseName(dbName);
+    // Get the correct cluster URL for thecount
+    const mongoUri = getClusterUrlByDatabaseName(count);
 
     // Connect to the database if not already connected
-    if (!dbConnections[dbName]) {
-      console.log(`Connecting to database: ${dbName}`);
-      dbConnections[dbName] = mongoose.createConnection(mongoUri);
+    if (!dbConnections[count]) {
+      console.log(`Connecting to database: ${count}`);
+      dbConnections[count] = mongoose.createConnection(mongoUri);
       // Handle connection errors
-      dbConnections[dbName].on("error", (err) => {
-        console.error(`Error connecting to ${dbName}:`, err.message);
-        delete dbConnections[dbName]; // Remove invalid connection from cache
+      dbConnections[count].on("error", (err) => {
+        console.error(`Error connecting to ${count}:`, err.message);
+        delete dbConnections[count]; // Remove invalid connection from cache
       });
 
       // Connection success log
-      dbConnections[dbName].once("open", () => {
-        console.log(`Successfully connected to database: ${dbName}`);
+      dbConnections[count].once("open", () => {
+        console.log(`Successfully connected to database: ${count}`);
       });
     }
 
     // Attach the database connection and user details to the request
-    req.db = dbConnections[dbName];
-    req.db.dbName = dbName;
-    req.user = { adminId, role, dbName };
+    req.db = dbConnections[count];
+    req.db.count = count;
+    req.user = { adminId, role, count };
 
     next();
   } catch (error) {
