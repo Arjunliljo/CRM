@@ -1,10 +1,11 @@
+import DocumentUpload from "../../smallComponents/DocumentUpload";
 import Tracker from "../../smallComponents/Tracker";
 import ActivityLog from "./ActivityLog";
 import EligiableCourses from "./EligiableCourses";
 import PersonalDetails from "./PersonalDetails";
 import ProfileCardStatus from "./ProfileCardStatus";
 
-export default function ProfileCard() {
+export default function ProfileCard({ IDocumentUpload }) {
   //dummy
   const lead = {
     img: "https://via.placeholder.com/100",
@@ -52,6 +53,7 @@ export default function ProfileCard() {
         <PersonalDetails />
         <ProfileCardStatus />
       </div>
+      {IDocumentUpload}
       <EligiableCourses />
       <ActivityLog />
     </div>

@@ -28,9 +28,9 @@
       width: 100%;
       background: linear-gradient(
         to right,
-        #bdd9e4 0%,
-        #a7d3e4 var(--completed-width, 0%),
-        rgba(167, 211, 228, 0) calc(var(--completed-width, 0%) + 4%)
+        #85cde9 0%,
+        #c3dfeb var(--completed-width, 0%),
+        rgba(167, 211, 228, 0) calc(var(--completed-width, 0%) + 18%)
       );
       z-index: 0;
       transition: background 0.3s ease-in-out;

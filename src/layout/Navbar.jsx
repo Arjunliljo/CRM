@@ -30,12 +30,12 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/wifi">
+        <NavLink to="my-profile">
           <HomeIcon path="wifi" />
         </NavLink>
       </li>
       <li>
-        <NavLink to="/user">
+        <NavLink to="profileEdit">
           <HomeIcon path="contact" />
         </NavLink>
       </li>

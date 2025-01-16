@@ -20,7 +20,7 @@
 @use "components/branchmanage";
 @use "components/generalCard";
 @use "layout/mainhead";
-@use "profilePage/profilePage";
+@use "page/profilePage";
 @use "layout/error";
 
 @use "page/profileUpdateUser";
@@ -38,6 +38,7 @@
 @use "components/userpersonaledit";
 @use "components/tracker";
 @use "components/userSelector";
+@use "layout/documentUpload";
 /*
 *
 *
