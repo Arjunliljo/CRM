@@ -14,6 +14,7 @@ import Payments from "../src/pages/Payment/Payments";
 import Branchmanage from "../src/pages/branchmanage/Branchmanage";
 import General from "../src/pages/General/General";
 import { useSelector } from "react-redux";
+import Dashboard from "../src/pages/dashboard/Dashboard";
 import Tracker from "../src/components/smallComponents/Tracker";
 
 const tabs = ["offerletter", "students", "payments"];
@@ -29,49 +30,52 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    children: [
-      {
-        path: "leads",
-        element: <Leads />,
-      },
-      {
-        path: "my-profile",
-        element: <Profilepage />,
-      },
-      {
-        path: "user",
-        element: <User />,
-      },
-      {
-        path: "student",
-        element: <Students />,
-      },
-      {
-        path: "university",
-        element: <University />,
-      },
-      {
-        path: "profileEdit",
-        element: <ProfileUpdateUser />,
-      },
-      {
-        path: "offerletter",
-        element: <OfferLetter />,
-      },
-      {
-        path: "payment",
-        element: <Payments />,
-      },
-      {
-        path: "track",
-        element: <Tracker />,
-      },
-      {
-        path: "branchmanaging",
-        element: <Branchmanage />,
-      },
+    children: [{
+      path: "dashboard",
+      element: <Dashboard />,
+    },
+    {
+      path: "leads",
+      element: <Leads />,
+    },
+    {
+      path: "my-profile",
+      element: <Profilepage />,
+    },
+    {
+      path: "user",
+      element: <User />,
+    },
+    {
+      path: "student",
+      element: <Students />,
+    },
+    {
+      path: "university",
+      element: <University />,
+    },
+    {
+      path: "profileEdit",
+      element: <ProfileUpdateUser />,
+    },
+    {
+      path: "offerletter",
+      element: <OfferLetter />,
+    },
+    {
+      path: "payment",
+      element: <Payments />,
+    },
+    {
+      path: "track",
+      element: <Tracker />,
+    },
+    {
+      path: "branchmanaging",
+      element: <Branchmanage />,
+    },
 
-      ...DynamicRoutes(),
+    ...DynamicRoutes(),
     ],
   },
 ]);
