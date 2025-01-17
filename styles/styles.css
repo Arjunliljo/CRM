@@ -4823,13 +4823,29 @@ F .log .message-area-textarea-container {
   width: calc(100vw - 3rem);
 }
 .dashbord-container-cards {
-  background-color: yellow;
+  background-color: rgb(224, 224, 113);
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr 1fr 1.5fr 1fr;
   gap: 1rem;
-  padding: 1rem;
+}
+.dashbord-container-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.dashbord-container-item-firstbox {
+  height: 15rem;
+  border-radius: 1rem;
+}
+.dashbord-container-item-secondbox {
+  flex: 1;
+  border-radius: 1rem;
+}
+.dashbord-container-item-chartbox {
+  height: 25rem;
+  border-radius: 1rem;
 }
 
 /*
