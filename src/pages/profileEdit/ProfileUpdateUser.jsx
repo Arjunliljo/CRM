@@ -1,19 +1,34 @@
+import { useState } from "react";
 import ActionButtons from "./ActionButtons";
-import ProfileBasic from "./ProfileBasic";
-import ProfileInfo from "./ProfileInfo";
+import ProfileBasicHolder from "./ProfileBasic/ProfileBasicHolder";
 import ProfileSwitchNav from "./ProfileSwitchNav";
+import ProfileStatusHolder from "./ProfileStatus/ProfileStatusHolder";
+
+const TABS = ["Profile", "Status", "Dashboard"];
 
 function ProfileUpdateUser() {
+  const [activeTab, setActiveTab] = useState(0);
+
+  const handleNext = () => {
+    if (activeTab < TABS.length - 1) {
+      setActiveTab(activeTab + 1);
+    }
+  };
+
+  const handleCancel = () => {
+    setActiveTab(0);
+  };
+
   return (
     <div className="profileUpdate-main">
-      <ProfileSwitchNav />
-      <div className="profile-edit-container">
-        <div className="profile-content">
-          <ProfileBasic />
-          <ProfileInfo />
-        </div>
-      </div>
-      <ActionButtons />
+      <ProfileSwitchNav
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        tabs={TABS}
+      />
+      {activeTab === 0 && <ProfileBasicHolder />}
+      {activeTab === 1 && <ProfileStatusHolder />}
+      <ActionButtons onHandleNext={handleNext} onHandleCancel={handleCancel} />
     </div>
   );
 }

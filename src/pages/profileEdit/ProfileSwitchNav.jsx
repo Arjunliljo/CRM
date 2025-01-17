@@ -1,11 +1,16 @@
-import React from "react";
-
-export default function ProfileSwitchNav() {
+// ProfileSwitchNav Component
+export default function ProfileSwitchNav({ activeTab, setActiveTab, tabs }) {
   return (
     <div className="profile-nav">
-      <button className="nav-item profile-active">Profile</button>
-      <button className="nav-item">Status</button>
-      <button className="nav-item">Dashboard</button>
+      {tabs.map((tab, index) => (
+        <button
+          key={index}
+          className={`nav-item ${activeTab === index ? "profile-active" : ""}`}
+          onClick={() => setActiveTab(index)}
+        >
+          {tab}
+        </button>
+      ))}
     </div>
   );
 }
