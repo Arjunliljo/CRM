@@ -3203,43 +3203,7 @@ F .log .message-area-textarea-container {
   width: 100%;
   height: 80%;
   margin: 0 auto;
-}
-.profile-edit-container .form-left,
-.profile-edit-container .form-right {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1;
-  width: 50%;
-}
-.profile-edit-container .form-left h2,
-.profile-edit-container .form-right h2 {
-  font-size: 18px;
-  margin-bottom: 62px;
-  color: #333;
-}
-.profile-edit-container .form-left .form-group,
-.profile-edit-container .form-right .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.profile-edit-container .form-left .form-group .input-formGroup,
-.profile-edit-container .form-right .form-group .input-formGroup {
-  width: 100%;
-  height: 3rem;
-  padding: 12px;
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 0.8rem;
-}
-.profile-edit-container .form-left .form-group .select-formGroup,
-.profile-edit-container .form-right .form-group .select-formGroup {
-  width: 80%;
-  padding: 12px;
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 0.8rem;
 }
 .profile-edit-container .auto-assign {
   display: flex;
@@ -3249,7 +3213,6 @@ F .log .message-area-textarea-container {
   background: #f9f9f9;
   border-radius: 1rem;
   border: 1px solid #ddd;
-  background-color: yellow;
 }
 .profile-edit-container .auto-assign .span-assign {
   font-size: 0.8rem;
@@ -3293,18 +3256,43 @@ F .log .message-area-textarea-container {
 
 .profile-content {
   display: flex;
-  gap: 5px;
+  gap: 3rem;
   padding: 20px;
   width: 50%;
 }
 .profile-content .content-section {
   flex: 1;
   min-width: 320px;
+  display: flex;
+  flex-direction: column;
 }
 .profile-content .content-section h2 {
   font-size: 18px;
   margin-bottom: 20px;
   color: #333;
+}
+.profile-content .content-section-head {
+  height: 5rem;
+  margin-bottom: 0.8rem;
+}
+.profile-content .content-section-item-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.profile-content .content-section .form-group {
+  overflow: hidden;
+}
+.profile-content .content-section .form-group select,
+.profile-content .content-section .form-group input {
+  width: 100%;
+  height: 3.2rem;
+  padding: 0 1rem;
+  border-radius: 1rem;
+  border: none;
+  outline: none;
+  color: #757575;
 }
 .profile-content .upload-btn {
   background-color: #757575;
