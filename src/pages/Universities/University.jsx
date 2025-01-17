@@ -8,56 +8,65 @@ import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import { setCurStudent } from "../../../global/studentsSlice";
 import StudentsCard from "../../components/Card/StudentsCard";
+import All from "../../components/buttons/All";
+import {
+  setAutoUniversitysAssign,
+  setCurUniversity,
+} from "../../../global/universitySlice";
+import UniversityCard from "../../components/Card/UniversityCard";
+import UniversityProfile from "../../components/Card/UniversityRight/UniversityProfile";
 
-const student = {
+const university = {
   num: 3,
-  name: "John Doe",
+  Uname: "University Of United Kingdom",
   img: "https://via.placeholder.com/150",
   number: 1234567890,
   status: "Interested",
   statusColor: "red",
   remark:
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-  applications: 2,
-  attempts: 1,
+  year: 2,
+  fee: 1000,
+  eligibility: "Eligibility",
   country: "Germany",
   count: 3,
 };
 const arr = [...Array(500)].map((_, i) => {
-  const obj = { ...student, _id: i };
+  const obj = { ...university, _id: i };
   return obj;
 });
 
 export default function University() {
-  const { autoStudentsAssign, curStudent } = useSelector(
-    (state) => state.students
+  const { autoUniversitysAssign, curUniversity } = useSelector(
+    (state) => state.universitys
   );
 
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
-  const IContents = arr?.map((student, index) => (
-    <StudentsCard
+  const IContents = arr?.map((university, index) => (
+    <UniversityCard
       key={index}
-      onSet={setCurStudent}
-      set={curStudent}
-      student={student}
+      onSet={setCurUniversity}
+      set={curUniversity}
+      university={university}
+      istoggle={setAutoUniversitysAssign}
+      toggle={autoUniversitysAssign}
     />
   ));
 
   //   const ISelector = <Selector />;
   const IPrimaryBttn = <PrimaryBttn>Add Students</PrimaryBttn>;
-  const IAllLeads = <AllLeads />;
+  const IAll = <All />;
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
-  const IProfileCard = <ProfileCard />;
-  const IStartApplication = <StartApplication />;
+  const IProfileCard = <UniversityProfile />;
 
   const TopLeft = [<div key="search-bar">{ISearchBar}</div>];
   const TopRight = [<div key="primary-btn">{IPrimaryBttn}</div>];
 
   const BottomLeft = [
-    <div key="all-leads">{IAllLeads}</div>,
+    <div key="all-leads">{IAll}</div>,
     <div key="selector-one">{ISelectorOne}</div>,
     <div key="selector-two">{ISelectorTwo}</div>,
     <div key="selector-three">{ISelectorThree}</div>,
@@ -72,11 +81,10 @@ export default function University() {
       TopLeft={TopLeft}
       TopRight={TopRight}
       IContents={IContents}
-      switching={autoStudentsAssign}
+      switching={autoUniversitysAssign}
       BottomLeft={BottomLeft}
       BottomRight={BottomRight}
       ProfileCard={IProfileCard}
-      StartApplication={IStartApplication}
     />
   );
 }

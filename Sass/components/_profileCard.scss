@@ -89,8 +89,8 @@
     }
   }
   &-journy {
-    background-color: variables.$color-white;
-    height: 7.5rem;
+    // background-color: variables.$color-white;
+    height: 8rem;
   }
 
   &-boxes {
@@ -129,7 +129,7 @@
       font-size: 1rem;
       font-weight: 400;
       height: 1.5rem;
-      margin: variables.$margin-sm variables.$margin-md;
+      margin: variables.$margin-sm;
       color: variables.$color-text-gray;
     }
     &-selectors {
@@ -155,7 +155,7 @@
     &-editable-detail {
       height: 10px;
     }
-    
+
     &-mark-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);

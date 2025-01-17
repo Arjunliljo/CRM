@@ -1,9 +1,11 @@
+import DocumentUpload from "../../smallComponents/DocumentUpload";
+import Tracker from "../../smallComponents/Tracker";
 import ActivityLog from "./ActivityLog";
 import EligiableCourses from "./EligiableCourses";
 import PersonalDetails from "./PersonalDetails";
 import ProfileCardStatus from "./ProfileCardStatus";
 
-export default function ProfileCard() {
+export default function ProfileCard({ IDocumentUpload }) {
   //dummy
   const lead = {
     img: "https://via.placeholder.com/100",
@@ -44,11 +46,14 @@ export default function ProfileCard() {
           </div>
         </div>
       </div>
-      <div className="profileCard-journy"></div>
+      <div className="profileCard-journy">
+        <Tracker completedStep={3} />
+      </div>
       <div className="profileCard-boxes">
         <PersonalDetails />
         <ProfileCardStatus />
       </div>
+      {IDocumentUpload}
       <EligiableCourses />
       <ActivityLog />
     </div>

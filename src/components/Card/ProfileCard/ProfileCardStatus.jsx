@@ -1,6 +1,7 @@
 import { IoMdArrowForward, IoMdArrowBack } from "react-icons/io";
 import { MdOutlineInterests } from "react-icons/md";
 import { MdDateRange } from "react-icons/md";
+import EligibleBttn from "../../buttons/EligibleBttn";
 
 export default function ProfileCardStatus() {
   return (
@@ -58,7 +59,7 @@ export default function ProfileCardStatus() {
           <input type="text" className="selector-with-icon" />
         </div>
         <div className="eligible-head">
-          <button className="eligible-head-btn">Eligible Course</button>
+          <EligibleBttn>Eligible Course</EligibleBttn>
         </div>
       </form>
     </div>

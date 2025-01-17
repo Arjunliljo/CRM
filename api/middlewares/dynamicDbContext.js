@@ -1,33 +1,52 @@
-import mongoose from "mongoose";
-import Admin from "../Models/adminModel.js";
+// /* global process */
+// import mongoose from "mongoose";
+// import catchAsync from "../Utilities/catchAsync.js";
 
-export const connectToUserAdminDb = async (adminId) => {
-  const admin = await Admin.findById(adminId);
-  if (!admin) {
-    throw new Error("Admin not found");
-  }
+// export const getClusterUrlByDatabaseName = (count) => {
+//   const defaultUrl = process.env.PRIMARY_STR;
+//   const urls = process.env.CLUSTER_URLS.split(",,,,,,,");
+//   const url = urls[count] || defaultUrl;
+//   console.log(count, ":", url);
 
-  const { databaseName } = admin;
+//   if (!url.startsWith("mongodb://") && !url.startsWith("mongodb+srv://")) {
+//     return defaultUrl;
+//   }
 
-  // create a connection to the corresponding admin's db
-  const connection = await mongoose.createConnection(
-    `mongodb://localhost:27017/${databaseName}`
-  );
-  return connection;
-};
+//   return url;
+// };
 
-//to get db name for crud operations
-export const addDbNameToRequest = (req, res, next) => {
-  try {
-    const currentConnection = mongoose.connection;
-    if (currentConnection && currentConnection.name) {
-      req.db = currentConnection.name;
-    } else {
-      req.db = null;
-    }
-    next();
-  } catch (err) {
-    console.error("Error in DB middleware:", err.message);
-    next(err);
-  }
-};
+// export const connectToUserAdminDb = async (admin) => {
+//   try {
+//     // Fetch the admin document
+
+//     if (!admin) {
+//       throw new Error("Admin not found");
+//     }
+
+//     const { count } = admin;
+
+//     // Get the corresponding cluster URL based on the database count
+//     const clusterUrl = await getClusterUrlByDatabaseName(count);
+
+//     // Create a connection to the corresponding admin's database
+//     const connection = await mongoose.createConnection(`${clusterUrl}`);
+
+//     console.log(`Successfully connected to the database`);
+
+//     return connection;
+//   } catch (error) {
+//     console.error("Error connecting to database:", error.message);
+//     throw error; // Re-throw the error if connection fails
+//   }
+// };
+
+// //to get db url for crud operations
+// export const addDbNameToRequest = catchAsync(async (req, res, next) => {
+//   const currentConnection = mongoose.connection;
+//   if (currentConnection && currentConnection.name) {
+//     req.db = currentConnection;
+//   } else {
+//     req.db = null;
+//   }
+//   next();
+// });

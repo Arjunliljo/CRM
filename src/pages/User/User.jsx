@@ -7,16 +7,17 @@ import AllLeads from "../../components/buttons/AllLeads";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import UserCard from "../../components/Card/UserCard";
-import { setCurUser } from "../../../global/userSlice";
+import { setAutoUserAssign, setCurUser } from "../../../global/userSlice";
 import All from "../../components/buttons/All";
 import Counsellor from "../../components/buttons/NormalButton";
 import NormalButton from "../../components/buttons/NormalButton";
+import UserRight from "../../components/Card/UserRight/UserRight";
 
 const user = {
   num: 3,
-  name: "John Doe",
+  name: "David Martin",
   img: "https://via.placeholder.com/150",
-  number: 1234567890,
+  role: "Counsellor",
   status: "Interested",
   statusColor: "red",
   remark:
@@ -38,7 +39,14 @@ export default function User() {
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
   const IContents = arr?.map((user, index) => (
-    <UserCard key={index} onSet={setCurUser} set={curUser} user={user} />
+    <UserCard
+      key={index}
+      onSet={setCurUser}
+      set={curUser}
+      user={user}
+      istoggle={setAutoUserAssign}
+      toggle={autoUserAssign}
+    />
   ));
 
   //   const ISelector = <Selector />;
@@ -47,8 +55,7 @@ export default function User() {
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
-  const IProfileCard = <ProfileCard />;
-  const IStartApplication = <StartApplication />;
+  const IProfileCard = <UserRight />;
 
   const TopLeft = [
     <div key="search-bar">{ISearchBar}</div>,
@@ -74,7 +81,6 @@ export default function User() {
       BottomLeft={BottomLeft}
       BottomRight={BottomRight}
       ProfileCard={IProfileCard}
-      StartApplication={IStartApplication}
     />
   );
 }

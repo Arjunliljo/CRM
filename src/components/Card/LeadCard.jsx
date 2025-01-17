@@ -4,11 +4,12 @@ import CountryBtn from "../buttons/CountryBtn";
 import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function LeadCard({ lead, set, onSet }) {
+export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(lead?._id === set?._id);
   const targetRef = useRef(null);
+  const { autoLeadsAssign, curLead } = useSelector((state) => state.leads);
 
   useEffect(() => {
     setIsSelected(lead?._id === set?._id);
@@ -17,6 +18,7 @@ export default function LeadCard({ lead, set, onSet }) {
   const dispatch = useDispatch();
   const handleLeadSelect = () => {
     dispatch(onSet(lead));
+    dispatch(istoggle(!toggle));
     setTimeout(() => {
       targetRef.current.scrollIntoView({
         behavior: "smooth",
@@ -24,6 +26,7 @@ export default function LeadCard({ lead, set, onSet }) {
       });
     }, 500);
   };
+  console.log(set, "//////");
 
   return (
     <div

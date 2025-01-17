@@ -9,6 +9,7 @@ import AllLeads from "../../components/buttons/AllLeads";
 import { setAutoLeadsAssign, setCurLead } from "../../../global/leadsSlice";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
+import DocumentUpload from "../../components/smallComponents/DocumentUpload";
 
 const lead = {
   num: 3,
@@ -33,9 +34,16 @@ export default function Leads() {
   const { autoLeadsAssign, curLead } = useSelector((state) => state.leads);
 
   const ISearchBar = <SearchBar />;
-  const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
+  const IAutoBtn = <AutoBtn />;
   const IContents = arr?.map((lead, index) => (
-    <LeadCard key={index} onSet={setCurLead} set={curLead} lead={lead} />
+    <LeadCard
+      key={index}
+      onSet={setCurLead}
+      set={curLead}
+      lead={lead}
+      istoggle={setAutoLeadsAssign}
+      toggle={autoLeadsAssign}
+    />
   ));
 
   const ISelector = <Selector />;
@@ -46,7 +54,7 @@ export default function Leads() {
   const ISelectorThree = <Selector />;
   const ISelectorFour = <Selector />;
   const ISelectorFive = <Selector />;
-  const IProfileCard = <ProfileCard />;
+
   const IStartApplication = <StartApplication />;
 
   const TopLeft = [
@@ -66,6 +74,9 @@ export default function Leads() {
     <div key="selector-four">{ISelectorFour}</div>,
     <div key="selector-five">{ISelectorFive}</div>,
   ];
+
+  const IDocumentUpload = <DocumentUpload />;
+  const IProfileCard = <ProfileCard IDocumentUpload={IDocumentUpload} />;
 
   return (
     <MainBody

@@ -1,0 +1,277 @@
+@use "../abstract/variables";
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 0.8fr 1fr 0.8fr;
+  gap: 16px;
+  padding: 24px;
+
+  .first-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .second-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 50rem;
+  }
+  .third-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 50rem;
+  }
+  .fourth-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 50rem;
+  }
+}
+.welcome-card {
+  font-size: 2rem;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  padding-top: 4rem;
+
+  &-name {
+    color: black;
+  }
+
+  &-wish {
+    color: gray;
+  }
+}
+
+.workLead-wrapper {
+  display: flex;
+}
+
+.overview {
+  background-color: variables.$color-white;
+  border-radius: variables.$radius-lg;
+  padding: variables.$padding-md 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1f36;
+    margin-top: 15px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: variables.$padding-md variables.$padding-xs;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: variables.$color-blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__count {
+    font-size: 24px;
+    font-weight: 600;
+    color: variables.$color-blue;
+  }
+
+  &__label {
+    font-size: 14px;
+    color: #6b7280;
+  }
+}
+
+.dashboard-leads {
+  background-color: variables.$color-white;
+  border-radius: variables.$radius-lg;
+  padding: variables.$padding-md 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1f36;
+    }
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1f36;
+    }
+  }
+
+  .lead-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
+
+    .lead-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: variables.$padding-xs;
+      padding-right: variables.$padding-md;
+      border: 1px solid variables.$color-gray-mid;
+      border-radius: 4rem;
+      font-size: variables.$font-size-small;
+      .lead-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: variables.$padding-xs;
+        padding-right: variables.$padding-md;
+        border: 1px solid variables.$color-gray-mid;
+        border-radius: 4rem;
+        font-size: variables.$font-size-small;
+
+        .lead-count {
+          display: flex;
+          align-items: center;
+          justify-content: start;
+          gap: 2rem;
+          width: 35%;
+          .lead-count {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 2rem;
+            width: 35%;
+
+            .arrow {
+              background-color: variables.$color-blue;
+              color: white;
+              border: none;
+              border-radius: 50%;
+              font-size: 1.2rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 2.6rem;
+              height: 2.6rem;
+            }
+            .arrow {
+              background-color: variables.$color-blue;
+              color: white;
+              border: none;
+              border-radius: 50%;
+              font-size: 1.2rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 2.6rem;
+              height: 2.6rem;
+            }
+
+            .count {
+              font-size: 2.5rem;
+              font-weight: variables.$font-size;
+              color: variables.$color-blue;
+              width: 15%;
+              text-align: start;
+            }
+          }
+          .count {
+            font-size: 2.5rem;
+            font-weight: variables.$font-size;
+            color: variables.$color-blue;
+            width: 15%;
+            text-align: start;
+          }
+        }
+
+        .label {
+          width: 45%;
+          border-radius: 15px;
+          padding: variables.$padding-xs;
+          font-size: variables.$font-size-small;
+          font-weight: bold;
+          text-align: center;
+          .label {
+            width: 45%;
+            border-radius: 15px;
+            padding: variables.$padding-xs;
+            font-size: variables.$font-size-small;
+            font-weight: bold;
+            text-align: center;
+
+            &.green {
+              background-color: variables.$color-prime;
+              color: variables.$color-gray-dark;
+            }
+            &.green {
+              background-color: variables.$color-prime;
+              color: variables.$color-gray-dark;
+            }
+
+            &.blue {
+              background-color: variables.$color-blue-shadow;
+              color: variables.$color-gray-dark;
+            }
+          }
+        }
+        &.blue {
+          background-color: variables.$color-blue-shadow;
+          color: variables.$color-gray-dark;
+        }
+      }
+    }
+  }
+}
+
+.add-button {
+  border: 1px solid variables.$color-gray-mid;
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  background-color: variables.$color-white;
+  background-color: variables.$color-white;
+}

@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <li>
-        <NavLink to="/">
+        <NavLink to="/dashboard">
           <HomeIcon path="home" />
         </NavLink>
       </li>
@@ -15,7 +15,7 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/student">
+        <NavLink to="/branchmanaging">
           <HomeIcon path="group" />
         </NavLink>
       </li>
@@ -25,17 +25,17 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/tick">
+        <NavLink to="/university">
           <HomeIcon path="tick" />
         </NavLink>
       </li>
       <li>
-        <NavLink to="/wifi">
+        <NavLink to="my-profile">
           <HomeIcon path="wifi" />
         </NavLink>
       </li>
       <li>
-        <NavLink to="/user">
+        <NavLink to="profileEdit">
           <HomeIcon path="contact" />
         </NavLink>
       </li>
