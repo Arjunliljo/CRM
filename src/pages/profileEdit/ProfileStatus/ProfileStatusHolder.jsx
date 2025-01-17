@@ -1,5 +1,3 @@
-import ProfileBasic from "../ProfileBasic/ProfileBasic";
-import ProfileInfo from "../ProfileBasic/ProfileInfo";
 import MainStatus from "./MainStatus";
 import SubStatus from "./SubStatus";
 import Tabs from "./Tabs";
