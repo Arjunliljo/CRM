@@ -196,3 +196,20 @@
     }
   }
 }
+.circle {
+  &-btn {
+    color: variables.$color-white;
+    height: variables.$btn-circle-size;
+    width: variables.$btn-circle-size;
+    border-radius: variables.$btn-circle-size;
+    font-size: 2rem;
+    padding: 10px;
+    border: 0.8px solid variables.$color-text-gray;
+    background-color: transparent;
+  }
+
+  &-blue {
+    background-color: variables.$color-blue !important;
+    border: none !important;
+  }
+}

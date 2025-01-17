@@ -28,7 +28,7 @@
 @use "components/universityRight";
 @use "components/universityEligible";
 @use "components/userRight";
-@use "page/dashboard";
+// @use "page/dashboard";
 @use "components/myActivity";
 @use "components/leaderboard";
 @use "components/messages";
@@ -39,6 +39,8 @@
 @use "components/tracker";
 @use "components/userSelector";
 @use "components/profileUpdateUser/profileStatusUpdate";
+@use "components/dashboard/leads-overview";
+@use "components/dashboard/overview";
 @use "layout/documentUpload";
 @use "layout/dash";
 /*

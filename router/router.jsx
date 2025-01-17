@@ -16,7 +16,7 @@ import General from "../src/pages/General/General";
 import { useSelector } from "react-redux";
 import Dashboard from "../src/pages/dashboard/Dashboard";
 import Tracker from "../src/components/smallComponents/Tracker";
-import Dash from "../src/layout/Dash";
+import Dash from "../src/pages/dashboard/Dash";
 
 const tabs = ["offerletter", "students", "payments"];
 

@@ -1,26 +1,26 @@
 @use "../abstract/variables" as variables;
 .dashbord-container {
-  background-color: rgb(223, 176, 176);
   margin-top: variables.$body-start-margin;
   margin-left: variables.$body-start-margin;
   height: calc(100vh - variables.$body-start-margin);
   width: calc(100vw - variables.$body-start-margin);
   &-cards {
-    background-color: rgb(224, 224, 113);
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: (1fr 1fr 1.5fr 1fr);
+    grid-template-columns: (1fr 1fr 1.2fr 1fr);
     gap: 1rem;
   }
   &-item {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    border-radius: variables.$radius-md;
 
     &-firstbox {
-      height: 15rem;
-      border-radius: 1rem;
+      height: fit-content;
+      border-radius: variables.$radius-lg;
+      overflow: hidden;
     }
     &-secondbox {
       flex: 1;

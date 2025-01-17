@@ -71,8 +71,17 @@ export default function HomeIcon({
         <path d="M4 4h16v12H5.17L4 17.17zm0-2c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm2 10h8v2H6zm0-3h12v2H6zm0-3h12v2H6z" />
       );
       break;
+    case "plus":
+      curPath = (
+        <path d="M468.5-469H257v-23h211.5v-211.5h23V-492H703v23H491.5v211.5h-23V-469Z" />
+      );
+      break;
+    case "arrow":
+      curPath = (
+        <path d="m232-212-20-20 448-448H360v-28h348v348h-28v-300L232-212Z" />
+      );
+      break;
   }
-
 
   return (
     <svg
