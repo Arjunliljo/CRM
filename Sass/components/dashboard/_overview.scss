@@ -4,9 +4,11 @@
   border-radius: variables.$radius-lg;
   padding: variables.$padding-md 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-
   height: 100%;
-  background-color: greenyellow;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   &__title {
     font-size: 18px;
@@ -20,9 +22,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 6px;
 
-    @media (max-width: 768px) {
-      grid-template-columns: repeat(1, 1fr);
-    }
+    flex: 1;
   }
 
   &__item {
@@ -30,16 +30,12 @@
     align-items: center;
     gap: 12px;
     padding: variables.$padding-md variables.$padding-xs;
-    transition: transform 0.2s ease;
-
-    &:hover {
-      transform: translateY(-2px);
-    }
   }
 
   &__icon {
     width: 40px;
     height: 40px;
+
     border-radius: 8px;
     background-color: variables.$color-blue;
     display: flex;
@@ -51,16 +47,18 @@
   &__content {
     display: flex;
     flex-direction: column;
+
+    text-wrap: nowrap;
   }
 
   &__count {
-    font-size: 24px;
+    font-size: 1.2rem;
     font-weight: 600;
     color: variables.$color-blue;
   }
 
   &__label {
-    font-size: 14px;
+    font-size: variables.$font-size-sm;
     color: #6b7280;
   }
 }

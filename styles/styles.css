@@ -4610,7 +4610,6 @@ F .log .message-area-textarea-container {
 }
 .dashboard-leads .lead-items .lead-item .label {
   width: 10rem;
-  background-color: red;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -4626,7 +4625,9 @@ F .log .message-area-textarea-container {
   padding: 1rem 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   height: 100%;
-  background-color: greenyellow;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .overview__title {
   font-size: 18px;
@@ -4638,21 +4639,13 @@ F .log .message-area-textarea-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 6px;
-}
-@media (max-width: 768px) {
-  .overview__grid {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  flex: 1;
 }
 .overview__item {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 1rem 2px;
-  transition: transform 0.2s ease;
-}
-.overview__item:hover {
-  transform: translateY(-2px);
 }
 .overview__icon {
   width: 40px;
@@ -4667,14 +4660,15 @@ F .log .message-area-textarea-container {
 .overview__content {
   display: flex;
   flex-direction: column;
+  text-wrap: nowrap;
 }
 .overview__count {
-  font-size: 24px;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #0075fc;
 }
 .overview__label {
-  font-size: 14px;
+  font-size: 12px;
   color: #6b7280;
 }
 
