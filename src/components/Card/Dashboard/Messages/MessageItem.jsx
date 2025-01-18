@@ -1,6 +1,10 @@
-export default function MessageItem({ message }) {
+export default function MessageItem({ message, onClick }) {
   return (
-    <div key={message.id} className="message-item">
+    <div
+      key={message.id}
+      className="message-item"
+      onClick={() => onClick(message)}
+    >
       <div className="message-item__content">
         <div className="message-item__header">
           <div className="message-item__avatar">
