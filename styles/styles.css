@@ -4731,6 +4731,10 @@ F .log .message-area-textarea-container {
   height: fit-content;
   border-radius: 1rem;
 }
+.dashbord-container-item-message {
+  flex: 1;
+  border-radius: 1rem;
+}
 
 /*
 *

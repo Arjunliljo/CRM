@@ -53,7 +53,7 @@ function Dash() {
             <Leaderboard />
           </div>
           <div
-            className="dashbord-container-item-secondbox"
+            className="dashbord-container-item-message"
             style={{ backgroundColor: "white" }}
           >
             <Messages />
