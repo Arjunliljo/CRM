@@ -42,7 +42,7 @@
 @use "components/dashboard/messages";
 @use "layout/documentUpload";
 @use "layout/dash";
-
+@use "components/chatbox";
 /*
 *
 *
@@ -63,5 +63,4 @@
 *
 *
 */
-
 @use "base/priority";
