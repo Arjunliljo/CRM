@@ -89,11 +89,12 @@ export default function Messages() {
           className="messages__search-input"
         />
       </div>
-
-      <div className="messages__list">
-        {messages.map((message) => (
-          <MessageItem key={message.id} message={message} />
-        ))}
+      <div className="messages-scroll">
+        <div className="messages__list">
+          {messages.map((message) => (
+            <MessageItem key={message.id} message={message} />
+          ))}
+        </div>
       </div>
     </div>
   );

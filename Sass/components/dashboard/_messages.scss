@@ -16,6 +16,11 @@
     margin-bottom: 20px;
   }
 
+  &-scroll {
+    height: 20rem;
+    overflow-y: scroll;
+  }
+
   &__add-btn {
     width: 40px;
     height: 40px;
@@ -60,9 +65,8 @@
   &__list {
     display: flex;
     flex-direction: column;
-
-    overflow-y: scroll;
-    height: 20rem;
+    gap: 1rem;
+    height: fit-content;
   }
 }
 
@@ -71,6 +75,7 @@
   align-items: center;
   padding: 8px;
   border-radius: 8px;
+  height: 10rem;
   transition: background-color 0.2s ease;
   position: relative;
   justify-content: space-between;
