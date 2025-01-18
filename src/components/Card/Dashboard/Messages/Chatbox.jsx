@@ -1,6 +1,6 @@
 function Chatbox({ message, onBack }) {
   return (
-    <div className="chatbox">
+    <div className="chatbox" onClick={onBack}>
       <div className="chatbox-head">
         <h2 className="chatbox-head-title">Arun</h2>
         <button className="chatbox-head-back" onClick={onBack}>
