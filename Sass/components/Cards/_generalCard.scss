@@ -1,6 +1,6 @@
-@use "../abstract/variables" as variables;
+@use "../../abstract/variables" as variables;
 
-.card {
+.cardGeneral {
   background-color: variables.$color-white;
   height: variables.$card-height;
   border-radius: variables.$radius-md;
@@ -78,7 +78,6 @@
     }
   }
 }
-
 .mover {
   display: flex;
   align-items: center;

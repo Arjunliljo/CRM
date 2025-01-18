@@ -1,6 +1,6 @@
-@use "../abstract/variables" as variables;
+@use "../../abstract/variables" as variables;
 
-.university-eligiable-courses {
+.eligiable-courses {
   background-color: variables.$color-white;
   border-radius: variables.$radius-md;
   gap: variables.$general-gap;

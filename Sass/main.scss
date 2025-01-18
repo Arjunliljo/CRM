@@ -10,39 +10,43 @@
 @use "base/responive";
 @use "components/buttons";
 @use "components/selectors";
-@use "components/card";
-@use "components/profileCard";
-@use "components/eligibleCard";
-@use "components/activityLog";
-@use "components/userCard";
-@use "components/university";
-@use "components/branchmanage";
-@use "components/generalCard";
+@use "components/Cards/leadcard";
+
+@use "components/RightsideProfileCard/eligibleCard";
+@use "components/RightsideProfileCard/activityLog";
+@use "components/User/userCard";
+@use "components/University/university";
+@use "components/Cards/branchmanagecard";
+@use "components/Cards/generalCard";
 @use "layout/mainhead";
 @use "page/profilePage";
 @use "layout/error";
 
 @use "page/profileUpdateUser";
-@use "components/Requirements";
-@use "components/universityRight";
-@use "components/universityEligible";
-@use "components/userRight";
+@use "components/University/Requirements";
+
+@use "components/University/universityEligible";
+@use "components/University/universityRight";
 
 // @use "page/dashboard";
+@use "components/User/userRight";
+@use "components/RightsideProfileCard/profileCard";
+@use "components/RightsideProfileCard/documentUpload";
 @use "components/myActivity";
 @use "components//dashboard/enrolled";
-@use "components/userpersonaledit";
-@use "components/tracker";
-@use "components/userSelector";
+@use "components/User/userpersonaledit";
+@use "Features/tracker";
+
+@use "components/User/userSelector";
 @use "components/profileUpdateUser/profileStatusUpdate";
 @use "components/dashboard/leads-overview";
 @use "components/dashboard/overview";
 @use "components/dashboard/performance";
 @use "components/dashboard/leaderboard";
 @use "components/dashboard/messages";
-@use "layout/documentUpload";
+
 @use "layout/dash";
-@use "components/chatbox";
+@use "Features/chatbox";
 /*
 *
 *
