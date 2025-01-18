@@ -87,7 +87,7 @@
 
   &-item {
     flex: 1;
-    height: 0.6rem;
+    height: 0.3rem;
     background-color: variables.$color-light-blue;
     border-radius: variables.$radius-lg;
   }
@@ -104,8 +104,8 @@
 
   &-img {
     background-color: variables.$color-gray;
+    height: 100%;
 
-    height: 120%;
     border-radius: 50%;
     overflow: hidden;
     img {

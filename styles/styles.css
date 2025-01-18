@@ -556,7 +556,7 @@ textarea::placeholder {
 }
 .mover-item {
   flex: 1;
-  height: 0.6rem;
+  height: 0.3rem;
   background-color: #60bdff;
   border-radius: 1.5rem;
 }
@@ -572,7 +572,7 @@ textarea::placeholder {
 }
 .name-bar-img {
   background-color: #e8e8e8;
-  height: 120%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -2618,53 +2618,6 @@ F .log .message-area-textarea-container {
   justify-content: center;
 }
 
-.mover {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.3rem;
-}
-.mover-item {
-  flex: 1;
-  height: 0.6rem;
-  background-color: #60bdff;
-  border-radius: 1.5rem;
-}
-.mover-gray {
-  background-color: #e8e8e8;
-}
-
-.name-bar {
-  display: flex;
-  align-items: start;
-  gap: 1rem;
-  height: 100%;
-}
-.name-bar-img {
-  background-color: #e8e8e8;
-  height: 120%;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.name-bar-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.name-bar-name {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  height: 100%;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.name-bar-name-whatsapp {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 .cardUniversity {
   background-color: #f9f9f9;
   height: 23rem;
@@ -2746,53 +2699,6 @@ F .log .message-area-textarea-container {
   justify-content: center;
 }
 
-.mover {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.3rem;
-}
-.mover-item {
-  flex: 1;
-  height: 0.6rem;
-  background-color: #60bdff;
-  border-radius: 1.5rem;
-}
-.mover-gray {
-  background-color: #e8e8e8;
-}
-
-.name-bar {
-  display: flex;
-  align-items: start;
-  gap: 1rem;
-  height: 100%;
-}
-.name-bar-img {
-  background-color: #e8e8e8;
-  height: 120%;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.name-bar-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.name-bar-name {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  height: 100%;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.name-bar-name-whatsapp {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 .cardHead {
   font-weight: 500;
   width: 8rem;
@@ -2869,53 +2775,6 @@ F .log .message-area-textarea-container {
   justify-content: center;
 }
 
-.mover {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.3rem;
-}
-.mover-item {
-  flex: 1;
-  height: 0.6rem;
-  background-color: #60bdff;
-  border-radius: 1.5rem;
-}
-.mover-gray {
-  background-color: #e8e8e8;
-}
-
-.name-bar {
-  display: flex;
-  align-items: start;
-  gap: 1rem;
-  height: 100%;
-}
-.name-bar-img {
-  background-color: #e8e8e8;
-  height: 120%;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.name-bar-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.name-bar-name {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  height: 100%;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.name-bar-name-whatsapp {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 .cardGeneral {
   background-color: #f9f9f9;
   height: 19rem;
@@ -2985,53 +2844,6 @@ F .log .message-area-textarea-container {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.mover {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.3rem;
-}
-.mover-item {
-  flex: 1;
-  height: 0.6rem;
-  background-color: #60bdff;
-  border-radius: 1.5rem;
-}
-.mover-gray {
-  background-color: #e8e8e8;
-}
-
-.name-bar {
-  display: flex;
-  align-items: start;
-  gap: 1rem;
-  height: 100%;
-}
-.name-bar-img {
-  background-color: #e8e8e8;
-  height: 120%;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.name-bar-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.name-bar-name {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  height: 100%;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.name-bar-name-whatsapp {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 .logocontainer {
@@ -3667,18 +3479,18 @@ F .log .message-area-textarea-container {
 .dashboard-card .work-items::-webkit-scrollbar {
   display: none;
 }
+.dashboard-card .work-items .work-item:nth-child(odd) {
+  background-color: #cff3a6;
+}
+.dashboard-card .work-items .work-item:nth-child(even) {
+  background-color: #d1e2f3;
+}
 .dashboard-card .work-items .work-item {
   display: flex;
   width: 100%;
   padding: 1rem;
   border-radius: 16px;
   box-shadow: none;
-}
-.dashboard-card .work-items .work-item.green {
-  background-color: #cff3a6;
-}
-.dashboard-card .work-items .work-item.blue {
-  background-color: #d1e2f3;
 }
 .dashboard-card .work-items .work-item .work-item-content {
   display: flex;

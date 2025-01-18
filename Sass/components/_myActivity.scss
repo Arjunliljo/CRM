@@ -66,20 +66,20 @@
     flex: 1;
     @include mixins.removeScrollbar;
 
+    .work-item:nth-child(odd) {
+      background-color: variables.$color-prime;
+    }
+
+    .work-item:nth-child(even) {
+      background-color: variables.$color-blue-shadow;
+    }
+
     .work-item {
       display: flex;
       width: 100%;
       padding: variables.$padding-md;
       border-radius: 16px;
       box-shadow: none;
-
-      &.green {
-        background-color: variables.$color-prime;
-      }
-
-      &.blue {
-        background-color: variables.$color-blue-shadow;
-      }
 
       .work-item-content {
         display: flex;
