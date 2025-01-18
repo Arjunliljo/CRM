@@ -1,8 +1,11 @@
+import { useState } from "react";
 import ArrowBlue from "../../../buttons/ArrowBlue";
 import HomeIcon from "../../../utils/Icons/HomeIcon";
 import MessageItem from "./MessageItem";
+import Chatbox from "./Chatbox";
 
 export default function Messages() {
+  const [selectedMessage, setSelectedMessage] = useState(null);
   const messages = [
     {
       id: 1,
@@ -73,29 +76,46 @@ export default function Messages() {
     },
   ];
 
+  const handleSelectMessage = (message) => {
+    setSelectedMessage(message);
+  };
+
   return (
     <div className="messages">
-      <div className="messages__header">
-        <h2 className="title">Messages</h2>
-        <ArrowBlue>
-          <HomeIcon path="plus" color="#fffffff8" />
-        </ArrowBlue>
-      </div>
-
-      <div className="messages__search">
-        <input
-          type="text"
-          placeholder="Search"
-          className="messages__search-input"
+      {selectedMessage ? (
+        <Chatbox
+          message={selectedMessage}
+          onBack={() => setSelectedMessage(null)}
         />
-      </div>
-      <div className="messages-scroll">
-        <div className="messages__list">
-          {messages.map((message) => (
-            <MessageItem key={message.id} message={message} />
-          ))}
-        </div>
-      </div>
+      ) : (
+        <>
+          <div className="messages__header">
+            <h2 className="title">Messages</h2>
+            <ArrowBlue>
+              <HomeIcon path="plus" color="#fffffff8" />
+            </ArrowBlue>
+          </div>
+
+          <div className="messages__search">
+            <input
+              type="text"
+              placeholder="Search"
+              className="messages__search-input"
+            />
+          </div>
+          <div className="messages-scroll">
+            <div className="messages__list">
+              {messages.map((message) => (
+                <MessageItem
+                  key={message.id}
+                  message={message}
+                  onClick={handleSelectMessage} // Pass the click handler
+                />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

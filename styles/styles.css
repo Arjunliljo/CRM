@@ -4700,21 +4700,35 @@ F .log .message-area-textarea-container {
 }
 
 .chatbox {
-  background-color: #f9f9f9;
+  background-color: #e8e8e8;
   border-radius: 1.5rem;
-  padding: 1rem 2rem;
+  padding: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   height: 100%;
 }
-.chatbox-title {
+.chatbox-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.chatbox-head-title {
   display: flex;
   align-items: start;
   justify-content: start;
 }
+.chatbox-head-back {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #0075fc;
+  border: none;
+  cursor: pointer;
+}
 .chatbox-scroll {
-  height: 20rem;
+  height: 25rem;
   overflow-y: scroll;
 }
 
