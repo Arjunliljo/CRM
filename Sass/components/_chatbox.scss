@@ -1,4 +1,4 @@
-@use "../../abstract/variables" as variables;
+@use "../abstract/variables" as variables;
 .chatbox {
   background-color: variables.$color-white;
   border-radius: variables.$radius-lg;

@@ -1,15 +1,3 @@
-/* Error: Can't find stylesheet to import.
- *   ,
- * 1 | @use "../../abstract/variables" as variables;
- *   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- *   '
- *   sass\components\_chatbox.scss 1:1  @use
- *   sass\main.scss 45:1                root stylesheet */
-
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
 * {
   padding: 0;
   margin: 0;
@@ -3638,10 +3626,6 @@ F .log .message-area-textarea-container {
   font-size: 24px;
   font-weight: 600;
   display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @use \"../../abstract/variables\" as variables;\d\a   \2502  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   sass\\components\\_chatbox.scss 1:1  @use\a   sass\\main.scss 45:1                root stylesheet";
 }
 .enrollment-card__progress .progress-numbers .label {
   font-size: 14px;
@@ -4595,6 +4579,25 @@ F .log .message-area-textarea-container {
 .dashbord-container-item-message {
   flex: 1;
   border-radius: 1rem;
+}
+
+.chatbox {
+  background-color: #f9f9f9;
+  border-radius: 1.5rem;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.chatbox-title {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+}
+.chatbox-scroll {
+  height: 20rem;
+  overflow-y: scroll;
 }
 
 /*
