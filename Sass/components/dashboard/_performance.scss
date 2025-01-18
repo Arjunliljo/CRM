@@ -102,8 +102,12 @@
     justify-content: center;
     border-radius: variables.$radius-xs;
     border: 1px solid variables.$color-gray-mid;
-    margin: 0rem 5rem;
+    padding: 0.2rem 0rem;
+    margin: 0 auto;
     margin-top: 1rem;
+    width: 15rem;
+
+    border-radius: 2rem;
     color: variables.$color-text-gray;
 
     span {

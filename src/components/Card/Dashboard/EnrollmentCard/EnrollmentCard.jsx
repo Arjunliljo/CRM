@@ -47,9 +47,9 @@ export default function EnrollmentCard() {
         <div className="enrollment-card__progress">
           <BarProgress />
           <ProgressBar />
-          <div className="target-difference">
-            <span>{difference} </span>
-            admissions away from target
+          <div className="performance__applications">
+            <span>{target}</span>
+            Applications so far
           </div>
         </div>
       </div>

@@ -4277,8 +4277,11 @@ F .log .message-area-textarea-container {
   justify-content: center;
   border-radius: 8px;
   border: 1px solid #dadada;
-  margin: 0rem 5rem;
+  padding: 0.2rem 0rem;
+  margin: 0 auto;
   margin-top: 1rem;
+  width: 15rem;
+  border-radius: 2rem;
   color: #757575;
 }
 .performance__applications span {
