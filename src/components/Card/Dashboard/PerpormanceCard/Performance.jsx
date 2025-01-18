@@ -20,7 +20,7 @@ export default function Performance() {
           </span>
         </div>
         <div className="performance__applications">
-          <span>{applications} </span>
+          <span>{applications}</span>
           Applications so far
         </div>
       </div>
