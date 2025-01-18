@@ -1,10 +1,10 @@
-import EnrollmentCard from "../../components/Card/Dashboard.jsx/EnrollmentCard";
-import Leaderboard from "../../components/Card/Dashboard.jsx/Leaderboard";
-import LeadsCard from "../../components/Card/Dashboard.jsx/LeadCard/LeadsCard";
-import Messages from "../../components/Card/Dashboard.jsx/Messages";
-import MyWork from "../../components/Card/Dashboard.jsx/MyWork";
-import Overview from "../../components/Card/Dashboard.jsx/Overview";
-import Performance from "../../components/Card/Dashboard.jsx/Performance";
+import EnrollmentCard from "../../components/Card/Dashboard/EnrollmentCard/EnrollmentCard";
+import Leaderboard from "../../components/Card/Dashboard/Leaderboard";
+import LeadsCard from "../../components/Card/Dashboard/LeadCard/LeadsCard";
+import Messages from "../../components/Card/Dashboard/Messages";
+import MyWork from "../../components/Card/Dashboard/MyWork";
+import Overview from "../../components/Card/Dashboard/Overview";
+import Performance from "../../components/Card/Dashboard/Performance";
 
 function Dash() {
   return (
@@ -36,7 +36,7 @@ function Dash() {
             className="dashbord-container-item-chartbox"
             style={{ backgroundColor: "white" }}
           >
-            {/* <EnrollmentCard /> */}
+            <EnrollmentCard />
           </div>
           <div
             className="dashbord-container-item-secondbox"

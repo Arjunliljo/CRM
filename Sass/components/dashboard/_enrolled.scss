@@ -1,18 +1,10 @@
-@use "../abstract/variables";
+@use "../../abstract/variables" as variables;
 
 .enrollment-card {
   background-color: variables.$color-white;
   border-radius: variables.$radius-lg;
   padding: variables.$padding-md 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-
-
-  &__title {
-    font-size: variables.$font-size-lg;
-    font-weight: 600;
-    color: variables.$color-black;
-    margin-top: 15px;
-  }
 
   &__chart {
     display: flex;
@@ -132,12 +124,15 @@
 
       .progress-fill {
         height: 100%;
-        background: linear-gradient(90deg, #dde1ee 0%, variables.$color-violet 100%);
+        background: linear-gradient(
+          90deg,
+          #dde1ee 0%,
+          variables.$color-violet 100%
+        );
         transition: width 0.3s ease;
         position: relative;
         border-radius: variables.$radius-xs;
       }
-
 
       .progress-remaining {
         position: absolute;
@@ -145,10 +140,11 @@
         right: 0;
         bottom: 0;
         left: 78%;
-        background: repeating-linear-gradient(-45deg,
-            transparent 1px,
-            variables.$color-violet 4px,
-          );
+        background: repeating-linear-gradient(
+          -45deg,
+          transparent 1px,
+          variables.$color-violet 4px
+        );
         border-radius: variables.$radius-xs;
       }
     }

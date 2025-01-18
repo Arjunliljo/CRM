@@ -4056,12 +4056,6 @@ F .log .message-area-textarea-container {
   padding: 1rem 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
-.enrollment-card__title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #000000;
-  margin-top: 15px;
-}
 .enrollment-card__chart {
   display: flex;
   justify-content: space-between;
@@ -4730,7 +4724,7 @@ F .log .message-area-textarea-container {
   border-radius: 1rem;
 }
 .dashbord-container-item-chartbox {
-  height: 25rem;
+  height: fit-content;
   border-radius: 1rem;
 }
 
