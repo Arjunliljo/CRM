@@ -4688,7 +4688,7 @@ F .log .message-area-textarea-container {
 .document-upload-document-container-add-on {
   background-color: #e8e8e8;
   height: 10rem;
-  width: 14rem;
+  width: 100%;
   border-radius: 0.5rem;
   padding: 1rem;
   display: flex;

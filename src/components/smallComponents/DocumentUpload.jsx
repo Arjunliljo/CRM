@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function DocumentUpload() {
-  const [documents, setDocuments] = useState(5);
+  const [documents, setDocuments] = useState(6);
 
   const handleAddCard = () => {
     setDocuments((prev) => prev + 1);

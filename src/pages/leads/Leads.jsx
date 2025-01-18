@@ -41,7 +41,7 @@ export default function Leads() {
       onSet={setCurLead}
       set={curLead}
       lead={lead}
-      istoggle={setAutoLeadsAssign}
+      istoggle={autoLeadsAssign}
       toggle={autoLeadsAssign}
     />
   ));
