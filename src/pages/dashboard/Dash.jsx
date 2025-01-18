@@ -39,7 +39,7 @@ function Dash() {
             <EnrollmentCard />
           </div>
           <div
-            className="dashbord-container-item-secondbox"
+            className="dashbord-container-item-performance"
             style={{ backgroundColor: "white" }}
           >
             <Performance />
@@ -47,7 +47,7 @@ function Dash() {
         </div>
         <div className="dashbord-container-item">
           <div
-            className="dashbord-container-item-firstbox"
+            className="dashbord-container-item-leader"
             style={{ backgroundColor: "white" }}
           >
             <Leaderboard />

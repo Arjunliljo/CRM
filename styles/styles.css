@@ -4588,7 +4588,8 @@ F .log .message-area-textarea-container {
 .messages__list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  overflow-y: scroll;
+  height: 20rem;
 }
 
 .message-item {
@@ -4599,7 +4600,6 @@ F .log .message-area-textarea-container {
   transition: background-color 0.2s ease;
   position: relative;
   justify-content: space-between;
-  gap: 4rem;
   flex: 1;
   cursor: pointer;
 }
@@ -4716,6 +4716,8 @@ F .log .message-area-textarea-container {
   flex-direction: column;
   gap: 1rem;
   border-radius: 1rem;
+  height: 100%;
+  overflow: hidden;
 }
 .dashbord-container-item-firstbox {
   height: fit-content;
@@ -4729,6 +4731,14 @@ F .log .message-area-textarea-container {
 }
 .dashbord-container-item-chartbox {
   height: fit-content;
+  border-radius: 1rem;
+}
+.dashbord-container-item-performance {
+  flex: 1;
+  border-radius: 1rem;
+}
+.dashbord-container-item-leader {
+  flex: 1;
   border-radius: 1rem;
 }
 .dashbord-container-item-message {

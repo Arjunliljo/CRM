@@ -16,6 +16,8 @@
     flex-direction: column;
     gap: 1rem;
     border-radius: variables.$radius-md;
+    height: 100%;
+    overflow: hidden;
 
     &-firstbox {
       height: fit-content;
@@ -29,6 +31,14 @@
     }
     &-chartbox {
       height: fit-content;
+      border-radius: 1rem;
+    }
+    &-performance {
+      flex: 1;
+      border-radius: 1rem;
+    }
+    &-leader {
+      flex: 1;
       border-radius: 1rem;
     }
 

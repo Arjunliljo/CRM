@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function MessageItem({ message }) {
   return (
     <div key={message.id} className="message-item">
