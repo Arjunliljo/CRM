@@ -14,7 +14,7 @@ function Dash() {
           className="dashbord-container-item"
           style={{ backgroundColor: "white" }}
         >
-          {/* <MyWork /> */}
+          <MyWork />
         </div>
 
         <div className="dashbord-container-item">
@@ -28,7 +28,7 @@ function Dash() {
             className="dashbord-container-item-secondbox"
             style={{ backgroundColor: "white" }}
           >
-            <Overview />l
+            <Overview />
           </div>
         </div>
         <div className="dashbord-container-item">
@@ -42,7 +42,7 @@ function Dash() {
             className="dashbord-container-item-secondbox"
             style={{ backgroundColor: "white" }}
           >
-            {/* <Performance /> */}
+            <Performance />
           </div>
         </div>
         <div className="dashbord-container-item">
@@ -50,7 +50,7 @@ function Dash() {
             className="dashbord-container-item-firstbox"
             style={{ backgroundColor: "white" }}
           >
-            {/* <Leaderboard /> */}
+            <Leaderboard />
           </div>
           <div
             className="dashbord-container-item-secondbox"

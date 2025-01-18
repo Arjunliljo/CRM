@@ -3957,6 +3957,7 @@ F .log .message-area-textarea-container {
   border-radius: 1.5rem;
   padding: 1rem 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  height: 100%;
 }
 .performance__title {
   font-size: 18px;
@@ -4722,6 +4723,7 @@ F .log .message-area-textarea-container {
 .dashbord-container-item-secondbox {
   flex: 1;
   border-radius: 1rem;
+  height: fit-content;
 }
 .dashbord-container-item-chartbox {
   height: fit-content;
