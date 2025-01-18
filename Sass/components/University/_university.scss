@@ -1,13 +1,16 @@
-@use "../abstract/variables" as variables;
+@use "../../abstract/variables" as variables;
 
-.cardBranchmanage {
+.cardUniversity {
   background-color: variables.$color-white;
-  height: variables.$card-minheight;
+  height: variables.$card-maxheight;
   border-radius: variables.$radius-md;
   padding: variables.$padding-md;
   transition: all 0.3s ease-in-out;
-  cursor: pointer;
 
+  cursor: pointer;
+  &-head {
+    padding: variables.$padding-sm;
+  }
   &-body {
     display: flex;
     flex-direction: column;
@@ -29,6 +32,7 @@
       overflow: hidden;
       border: 1px solid rgb(206, 206, 206);
       margin-top: 0.71em;
+
       & textarea {
         width: 100%;
         height: 100%;
@@ -41,6 +45,14 @@
     }
     &-bottom {
       flex: 1;
+
+      &-iconsUniversity {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        gap: 0.5rem;
+      }
 
       &-icons {
         display: flex;
@@ -57,11 +69,17 @@
         }
       }
 
-      &-country {
+      &-countryEligible {
         display: flex;
         align-items: end;
         justify-content: space-between;
-        margin-bottom: 0.5rem;
+        margin-bottom: 4rem;
+
+        //   &-country {
+        //     display: flex;
+        //     align-items: end;
+        //     justify-content: space-between;
+        //     margin-bottom: 0.5rem;
 
         &-count {
           background-color: variables.$color-blue;
@@ -77,4 +95,9 @@
       }
     }
   }
+}
+
+.cardHead {
+  font-weight: 500;
+  width: 8rem;
 }

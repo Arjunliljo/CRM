@@ -1,6 +1,6 @@
-@use "../abstract/variables" as variables;
+@use "../../abstract/variables" as variables;
 
-.cardUser {
+.cardBranchmanage {
   background-color: variables.$color-white;
   height: variables.$card-minheight;
   border-radius: variables.$radius-md;

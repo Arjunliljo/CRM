@@ -1,6 +1,6 @@
-@use "../abstract/variables" as variables;
+@use "../../abstract/variables" as variables;
 
-.profileCardEdituser {
+.profileCard {
   height: fit-content;
   width: 100%;
   padding: variables.$general-gap;
@@ -89,8 +89,8 @@
     }
   }
   &-journy {
-    background-color: variables.$color-white;
-    height: 7.5rem;
+    // background-color: variables.$color-white;
+    height: 8rem;
   }
 
   &-boxes {
@@ -107,13 +107,13 @@
 }
 
 // add styling
-.personalUserEdit {
+.personal {
   &-status {
     background-color: variables.$color-gray-light;
     display: flex;
     flex-direction: column;
     padding: variables.$padding-lg 2rem;
-    height: 28rem;
+    height: fit-content;
 
     &-bottom-set {
       padding: variables.$margin-md;
@@ -129,7 +129,7 @@
       font-size: 1rem;
       font-weight: 400;
       height: 1.5rem;
-      margin: variables.$margin-sm 0;
+      margin: variables.$margin-sm;
       color: variables.$color-text-gray;
     }
     &-selectors {
@@ -144,7 +144,7 @@
     display: flex;
     flex-direction: column;
     padding: variables.$padding-lg 2rem;
-    height: 28rem;
+    height: 41rem;
 
     &-heading {
       display: flex;
@@ -254,15 +254,6 @@
       display: flex;
       gap: 1rem;
       justify-content: space-between;
-    }
-    &-buttons {
-      height: 5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: variables.$padding-md;
-      padding-top: 2rem;
-      gap: 2rem;
     }
   }
 }
