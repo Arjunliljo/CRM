@@ -1,14 +1,17 @@
 import express from "express";
+import cors from "cors";
 import AppError from "./Utilities/appError.js";
 import versionOne from "./versions/v1.js";
 import globalErrorHandler from "./Utilities/globalErrorhandler.js";
-import { addDbNameToRequest } from "./middlewares/dynamicDbContext.js";
+// import { addDbNameToRequest } from "./middlewares/dynamicDbContext.js";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(addDbNameToRequest);
+// app.use(addDbNameToRequest);
+
+app.use(cors());
 
 // Define routes BEFORE error handling
 app.use("/api/v2", versionOne);

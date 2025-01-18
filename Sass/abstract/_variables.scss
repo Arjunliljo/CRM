@@ -26,13 +26,10 @@ $bg-rotate: linear-gradient(
   rgba($color-white, 0.5),
   $color-bg2,
   $color-bg1
-
 );
-
 
 $color-success-light: #e8f5e9;
 $color-badge: #e8f0c6;
-
 
 //default variables
 $font-size: 1rem;
@@ -43,7 +40,6 @@ $font-size-sm: 12px;
 $font-size-md: 14px;
 $font-size-lg: 18px;
 $font-size-xl: 24px;
-
 
 //default icon size
 $icon-size: 1.5rem;
@@ -65,7 +61,6 @@ $radius-md: 1rem;
 $radius-lg: 1.5rem;
 $radius-pill: 16px;
 
-
 // measurements
 $navbar-margin: 1rem;
 $navbar-width: 3rem;
@@ -77,3 +72,6 @@ $btn-height: 2.5rem;
 $card-minheight: 16rem;
 $card-height: 19rem;
 $card-maxheight: 23rem;
+
+//buttons
+$btn-circle-size: 2.5rem;

@@ -1,7 +1,7 @@
 function LeftRound() {
   return (
     <div className="profile-page__icon">
-      <span></span>
+      <span className="profile-page__icon-camera">+</span>
     </div>
   );
 }

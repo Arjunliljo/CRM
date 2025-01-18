@@ -1,5 +1,5 @@
 import express from "express";
-import { protect } from "../middlewares/auth.js";
+// import { protect } from "../middlewares/auth.js";
 import {
   assignLeadsToUsers,
   branchLeadAssignment,
@@ -8,7 +8,7 @@ import {
 } from "../Controllers/leadController.js";
 const router = express.Router();
 
-router.use(protect);
+// router.use(protect);
 
 // Lead cruds - admin only will do
 router.post("/", createLead);

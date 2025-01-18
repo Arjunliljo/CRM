@@ -52,7 +52,7 @@ export default function Students() {
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
-  const IProfileCard = <ProfileCard />;
+  const IProfileCard = <ProfileCard IDocumentUpload={IDocumentUpload} />;
   const IStartApplication = <StartApplication />;
 
   const TopLeft = [<div key="search-bar">{ISearchBar}</div>];

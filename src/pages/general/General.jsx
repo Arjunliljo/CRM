@@ -58,7 +58,7 @@ export default function General() {
   const ISelectorThree = <Selector />;
   const ISelectorFour = <Selector />;
   const ISelectorFive = <Selector />;
-  const IProfileCard = <ProfileCard />;
+  const IProfileCard = <ProfileCard IDocumentUpload={IDocumentUpload} />;
   const IStartApplication = <StartApplication />;
 
   const TopLeft = [

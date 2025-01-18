@@ -4,7 +4,7 @@ import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
 import { useDispatch } from "react-redux";
 
-function BranchManagingCard({ branchmanage, set, onSet }) {
+function BranchManagingCard({ branchmanage, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(branchmanage?._id === set?._id);
   const targetRef = useRef(null);
 
@@ -15,6 +15,7 @@ function BranchManagingCard({ branchmanage, set, onSet }) {
   const dispatch = useDispatch();
   const handleBranchmanageSelect = () => {
     dispatch(onSet(branchmanage));
+    dispatch(istoggle(!toggle));
     setTimeout(() => {
       targetRef.current.scrollIntoView({
         behavior: "smooth",

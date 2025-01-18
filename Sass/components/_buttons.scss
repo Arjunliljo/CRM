@@ -103,6 +103,7 @@
   display: flex;
   align-items: start;
   height: 2rem;
+  padding: 0rem 1rem;
 }
 
 .selector-with-icon {
@@ -153,4 +154,62 @@
   border-radius: variables.$radius-md;
   height: variables.$btn-height;
   border: none;
+}
+.selector-with-icon-user {
+  border-radius: 7px;
+  border-width: 1.8px;
+  border-style: solid;
+  border-color: variables.$color-gray-mid;
+  height: 2.1rem;
+  width: 100%;
+  font-size: variables.$font-size;
+  font-weight: 400;
+}
+
+.action-buttons {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  gap: 12px;
+
+  & .btn-cancel,
+  & .btn-next {
+    padding: variables.$padding-sm 2rem;
+    border-radius: variables.$radius-md;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+
+    & .btn-cancel {
+      background: variables.$color-gray-mid;
+      color: variables.$color-black;
+
+      &:hover {
+        background: #e9ecef;
+      }
+    }
+
+    &.btn-next {
+      background: variables.$color-blue;
+      color: variables.$color-white;
+    }
+  }
+}
+.circle {
+  &-btn {
+    color: variables.$color-white;
+    height: variables.$btn-circle-size;
+    width: variables.$btn-circle-size;
+    border-radius: variables.$btn-circle-size;
+    font-size: 2rem;
+    padding: 10px;
+    border: 0.8px solid variables.$color-text-gray;
+    background-color: transparent;
+  }
+
+  &-blue {
+    background-color: variables.$color-blue !important;
+    border: none !important;
+  }
 }
