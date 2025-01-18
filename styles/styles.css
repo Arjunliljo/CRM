@@ -3605,14 +3605,18 @@ F .log .message-area-textarea-container {
 .dashboard-card {
   background-color: #f9f9f9;
   border-radius: 1.5rem;
-  padding: 1.5rem 2rem;
+  padding: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .dashboard-card header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  height: fit-content;
 }
 .dashboard-card header h1 {
   font-size: 18px;
@@ -3621,6 +3625,7 @@ F .log .message-area-textarea-container {
 }
 .dashboard-card-search-bar {
   margin-bottom: 20px;
+  height: fit-content;
 }
 .dashboard-card-search-bar .search-input-container {
   position: relative;
@@ -3653,12 +3658,19 @@ F .log .message-area-textarea-container {
 .dashboard-card .work-items {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0.8rem;
+  overflow-y: scroll;
+  width: 100%;
+  flex: 1;
+  scrollbar-width: none;
+}
+.dashboard-card .work-items::-webkit-scrollbar {
+  display: none;
 }
 .dashboard-card .work-items .work-item {
   display: flex;
-  flex-direction: column;
-  padding: 16px;
+  width: 100%;
+  padding: 1rem;
   border-radius: 16px;
   box-shadow: none;
 }
@@ -3667,6 +3679,11 @@ F .log .message-area-textarea-container {
 }
 .dashboard-card .work-items .work-item.blue {
   background-color: #d1e2f3;
+}
+.dashboard-card .work-items .work-item .work-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 .dashboard-card .work-items .work-item .work-item-content h2 {
   font-size: 1rem;
@@ -4537,7 +4554,7 @@ F .log .message-area-textarea-container {
 .messages {
   background-color: #f9f9f9;
   border-radius: 1.5rem;
-  padding: 1rem 2rem;
+  padding: 1.2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
@@ -4551,7 +4568,8 @@ F .log .message-area-textarea-container {
   margin-bottom: 20px;
 }
 .messages-scroll {
-  height: 20rem;
+  flex: 1;
+  max-height: 20rem;
   overflow-y: scroll;
 }
 .messages__add-btn {
