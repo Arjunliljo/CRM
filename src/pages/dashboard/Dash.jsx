@@ -1,9 +1,10 @@
 import EnrollmentCard from "../../components/Card/Dashboard/EnrollmentCard/EnrollmentCard";
-import Leaderboard from "../../components/Card/Dashboard/Leaderboard";
+import Leaderboard from "../../components/Card/Dashboard/LeaderBoard/Leaderboard";
 import LeadsCard from "../../components/Card/Dashboard/LeadCard/LeadsCard";
-import MyWork from "../../components/Card/Dashboard/MyWork";
+import MyWork from "../../components/Card/Dashboard/Work/MyWork";
 import Overview from "../../components/Card/Dashboard/Overview";
-import Performance from "../../components/Card/Dashboard/Performance";
+import Performance from "../../components/Card/Dashboard/PerpormanceCard/Performance";
+import Messages from "../../components/Card/Dashboard/Messages/Messages";
 
 function Dash() {
   return (
@@ -55,7 +56,7 @@ function Dash() {
             className="dashbord-container-item-secondbox"
             style={{ backgroundColor: "white" }}
           >
-            {/* <Messages /> */}
+            <Messages />
           </div>
         </div>
       </div>

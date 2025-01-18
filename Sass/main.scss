@@ -1,6 +1,5 @@
 @use "abstract/variables";
 @use "abstract/mixins";
-
 @use "base/base";
 
 @use "base/typo";
@@ -28,12 +27,10 @@
 @use "components/universityRight";
 @use "components/universityEligible";
 @use "components/userRight";
+
 // @use "page/dashboard";
 @use "components/myActivity";
-@use "components/leaderboard";
-@use "components/messages";
 @use "components//dashboard/enrolled";
-
 @use "components/userpersonaledit";
 @use "components/tracker";
 @use "components/userSelector";
@@ -41,8 +38,11 @@
 @use "components/dashboard/leads-overview";
 @use "components/dashboard/overview";
 @use "components/dashboard/performance";
+@use "components/dashboard/leaderboard";
+@use "components/dashboard/messages";
 @use "layout/documentUpload";
 @use "layout/dash";
+
 /*
 *
 *
@@ -63,4 +63,5 @@
 *
 *
 */
+
 @use "base/priority";
