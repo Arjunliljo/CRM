@@ -3714,111 +3714,6 @@ F .log .message-area-textarea-container {
   font-size: 0.8rem;
 }
 
-.leaderboard {
-  background-color: #f9f9f9;
-  border-radius: 1.5rem;
-  padding: 1rem 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-.leaderboard__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.leaderboard__title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a1f36;
-}
-.leaderboard__trophy-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease;
-}
-.leaderboard__trophy-btn:hover {
-  transform: scale(1.05);
-}
-.leaderboard__content {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 16px;
-}
-.leaderboard__item {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 12px;
-  padding: 8px;
-  border-radius: 12px;
-  transition: background-color 0.2s ease;
-}
-.leaderboard__item:hover {
-  background-color: #f8f9ff;
-}
-.leaderboard__position {
-  color: #4070ff;
-  font-size: 14px;
-  min-width: 32px;
-}
-.leaderboard__avatar {
-  width: 4rem;
-  height: 4rem;
-  border-radius: 0.5rem;
-  overflow: hidden;
-}
-.leaderboard__avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.leaderboard__avatar--center {
-  width: 6rem;
-  height: 6rem;
-}
-.leaderboard__info {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-.leaderboard__name {
-  font-size: 14px;
-  font-weight: 500;
-  color: #1a1f36;
-}
-.leaderboard__score {
-  font-size: 0.7rem;
-  color: #00b100;
-  text-align: center;
-}
-.leaderboard__stat-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.leaderboard__stat-item--negative .leaderboard__stat-value {
-  background-color: #fd6363;
-  color: #f9f9f9;
-  padding: 4px 8px;
-  border-radius: 12px;
-}
-.leaderboard__stat-value {
-  font-size: 0.7rem;
-}
-.leaderboard__stat-label {
-  font-size: 14px;
-  color: #6b7280;
-}
-
 .messages {
   background-color: #f9f9f9;
   border-radius: 1.5rem;
@@ -4666,6 +4561,110 @@ F .log .message-area-textarea-container {
   color: #757575;
   padding-right: 0.5rem;
   color: #000000;
+}
+
+.leaderboard {
+  background-color: #f9f9f9;
+  border-radius: 1.5rem;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.leaderboard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.leaderboard__trophy-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+.leaderboard__trophy-btn:hover {
+  transform: scale(1.05);
+}
+.leaderboard__content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+}
+.leaderboard__item {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
+}
+.leaderboard__item:hover {
+  background-color: #f8f9ff;
+}
+.leaderboard__position {
+  color: #4070ff;
+  font-size: 14px;
+  min-width: 32px;
+}
+.leaderboard__avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.leaderboard__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.leaderboard__avatar--center {
+  width: 6rem;
+  height: 6rem;
+}
+.leaderboard__info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.leaderboard__name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1f36;
+}
+.leaderboard__score {
+  font-size: 0.7rem;
+  color: #00b100;
+  text-align: center;
+}
+.leaderboard__stat-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.leaderboard__stat-item--negative .leaderboard__stat-value {
+  background-color: #fd6363;
+  color: #f9f9f9;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+.leaderboard__stat-value {
+  font-size: 0.7rem;
+}
+.leaderboard__stat-label {
+  font-size: 14px;
+  color: #6b7280;
 }
 
 .document-upload {

@@ -1,9 +1,9 @@
 import EnrollmentCard from "../../components/Card/Dashboard/EnrollmentCard/EnrollmentCard";
-import Leaderboard from "../../components/Card/Dashboard/Leaderboard";
+import Leaderboard from "../../components/Card/Dashboard/LeaderBoard/Leaderboard";
 import LeadsCard from "../../components/Card/Dashboard/LeadCard/LeadsCard";
 import MyWork from "../../components/Card/Dashboard/MyWork";
 import Overview from "../../components/Card/Dashboard/Overview";
-import Performance from "../../components/Card/Dashboard/Performance";
+import Performance from "../../components/Card/Dashboard/PerpormanceCard/Performance";
 
 function Dash() {
   return (

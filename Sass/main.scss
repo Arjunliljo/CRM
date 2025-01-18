@@ -30,7 +30,6 @@
 @use "components/userRight";
 // @use "page/dashboard";
 @use "components/myActivity";
-@use "components/leaderboard";
 @use "components/messages";
 @use "components//dashboard/enrolled";
 
@@ -41,6 +40,8 @@
 @use "components/dashboard/leads-overview";
 @use "components/dashboard/overview";
 @use "components/dashboard/performance";
+@use "components/dashboard/leaderboard";
+
 @use "layout/documentUpload";
 @use "layout/dash";
 /*

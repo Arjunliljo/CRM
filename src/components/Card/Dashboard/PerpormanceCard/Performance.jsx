@@ -1,4 +1,4 @@
-import PerphomenceBar from "./PerpormanceCard/PerphomenceBar";
+import PerphomenceBar from "./PerphomenceBar";
 
 export default function Performance() {
   const applications = 128;
