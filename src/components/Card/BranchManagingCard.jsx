@@ -14,8 +14,14 @@ function BranchManagingCard({ branchmanage, set, onSet, istoggle, toggle }) {
 
   const dispatch = useDispatch();
   const handleBranchmanageSelect = () => {
-    dispatch(onSet(branchmanage));
-    dispatch(istoggle(!toggle));
+    if (branchmanage._id === set?._id) {
+      dispatch(setAutoBranchmanageAssign(!toggle));
+    } else {
+      dispatch(onSet(branchmanage));
+      if (!toggle) {
+        dispatch(setAutoBranchmanageAssign(true));
+      }
+    }
     setTimeout(() => {
       targetRef.current.scrollIntoView({
         behavior: "smooth",

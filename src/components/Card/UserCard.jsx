@@ -17,8 +17,14 @@ function UserCard({ user, set, onSet, istoggle, toggle }) {
 
   const dispatch = useDispatch();
   const handleUserSelect = () => {
-    dispatch(onSet(user));
-    dispatch(istoggle(!toggle));
+    if (user._id === set?._id) {
+      dispatch(setAutoUserAssign(!toggle));
+    } else {
+      dispatch(onSet(user));
+      if (!toggle) {
+        dispatch(setAutoUserAssign(true));
+      }
+    }
     setTimeout(() => {
       targetRef.current.scrollIntoView({
         behavior: "smooth",
