@@ -20,8 +20,14 @@ function UniversityCard({ university, set, onSet, istoggle, toggle }) {
 
   const dispatch = useDispatch();
   const handleStudentSelect = () => {
-    dispatch(onSet(university));
-    dispatch(istoggle(!toggle));
+    if (university._id === set?._id) {
+      dispatch(setAutoUniversitysAssign(!toggle));
+    } else {
+      dispatch(onSet(university));
+      if (!toggle) {
+        dispatch(setAutoUniversitysAssign(true));
+      }
+    }
     setTimeout(() => {
       targetRef.current.scrollIntoView({
         behavior: "smooth",

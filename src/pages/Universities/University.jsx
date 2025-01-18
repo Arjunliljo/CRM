@@ -62,7 +62,7 @@ export default function University() {
   const ISelectorThree = <Selector />;
   const IProfileCard = <UniversityProfile />;
 
-  const TopLeft = [<div key="search-bar">{ISearchBar}</div>];
+  const TopLeft = [<div key="search-bar">{ISelectorOne}</div>];
   const TopRight = [<div key="primary-btn">{IPrimaryBttn}</div>];
 
   const BottomLeft = [
@@ -72,7 +72,7 @@ export default function University() {
     <div key="selector-three">{ISelectorThree}</div>,
   ];
   const BottomRight = [
-    // <div key="selector-four">{ISelectorFour}</div>,
+    <div key="search-bar">{ISearchBar}</div>,
     // <div key="selector-five">{ISelectorFive}</div>,
   ];
 

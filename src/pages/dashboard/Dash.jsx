@@ -1,10 +1,10 @@
-import EnrollmentCard from "../../components/Card/Dashboard.jsx/EnrollmentCard";
-import Leaderboard from "../../components/Card/Dashboard.jsx/Leaderboard";
-import LeadsCard from "../../components/Card/Dashboard.jsx/LeadCard/LeadsCard";
-import Messages from "../../components/Card/Dashboard.jsx/Messages";
-import MyWork from "../../components/Card/Dashboard.jsx/MyWork";
-import Overview from "../../components/Card/Dashboard.jsx/Overview";
-import Performance from "../../components/Card/Dashboard.jsx/Performance";
+import EnrollmentCard from "../../components/Card/Dashboard/EnrollmentCard/EnrollmentCard";
+import Leaderboard from "../../components/Card/Dashboard/LeaderBoard/Leaderboard";
+import LeadsCard from "../../components/Card/Dashboard/LeadCard/LeadsCard";
+import MyWork from "../../components/Card/Dashboard/Work/MyWork";
+import Overview from "../../components/Card/Dashboard/Overview";
+import Performance from "../../components/Card/Dashboard/PerpormanceCard/Performance";
+import Messages from "../../components/Card/Dashboard/Messages/Messages";
 
 function Dash() {
   return (
@@ -14,7 +14,7 @@ function Dash() {
           className="dashbord-container-item"
           style={{ backgroundColor: "white" }}
         >
-          {/* <MyWork /> */}
+          <MyWork />
         </div>
 
         <div className="dashbord-container-item">
@@ -28,7 +28,7 @@ function Dash() {
             className="dashbord-container-item-secondbox"
             style={{ backgroundColor: "white" }}
           >
-            <Overview />l
+            <Overview />
           </div>
         </div>
         <div className="dashbord-container-item">
@@ -36,27 +36,27 @@ function Dash() {
             className="dashbord-container-item-chartbox"
             style={{ backgroundColor: "white" }}
           >
-            {/* <EnrollmentCard /> */}
+            <EnrollmentCard />
           </div>
           <div
-            className="dashbord-container-item-secondbox"
+            className="dashbord-container-item-performance"
             style={{ backgroundColor: "white" }}
           >
-            {/* <Performance /> */}
+            <Performance />
           </div>
         </div>
         <div className="dashbord-container-item">
           <div
-            className="dashbord-container-item-firstbox"
+            className="dashbord-container-item-leader"
             style={{ backgroundColor: "white" }}
           >
-            {/* <Leaderboard /> */}
+            <Leaderboard />
           </div>
           <div
-            className="dashbord-container-item-secondbox"
+            className="dashbord-container-item-message"
             style={{ backgroundColor: "white" }}
           >
-            {/* <Messages /> */}
+            <Messages />
           </div>
         </div>
       </div>

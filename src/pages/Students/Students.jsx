@@ -10,6 +10,7 @@ import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import { setCurStudent } from "../../../global/studentsSlice";
 import StudentsCard from "../../components/Card/StudentsCard";
+import DocumentUpload from "../../components/smallComponents/DocumentUpload";
 
 const student = {
   num: 3,
@@ -49,6 +50,7 @@ export default function Students() {
   //   const ISelector = <Selector />;
   const IPrimaryBttn = <PrimaryBttn>Add Students</PrimaryBttn>;
   const IAllLeads = <AllLeads />;
+  const IDocumentUpload = <DocumentUpload />
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;

@@ -1,11 +1,11 @@
-import TagWishCard from "../../components/Card/Dashboard.jsx/TagWishCard";
-import MyWork from "../../components/Card/Dashboard.jsx/MyWork";
-import LeadsCard from "../../components/Card/Dashboard.jsx/LeadCard/LeadsCard";
-import Overview from "../../components/Card/Dashboard.jsx/Overview";
-import Leaderboard from "../../components/Card/Dashboard.jsx/Leaderboard";
-import Messages from "../../components/Card/Dashboard.jsx/Messages";
-import Performance from "../../components/Card/Dashboard.jsx/Performance";
-import EnrollmentCard from "../../components/Card/Dashboard.jsx/EnrollmentCard";
+import TagWishCard from "../../components/Card/Dashboard/TagWishCard";
+import MyWork from "../../components/Card/Dashboard/Work/MyWork";
+import LeadsCard from "../../components/Card/Dashboard/LeadCard/LeadsCard";
+import Overview from "../../components/Card/Dashboard/Overview";
+import Leaderboard from "../../components/Card/Dashboard/LeaderBoard/Leaderboard";
+import Messages from "../../components/Card/Dashboard/Messages/Messages";
+import Performance from "../../components/Card/Dashboard/PerpormanceCard/Performance";
+import EnrollmentCard from "../../components/Card/Dashboard/EnrollmentCard/EnrollmentCard";
 import CustomBody from "../../layout/MainBody/CustomBody";
 import { Padding } from "@mui/icons-material";
 
