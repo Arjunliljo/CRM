@@ -44,11 +44,7 @@ export default function Messages() {
       <div className="messages__header">
         <h2 className="title">Messages</h2>
         <ArrowBlue>
-          <HomeIcon
-            path="plus"
-            color="#fffffff8"
-            style={{ transform: "rotate(270deg)" }}
-          />
+          <HomeIcon path="plus" color="#fffffff8" />
         </ArrowBlue>
       </div>
 

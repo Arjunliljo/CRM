@@ -1,5 +1,5 @@
 import TagWishCard from "../../components/Card/Dashboard/TagWishCard";
-import MyWork from "../../components/Card/Dashboard/MyWork";
+import MyWork from "../../components/Card/Dashboard/Work/MyWork";
 import LeadsCard from "../../components/Card/Dashboard/LeadCard/LeadsCard";
 import Overview from "../../components/Card/Dashboard/Overview";
 import Leaderboard from "../../components/Card/Dashboard/LeaderBoard/Leaderboard";
