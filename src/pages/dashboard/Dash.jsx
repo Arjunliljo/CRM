@@ -1,7 +1,6 @@
 import EnrollmentCard from "../../components/Card/Dashboard/EnrollmentCard/EnrollmentCard";
 import Leaderboard from "../../components/Card/Dashboard/Leaderboard";
 import LeadsCard from "../../components/Card/Dashboard/LeadCard/LeadsCard";
-import Messages from "../../components/Card/Dashboard/Messages";
 import MyWork from "../../components/Card/Dashboard/MyWork";
 import Overview from "../../components/Card/Dashboard/Overview";
 import Performance from "../../components/Card/Dashboard/Performance";

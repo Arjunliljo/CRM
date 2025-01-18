@@ -3952,105 +3952,6 @@ F .log .message-area-textarea-container {
   justify-content: center;
 }
 
-.performance {
-  background-color: #f9f9f9;
-  border-radius: 1.5rem;
-  padding: 1rem 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  height: 100%;
-}
-.performance__title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a1f36;
-  margin-top: 15px;
-}
-.performance__gauge {
-  position: relative;
-  width: 100%;
-  max-width: 260px;
-  margin: 0 auto;
-}
-.performance__gauge-svg {
-  width: 100%;
-  height: auto;
-  transform: rotate(0deg);
-  overflow: hidden;
-  clip-path: polygon(0, 100% 0, 100% 100%);
-}
-.performance__gauge-background {
-  fill: none;
-  stroke-width: 16;
-  stroke-linecap: round;
-}
-.performance__gauge-progress {
-  fill: none;
-  stroke: url(#blue-gradient);
-  stroke-width: 16;
-  stroke-linecap: round;
-  transform-origin: center;
-  transition: stroke-dashoffset 1s ease-out;
-}
-.performance__gauge-value {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 48px;
-  font-weight: 600;
-  color: #1a1f36;
-  margin-bottom: 1.5rem;
-}
-.performance__gauge-total {
-  position: absolute;
-  right: 0;
-  top: 20%;
-  font-size: 14px;
-  color: #6b7280;
-  background-color: #f3f4f6;
-  padding: 4px 8px;
-  border-radius: 12px;
-}
-.performance__stats {
-  margin-top: 12px;
-}
-.performance__increase {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 24px;
-}
-.performance__increase-value {
-  background: #00b100;
-  color: #f9f9f9;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
-}
-.performance__increase-label {
-  color: #666;
-  font-size: 14px;
-}
-.performance__applications {
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  border: 1px solid #dadada;
-  margin: 0rem 5rem;
-  margin-top: 1rem;
-  color: #757575;
-}
-.performance__applications span {
-  background: #f9f9f9;
-  color: #757575;
-  padding-right: 0.5rem;
-  color: #000000;
-}
-
 .enrollment-card {
   background-color: #f9f9f9;
   border-radius: 1.5rem;
@@ -4665,6 +4566,106 @@ F .log .message-area-textarea-container {
 .overview__label {
   font-size: 12px;
   color: #6b7280;
+}
+
+.performance {
+  background-color: #f9f9f9;
+  border-radius: 1.5rem;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.performance .title {
+  width: 100%;
+}
+.performance__gauge {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
+  margin: 0 auto;
+}
+.performance__gauge-svg {
+  width: 100%;
+  height: auto;
+  transform: rotate(0deg);
+  overflow: hidden;
+  clip-path: polygon(0, 100% 0, 100% 100%);
+}
+.performance__gauge-background {
+  fill: none;
+  stroke-width: 16;
+  stroke-linecap: round;
+}
+.performance__gauge-progress {
+  fill: none;
+  stroke: url(#blue-gradient);
+  stroke-width: 16;
+  stroke-linecap: round;
+  transform-origin: center;
+  transition: stroke-dashoffset 1s ease-out;
+}
+.performance__gauge-value {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 48px;
+  font-weight: 600;
+  color: #1a1f36;
+  margin-bottom: 1.5rem;
+}
+.performance__gauge-total {
+  position: absolute;
+  right: 0;
+  top: 20%;
+  font-size: 14px;
+  color: #6b7280;
+  background-color: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+.performance__stats {
+  margin-top: 12px;
+}
+.performance__increase {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.performance__increase-value {
+  background: #00b100;
+  color: #f9f9f9;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.performance__increase-label {
+  color: #666;
+  font-size: 14px;
+}
+.performance__applications {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid #dadada;
+  margin: 0rem 5rem;
+  margin-top: 1rem;
+  color: #757575;
+}
+.performance__applications span {
+  background: #f9f9f9;
+  color: #757575;
+  padding-right: 0.5rem;
+  color: #000000;
 }
 
 .document-upload {
