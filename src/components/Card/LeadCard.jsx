@@ -5,6 +5,7 @@ import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setAutoLeadsAssign } from "../../../global/leadsSlice";
 
 export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(lead?._id === set?._id);
@@ -17,8 +18,14 @@ export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
 
   const dispatch = useDispatch();
   const handleLeadSelect = () => {
-    dispatch(onSet(lead));
-    dispatch(istoggle(!toggle));
+    if (lead._id === set?._id) {
+      dispatch(setAutoLeadsAssign(!toggle));
+    } else {
+      dispatch(onSet(lead));
+      if (!toggle) {
+        dispatch(setAutoLeadsAssign(true));
+      }
+    }
     setTimeout(() => {
       targetRef.current.scrollIntoView({
         behavior: "smooth",
