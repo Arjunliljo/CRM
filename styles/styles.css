@@ -4585,10 +4585,7 @@ F .log .message-area-textarea-container {
 }
 
 .chatbox {
-  background-color: #e8e8e8;
   border-radius: 1.5rem;
-  padding: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -4599,10 +4596,23 @@ F .log .message-area-textarea-container {
   align-items: center;
   margin-bottom: 20px;
 }
+.chatbox-head-profilehead {
+  display: flex;
+  gap: 4px;
+}
+.chatbox-head-profilehead-pic {
+  width: 35px;
+  border-radius: 50%;
+}
+.chatbox-head-profilehead-online {
+  display: flex;
+  flex-direction: column;
+}
 .chatbox-head-title {
   display: flex;
   align-items: start;
   justify-content: start;
+  font-size: large;
 }
 .chatbox-head-back {
   width: 40px;
@@ -4612,9 +4622,36 @@ F .log .message-area-textarea-container {
   border: none;
   cursor: pointer;
 }
+.chatbox-type {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5px;
+  position: relative;
+  position: static;
+}
+.chatbox-type-input {
+  border: none;
+  outline: none;
+  background: none;
+  resize: none;
+  font-size: 11px;
+  height: 17px;
+  margin: 0;
+  padding-right: 20px;
+  width: 265px;
+}
 .chatbox-scroll {
-  height: 25rem;
+  height: 18rem;
+  font-size: small;
   overflow-y: scroll;
+}
+.chatbox-scroll p {
+  background-color: rgb(159, 198, 241);
+  padding: 5px;
+  border-radius: 1rem;
+  width: fit-content;
 }
 
 /*
