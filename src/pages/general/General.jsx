@@ -11,6 +11,7 @@ import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import { setCurGeneral } from "../../../global/generalSlice";
 import GeneralCard from "../../components/Card/GeneralCard";
+import DocumentUpload from "../../components/smallComponents/DocumentUpload";
 
 const general = {
   num: 3,
@@ -29,7 +30,6 @@ const general = {
 const arr = [...Array(500)].map((_, i) => {
   const obj = { ...general, _id: i };
   return obj;
-  s;
 });
 
 export default function General() {
@@ -58,6 +58,7 @@ export default function General() {
   const ISelectorThree = <Selector />;
   const ISelectorFour = <Selector />;
   const ISelectorFive = <Selector />;
+  const IDocumentUpload = <DocumentUpload />;
   const IProfileCard = <ProfileCard IDocumentUpload={IDocumentUpload} />;
   const IStartApplication = <StartApplication />;
 

@@ -10,6 +10,8 @@ export default function ModalBase({ isOpen, closeModal, title, children }) {
       footer={null}
       centered
       className="modal"
+      forceRender
+      mask={true}
     >
       <div className="modal-content">
         {children}
