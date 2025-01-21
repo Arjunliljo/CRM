@@ -9,7 +9,7 @@ function Chatbox({ message, onBack }) {
       console.log("Message sent:", inputMessage);
       setInputMessage("");
     } else {
-      alert("Please type a message!");
+      console.warn("Empty message cannot be sent");
     }
   };
 
