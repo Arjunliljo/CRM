@@ -5,6 +5,7 @@ import InfoBtn from "../buttons/InfoBtn";
 import HomeIcon from "../utils/Icons/HomeIcon";
 import { useDispatch, useSelector } from "react-redux";
 import UserNamebar from "./UserRight/UserNamebar";
+import { setAutoUserAssign } from "../../../global/userSlice";
 
 function UserCard({ user, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(user?._id === set?._id);

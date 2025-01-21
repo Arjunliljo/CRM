@@ -44,8 +44,8 @@ export default function User() {
       onSet={setCurUser}
       set={curUser}
       user={user}
-      istoggle={setAutoUserAssign}
-      toggle={autoUserAssign}
+      istoggle={autoUserAssign}
+      toggle={setAutoUserAssign}
     />
   ));
 

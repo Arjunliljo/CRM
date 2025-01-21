@@ -49,8 +49,8 @@ export default function Branchmanage() {
       onSet={setCurBranchmanage}
       set={curBranchmanage}
       branchmanage={branchmanage}
-      istoggle={setAutoBranchmanageAssign}
-      toggle={autoBranchmanageAssign}
+      istoggle={autoBranchmanageAssign}
+      toggle={setAutoBranchmanageAssign}
     />
   ));
 

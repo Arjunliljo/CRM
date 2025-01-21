@@ -9,6 +9,7 @@ import Students from "../../pages/Students/Students";
 import PrimaryBttn from "../buttons/PrimaryBttn";
 import EligibleBttn from "../buttons/EligibleBttn";
 import { color } from "framer-motion";
+import { setAutoUniversitysAssign } from "../../../global/universitySlice";
 
 function UniversityCard({ university, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(university?._id === set?._id);
