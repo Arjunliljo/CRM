@@ -3669,7 +3669,7 @@ F .log .message-area-textarea-container {
 }
 .enrollment-card__progress .progress-bar__start-cap, .enrollment-card__progress .progress-bar__end-cap {
   position: absolute;
-  top: -8px;
+  top: -1px;
   width: 3px;
   height: 40px;
   background: #000;
@@ -4627,31 +4627,59 @@ F .log .message-area-textarea-container {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 5px;
+  padding: 1px;
+  gap: 5px;
   position: relative;
   position: static;
 }
 .chatbox-type-input {
-  border: none;
-  outline: none;
   background: none;
   resize: none;
-  font-size: 11px;
-  height: 17px;
+  font-size: 12px;
+  height: 25px;
   margin: 0;
-  padding-right: 20px;
-  width: 265px;
+  padding-top: 3px;
+  padding-left: 5px;
+  width: 100%;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chatbox-type-input::placeholder {
+  font-size: 12px;
 }
 .chatbox-scroll {
-  height: 18rem;
+  display: flex;
+  flex-direction: column;
+  height: 19rem;
   font-size: small;
   overflow-y: scroll;
+  scrollbar-width: none;
+}
+.chatbox-scroll::-webkit-scrollbar {
+  display: none;
 }
 .chatbox-scroll p {
-  background-color: rgb(159, 198, 241);
-  padding: 5px;
+  padding: 2px 0.5rem;
   border-radius: 1rem;
   width: fit-content;
+  font-size: 0.7rem;
+  border: 0.1px solid #dadada;
+}
+.chatbox-message {
+  margin: 2px 0;
+  border-radius: 8px;
+  max-width: 70%;
+  display: inline-block;
+}
+.chatbox-message-sent {
+  align-self: flex-end;
+  text-align: right;
+}
+.chatbox-message-received {
+  background-color: #e8e8e8;
+  align-self: flex-start;
 }
 
 /*

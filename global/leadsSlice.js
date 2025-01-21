@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const leadsSlice = createSlice({
   name: "leads",
   initialState: {
-    autoLeadsAssign: true,
+    autoLeadsAssign: false,
     curLead: {},
   },
   reducers: {

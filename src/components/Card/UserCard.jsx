@@ -22,7 +22,7 @@ function UserCard({ user, set, onSet, istoggle, toggle }) {
     } else {
       dispatch(onSet(user));
       if (!toggle) {
-        dispatch(setAutoUserAssign(true));
+        dispatch(setAutoUserAssign(false));
       }
     }
     setTimeout(() => {

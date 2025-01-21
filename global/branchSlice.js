@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const branchSlice = createSlice({
   name: "branchmanage",
   initialState: {
-    autoBranchmanageAssign: true,
+    autoBranchmanageAssign: false,
     curBranchmanage: {},
   },
   reducers: {

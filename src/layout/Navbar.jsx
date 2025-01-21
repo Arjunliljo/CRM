@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <li>
-        <NavLink to="/dashboard">
+        <NavLink to="/dash">
           <HomeIcon path="home" />
         </NavLink>
       </li>
@@ -30,7 +30,7 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li>
-        <NavLink to="my-profile">
+        <NavLink to="">
           <HomeIcon path="wifi" />
         </NavLink>
       </li>
@@ -40,7 +40,7 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/settings">
+        <NavLink to="/my-profile">
           <HomeIcon path="settings" />
         </NavLink>
       </li>

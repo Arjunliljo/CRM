@@ -19,7 +19,7 @@ function BranchManagingCard({ branchmanage, set, onSet, istoggle, toggle }) {
     } else {
       dispatch(onSet(branchmanage));
       if (!toggle) {
-        dispatch(setAutoBranchmanageAssign(true));
+        dispatch(setAutoBranchmanageAssign(false));
       }
     }
     setTimeout(() => {

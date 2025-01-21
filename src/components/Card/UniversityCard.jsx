@@ -25,7 +25,7 @@ function UniversityCard({ university, set, onSet, istoggle, toggle }) {
     } else {
       dispatch(onSet(university));
       if (!toggle) {
-        dispatch(setAutoUniversitysAssign(true));
+        dispatch(setAutoUniversitysAssign(false));
       }
     }
     setTimeout(() => {

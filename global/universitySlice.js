@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const universitySlice = createSlice({
   name: "university",
   initialState: {
-    autoUniversitysAssign: true,
+    autoUniversitysAssign: false,
     curUniversity: {},
   },
   reducers: {

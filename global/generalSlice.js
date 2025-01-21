@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const generalSlice = createSlice({
   name: "general",
   initialState: {
-    autoGeneralsAssign: true,
+    autoGeneralsAssign: false,
     curGeneral: {},
   },
 

@@ -1,4 +1,5 @@
 @use "../abstract/variables" as variables;
+@use "../abstract/mixins";
 .chatbox {
   border-radius: variables.$radius-lg;
   display: flex;
@@ -48,33 +49,64 @@
     justify-content: space-between;
     width: 100%;
     // background-color: rgba(24, 23, 23, 0.3);
-    padding: 5px;
+    padding: 1px;
+    gap: 5px;
     position: relative;
     position: static;
 
     &-input {
-      border: none;
-      outline: none;
+      // border: none;
+      // outline: none;
       background: none;
       resize: none;
-      // color: rgba(255, 255, 255, 0.7);
-      font-size: 11px;
-      height: 17px;
+      font-size: variables.$font-size-sm;
+      height: 25px;
       margin: 0;
-      padding-right: 20px;
-      width: 265px;
+      padding-top: 3px;
+      padding-left: 5px;
+      width: 100%;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::placeholder {
+        font-size: variables.$font-size-sm;
+      }
     }
   }
   &-scroll {
-    height: 18rem;
+    display: flex;
+    flex-direction: column;
+    height: 19rem;
     font-size: small;
     overflow-y: scroll;
+    @include mixins.removeScrollbar;
 
     p {
-      background-color: rgb(159, 198, 241);
-      padding: 5px;
-      border-radius: 1rem;
+      // background-color: variables.$color-light-blue;
+      padding: variables.$padding-xs variables.$padding-sm;
+      border-radius: variables.$radius-md;
       width: fit-content;
+      font-size: variables.$font-size-xs;
+      border: 0.1px solid variables.$color-gray-mid;
+    }
+  }
+
+  &-message {
+    margin: variables.$margin-xs 0;
+    border-radius: variables.$radius-xs;
+    max-width: 70%;
+    display: inline-block;
+
+    &-sent {
+      align-self: flex-end;
+      text-align: right;
+    }
+
+    &-received {
+      background-color: variables.$color-gray;
+      align-self: flex-start;
     }
   }
 }

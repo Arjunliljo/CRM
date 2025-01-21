@@ -23,7 +23,7 @@ export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
     } else {
       dispatch(onSet(lead));
       if (!toggle) {
-        dispatch(setAutoLeadsAssign(true));
+        dispatch(setAutoLeadsAssign(false));
       }
     }
     setTimeout(() => {

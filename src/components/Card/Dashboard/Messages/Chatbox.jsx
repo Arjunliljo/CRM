@@ -1,12 +1,17 @@
 import { useState } from "react";
 import CountryBtn from "../../../buttons/CountryBtn";
+import { BorderAllRounded } from "@mui/icons-material";
 
 function Chatbox({ message, onBack }) {
   const [inputMessage, setInputMessage] = useState("");
+  const [chatMessages, setChatMessages] = useState([]);
 
   const handleSendMessage = () => {
     if (inputMessage.trim()) {
-      console.log("Message sent:", inputMessage);
+      setChatMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: "You", text: inputMessage },
+      ]);
       setInputMessage("");
     } else {
       console.warn("Empty message cannot be sent");
@@ -32,12 +37,18 @@ function Chatbox({ message, onBack }) {
         </button>
       </div>
       <div className="chatbox-scroll">
-        {/* <img
-          src={message.avatar}
-          alt={message.name}
-          className="chatbox-head-profilehead-pic"
-        /> */}
-        <p>{message.message}</p>
+        {chatMessages.map((msg, index) => (
+          <div
+            key={index}
+            className={`chatbox-message ${
+              msg.sender === "You"
+                ? "chatbox-message-sent"
+                : "chatbox-message-received"
+            }`}
+          >
+            <p>{msg.text}</p>
+          </div>
+        ))}
       </div>
       <div className="chatbox-type">
         <textarea
@@ -51,8 +62,9 @@ function Chatbox({ message, onBack }) {
           style={{
             paddingLeft: "6.5px",
             paddingRight: "6.5px",
-            fontSize: "12px",
-            backgroundColor: "#00b100",
+            fontSize: "14px",
+            borderRadius: "15px",
+            backgroundColor: "#0075fc",
           }}
           onClick={handleSendMessage}
         >
