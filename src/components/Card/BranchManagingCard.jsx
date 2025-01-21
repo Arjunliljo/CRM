@@ -3,6 +3,7 @@ import CountryBtn from "../buttons/CountryBtn";
 import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
 import { useDispatch } from "react-redux";
+import { setAutoBranchmanageAssign } from "../../../global/branchSlice";
 
 function BranchManagingCard({ branchmanage, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(branchmanage?._id === set?._id);

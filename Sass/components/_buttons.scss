@@ -213,3 +213,11 @@
     border: none !important;
   }
 }
+
+.cancel-btn {
+  background-color: variables.$color-gray;
+  color: variables.$color-black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

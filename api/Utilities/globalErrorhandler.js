@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import AppError from "./appError.js";
+/* global process */
 
 const sendErr = (err, res) => {
   res.status(err.statusCode).json({

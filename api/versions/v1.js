@@ -5,6 +5,7 @@ import countryRoute from "../Routes/countryRoute.js";
 import leadRoute from "../Routes/leadRoute.js";
 import statusRoute from "../Routes/statusRoute.js";
 import userRoute from "../Routes/userRoute.js";
+import metaLeadRoute from "../Routes/metaLeadRoute.js";
 
 const router = express.Router();
 
@@ -32,6 +33,7 @@ const router = express.Router();
 // });
 
 router.use("/user", userRoute);
+router.use("/meta_lead", metaLeadRoute);
 router.use("/branch", branchRoute);
 router.use("/country", countryRoute);
 router.use("/lead", leadRoute);
