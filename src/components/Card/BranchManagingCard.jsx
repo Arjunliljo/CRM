@@ -2,12 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import CountryBtn from "../buttons/CountryBtn";
 import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAutoBranchmanageAssign } from "../../../global/branchSlice";
 
 function BranchManagingCard({ branchmanage, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(branchmanage?._id === set?._id);
   const targetRef = useRef(null);
+  const { autoLeadsAssign, curLead } = useSelector(
+    (state) => state.branchmanage
+  );
 
   useEffect(() => {
     setIsSelected(branchmanage?._id === set?._id);

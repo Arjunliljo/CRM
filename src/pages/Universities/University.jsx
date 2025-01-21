@@ -57,8 +57,8 @@ export default function University() {
       onSet={setCurUniversity}
       set={curUniversity}
       university={university}
-      istoggle={setAutoUniversitysAssign}
-      toggle={autoUniversitysAssign}
+      istoggle={autoUniversitysAssign}
+      toggle={setAutoUniversitysAssign}
     />
   ));
 
