@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 body {
@@ -3019,6 +3019,93 @@ F .log .message-area-textarea-container {
   outline: none;
   color: #757575;
 }
+.profile-content .content-section .form-group p {
+  font-size: 0.8rem;
+  color: #000000;
+  margin-bottom: 0.5rem;
+  padding: 0 0.5rem;
+  font-weight: 500;
+}
+.profile-content .content-section .form-group-sub-status {
+  height: 10rem;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 0.25rem;
+  /* Scrollbar styling */
+}
+.profile-content .content-section .form-group-sub-status-element {
+  font-size: 0.7rem;
+  border: 1px solid #dadada;
+  min-height: 1.5rem;
+  height: 1.5rem;
+  min-width: 0;
+  width: 100%;
+  border-radius: 0.5rem;
+  background: #0075fc;
+  color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.profile-content .content-section .form-group-sub-status::-webkit-scrollbar {
+  width: 8px;
+}
+.profile-content .content-section .form-group-sub-status::-webkit-scrollbar-track {
+  background: rgba(0, 117, 252, 0.1);
+  border-radius: 4px;
+}
+.profile-content .content-section .form-group-sub-status::-webkit-scrollbar-thumb {
+  background: rgba(0, 117, 252, 0.5);
+  border-radius: 4px;
+}
+.profile-content .content-section .form-group-sub-status::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 117, 252, 0.7);
+}
+.profile-content .content-section .form-group .tab-buttons {
+  display: flex;
+  gap: 1rem;
+}
+.profile-content .content-section .form-group .tab-buttons button {
+  padding: 10px 20px;
+  border-radius: 1rem;
+  border: 1px solid #dadada;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  color: #444;
+  font-size: 0.8rem;
+}
+.profile-content .content-section .form-group .tab-buttons button.active {
+  background-color: #0075fc;
+  color: #f9f9f9;
+}
+.profile-content .content-section .form-group .tab-buttons button:hover {
+  background-color: #f9f9f9;
+}
+.profile-content .content-section .form-group .class-select {
+  display: flex;
+  gap: 1rem;
+}
+.profile-content .content-section .form-group .class-select button {
+  padding: 10px;
+  border-radius: 1rem;
+  border: 1px solid #dadada;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  color: #444;
+}
+.profile-content .content-section .form-group .class-select button.selected {
+  background-color: #0075fc;
+  color: #f9f9f9;
+}
+.profile-content .content-section .form-group .class-select button:hover {
+  background-color: #f9f9f9;
+}
 .profile-content .upload-btn {
   background-color: #757575;
   color: #f9f9f9;
@@ -4700,10 +4787,7 @@ F .log .message-area-textarea-container {
 }
 
 .chatbox {
-  background-color: #e8e8e8;
   border-radius: 1.5rem;
-  padding: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -4714,10 +4798,23 @@ F .log .message-area-textarea-container {
   align-items: center;
   margin-bottom: 20px;
 }
+.chatbox-head-profilehead {
+  display: flex;
+  gap: 4px;
+}
+.chatbox-head-profilehead-pic {
+  width: 35px;
+  border-radius: 50%;
+}
+.chatbox-head-profilehead-online {
+  display: flex;
+  flex-direction: column;
+}
 .chatbox-head-title {
   display: flex;
   align-items: start;
   justify-content: start;
+  font-size: large;
 }
 .chatbox-head-back {
   width: 40px;
@@ -4727,9 +4824,36 @@ F .log .message-area-textarea-container {
   border: none;
   cursor: pointer;
 }
+.chatbox-type {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5px;
+  position: relative;
+  position: static;
+}
+.chatbox-type-input {
+  border: none;
+  outline: none;
+  background: none;
+  resize: none;
+  font-size: 11px;
+  height: 17px;
+  margin: 0;
+  padding-right: 20px;
+  width: 265px;
+}
 .chatbox-scroll {
-  height: 25rem;
+  height: 18rem;
+  font-size: small;
   overflow-y: scroll;
+}
+.chatbox-scroll p {
+  background-color: rgb(159, 198, 241);
+  padding: 5px;
+  border-radius: 1rem;
+  width: fit-content;
 }
 
 /*

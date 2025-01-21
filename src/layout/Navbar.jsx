@@ -46,13 +46,22 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li className="learn-more">
-        <NavLink to="/wifi">
+        <NavLink to="/dependencies">
+          <span className="circle" aria-hidden="true">
+            <HomeIcon path="contact" />
+          </span>
+          <span className="li-text">Dependencies</span>
+        </NavLink>
+      </li>
+      <li className="learn-more">
+        <NavLink to="/profileEdit">
           <span className="circle" aria-hidden="true">
             <HomeIcon path="wifi" />
           </span>
-          <span className="li-text">Network</span>
+          <span className="li-text">Profile</span>
         </NavLink>
       </li>
+
       <li className="learn-more">
         <NavLink to="/user">
           <span className="circle" aria-hidden="true">

@@ -134,6 +134,105 @@
         outline: none;
         color: variables.$color-text-gray;
       }
+      p {
+        font-size: variables.$font-size-small;
+        color: variables.$color-black;
+        margin-bottom: 0.5rem;
+        padding: 0 0.5rem;
+        font-weight: variables.$font-bold;
+      }
+      &-sub-status {
+        height: 10rem;
+        overflow-y: auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        padding: 0.25rem;
+
+        &-element {
+          font-size: variables.$font-size-xs;
+          border: 1px solid variables.$color-gray-mid;
+          min-height: 1.5rem;
+          height: 1.5rem;
+          min-width: 0;
+          width: 100%;
+          border-radius: variables.$radius-sm;
+          background: variables.$color-blue;
+          color: variables.$color-white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0 0.5rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        /* Scrollbar styling */
+        &::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: rgba(variables.$color-blue, 0.1);
+          border-radius: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: rgba(variables.$color-blue, 0.5);
+          border-radius: 4px;
+
+          &:hover {
+            background: rgba(variables.$color-blue, 0.7);
+          }
+        }
+      }
+
+      & .tab-buttons {
+        display: flex;
+        gap: 1rem;
+
+        button {
+          padding: 10px 20px;
+          border-radius: variables.$radius-md;
+          border: 1px solid variables.$color-gray-mid;
+          cursor: pointer;
+          background-color: variables.$color-white;
+          color: #444;
+          font-size: variables.$font-size-small;
+
+          &.active {
+            background-color: variables.$color-blue;
+            color: variables.$color-white;
+          }
+
+          &:hover {
+            background-color: variables.$color-gray-light;
+          }
+        }
+      }
+
+      & .class-select {
+        display: flex;
+        gap: 1rem;
+
+        button {
+          padding: 10px;
+          border-radius: variables.$radius-md;
+          border: 1px solid variables.$color-gray-mid;
+          cursor: pointer;
+          background-color: variables.$color-white;
+          color: #444;
+
+          &.selected {
+            background-color: variables.$color-blue;
+            color: variables.$color-white;
+          }
+
+          &:hover {
+            background-color: variables.$color-gray-light;
+          }
+        }
+      }
     }
   }
 

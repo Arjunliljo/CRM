@@ -1,7 +1,12 @@
-export default function CountryBtn({ children, style }) {
+export default function CountryBtn({ children, style, onClick, type = "button" }) {
   return (
-    <div className="btn countrybtn" style={style}>
+    <button
+      type={type}
+      className="btn countrybtn"
+      style={style}
+      onClick={onClick}
+    >
       {children}
-    </div>
+    </button>
   );
 }

@@ -1,9 +1,6 @@
 @use "../abstract/variables" as variables;
 .chatbox {
-  background-color: variables.$color-gray;
   border-radius: variables.$radius-lg;
-  padding: variables.$padding-sm;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -14,10 +11,26 @@
     align-items: center;
     margin-bottom: 20px;
 
+    &-profilehead {
+      display: flex;
+      gap: 4px;
+
+      &-pic {
+        width: 35px;
+        border-radius: 50%;
+      }
+      &-online {
+        display: flex;
+        flex-direction: column;
+        // font-weight: 300;
+      }
+    }
+
     &-title {
       display: flex;
       align-items: start;
       justify-content: start;
+      font-size: large;
     }
 
     &-back {
@@ -29,8 +42,39 @@
       cursor: pointer;
     }
   }
+  &-type {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    // background-color: rgba(24, 23, 23, 0.3);
+    padding: 5px;
+    position: relative;
+    position: static;
+
+    &-input {
+      border: none;
+      outline: none;
+      background: none;
+      resize: none;
+      // color: rgba(255, 255, 255, 0.7);
+      font-size: 11px;
+      height: 17px;
+      margin: 0;
+      padding-right: 20px;
+      width: 265px;
+    }
+  }
   &-scroll {
-    height: 25rem;
+    height: 18rem;
+    font-size: small;
     overflow-y: scroll;
+
+    p {
+      background-color: rgb(159, 198, 241);
+      padding: 5px;
+      border-radius: 1rem;
+      width: fit-content;
+    }
   }
 }
