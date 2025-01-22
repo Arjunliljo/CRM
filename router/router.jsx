@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import Dashboard from "../src/pages/dashboard/Dashboard";
 import Tracker from "../src/components/smallComponents/Tracker";
 import Dash from "../src/pages/dashboard/Dash";
+import Dependencies from "../src/pages/Dependency/Dependencies";
 
 const tabs = ["offerletter", "students", "payments"];
 
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
       {
         path: "university",
         element: <University />,
+      },
+      {
+        path: "dependencies",
+        element: <Dependencies />,
       },
       {
         path: "profileEdit",

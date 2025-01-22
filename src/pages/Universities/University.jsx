@@ -15,6 +15,9 @@ import {
 } from "../../../global/universitySlice";
 import UniversityCard from "../../components/Card/UniversityCard";
 import UniversityProfile from "../../components/Card/UniversityRight/UniversityProfile";
+import ModalBase from "../../components/Modals/ModalBase";
+import { useState } from "react";
+import AddUniversity from "../../components/Modals/ModalComponents/AddUniversity";
 
 const university = {
   num: 3,
@@ -40,7 +43,12 @@ export default function University() {
   const { autoUniversitysAssign, curUniversity } = useSelector(
     (state) => state.universitys
   );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeModal = () => setIsModalOpen(false);
 
+  const handleModal = () => {
+    setIsModalOpen((val) => !val);
+  };
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
   const IContents = arr?.map((university, index) => (
@@ -55,7 +63,9 @@ export default function University() {
   ));
 
   //   const ISelector = <Selector />;
-  const IPrimaryBttn = <PrimaryBttn>Add Students</PrimaryBttn>;
+  const IPrimaryBttn = (
+    <PrimaryBttn onClick={handleModal}>Add University</PrimaryBttn>
+  );
   const IAll = <All />;
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
@@ -77,14 +87,19 @@ export default function University() {
   ];
 
   return (
-    <MainBody
-      TopLeft={TopLeft}
-      TopRight={TopRight}
-      IContents={IContents}
-      switching={autoUniversitysAssign}
-      BottomLeft={BottomLeft}
-      BottomRight={BottomRight}
-      ProfileCard={IProfileCard}
-    />
+    <>
+      <MainBody
+        TopLeft={TopLeft}
+        TopRight={TopRight}
+        IContents={IContents}
+        switching={autoUniversitysAssign}
+        BottomLeft={BottomLeft}
+        BottomRight={BottomRight}
+        ProfileCard={IProfileCard}
+      />
+      <ModalBase title="Add University" isOpen={isModalOpen} closeModal={closeModal}>
+        <AddUniversity closeModal={closeModal} />
+      </ModalBase>
+    </>
   );
 }

@@ -1,6 +1,7 @@
-function PrimaryBttn({ style, children }) {
+
+function PrimaryBttn({ style, children, onClick }) {
   return (
-    <button style={style} className="btn primary-btn">
+    <button style={style} className="btn primary-btn" onClick={onClick}>
       {children}
     </button>
   );

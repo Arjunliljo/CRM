@@ -10,6 +10,10 @@ import { setAutoLeadsAssign, setCurLead } from "../../../global/leadsSlice";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
+import { useState } from "react";
+import { Button } from "antd";
+import ModalBase from "../../components/Modals/ModalBase";
+import AddLead from "../../components/Modals/ModalComponents/AddLead";
 
 const lead = {
   num: 3,
@@ -33,6 +37,13 @@ const arr = [...Array(500)].map((_, i) => {
 export default function Leads() {
   const { autoLeadsAssign, curLead } = useSelector((state) => state.leads);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleModal = () => {
+    setIsModalOpen(val => !val)
+  }
+
   const ISearchBar = <SearchBar />;
   const IAutoBtn = <AutoBtn />;
   const IContents = arr?.map((lead, index) => (
@@ -47,7 +58,13 @@ export default function Leads() {
   ));
 
   const ISelector = <Selector />;
-  const IPrimaryBttn = <PrimaryBttn>Add Leads</PrimaryBttn>;
+
+  const IPrimaryBttn = (
+    <PrimaryBttn onClick={handleModal}>
+      Add Leads
+    </PrimaryBttn>
+  );
+
   const IAllLeads = <AllLeads />;
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
@@ -79,15 +96,22 @@ export default function Leads() {
   const IProfileCard = <ProfileCard IDocumentUpload={IDocumentUpload} />;
 
   return (
-    <MainBody
-      TopLeft={TopLeft}
-      TopRight={TopRight}
-      IContents={IContents}
-      switching={autoLeadsAssign}
-      BottomLeft={BottomLeft}
-      BottomRight={BottomRight}
-      ProfileCard={IProfileCard}
-      StartApplication={IStartApplication}
-    />
+    <>
+      <MainBody
+        TopLeft={TopLeft}
+        TopRight={TopRight}
+        IContents={IContents}
+        switching={autoLeadsAssign}
+        BottomLeft={BottomLeft}
+        BottomRight={BottomRight}
+        ProfileCard={IProfileCard}
+        StartApplication={IStartApplication}
+      />
+
+      {/* Modal for adding a leads */}
+      <ModalBase title="Add Lead" isOpen={isModalOpen} closeModal={closeModal}>
+        <AddLead closeModal={closeModal} />
+      </ModalBase>
+    </>
   );
 }

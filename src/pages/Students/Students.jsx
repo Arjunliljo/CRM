@@ -10,6 +10,9 @@ import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import { setCurStudent } from "../../../global/studentsSlice";
 import StudentsCard from "../../components/Card/StudentsCard";
+import DocumentUpload from "../../components/smallComponents/DocumentUpload";
+import ModalBase from "../../components/Modals/ModalBase";
+import { useState } from "react";
 
 const student = {
   num: 3,
@@ -35,6 +38,12 @@ export default function Students() {
     (state) => state.students
   );
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleModal = () => {
+    setIsModalOpen(val => !val)
+  }
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
   const IContents = arr?.map((student, index) => (
@@ -47,8 +56,9 @@ export default function Students() {
   ));
 
   //   const ISelector = <Selector />;
-  const IPrimaryBttn = <PrimaryBttn>Add Students</PrimaryBttn>;
+  const IPrimaryBttn = <PrimaryBttn onClick={handleModal}>Add Students</PrimaryBttn>;
   const IAllLeads = <AllLeads />;
+  const IDocumentUpload = <DocumentUpload />
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
@@ -70,15 +80,20 @@ export default function Students() {
   ];
 
   return (
-    <MainBody
-      TopLeft={TopLeft}
-      TopRight={TopRight}
-      IContents={IContents}
-      switching={autoStudentsAssign}
-      BottomLeft={BottomLeft}
-      BottomRight={BottomRight}
-      ProfileCard={IProfileCard}
-      StartApplication={IStartApplication}
-    />
+    <>
+      <MainBody
+        TopLeft={TopLeft}
+        TopRight={TopRight}
+        IContents={IContents}
+        switching={autoStudentsAssign}
+        BottomLeft={BottomLeft}
+        BottomRight={BottomRight}
+        ProfileCard={IProfileCard}
+        StartApplication={IStartApplication}
+      />
+      <ModalBase title="Add Student" isOpen={isModalOpen} closeModal={closeModal}>
+        {/* <AddStudent closeModal={closeModal} /> */}
+      </ModalBase>
+    </>
   );
 }
