@@ -1,24 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../src/App";
 import Leads from "../src/pages/leads/Leads";
-import ProfileForm from "../src/pages/ProfilePage/ProfilePage";
-import UserCard from "../src/components/Card/UserCard";
+
 import Profilepage from "../src/pages/ProfilePage/ProfilePage";
 import User from "../src/pages/User/User";
 import Students from "../src/pages/Students/Students";
 import University from "../src/pages/Universities/University";
-import ProfileEdit from "../src/pages/profileEdit/ProfileUpdateUser";
+
 import ProfileUpdateUser from "../src/pages/profileEdit/ProfileUpdateUser";
-import OfferLetter from "../src/pages/offerLetter/OfferLetter";
-import Payments from "../src/pages/Payment/Payments";
+
 import Branchmanage from "../src/pages/branchmanage/Branchmanage";
 import General from "../src/pages/General/General";
-import { useSelector } from "react-redux";
-import Dashboard from "../src/pages/dashboard/Dashboard";
-import Tracker from "../src/components/smallComponents/Tracker";
+
 import Dash from "../src/pages/dashboard/Dash";
 import Dependencies from "../src/pages/Dependency/Dependencies";
-import ProfileCard from "../src/components/Card/ProfileCard/ProfileCard";
 
 const tabs = ["offerletter", "students", "payments"];
 
@@ -34,10 +29,6 @@ export const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      {
-        path: "dashboard",
-        element: <Dashboard />,
-      },
       {
         path: "leads",
         element: <Leads />,
@@ -65,18 +56,6 @@ export const router = createBrowserRouter([
       {
         path: "profileEdit",
         element: <ProfileUpdateUser />,
-      },
-      {
-        path: "offerletter",
-        element: <OfferLetter />,
-      },
-      {
-        path: "payment",
-        element: <Payments />,
-      },
-      {
-        path: "track",
-        element: <Tracker />,
       },
       {
         path: "dash",

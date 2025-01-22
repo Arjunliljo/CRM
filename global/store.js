@@ -4,10 +4,7 @@ import leadsSlice from "./leadsSlice";
 import userSlice from "./userSlice";
 import studentsSlice from "./studentsSlice";
 import universitySlice from "./universitySlice";
-import offerLetterSlice from "./offerlettersSlice";
-import paymentsSlice from "./paymentsSlice";
 import branchSlice from "./branchSlice";
-import chatboxSlice from "./chatboxSlice";
 import coreSlice from "./coreSlice";
 
 const store = configureStore({
@@ -17,10 +14,7 @@ const store = configureStore({
     user: userSlice,
     students: studentsSlice,
     universitys: universitySlice,
-    offerletters: offerLetterSlice,
-    payments: paymentsSlice,
     branchmanage: branchSlice,
-    chatbox: chatboxSlice,
     core: coreSlice,
   },
 });

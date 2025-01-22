@@ -29,14 +29,14 @@ export default function Navbar() {
           <span className="li-text">Students</span>
         </NavLink>
       </li>
-      <li className="learn-more">
+      {/* <li className="learn-more">
         <NavLink to="/user">
           <span className="circle" aria-hidden="true">
             <HomeIcon path="doc" />
           </span>
           <span className="li-text">Documents</span>
         </NavLink>
-      </li>
+      </li> */}
       <li className="learn-more">
         <NavLink to="/university">
           <span className="circle" aria-hidden="true">
