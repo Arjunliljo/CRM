@@ -48,7 +48,7 @@ export const getMetaLeads = catchAsync(async (req, res) => {
 
             // Fetch leads from the lead form
             const leads = await fetchLeads(formId, accessToken);
-console.log(leads,"leads");
+            console.log(leads, "leads");
 
             allLeads.push(...leads);
 
