@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <li className="learn-more">
-        <NavLink to="/">
+        <NavLink to="/dash">
           <span className="circle" aria-hidden="true">
             <HomeIcon path="home" />
           </span>
@@ -71,7 +71,7 @@ export default function Navbar() {
         </NavLink>
       </li>
       <li className="learn-more">
-        <NavLink to="/settings">
+        <NavLink to="/profileCard">
           <span className="circle" aria-hidden="true">
             <HomeIcon path="settings" />
           </span>

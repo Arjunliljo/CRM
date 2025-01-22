@@ -1,4 +1,9 @@
-export default function CountryBtn({ children, style, onClick, type = "button" }) {
+export default function CountryBtn({
+  children,
+  style,
+  onClick,
+  type = "button",
+}) {
   return (
     <button
       type={type}
