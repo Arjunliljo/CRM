@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { message } from "antd";
-import { createBranch } from "../../../../config/axiosService";
 import CancelBtn from "../../../components/buttons/CancelBtn";
 import NextBtn from "../../../components/buttons/NextBtn";
+import apiClient from "../../../../config/axiosInstance";
 
 export default function Branch() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [newBranch, setNewBranch] = useState({
     name: "",
+    description: "",
   });
 
   const handleChange = (e) => {
@@ -17,7 +20,7 @@ export default function Branch() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!newBranch.name) {
@@ -25,14 +28,18 @@ export default function Branch() {
       return;
     }
 
-    createBranch(newBranch)
-      .then((response) => {
-        setNewBranch({ name: "" });
-        message.success("Role created successfully!");
-      })
-      .catch((error) => {
-        message.error("Error creating role. Please try again.");
-      });
+    try {
+      setIsLoading(true);
+      const response = await apiClient.post("/branch", newBranch);
+      setIsLoading(false);
+      setNewBranch({ name: "", description: "" });
+      message.success("Branch created successfully!");
+    } catch (e) {
+      setIsLoading(false);
+      message.error("Error creating branch. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -41,7 +48,6 @@ export default function Branch() {
         <h2>Add new Branch</h2>
       </div>
 
-      {/* Step 4: Wrap the form inside a <form> element */}
       <form onSubmit={handleSubmit} className="content-section-item-box">
         <div className="form-group">
           <input
@@ -56,21 +62,23 @@ export default function Branch() {
         </div>
         <div className="form-group">
           <textarea
-            type="text"
-            name="name"
-            value={newBranch.name}
+            name="description"
+            value={newBranch.description}
             onChange={handleChange}
-            // placeholder="Description"
             className="input-formGroup"
             required
           />
         </div>
 
         <div className="modal__form-buttons" style={{ marginTop: "2rem" }}>
-          <CancelBtn onClick={() => setNewBranch({ name: "" })}>
+          <CancelBtn
+            onClick={() => setNewBranch({ name: "", description: "" })}
+          >
             Cancel
           </CancelBtn>
-          <NextBtn onClick={handleSubmit}>Save</NextBtn>
+          <NextBtn onClick={handleSubmit} isLoading={isLoading}>
+            Save
+          </NextBtn>
         </div>
       </form>
     </div>
