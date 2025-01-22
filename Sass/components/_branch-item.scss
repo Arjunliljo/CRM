@@ -1,0 +1,17 @@
+@use "../abstract/variables" as variables;
+
+.branch-item {
+  background-color: variables.$color-white;
+  padding: 1rem;
+  border-radius: variables.$radius-md;
+  cursor: pointer;
+  font-size: variables.$font-size-small;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & .branch-item-actions {
+    display: flex;
+    gap: 1rem;
+  }
+}
