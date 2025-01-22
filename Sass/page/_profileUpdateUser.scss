@@ -1,4 +1,5 @@
 @use "../abstract/variables";
+@use "../abstract/mixins";
 
 .profileUpdate-main {
   background-color: variables.$color-white;
@@ -111,8 +112,6 @@
       overflow-y: scroll;
     }
     & .form-group {
-      height: 3.5rem;
-
       & .status-item {
         background-color: variables.$color-white;
         width: 100%;
@@ -125,14 +124,24 @@
         cursor: pointer;
       }
       & select,
+      textarea,
       input {
         width: 100%;
-        height: 3.5rem;
+        height: 3rem;
         padding: 0 1rem;
+
         border-radius: variables.$radius-md;
         border: none;
         outline: none;
         color: variables.$color-text-gray;
+      }
+      & textarea {
+        height: 8rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem !important;
+        resize: none;
+        width: 100% !important;
+        @include mixins.removeScrollbar;
       }
       p {
         font-size: variables.$font-size-small;

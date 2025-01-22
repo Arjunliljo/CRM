@@ -1,24 +1,24 @@
 import { useState } from "react";
-import CountryBtn from "../../../components/buttons/CountryBtn";
 import { message } from "antd";
 import { createBranch } from "../../../../config/axiosService";
+import CancelBtn from "../../../components/buttons/CancelBtn";
+import NextBtn from "../../../components/buttons/NextBtn";
 
 export default function Branch() {
   const [newBranch, setNewBranch] = useState({
-    name: '',
+    name: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewBranch(prev => ({
+    setNewBranch((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
 
     if (!newBranch.name) {
       message.error("Please fill in the branch name");
@@ -33,11 +33,10 @@ export default function Branch() {
       .catch((error) => {
         message.error("Error creating role. Please try again.");
       });
-
   };
 
   return (
-    <div className="content-section">
+    <div className="content-section dependancies">
       <div className="content-section-head" style={{ height: "fit-content" }}>
         <h2>Add new Branch</h2>
       </div>
@@ -55,14 +54,23 @@ export default function Branch() {
             required
           />
         </div>
+        <div className="form-group">
+          <textarea
+            type="text"
+            name="name"
+            value={newBranch.name}
+            onChange={handleChange}
+            // placeholder="Description"
+            className="input-formGroup"
+            required
+          />
+        </div>
 
         <div className="modal__form-buttons" style={{ marginTop: "2rem" }}>
-          <CountryBtn type="button" onClick={() => setNewBranch({ name: '' })}>
+          <CancelBtn onClick={() => setNewBranch({ name: "" })}>
             Cancel
-          </CountryBtn>
-          <CountryBtn type="submit" style={{ backgroundColor: "#0075fc" }}>
-            Save
-          </CountryBtn>
+          </CancelBtn>
+          <NextBtn onClick={handleSubmit}>Save</NextBtn>
         </div>
       </form>
     </div>

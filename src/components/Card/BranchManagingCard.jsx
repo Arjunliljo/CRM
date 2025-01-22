@@ -8,6 +8,7 @@ import { setAutoBranchmanageAssign } from "../../../global/branchSlice";
 function BranchManagingCard({ branchmanage, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(branchmanage?._id === set?._id);
   const targetRef = useRef(null);
+
   const { autoLeadsAssign, curLead } = useSelector(
     (state) => state.branchmanage
   );

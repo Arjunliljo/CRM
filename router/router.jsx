@@ -18,6 +18,7 @@ import Dashboard from "../src/pages/dashboard/Dashboard";
 import Tracker from "../src/components/smallComponents/Tracker";
 import Dash from "../src/pages/dashboard/Dash";
 import Dependencies from "../src/pages/Dependency/Dependencies";
+import ProfileCard from "../src/components/Card/ProfileCard/ProfileCard";
 
 const tabs = ["offerletter", "students", "payments"];
 
@@ -85,7 +86,10 @@ export const router = createBrowserRouter([
         path: "branchmanaging",
         element: <Branchmanage />,
       },
-
+      {
+        path: "profileCard",
+        element: <Profilepage />,
+      },
       ...DynamicRoutes(),
     ],
   },
