@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
+const apiClient = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   // baseURL: "http://localhost:3000/api/v2",
 
@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.response.use(
+apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     // Handle errors globally
@@ -23,4 +23,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+export default apiClient;

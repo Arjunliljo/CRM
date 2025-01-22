@@ -6,12 +6,12 @@ export default function NextBtn({
 }) {
   return (
     <button
-      className={`loading`}
+      className={`btn-next`}
       type={type}
       onClick={onClick}
       disabled={isLoading}
     >
-      {isLoading ? <span className="loading-indicator"></span> : children}
+      {isLoading ? <div className="btn-loader"></div> : children}
     </button>
   );
 }
