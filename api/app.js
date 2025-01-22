@@ -3,7 +3,6 @@ import cors from "cors";
 import AppError from "./Utilities/appError.js";
 import versionOne from "./versions/v1.js";
 import globalErrorHandler from "./Utilities/globalErrorhandler.js";
-// import { addDbNameToRequest } from "./middlewares/dynamicDbContext.js";
 
 const app = express();
 

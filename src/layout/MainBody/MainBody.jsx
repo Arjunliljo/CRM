@@ -1,6 +1,3 @@
-import { wrapGrid } from "animate-css-grid";
-import { useEffect, useRef } from "react";
-
 export default function MainBody({
   TopLeft = [],
   TopRight = [],
@@ -11,17 +8,6 @@ export default function MainBody({
   ProfileCard = <></>,
   StartApplication = <></>,
 }) {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    if (ref.current) {
-      const grid = wrapGrid(ref.current);
-      return () => grid.unwrapGrid();
-    }
-  }, [IContents]);
-
-  console.log(ref.current, ".....");
-
   return (
     <main className="main-body leads">
       <div className="main-body-head">
@@ -56,9 +42,7 @@ export default function MainBody({
           className={`main-body-box-left`}
           style={switching ? { width: "50%" } : { width: "100%" }}
         >
-          <div className="main-body-scroll-container" ref={ref}>
-            {IContents}
-          </div>
+          <div className="main-body-scroll-container">{IContents}</div>
         </div>
 
         {/* Right side of the box the dynamic one*/}
