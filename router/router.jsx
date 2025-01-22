@@ -16,7 +16,7 @@ import General from "../src/pages/General/General";
 import { useSelector } from "react-redux";
 import Dashboard from "../src/pages/dashboard/Dashboard";
 import Tracker from "../src/components/smallComponents/Tracker";
-import Dash from "../src/pages/dashboard/Dash";
+import Dash from "../src/pages/dashboard/Dashboard";
 import Dependencies from "../src/pages/Dependency/Dependencies";
 import ProfileCard from "../src/components/Card/ProfileCard/ProfileCard";
 
@@ -34,10 +34,7 @@ export const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      {
-        path: "dashboard",
-        element: <Dashboard />,
-      },
+
       {
         path: "leads",
         element: <Leads />,
@@ -79,8 +76,8 @@ export const router = createBrowserRouter([
         element: <Tracker />,
       },
       {
-        path: "dash",
-        element: <Dash />,
+        path: "dashboard",
+        element: <Dashboard />,
       },
       {
         path: "branchmanaging",

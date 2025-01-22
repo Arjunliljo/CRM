@@ -19,7 +19,7 @@
 
   & li {
     list-style: none;
-    padding: 0.4rem;
+    padding: 0 0.4rem;
     border-radius: 50%;
     gap: 0.5rem;
     position: relative;
@@ -47,6 +47,7 @@
     height: 2.8rem;
     background-color: variables.$color-black;
     border-radius: 1.625rem;
+    overflow: hidden;
   }
 
   li.learn-more a.active .circle {
@@ -67,10 +68,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
   }
 
-  li:hover .circle {
+  li.learn-more .circle:hover {
     width: 100%;
     transition-delay: 0s;
     padding-left: 10px;
@@ -80,11 +80,9 @@
     background-color: variables.$color-black;
   }
 
-
-  li:hover .li-text {
+  li.learn-more .circle:hover + .li-text {
     color: variables.$color-white;
     opacity: 1;
     transition-delay: 0.1s;
-
   }
 }
