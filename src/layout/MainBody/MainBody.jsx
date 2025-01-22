@@ -1,4 +1,3 @@
-import { wrapGrid } from "animate-css-grid";
 import { useEffect, useRef } from "react";
 
 export default function MainBody({
