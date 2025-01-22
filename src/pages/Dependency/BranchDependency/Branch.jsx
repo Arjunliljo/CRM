@@ -6,7 +6,6 @@ import apiClient from "../../../../config/axiosInstance";
 
 export default function Branch() {
   const [isLoading, setIsLoading] = useState(false);
-
   const [newBranch, setNewBranch] = useState({
     name: "",
     description: "",
@@ -27,10 +26,9 @@ export default function Branch() {
       message.error("Please fill in the branch name");
       return;
     }
-
     try {
       setIsLoading(true);
-      const response = await apiClient.post("/branch", newBranch);
+      const res = await apiClient.post("/branch", newBranch);
       setIsLoading(false);
       setNewBranch({ name: "", description: "" });
       message.success("Branch created successfully!");
