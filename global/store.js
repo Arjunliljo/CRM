@@ -9,6 +9,7 @@ import paymentsSlice from "./paymentsSlice";
 import branchSlice from "./branchSlice";
 import chatboxSlice from "./chatboxSlice";
 import coreSlice from "./coreSlice";
+import creationSlice from "./creationSlice";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     branchmanage: branchSlice,
     chatbox: chatboxSlice,
     core: coreSlice,
+    creation: creationSlice,
   },
 });
 

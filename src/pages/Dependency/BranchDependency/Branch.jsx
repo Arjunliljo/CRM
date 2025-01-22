@@ -3,21 +3,10 @@ import { message } from "antd";
 import CancelBtn from "../../../components/buttons/CancelBtn";
 import NextBtn from "../../../components/buttons/NextBtn";
 import apiClient from "../../../../config/axiosInstance";
+import { refetchBranches } from "../../../apiHooks/useBranches";
 
-export default function Branch() {
+export default function Branch({ newBranch, setNewBranch, handleChange }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [newBranch, setNewBranch] = useState({
-    name: "",
-    description: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewBranch((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +20,7 @@ export default function Branch() {
       const res = await apiClient.post("/branch", newBranch);
       setIsLoading(false);
       setNewBranch({ name: "", description: "" });
+      refetchBranches();
       message.success("Branch created successfully!");
     } catch (e) {
       setIsLoading(false);
@@ -46,7 +36,7 @@ export default function Branch() {
         <h2>Add new Branch</h2>
       </div>
 
-      <form onSubmit={handleSubmit} className="content-section-item-box">
+      <form onSubmit={handleSubmit} className="dependancies-item-box">
         <div className="form-group">
           <input
             type="text"
