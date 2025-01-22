@@ -9,62 +9,79 @@ import {
   saveLeadData,
 } from "../Utilities/facebookLeads.js";
 import catchAsync from "../Utilities/catchAsync.js";
+import { fetchQueue } from "../config/bullConfig.js";
 
 // Controller function to handle lead fetching and saving
-export const getMetaLeads = catchAsync(async (req, res) => {
-  const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
+// export const getMetaLeads = catchAsync(async (req, res) => {
+//   const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
 
-  if (!accessToken) {
-    return res.status(400).json({ error: "Access token is required" });
-  }
+//   if (!accessToken) {
+//     return res.status(400).json({ error: "Access token is required" });
+//   }
 
-  // Get all ad accounts linked to the app
-  const adAccounts = await fetchAdAccounts(accessToken);
+//   // Get all ad accounts linked to the app
+//   const adAccounts = await fetchAdAccounts(accessToken);
 
-  if (!adAccounts || adAccounts.length === 0) {
-    return res.status(404).json({ error: "No ad accounts found" });
-  }
+//   if (!adAccounts || adAccounts.length === 0) {
+//     return res.status(404).json({ error: "No ad accounts found" });
+//   }
 
-  // Store all leads
-  const allLeads = [];
+//   // Store all leads
+//   const allLeads = [];
 
-  for (const adAccount of adAccounts) {
-    const adAccountId = adAccount.account_id || adAccount.id;
+//   for (const adAccount of adAccounts) {
+//     const adAccountId = adAccount.account_id || adAccount.id;
 
-    // Fetch campaigns for each ad account
-    const campaigns = await fetchCampaigns(adAccountId, accessToken);
+//     // Fetch campaigns for each ad account
+//     const campaigns = await fetchCampaigns(adAccountId, accessToken);
 
-    for (const campaign of campaigns) {
-      const campaignId = campaign.id;
-      const campaignName = campaign.name;
+//     for (const campaign of campaigns) {
+//       const campaignId = campaign.id;
+//       const campaignName = campaign.name;
 
-      // Fetch lead forms for each campaign
-      const adSets = await fetchLeadForms(campaignId, accessToken);
+//       // Fetch lead forms for each campaign
+//       const adSets = await fetchLeadForms(campaignId, accessToken);
 
-      for (const adSet of adSets) {
-        if (adSet.leadgen_forms) {
-          for (const form of adSet.leadgen_forms) {
-            const formId = form.id;
+//       for (const adSet of adSets) {
+//         if (adSet.leadgen_forms) {
+//           for (const form of adSet.leadgen_forms) {
+//             const formId = form.id;
 
-            // Fetch leads from the lead form
-            const leads = await fetchLeads(formId, accessToken);
-            console.log(leads, "leads");
+//             // Fetch leads from the lead form
+//             const leads = await fetchLeads(formId, accessToken);
+//             console.log(leads, "leads");
 
-            allLeads.push(...leads);
+//             allLeads.push(...leads);
 
-            // const LeadModel = dbConnection.model("Lead", leadSchema);
-            // for (const lead of leads) {
-            //   await saveLeadData(lead, campaignName, LeadModel);
-            // }
-          }
-        }
+//             // const LeadModel = dbConnection.model("Lead", leadSchema);
+//             // for (const lead of leads) {
+//             //   await saveLeadData(lead, campaignName, LeadModel);
+//             // }
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   // Send response with all collected leads
+//   res.status(200).json({
+//     data: allLeads,
+//     message: "Leads fetched and saved successfully",
+//   });
+// });
+
+export const getMetaLeads = catchAsync(async (req, res, next) => {
+    let META_API_URL;
+    // Add a job to the BullMQ queue
+    await fetchQueue.add(
+      "fetch-meta-leads",
+      { url: META_API_URL },
+      {
+        repeat: { every: 30 * 60 * 1000 }, // Repeat every 30 minutes
       }
-    }
-  }
+    );
 
-  // Send response with all collected leads
-  res.status(200).json({
-    data: allLeads,
-    message: "Leads fetched and saved successfully",
-  });
-});
+    res
+      .status(200)
+      .json({ message: "Job added to fetch Meta Leads every 30 minutes." });
+})
