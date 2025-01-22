@@ -3,13 +3,16 @@ import InfoBtn from "../buttons/InfoBtn";
 import CountryBtn from "../buttons/CountryBtn";
 import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
+
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAutoLeadsAssign } from "../../../global/leadsSlice";
+import { wrapGrid } from "animate-css-grid";
 
 export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(lead?._id === set?._id);
   const targetRef = useRef(null);
+  const ref = useRef(null);
   const { autoLeadsAssign, curLead } = useSelector((state) => state.leads);
 
   useEffect(() => {
@@ -33,7 +36,13 @@ export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
       });
     }, 500);
   };
-  console.log(set, "//////");
+
+  useEffect(() => {
+    if (targetRef.current) {
+      const grid = wrapGrid(targetRef.current);
+      return () => grid.unwrapGrid();
+    }
+  }, []);
 
   return (
     <div
