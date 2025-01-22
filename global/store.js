@@ -8,6 +8,7 @@ import offerLetterSlice from "./offerlettersSlice";
 import paymentsSlice from "./paymentsSlice";
 import branchSlice from "./branchSlice";
 import chatboxSlice from "./chatboxSlice";
+import coreSlice from "./coreSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     payments: paymentsSlice,
     branchmanage: branchSlice,
     chatbox: chatboxSlice,
+    core: coreSlice,
   },
 });
 
