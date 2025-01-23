@@ -35,11 +35,7 @@ function UniversityProfile() {
                 <span className="UniversityRightCard-head-info-location"></span>
               </div>
               <div className="cardUniversity-body-bottom-icons-item">
-                <HomeIcon
-                  path="u-turn"
-                  color="#00b100"
-                  style={{ transform: "rotate(270deg)" }}
-                />
+                <HomeIcon path="stayback" color="#00b100" />
                 <p>
                   <span style={{ fontSize: "0.8rem", color: "gray" }}>
                     Stayback:{" "}

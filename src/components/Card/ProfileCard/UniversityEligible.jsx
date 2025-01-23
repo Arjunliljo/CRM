@@ -64,13 +64,6 @@ function UniversityEligible() {
 
       <div className="university-eligiable-courses-selector-container">
         <BlackSelector
-          options={Countries}
-          set={Countries[0]}
-          onSet={(value) => {
-            handleOptionChange(value);
-          }}
-        />
-        <BlackSelector
           options={courses}
           set={courses[0]}
           onSet={(value) => {

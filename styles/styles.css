@@ -3265,7 +3265,6 @@ F .log .message-area-textarea-container {
 }
 .university-eligiable-courses-selector-container {
   display: flex;
-  justify-content: space-between;
   width: 50%;
   height: 4rem;
   gap: 1rem;

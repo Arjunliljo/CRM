@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CountryBtn from "../../../buttons/CountryBtn";
 import { BorderAllRounded } from "@mui/icons-material";
+import HomeIcon from "../../../utils/Icons/HomeIcon";
 
 function Chatbox({ message, onBack }) {
   const [inputMessage, setInputMessage] = useState("");
@@ -33,7 +34,7 @@ function Chatbox({ message, onBack }) {
           </div>
         </div>
         <button className="chatbox-head-back" onClick={onBack}>
-          -
+          <HomeIcon path="iconback" color="#ffffff" />
         </button>
       </div>
       <div className="chatbox-scroll">

@@ -111,7 +111,7 @@ export default function HomeIcon({
         <path d="M80-160v-400l240-240 240 240v400H80Zm80-80h120v-120h80v120h120v-287L320-687 160-527v287Zm120-200v-80h80v80h-80Zm360 280v-433L433-800h113l174 174v466h-80Zm160 0v-499L659-800h113l108 108v532h-80Zm-640-80h320-320Z" />
       );
       break;
-    case "back":
+    case "iconback":
       curPath = (
         <path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" />
       );
