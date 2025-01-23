@@ -7,14 +7,13 @@ import { useEffect } from "react";
 
 export const useBranches = () => {
   const dispatch = useDispatch();
+
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["branches"],
     queryFn: () => apiClient.get("/branch"),
   });
 
   const branches = data?.data?.data;
-
-  console.log(branches, "branches");
 
   useEffect(() => {
     if (!branches) return;

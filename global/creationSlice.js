@@ -5,6 +5,11 @@ const creationSlice = createSlice({
   initialState: {
     isBranchEdit: false,
     editBranch: {},
+    isCountryEdit: false,
+    editCountry: {},
+
+    countryNames: [],
+    branchNames: [],
   },
 
   reducers: {
@@ -12,8 +17,12 @@ const creationSlice = createSlice({
       state.isBranchEdit = action.payload.isBranchEdit;
       state.editBranch = action.payload.editBranch;
     },
+    setCountryEdit: (state, action) => {
+      state.isCountryEdit = action.payload.isCountryEdit;
+      state.editCountry = action.payload.editCountry;
+    },
   },
 });
 
-export const { setBranchEdit } = creationSlice.actions;
+export const { setBranchEdit, setCountryEdit } = creationSlice.actions;
 export default creationSlice.reducer;
