@@ -15,9 +15,9 @@ import {
 } from "../../../global/universitySlice";
 import UniversityCard from "../../components/Card/UniversityCard";
 import UniversityProfile from "../../components/Card/UniversityRight/UniversityProfile";
-import ModalBase from "../../components/Modals/ModalBase";
+import ModalBase from "../../components/Forms/ModalBase";
 import { useState } from "react";
-import AddUniversity from "../../components/Modals/ModalComponents/AddUniversity";
+import AddUniversity from "../../components/Forms/University/AddUniversity";
 
 const university = {
   num: 3,
@@ -97,7 +97,11 @@ export default function University() {
         BottomRight={BottomRight}
         ProfileCard={IProfileCard}
       />
-      <ModalBase title="Add University" isOpen={isModalOpen} closeModal={closeModal}>
+      <ModalBase
+        title="Add University"
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+      >
         <AddUniversity closeModal={closeModal} />
       </ModalBase>
     </>
