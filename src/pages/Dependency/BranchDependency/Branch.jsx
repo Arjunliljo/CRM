@@ -4,6 +4,7 @@ import CancelBtn from "../../../components/buttons/CancelBtn";
 import NextBtn from "../../../components/buttons/NextBtn";
 import apiClient from "../../../../config/axiosInstance";
 import { refetchBranches } from "../../../apiHooks/useBranches";
+import { useApi } from "../../../context/apiContext/ApiContext";
 
 export default function Branch({ newBranch, setNewBranch, handleChange }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +30,10 @@ export default function Branch({ newBranch, setNewBranch, handleChange }) {
       setIsLoading(false);
     }
   };
+
+  // const {
+  //   branchConfig: { isLoading: branchLoading },
+  // } = useApi();
 
   return (
     <div className="content-section dependancies">
