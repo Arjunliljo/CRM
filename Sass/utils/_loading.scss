@@ -27,3 +27,25 @@
     transform: rotate(360deg);
   }
 }
+
+.loader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &-round-names {
+    width: 100%;
+    height: 30rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // &-center {
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  // }
+}
