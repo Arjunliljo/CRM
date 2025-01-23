@@ -510,7 +510,11 @@ textarea::placeholder {
   font-weight: 500;
   background: #0075fc;
   color: #f9f9f9;
-  height: fit-content;
+  height: 2rem;
+  width: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .circle-btn {
@@ -4810,6 +4814,18 @@ F .log .message-area-textarea-container {
   border-top: 1px solid #3498db;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+}
+
+.btn-bigloader {
+  height: 5rem;
+  width: 5rem;
+  border: 1px solid #f3f3f3;
+  border-top: 1px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes spin {

@@ -8,9 +8,13 @@ export default function BranchNames({ setNewBranch }) {
     <div className="dependancies">
       <div className="dependancies-branch-names">
         <div className="dependancies-branch-names-left">
-          {branchConfigs?.branches?.map((val, i) => (
-            <BranchItem key={i} item={val} setNewBranch={setNewBranch} />
-          ))}
+          {branchConfigs ? (
+            <div className="btn-bigloader"></div>
+          ) : (
+            branches?.map((val, i) => (
+              <BranchItem key={i} item={val} setNewBranch={setNewBranch} />
+            ))
+          )}
         </div>
       </div>
     </div>
