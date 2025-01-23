@@ -4231,7 +4231,7 @@ F .log .message-area-textarea-container {
   min-height: fit-content;
 }
 .progress-tracker__section {
-  margin-bottom: 25px;
+  margin-bottom: 35px;
 }
 .progress-tracker__container {
   margin: 0 auto;
