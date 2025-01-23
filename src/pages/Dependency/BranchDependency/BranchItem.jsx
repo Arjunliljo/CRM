@@ -1,12 +1,12 @@
 import { DeleteOutlined, EditOutlined } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { setBranchNames } from "../../../../global/coreSlice";
+import { setBranchEdit } from "../../../../global/creationSlice";
 
 export default function BranchItem({ item }) {
   const dispatch = useDispatch();
 
   const handleEdit = () => {
-    dispatch(setBranchNames({ isBranchEdit: true, editBranch: item }));
+    dispatch(setBranchEdit({ isBranchEdit: true, editBranch: item }));
   };
 
   return (
@@ -17,7 +17,7 @@ export default function BranchItem({ item }) {
           sx={{ color: "darkblue", fontSize: "1.2rem" }}
           onClick={handleEdit}
         />
-        <DeleteOutlined sx={{ color: "darkred", fontSize: "1.2rem" }} />
+        {/* <DeleteOutlined sx={{ color: "darkred", fontSize: "1.2rem" }} /> */}
       </div>
     </div>
   );

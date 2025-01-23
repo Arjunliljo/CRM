@@ -10,11 +10,10 @@ const creationSlice = createSlice({
   reducers: {
     setBranchEdit: (state, action) => {
       state.isBranchEdit = action.payload.isBranchEdit;
-      state.editBranch = action.payload.newBranch;
+      state.editBranch = action.payload.editBranch;
     },
   },
 });
 
 export const { setBranchEdit } = creationSlice.actions;
-
 export default creationSlice.reducer;
