@@ -52,19 +52,11 @@ function UserCard({ user, set, onSet, istoggle, toggle }) {
         <div className="cardUser-body-center">
           <div className="cardUser-body-bottom-icons">
             <div className="cardUser-body-bottom-icons-item">
-              <HomeIcon
-                path="u-turn"
-                color="#00b100"
-                style={{ transform: "rotate(270deg)" }}
-              />
+              <HomeIcon path="payments" color="#00b100" />
               <p>{user.applications}</p>
             </div>
             <div className="cardUser-body-bottom-icons-item">
-              <HomeIcon
-                path="retry"
-                color="#0075fc"
-                style={{ transform: "rotate(270deg)" }}
-              />
+              <HomeIcon path="ongoing" color="#0075fc" />
               <p>{user.ongoing}</p>
             </div>
           </div>

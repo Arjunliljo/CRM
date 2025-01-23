@@ -2,12 +2,18 @@
 
 .progress-tracker {
   width: 100%;
+  min-height: fit-content;
+
+  &__section {
+    margin-bottom: 25px;
+  }
 
   &__container {
     margin: 0 auto;
     padding: variables.$padding-md;
     display: flex;
     flex-direction: column;
+    min-height: fit-content;
   }
 
   &__steps {
@@ -17,6 +23,7 @@
     // background-color: rgb(223, 215, 215); /* Default gray background */
     border-radius: variables.$radius-md;
     height: 90%;
+    // height: fit-content;
 
     &::before {
       content: "";
@@ -77,7 +84,6 @@
   }
 
   &__university {
-    margin-top: 1rem;
     display: inline-flex;
     align-items: center;
     border-radius: variables.$radius-md;

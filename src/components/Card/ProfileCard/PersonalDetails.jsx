@@ -21,13 +21,13 @@ export default function PersonalDetails() {
 
   const [cards, setCards] = useState([
     { id: 1, title: "SSLC", percentage: "79%" },
-    { id: 1, title: "PG", percentage: "69%" },
-    { id: 1, title: "IELTS", percentage: "5" },
-    { id: 1, title: "SSLC", percentage: "80.05%" },
-    { id: 1, title: "IELTS", percentage: "72%" },
-    { id: 1, title: "SSLC", percentage: "5" },
-    { id: 1, title: "UG", percentage: "69%" },
-    { id: 1, title: "HSE", percentage: "79%" },
+    { id: 2, title: "PG", percentage: "69%" },
+    { id: 3, title: "IELTS", percentage: "5" },
+    { id: 4, title: "SSLC", percentage: "80.05%" },
+    { id: 5, title: "IELTS", percentage: "72%" },
+    { id: 6, title: "SSLC", percentage: "5" },
+    { id: 7, title: "UG", percentage: "69%" },
+    { id: 8, title: "HSE", percentage: "79%" },
   ]);
 
   //to edit mode open
@@ -61,7 +61,7 @@ export default function PersonalDetails() {
       title: "New Card",
       percentage: "50%",
     };
-    setCards((prevCards) => [...prevCards, newCard]);
+    setCards((prevCards) => [newCard, ...prevCards]);
   };
 
   return (

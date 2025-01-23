@@ -8,7 +8,10 @@ import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import AllLeads from "../../components/buttons/AllLeads";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
-import { setCurStudent } from "../../../global/studentsSlice";
+import {
+  setAutoStudentsAssign,
+  setCurStudent,
+} from "../../../global/studentsSlice";
 import StudentsCard from "../../components/Card/StudentsCard";
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
 import ModalBase from "../../components/Modals/ModalBase";
@@ -42,8 +45,8 @@ export default function Students() {
   const closeModal = () => setIsModalOpen(false);
 
   const handleModal = () => {
-    setIsModalOpen(val => !val)
-  }
+    setIsModalOpen((val) => !val);
+  };
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
   const IContents = arr?.map((student, index) => (
@@ -52,13 +55,15 @@ export default function Students() {
       onSet={setCurStudent}
       set={curStudent}
       student={student}
+      istoggle={autoStudentsAssign}
+      toggle={setAutoStudentsAssign}
     />
   ));
 
   //   const ISelector = <Selector />;
-  const IPrimaryBttn = <PrimaryBttn onClick={handleModal}>Add Students</PrimaryBttn>;
+  const IPrimaryBttn = <PrimaryBttn>Add Students</PrimaryBttn>;
   const IAllLeads = <AllLeads />;
-  const IDocumentUpload = <DocumentUpload />
+  const IDocumentUpload = <DocumentUpload />;
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
@@ -91,7 +96,11 @@ export default function Students() {
         ProfileCard={IProfileCard}
         StartApplication={IStartApplication}
       />
-      <ModalBase title="Add Student" isOpen={isModalOpen} closeModal={closeModal}>
+      <ModalBase
+        title="Add Student"
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+      >
         {/* <AddStudent closeModal={closeModal} /> */}
       </ModalBase>
     </>

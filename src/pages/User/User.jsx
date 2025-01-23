@@ -12,6 +12,7 @@ import All from "../../components/buttons/All";
 import Counsellor from "../../components/buttons/NormalButton";
 import NormalButton from "../../components/buttons/NormalButton";
 import UserRight from "../../components/Card/UserRight/UserRight";
+import { useNavigate } from "react-router-dom";
 
 const user = {
   num: 3,
@@ -35,7 +36,10 @@ const arr = [...Array(500)].map((_, i) => {
 
 export default function User() {
   const { autoUserAssign, curUser } = useSelector((state) => state.user);
-
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate("/profileEdit");
+  };
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
   const IContents = arr?.map((user, index) => (
@@ -50,7 +54,9 @@ export default function User() {
   ));
 
   //   const ISelector = <Selector />;
-  const IPrimaryBttn = <PrimaryBttn>Add User</PrimaryBttn>;
+  const IPrimaryBttn = (
+    <PrimaryBttn onClick={handleNavigate}>Add User</PrimaryBttn>
+  );
   const IAll = <All />;
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;

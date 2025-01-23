@@ -1,16 +1,15 @@
 import { Input, Select } from "antd";
 import CancelBtn from "../../buttons/CancelBtn";
 import PrimaryBttn from "../../buttons/PrimaryBttn";
+import NextBtn from "../../buttons/NextBtn";
 
 export default function AddUniversity({ closeModal }) {
   return (
     <>
       <form className="modal__form">
-
         <div className="modal__form-input">
           <Input placeholder="University Name" />
         </div>
-
 
         <div className="modal__form-row">
           <div className="modal__form-input">
@@ -22,7 +21,10 @@ export default function AddUniversity({ closeModal }) {
           </div>
 
           <div className="modal__form-input">
-            <select className="modal__form-input-select" placeholder="Degree Type">
+            <select
+              className="modal__form-input-select"
+              placeholder="Degree Type"
+            >
               <option value="ug">UG</option>
               <option value="pg">PG</option>
               <option value="phd">PhD</option>
@@ -31,14 +33,10 @@ export default function AddUniversity({ closeModal }) {
         </div>
 
         <div className="modal__form-buttons">
-          <CancelBtn onClick={closeModal}>
-            Cancel
-          </CancelBtn>
-          <PrimaryBttn type="submit">
-            Add
-          </PrimaryBttn>
+          <CancelBtn onClick={closeModal}>Cancel</CancelBtn>
+          <NextBtn type="submit">Add</NextBtn>
         </div>
-      </form >
+      </form>
     </>
   );
 }

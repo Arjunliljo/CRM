@@ -5,8 +5,9 @@ import InfoBtn from "../buttons/InfoBtn";
 import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
 import { useEffect, useRef, useState } from "react";
+import { setAutoStudentsAssign } from "../../../global/studentsSlice";
 
-function StudentsCard({ student, set, onSet }) {
+function StudentsCard({ student, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(student?._id === set?._id);
   const targetRef = useRef(null);
 
@@ -16,7 +17,14 @@ function StudentsCard({ student, set, onSet }) {
 
   const dispatch = useDispatch();
   const handleStudentSelect = () => {
-    dispatch(onSet(student));
+    if (student._id === set?._id) {
+      dispatch(setAutoStudentsAssign(!toggle));
+    } else {
+      dispatch(onSet(student));
+      if (!toggle) {
+        dispatch(setAutoStudentsAssign(false));
+      }
+    }
     setTimeout(() => {
       targetRef.current.scrollIntoView({
         behavior: "smooth",

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { createRole } from "../../../../config/axiosService";
 import CountryBtn from "../../../components/buttons/CountryBtn";
 import { message } from "antd";
+import CancelBtn from "../../../components/buttons/CancelBtn";
+import NextBtn from "../../../components/buttons/NextBtn";
 
 // Your Role component
 export default function Role() {
@@ -67,15 +69,15 @@ export default function Role() {
         </div>
 
         <div className="modal__form-buttons" style={{ marginTop: "2rem" }}>
-          <CountryBtn
+          <CancelBtn
             type="button"
             onClick={() => setNewItem({ name: "", description: "" })}
           >
             Cancel
-          </CountryBtn>
-          <CountryBtn type="submit" style={{ backgroundColor: "#0075fc" }}>
+          </CancelBtn>
+          <NextBtn type="submit" style={{ backgroundColor: "#0075fc" }}>
             Save
-          </CountryBtn>
+          </NextBtn>
         </div>
       </form>
     </div>
