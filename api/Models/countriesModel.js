@@ -7,22 +7,13 @@ const countrySchema = mongoose.Schema(
       required: [true, "Country must have a name"],
       unique: true,
     },
-    code: {
+    description: {
       type: String,
-      unique: true,
-    },
-    flag: {
-      type: String,
-      default:
-        "https://cbbstwltufvzpsqvnahz.supabase.co/storage/v1/object/public/avatars/public/logoipsum.png",
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-// return the Country model using the provided database connection
-const getCountryModel = (dbConnection) => {
-  return dbConnection.model("Country", countrySchema);
-};
+const Country = mongoose.model("Country", countrySchema);
 
-export default getCountryModel;
+export default Country;

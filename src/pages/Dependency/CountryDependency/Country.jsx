@@ -1,5 +1,4 @@
 import CancelBtn from "../../../components/buttons/CancelBtn";
-import CountryBtn from "../../../components/buttons/CountryBtn";
 import NextBtn from "../../../components/buttons/NextBtn";
 
 export default function Country() {
