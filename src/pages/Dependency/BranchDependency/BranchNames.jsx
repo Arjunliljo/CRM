@@ -2,13 +2,15 @@ import BranchItem from "./BranchItem";
 import { useApi } from "../../../context/apiContext/ApiContext";
 
 export default function BranchNames({ setNewBranch }) {
-  const { branchConfigs } = useApi();
+  const {
+    branchConfigs: { isLoading, branches },
+  } = useApi();
 
   return (
     <div className="dependancies">
       <div className="dependancies-branch-names">
         <div className="dependancies-branch-names-left">
-          {branchConfigs ? (
+          {isLoading ? (
             <div className="btn-bigloader"></div>
           ) : (
             branches?.map((val, i) => (
