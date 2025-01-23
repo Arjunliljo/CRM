@@ -39,17 +39,21 @@
       color: #333;
     }
 
-    .button-off {
-      background: variables.$color-red-light;
+    .button-toggle {
       border: 1px solid variables.$color-gray-mid;
       border-radius: variables.$radius-sm;
       cursor: pointer;
       padding: 5px 10px;
       font-size: variables.$font-size-small;
-      color: variables.$color-black;
 
-      &:hover {
-        background: variables.$color-gray-light;
+      &.off {
+        background: variables.$color-red-light;
+        color: variables.$color-black;
+      }
+
+      &.active {
+        background: variables.$color-prime;
+        color: variables.$color-black;
       }
     }
   }

@@ -2977,17 +2977,20 @@ F .log .message-area-textarea-container {
   font-size: 0.8rem;
   color: #333;
 }
-.profile-edit-container .auto-assign .button-off {
-  background: #fd6363;
+.profile-edit-container .auto-assign .button-toggle {
   border: 1px solid #dadada;
   border-radius: 0.5rem;
   cursor: pointer;
   padding: 5px 10px;
   font-size: 0.8rem;
+}
+.profile-edit-container .auto-assign .button-toggle.off {
+  background: #fd6363;
   color: #000000;
 }
-.profile-edit-container .auto-assign .button-off:hover {
-  background: #f9f9f9;
+.profile-edit-container .auto-assign .button-toggle.active {
+  background: #cff3a6;
+  color: #000000;
 }
 
 .profile-nav {

@@ -1,4 +1,11 @@
+import { useState } from "react";
+
 export default function ProfileInfo() {
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleAssign = () => {
+    setIsActive((prev) => !prev);
+  };
   return (
     <div className="content-section">
       <div className="content-section-head">
@@ -34,7 +41,12 @@ export default function ProfileInfo() {
 
         <div className="auto-assign">
           <span className="span-assign">Auto Assign</span>
-          <button className="button-off">off</button>
+          <button
+            className={`button-toggle ${isActive ? "active" : "off"}`}
+            onClick={toggleAssign}
+          >
+            {isActive ? "On" : "Off"}
+          </button>
         </div>
       </div>
     </div>
