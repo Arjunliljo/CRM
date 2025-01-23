@@ -19,7 +19,6 @@ export default function Branch({ newBranch, setNewBranch, handleChange }) {
     try {
       setIsLoading(true);
       const res = await apiClient.post("/branch", newBranch);
-      setIsLoading(false);
       setNewBranch({ name: "", description: "" });
       refetchBranches();
       message.success("Branch created successfully!");
