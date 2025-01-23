@@ -1,7 +1,8 @@
-import React from 'react'
-import CancelBtn from '../../buttons/CancelBtn'
-import PrimaryBttn from '../../buttons/PrimaryBttn'
-import { Input } from 'antd'
+import React from "react";
+import CancelBtn from "../../buttons/CancelBtn";
+import PrimaryBttn from "../../buttons/PrimaryBttn";
+import { Input } from "antd";
+import NextBtn from "../../buttons/NextBtn";
 
 export default function AddLead({ closeModal }) {
   return (
@@ -36,7 +37,10 @@ export default function AddLead({ closeModal }) {
             </select>
           </div>
           <div className="modal__form-input">
-            <select className="modal__form-input-select" placeholder="University">
+            <select
+              className="modal__form-input-select"
+              placeholder="University"
+            >
               <option value="uni1">University 1</option>
               <option value="uni2">University 2</option>
             </select>
@@ -52,9 +56,9 @@ export default function AddLead({ closeModal }) {
 
         <div className="modal__form-buttons">
           <CancelBtn onClick={closeModal}>Cancel</CancelBtn>
-          <PrimaryBttn>Add Lead</PrimaryBttn>
+          <NextBtn>Add Lead</NextBtn>
         </div>
       </form>
     </>
-  )
+  );
 }

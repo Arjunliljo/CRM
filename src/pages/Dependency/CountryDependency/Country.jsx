@@ -24,6 +24,8 @@ export default function Country() {
         <div className="modal__form-buttons" style={{ marginTop: "2rem" }}>
           <CancelBtn>Cancel</CancelBtn>
           <NextBtn>Save</NextBtn>
+          <CancelBtn>Cancel</CancelBtn>
+          <NextBtn>Save</NextBtn>
         </div>
       </div>
     </div>

@@ -3042,13 +3042,13 @@ F .log .message-area-textarea-container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1rem;
   overflow-y: scroll;
 }
 .profile-content .content-section .form-group .status-item {
   background-color: #f9f9f9;
   width: 100%;
-  height: 3.5rem;
+  height: 2.5rem;
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
@@ -3515,7 +3515,7 @@ F .log .message-area-textarea-container {
   font-weight: 500;
 }
 .profileCard-journy {
-  height: 8rem;
+  height: fit-content;
 }
 .profileCard-boxes {
   display: flex;
@@ -4226,12 +4226,17 @@ F .log .message-area-textarea-container {
 
 .progress-tracker {
   width: 100%;
+  min-height: fit-content;
+}
+.progress-tracker__section {
+  margin-bottom: 25px;
 }
 .progress-tracker__container {
   margin: 0 auto;
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  min-height: fit-content;
 }
 .progress-tracker__steps {
   display: flex;
@@ -4285,7 +4290,6 @@ F .log .message-area-textarea-container {
   justify-content: space-between;
 }
 .progress-tracker__university {
-  margin-top: 1rem;
   display: inline-flex;
   align-items: center;
   border-radius: 1rem;

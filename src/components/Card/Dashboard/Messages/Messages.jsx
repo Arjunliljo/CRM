@@ -92,7 +92,7 @@ export default function Messages() {
           <div className="messages__header">
             <h2 className="title">Messages</h2>
             <ArrowBlue>
-              <HomeIcon path="plus" color="#fffffff8" />
+              <HomeIcon path="plus" color="#ffffff" />
             </ArrowBlue>
           </div>
 

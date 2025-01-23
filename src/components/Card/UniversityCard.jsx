@@ -67,9 +67,9 @@ function UniversityCard({ university, set, onSet, istoggle, toggle }) {
           <div className="cardUniversity-body-bottom-iconsUniversity">
             <div className="cardUniversity-body-bottom-icons-item">
               <HomeIcon
-                path="u-turn"
+                path="stayback"
                 color="#00b100"
-                style={{ transform: "rotate(270deg)" }}
+                // style={{ transform: "rotate(270deg)" }}
               />
               <p>
                 <span style={{ color: "gray" }}>Stayback:</span>
@@ -78,9 +78,9 @@ function UniversityCard({ university, set, onSet, istoggle, toggle }) {
             </div>
             <div className="cardUniversity-body-bottom-icons-item">
               <HomeIcon
-                path="retry"
+                path="payments"
                 color="#0075fc"
-                style={{ transform: "rotate(270deg)" }}
+                // style={{ transform: "rotate(270deg)" }}
               />
               <p>
                 {" "}

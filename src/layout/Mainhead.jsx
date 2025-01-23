@@ -1,12 +1,41 @@
+import React from "react";
+import { useLocation } from "react-router-dom";
 import icon from "./../assets/Icons/mlq-01pro.svg";
 import { CiBellOn } from "react-icons/ci";
 import profile from "./../assets/profilepic.avif";
+
 function Mainhead() {
+  const location = useLocation(); // Access the current route
+
+  // Map routes to their corresponding titles
+  const getPageTitle = () => {
+    switch (location.pathname) {
+      case "/dashboard":
+        return "Dashboard";
+      case "/leads":
+        return "Leads";
+      case "/student":
+        return "Students";
+      case "/user":
+        return "Documents";
+      case "/university":
+        return "University";
+      case "/dependencies":
+        return "Dependencies";
+      case "/profileEdit":
+        return "Profile";
+      case "/profileCard":
+        return "Settings";
+      default:
+        return "Page Title";
+    }
+  };
+
   return (
     <div className="logocontainer">
       <img src={icon} alt="" className="logocontainer-rightlogo" />
       <div className="logocontainer-leftlead">
-        <h2>Dashboard</h2>
+        <h2>{getPageTitle()}</h2>
         <div className="logocontainer-leftlead-bell">
           <CiBellOn className="logocontainer-leftlead-bell-icon" />
         </div>
