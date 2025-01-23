@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ActionButtons({ onHandleNext, onHandleCancel }) {
   return (
     <div className="action-buttons">

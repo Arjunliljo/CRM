@@ -1,4 +1,4 @@
-import Country from "../../src/pages/Dependency/CountryDependency/Country.jsx";
+import Country from "../Models/countriesModel.js";
 import getCountryModel from "../Models/countriesModel.js";
 import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
@@ -20,7 +20,6 @@ const createCountry = catchAsync(async (req, res, next) => {
 });
 
 const getAllCountries = catchAsync(async (req, res) => {
-  const Country = getCountryModel(req.db);
   const countries = await Country.find({});
   return res.status(200).json({
     success: true,
