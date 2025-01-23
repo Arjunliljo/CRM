@@ -1,3 +1,4 @@
+import Country from "../Models/countriesModel.js";
 import getCountryModel from "../Models/countriesModel.js";
 import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
@@ -5,19 +6,8 @@ import { sanitizeInput } from "../Utilities/validation.js";
 
 const createCountry = catchAsync(async (req, res, next) => {
   let { name, code, flag } = req.body;
-
   // Sanitize
   name = sanitizeInput(name);
-  code = sanitizeInput(code);
-
-  // Dynamically get the Country model for the current database connection
-  const Country = getCountryModel(req.db);
-
-  // Check if the country already exists in the specified database
-  const existingCountry = await Country.findOne({ name });
-  if (existingCountry) {
-    return next(new AppError(`This country already exists.`, 400));
-  }
 
   const newCountry = await Country.create({ name, flag, code });
   if (!newCountry) return next(new AppError("Failed to create country", 400));
@@ -30,7 +20,6 @@ const createCountry = catchAsync(async (req, res, next) => {
 });
 
 const getAllCountries = catchAsync(async (req, res) => {
-  const Country = getCountryModel(req.db);
   const countries = await Country.find({});
   return res.status(200).json({
     success: true,
@@ -40,8 +29,8 @@ const getAllCountries = catchAsync(async (req, res) => {
 });
 
 const getCountry = catchAsync(async (req, res) => {
-  const Country = getCountryModel(req.db);
   const country = await Country.findById(req.params.id);
+
   return res.status(200).json({
     success: true,
     message: "Country fetched successfully",

@@ -14,6 +14,8 @@ export const useBranches = () => {
 
   const branches = data?.data?.data;
 
+  console.log(branches, "branches");
+
   useEffect(() => {
     if (!branches) return;
     dispatch(setBranchNames(branches.map((branch) => branch.name)));

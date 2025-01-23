@@ -48,8 +48,8 @@ const getBranch = catchAsync(async (req, res, next) => {
     data: branch,
   });
 });
+
 const updateBranch = catchAsync(async (req, res, next) => {
-  const Branch = getBranchModel(req.db);
   const branch = await Branch.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
@@ -60,6 +60,7 @@ const updateBranch = catchAsync(async (req, res, next) => {
     data: branch,
   });
 });
+
 const deleteBranch = catchAsync(async (req, res, next) => {
   const Branch = getBranchModel(req.db);
   const branch = await Branch.findByIdAndDelete(req.params.id);

@@ -1,39 +1,61 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { message } from "antd";
 import CancelBtn from "../../../components/buttons/CancelBtn";
 import NextBtn from "../../../components/buttons/NextBtn";
 import apiClient from "../../../../config/axiosInstance";
 import { refetchBranches } from "../../../apiHooks/useBranches";
+import { useDispatch, useSelector } from "react-redux";
+import { setBranchEdit } from "../../../../global/creationSlice";
 
-export default function Branch({ newBranch, setNewBranch, handleChange }) {
+export default function UpdateBranch() {
   const [isLoading, setIsLoading] = useState(false);
+  const { editBranch } = useSelector((state) => state.creation);
+  const [formData, setFormData] = useState({ name: "", description: "" });
+  const dispatch = useDispatch();
+
+  // Sync formData with Redux's editBranch
+  useEffect(() => {
+    if (editBranch) {
+      setFormData({
+        name: editBranch.name || "",
+        description: editBranch.description || "",
+      });
+    }
+  }, [editBranch]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!newBranch.name) {
+    if (!formData.name) {
       message.error("Please fill in the branch name");
       return;
     }
+
     try {
       setIsLoading(true);
-      const res = await apiClient.post("/branch", newBranch);
-      setIsLoading(false);
-      setNewBranch({ name: "", description: "" });
+      await apiClient.patch(`/branch/${editBranch._id}`, formData);
       refetchBranches();
-      message.success("Branch created successfully!");
+      message.success("Branch updated successfully!");
     } catch (e) {
-      setIsLoading(false);
-      message.error("Error creating branch. Please try again.");
+      message.error("Error updating branch. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleCancel = () => {
+    dispatch(setBranchEdit({ isBranchEdit: false, editBranch: {} }));
+  };
+
   return (
     <div className="content-section dependancies">
       <div className="content-section-head" style={{ height: "fit-content" }}>
-        <h2>Add new Branch</h2>
+        <h2>Update Branch</h2>
       </div>
 
       <form onSubmit={handleSubmit} className="dependancies-item-box">
@@ -41,7 +63,7 @@ export default function Branch({ newBranch, setNewBranch, handleChange }) {
           <input
             type="text"
             name="name"
-            value={newBranch.name}
+            value={formData.name}
             onChange={handleChange}
             placeholder="Branch Name"
             className="input-formGroup"
@@ -51,21 +73,18 @@ export default function Branch({ newBranch, setNewBranch, handleChange }) {
         <div className="form-group">
           <textarea
             name="description"
-            value={newBranch.description}
+            value={formData.description}
             onChange={handleChange}
+            placeholder="Branch Description"
             className="input-formGroup"
             required
           />
         </div>
 
         <div className="modal__form-buttons" style={{ marginTop: "2rem" }}>
-          <CancelBtn
-            onClick={() => setNewBranch({ name: "", description: "" })}
-          >
-            Cancel
-          </CancelBtn>
-          <NextBtn onClick={handleSubmit} isLoading={isLoading}>
-            Save
+          <CancelBtn onClick={handleCancel}>Discard</CancelBtn>
+          <NextBtn type="submit" isLoading={isLoading}>
+            Update
           </NextBtn>
         </div>
       </form>

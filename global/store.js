@@ -6,6 +6,7 @@ import studentsSlice from "./studentsSlice";
 import universitySlice from "./universitySlice";
 import branchSlice from "./branchSlice";
 import coreSlice from "./coreSlice";
+import creationSlice from "./creationSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     universitys: universitySlice,
     branchmanage: branchSlice,
     core: coreSlice,
+    creation: creationSlice,
   },
 });
 

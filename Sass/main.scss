@@ -29,7 +29,6 @@
 @use "components/University/universityEligible";
 @use "components/University/universityRight";
 
-// @use "page/dashboard";
 @use "components/User/userRight";
 @use "components/RightsideProfileCard/profileCard";
 @use "components/RightsideProfileCard/documentUpload";
@@ -49,6 +48,7 @@
 @use "layout/dash";
 @use "Features/chatbox";
 @use "page/dependancies";
+@use "components/branch-item";
 /*
 *
 *

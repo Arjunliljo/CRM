@@ -2,7 +2,7 @@ export default function NextBtn({
   children,
   onClick,
   type = "button",
-  isLoading = true,
+  isLoading = false,
 }) {
   return (
     <button
