@@ -76,7 +76,7 @@ export default function AddLead({ closeModal }) {
 
         <div className="modal__form-buttons">
           <CancelBtn onClick={closeModal}>Cancel</CancelBtn>
-          <NextBtn>Add Lead</NextBtn>
+          <NextBtn>Add</NextBtn>
         </div>
       </form>
     </>
