@@ -6,7 +6,7 @@ export default function RoleItem({ item }) {
   const dispatch = useDispatch();
 
   const handleEdit = () => {
-    dispatch(setBranchEdit({ isBranchEdit: true, editBranch: item }));
+    dispatch(setBranchEdit({ isRoleEdit: true, editRole: item }));
   };
 
   return (

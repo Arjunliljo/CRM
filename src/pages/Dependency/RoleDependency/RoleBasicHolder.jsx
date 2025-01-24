@@ -5,34 +5,36 @@ import UpdateRole from "./UpdateRole";
 import RoleNames from "./RoleNames";
 
 export default function RoleBasicHolder() {
-  const [newBranch, setNewBranch] = useState({
+  const [newRole, setNewRole] = useState({
     name: "",
     description: "",
   });
-  const { editBranch, isBranchEdit } = useSelector((state) => state.creation);
+  const { editRole, isRoleEdit } = useSelector((state) => state.creation);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewBranch((prev) => ({
+    setNewRole((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
+
+  
   return (
    <div className="profile-edit-container dependancies-holder">
          <div className="dependancies-content">
-           {isBranchEdit ? (
+           {isRoleEdit ? (
              <UpdateRole />
            ) : (
              <Role
-               newBranch={newBranch}
-               setNewBranch={setNewBranch}
+               newRole={newRole}
+               setNewRole={setNewRole}
                handleChange={handleChange}
              />
            )}
          </div>
          <div className="dependancies-content">
-           <RoleNames setNewBranch={setNewBranch} />
+           <RoleNames setNewRole={setNewRole} />
          </div>
        </div>
   );
