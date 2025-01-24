@@ -5,11 +5,13 @@ import catchAsync from "../Utilities/catchAsync.js";
 import { sanitizeInput } from "../Utilities/validation.js";
 
 const createCountry = catchAsync(async (req, res, next) => {
-  let { name, code, flag } = req.body;
+  let { name, description } = req.body;
+  
   // Sanitize
   name = sanitizeInput(name);
+  name = sanitizeInput(description);
 
-  const newCountry = await Country.create({ name, flag, code });
+  const newCountry = await Country.create({ name, description });
   if (!newCountry) return next(new AppError("Failed to create country", 400));
 
   res.status(201).json({

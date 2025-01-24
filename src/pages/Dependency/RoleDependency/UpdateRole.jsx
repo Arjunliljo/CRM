@@ -3,25 +3,25 @@ import { message } from "antd";
 import CancelBtn from "../../../components/buttons/CancelBtn";
 import NextBtn from "../../../components/buttons/NextBtn";
 import apiClient from "../../../../config/axiosInstance";
-import { refetchBranches } from "../../../apiHooks/useBranches";
 import { useDispatch, useSelector } from "react-redux";
-import { setBranchEdit } from "../../../../global/creationSlice";
+import { setRoleEdit } from "../../../../global/creationSlice";
+import { refetchRoles } from "../../../apiHooks/useRoles";
 
 export default function UpdateRole() {
   const [isLoading, setIsLoading] = useState(false);
-  const { editBranch } = useSelector((state) => state.creation);
+  const { editRole } = useSelector((state) => state.creation);
   const [formData, setFormData] = useState({ name: "", description: "" });
   const dispatch = useDispatch();
 
-  // Sync formData with Redux's editBranch
+  // Sync formData with Redux's editRole
   useEffect(() => {
-    if (editBranch) {
+    if (editRole) {
       setFormData({
-        name: editBranch.name || "",
-        description: editBranch.description || "",
+        name: editRole.name || "",
+        description: editRole.description || "",
       });
     }
-  }, [editBranch]);
+  }, [editRole]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,24 +32,24 @@ export default function UpdateRole() {
     e.preventDefault();
 
     if (!formData.name) {
-      message.error("Please fill in the branch name");
+      message.error("Please fill in the role name");
       return;
     }
 
     try {
       setIsLoading(true);
-      await apiClient.patch(`/branch/${editBranch._id}`, formData);
-      refetchBranches();
-      message.success("Branch updated successfully!");
+      await apiClient.patch(`/role/${editRole._id}`, formData);
+      refetchRoles();
+      message.success("Role updated successfully!");
     } catch (e) {
-      message.error("Error updating branch. Please try again.");
+      message.error("Error updating role. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleCancel = () => {
-    dispatch(setBranchEdit({ isBranchEdit: false, editBranch: {} }));
+    dispatch(setRoleEdit({ isBranchEdit: false, editRole: {} }));
   };
 
   return (
