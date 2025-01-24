@@ -10,6 +10,8 @@ function ApiProvider({ children }) {
   const countryConfigs = useCountries();
   const leadsConfigs = useLeads();
 
+  console.log(leadsConfigs, "///////");
+
   return (
     <ApiContext.Provider
       value={{ branchConfigs, countryConfigs, leadsConfigs }}

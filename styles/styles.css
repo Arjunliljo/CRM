@@ -3709,6 +3709,7 @@ F .log .message-area-textarea-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .dashboard-card {
