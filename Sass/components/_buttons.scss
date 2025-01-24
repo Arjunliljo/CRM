@@ -216,7 +216,11 @@
   font-weight: 500;
   background: variables.$color-blue;
   color: variables.$color-white;
-  height: fit-content;
+  height: 2rem;
+  width: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .circle {

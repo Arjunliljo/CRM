@@ -1,13 +1,15 @@
 import { createContext, useContext } from "react";
 import { useBranches } from "../../apiHooks/useBranches";
+import { useCountries } from "../../apiHooks/useCountries";
 
 const ApiContext = createContext();
 
 function ApiProvider({ children }) {
   const branchConfigs = useBranches();
+  const countryConfigs = useCountries();
 
   return (
-    <ApiContext.Provider value={{ branchConfigs }}>
+    <ApiContext.Provider value={{ branchConfigs, countryConfigs }}>
       {children}
     </ApiContext.Provider>
   );

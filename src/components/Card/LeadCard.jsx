@@ -5,7 +5,7 @@ import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
 
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setAutoLeadsAssign } from "../../../global/leadsSlice";
 
 export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
