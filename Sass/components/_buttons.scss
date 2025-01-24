@@ -248,3 +248,28 @@
   align-items: center;
   justify-content: center;
 }
+
+// input file 
+.upload-file {
+  display: none; 
+}
+
+.upload-file-label {
+  background-color: variables.$color-text-gray;
+  color: variables.$color-white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: variables.$radius-md;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+  max-width: 150px; 
+  font-size: 0.8rem;
+
+}
+
+.upload-file-label:hover {
+  background-color: variables.$color-gray-mid;
+  color: variables.$color-gray-dark;
+}

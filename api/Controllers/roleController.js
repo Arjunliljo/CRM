@@ -1,3 +1,4 @@
+import Role from "../Models/roleModel.js";
 import getRoleModel from "../Models/roleModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import { sanitizeInput } from "../Utilities/validation.js";
@@ -8,9 +9,6 @@ const createRole = catchAsync(async (req, res, next) => {
   // Sanitize and validate inputs
   name = sanitizeInput(name);
   description = sanitizeInput(description);
-
-  // Dynamically get the Role model for the current database connection
-  const Role = getRoleModel(req.db);
 
   // Create a new role in the correct database
   const newRole = await Role.create({ name, description });
@@ -24,9 +22,7 @@ const createRole = catchAsync(async (req, res, next) => {
 });
 
 const getAllRoles = catchAsync(async (req, res) => {
-  const Role = getRoleModel(req.db);
   const roles = await Role.find({});
-
   return res.status(200).json({
     success: true,
     message: "Roles fetched successfully",
@@ -35,7 +31,6 @@ const getAllRoles = catchAsync(async (req, res) => {
 });
 
 const updateRole = catchAsync(async (req, res) => {
-  const Role = getRoleModel(req.db);
   const role = await Role.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
@@ -48,7 +43,6 @@ const updateRole = catchAsync(async (req, res) => {
 });
 
 const getRole = catchAsync(async (req, res) => {
-  const Role = getRoleModel(req.db);
   const role = await Role.findById(req.params.id);
 
   return res.status(200).json({
@@ -58,7 +52,6 @@ const getRole = catchAsync(async (req, res) => {
   });
 });
 const deleteRole = catchAsync(async (req, res) => {
-  const Role = getRoleModel(req.db);
   const role = await Role.findByIdAndDelete(req.params.id);
 
   return res.status(200).json({
