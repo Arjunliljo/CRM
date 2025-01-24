@@ -1,42 +1,38 @@
 import { Input, Select } from "antd";
 import CancelBtn from "../../buttons/CancelBtn";
 import PrimaryBttn from "../../buttons/PrimaryBttn";
+import QualificationSelector from "./QualificationSelector";
+import PercentageSelector from "./PercentageSelector";
 
 export default function AddEntryRequirement({ closeModal }) {
   return (
     <>
       <form className="modal__form">
-
-        <div className="modal__form-input">
-          <Input placeholder="Course" />
+        <div className="modal__form-input-text">
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            className="input-formGroup"
+            required
+          />
         </div>
 
-
         <div className="modal__form-row">
-          <div className="modal__form-input">
-            <select className="modal__form-input-select" placeholder="Standard">
-              <option value="india">Plus two</option>
-
-            </select>
+          <div className="modal__form-input-text">
+            <QualificationSelector />
           </div>
 
-          <div className="modal__form-input">
-            <select className="modal__form-input-select" placeholder="Percentage">
-              <option value="ug">45%</option>
-
-            </select>
+          <div className="modal__form-input-text">
+            <PercentageSelector />
           </div>
         </div>
 
         <div className="modal__form-buttons">
-          <CancelBtn onClick={closeModal}>
-            Cancel
-          </CancelBtn>
-          <PrimaryBttn type="submit">
-            Add
-          </PrimaryBttn>
+          <CancelBtn onClick={closeModal}>Cancel</CancelBtn>
+          <PrimaryBttn type="submit">Add</PrimaryBttn>
         </div>
-      </form >
+      </form>
     </>
   );
 }

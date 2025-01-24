@@ -7,6 +7,7 @@ const ApiContext = createContext();
 function ApiProvider({ children }) {
   const branchConfigs = useBranches();
   const countryConfigs = useCountries();
+  const leadsConfigs = useLeads();
 
   return (
     <ApiContext.Provider value={{ branchConfigs, countryConfigs }}>
