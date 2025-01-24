@@ -44,6 +44,22 @@ export default function Leads() {
     setIsModalOpen((val) => !val);
   };
 
+  const [newLead, setNewLead] = useState({
+    name: "",
+    DOM: "",
+    Contact: "",
+    Whatsupp: "",
+    Mail: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewLead((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const ISearchBar = <SearchBar />;
   const IAutoBtn = <AutoBtn />;
   const IContents = arr?.map((lead, index) => (
@@ -108,7 +124,12 @@ export default function Leads() {
 
       {/* Modal for adding a leads */}
       <ModalBase title="Add Lead" isOpen={isModalOpen} closeModal={closeModal}>
-        <AddLead closeModal={closeModal} />
+        <AddLead
+          closeModal={closeModal}
+          newLead={newLead}
+          setNewLead={setNewLead}
+          handleChange={handleChange}
+        />
       </ModalBase>
     </>
   );

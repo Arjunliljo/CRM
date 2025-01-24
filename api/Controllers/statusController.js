@@ -1,3 +1,4 @@
+import Status from "../Models/statusModel.js";
 import getStatusModel from "../Models/statusModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import { sanitizeInput } from "../Utilities/validation.js";
@@ -9,7 +10,7 @@ const createStatus = catchAsync(async (req, res) => {
   const sanitizedStatus = sanitizeInput(status);
 
   // Dynamically get the Status model for the current database connection
-  const Status = getStatusModel(req.db);
+  // const Status = getStatusModel(req.db);
 
   const newStatus = await Status.create({
     status: sanitizedStatus,

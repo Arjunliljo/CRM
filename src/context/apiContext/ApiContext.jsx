@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
 import { useBranches } from "../../apiHooks/useBranches";
 import { useCountries } from "../../apiHooks/useCountries";
+import { useLeads } from "../../apiHooks/useLeads";
 
 const ApiContext = createContext();
 
@@ -10,7 +11,9 @@ function ApiProvider({ children }) {
   const leadsConfigs = useLeads();
 
   return (
-    <ApiContext.Provider value={{ branchConfigs, countryConfigs }}>
+    <ApiContext.Provider
+      value={{ branchConfigs, countryConfigs, leadsConfigs }}
+    >
       {children}
     </ApiContext.Provider>
   );

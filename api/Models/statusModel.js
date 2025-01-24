@@ -35,8 +35,6 @@ const statusSchema = mongoose.Schema(
 );
 
 // Return the Status model using the provided database connection
-const getStatusModel = (dbConnection) => {
-  return dbConnection.model("Status", statusSchema);
-};
+const Status = mongoose.model("Status", statusSchema);
 
-export default getStatusModel;
+export default Status;
