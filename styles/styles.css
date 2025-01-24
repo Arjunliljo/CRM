@@ -609,24 +609,25 @@ textarea::placeholder {
   display: flex;
   gap: 16px;
 }
-.modal__form-input {
+.modal__form-input-text {
   flex: 1;
   width: 100%;
 }
-.modal__form-input .ant-input {
+.modal__form-input-text input {
   width: 100%;
   height: 40px;
   border-radius: 8px;
   border: 1px solid #000000;
 }
-.modal__form-input .ant-input::placeholder {
+.modal__form-input-text input::placeholder {
   color: #000000;
+  padding: 10px;
 }
-.modal__form-input .ant-input:focus {
+.modal__form-input-text input:focus {
   border-color: #0075fc;
   outline: none;
 }
-.modal__form-input-select {
+.modal__form-input-text select {
   width: 100%;
   height: 40px;
   border-radius: 8px;
@@ -635,7 +636,7 @@ textarea::placeholder {
   font-size: 14px;
   color: #333;
 }
-.modal__form-input-select:focus {
+.modal__form-input-text select:focus {
   border-color: #0075fc;
   outline: none;
 }
@@ -4836,6 +4837,21 @@ F .log .message-area-textarea-container {
     transform: rotate(360deg);
   }
 }
+.loader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader-round-names {
+  width: 100%;
+  height: 30rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .dashbord-container {
   margin-top: 3rem;
   margin-left: 3rem;

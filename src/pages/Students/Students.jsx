@@ -14,7 +14,7 @@ import {
 } from "../../../global/studentsSlice";
 import StudentsCard from "../../components/Card/StudentsCard";
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
-import ModalBase from "../../components/Modals/ModalBase";
+import ModalBase from "../../components/Forms/ModalBase";
 import { useState } from "react";
 
 const student = {
