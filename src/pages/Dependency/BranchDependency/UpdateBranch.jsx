@@ -66,7 +66,7 @@ export default function UpdateBranch() {
             value={formData.name}
             onChange={handleChange}
             placeholder="Branch Name"
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>
@@ -76,7 +76,7 @@ export default function UpdateBranch() {
             value={formData.description}
             onChange={handleChange}
             placeholder="Branch Description"
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>

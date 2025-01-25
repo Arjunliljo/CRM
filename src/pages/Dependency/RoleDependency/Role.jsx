@@ -19,7 +19,7 @@ export default function Role(newCountry, setNewCountry, handleChange) {
             value={newCountry.name}
             onChange={handleChange}
             placeholder="Role Name"
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>
@@ -28,7 +28,7 @@ export default function Role(newCountry, setNewCountry, handleChange) {
             name="description"
             value={newCountry.description}
             onChange={handleChange}
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>

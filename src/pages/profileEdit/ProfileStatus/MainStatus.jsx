@@ -9,7 +9,7 @@ export default function MainStatus() {
       <div className="content-section-item-box">
         {arr.map((item, index) => (
           <div className="form-group" key={index}>
-            <div className="status-item">Status</div>
+            <div className="forms-status-item">Status</div>
           </div>
         ))}
       </div>

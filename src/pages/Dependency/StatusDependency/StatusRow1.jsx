@@ -16,7 +16,11 @@ export default function StatusRow() {
 
       <div className="content-section-item-box">
         <div className="form-group">
-          <input type="text" placeholder="Status name" className="input-formGroup" />
+          <input
+            type="text"
+            placeholder="Status name"
+            className="forms-input"
+          />
         </div>
 
         <div className="form-group">
@@ -52,10 +56,12 @@ export default function StatusRow() {
           </div>
         </div>
         <div className="form-group">
-          <input type="text" placeholder="Description" className="input-formGroup" />
+          <input
+            type="text"
+            placeholder="Description"
+            className="forms-input"
+          />
         </div>
-
-
       </div>
     </div>
   );

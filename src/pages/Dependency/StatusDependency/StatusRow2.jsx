@@ -27,7 +27,7 @@ export default function StatusRow2() {
           <input
             type="text"
             placeholder="Sub-status"
-            className="input-formGroup"
+            className="forms-input"
             value={subStatusInput}
             onChange={(e) => setSubStatusInput(e.target.value)}
           />

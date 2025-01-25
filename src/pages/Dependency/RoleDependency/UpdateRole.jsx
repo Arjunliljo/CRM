@@ -66,7 +66,7 @@ export default function UpdateRole() {
             value={formData.name}
             onChange={handleChange}
             placeholder="Role Name"
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>
@@ -76,7 +76,7 @@ export default function UpdateRole() {
             value={formData.description}
             onChange={handleChange}
             placeholder="Role Description"
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>
