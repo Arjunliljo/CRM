@@ -1,5 +1,4 @@
 import getBranchModel from "../Models/branchModel.js";
-import getCountryModel from "../Models/countriesModel.js";
 import Lead from "../Models/leadsModel.js";
 import getLeadModel from "../Models/leadsModel.js";
 import Status from "../Models/statusModel.js";
@@ -78,7 +77,6 @@ const receiveLeads = catchAsync(async (req, res) => {
   getStatusModel(dbConnection);
   getBranchModel(dbConnection);
   getGroupModel(dbConnection);
-  getCountryModel(dbConnection);
 
   // Fetch leads and populate all status IDs
   const leads = await Lead.find({})
