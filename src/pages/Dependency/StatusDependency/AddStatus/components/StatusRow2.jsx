@@ -1,13 +1,18 @@
-import { useState } from "react";
-import PrimaryBttn from "../../../../components/buttons/PrimaryBttn";
+import React, { useState } from "react";
+import PrimaryBttn from "../../../../../components/buttons/PrimaryBttn";
 
-export default function StatusRow2() {
-  const [subStatuses, setSubStatuses] = useState([]);
+export default function StatusRow2({ newStatus, setNewStatus }) {
   const [subStatusInput, setSubStatusInput] = useState("");
+  const handleSubStatusAdd = (subStatus) => {
+    setNewStatus((prev) => ({
+      ...prev,
+      subStatuses: [...prev.subStatuses, subStatus],
+    }));
+  };
 
   const handleAddSubStatus = () => {
     if (subStatusInput.trim()) {
-      setSubStatuses([...subStatuses, subStatusInput.trim()]);
+      handleSubStatusAdd(subStatusInput.trim());
       setSubStatusInput("");
     }
   };
@@ -21,7 +26,6 @@ export default function StatusRow2() {
             display: "flex",
             gap: "10px",
             alignItems: "center",
-            marginTop: "3rem",
           }}
         >
           <input
@@ -32,6 +36,7 @@ export default function StatusRow2() {
             onChange={(e) => setSubStatusInput(e.target.value)}
           />
           <PrimaryBttn
+            type="button"
             onClick={handleAddSubStatus}
             style={{ borderRadius: "0.6rem" }}
           >
@@ -40,7 +45,7 @@ export default function StatusRow2() {
         </div>
 
         <div className="status-form-group-sub-status">
-          {subStatuses.map((status, index) => (
+          {newStatus.subStatuses.map((status, index) => (
             <div key={index} className="status-form-group-sub-status-element">
               {status}
             </div>

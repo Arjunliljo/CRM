@@ -5,23 +5,24 @@ import NextBtn from "../../../components/buttons/NextBtn";
 import apiClient from "../../../../config/axiosInstance";
 import { refetchBranches } from "../../../apiHooks/useBranches";
 import { useDispatch, useSelector } from "react-redux";
-import { setBranchEdit } from "../../../../global/creationSlice";
+import { setBranchEdit, setCountryEdit } from "../../../../global/creationSlice";
+import { refetchCountries } from "../../../apiHooks/useCountries";
 
 export default function UpdateCountry() {
   const [isLoading, setIsLoading] = useState(false);
-  const { editBranch } = useSelector((state) => state.creation);
+  const { editCountry } = useSelector((state) => state.creation);
   const [formData, setFormData] = useState({ name: "", description: "" });
   const dispatch = useDispatch();
 
-  // Sync formData with Redux's editBranch
+  // Sync formData with Redux's editCountry
   useEffect(() => {
-    if (editBranch) {
+    if (editCountry) {
       setFormData({
-        name: editBranch.name || "",
-        description: editBranch.description || "",
+        name: editCountry.name || "",
+        description: editCountry.description || "",
       });
     }
-  }, [editBranch]);
+  }, [editCountry]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,24 +33,24 @@ export default function UpdateCountry() {
     e.preventDefault();
 
     if (!formData.name) {
-      message.error("Please fill in the branch name");
+      message.error("Please fill in the country name");
       return;
     }
 
     try {
       setIsLoading(true);
-      await apiClient.patch(`/branch/${editBranch._id}`, formData);
-      refetchBranches();
-      message.success("Branch updated successfully!");
+      await apiClient.patch(`/country/${editCountry._id}`, formData);
+      refetchCountries();
+      message.success("Country updated successfully!");
     } catch (e) {
-      message.error("Error updating branch. Please try again.");
+      message.error("Error updating Country. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleCancel = () => {
-    dispatch(setBranchEdit({ isBranchEdit: false, editBranch: {} }));
+    dispatch(setCountryEdit({ isCountryEdit: false, editCountry: {} }));
   };
 
   return (
@@ -59,7 +60,7 @@ export default function UpdateCountry() {
       </div>
 
       <form onSubmit={handleSubmit} className="dependancies-item-box">
-        <div className="form-group">
+      <div className="form-group">
           <input
             type="text"
             name="name"
@@ -75,7 +76,6 @@ export default function UpdateCountry() {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            placeholder="Country Description"
             className="input-formGroup"
             required
           />

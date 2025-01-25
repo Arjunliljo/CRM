@@ -1,12 +1,12 @@
 import { EditOutlined } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { setBranchEdit } from "../../../../global/creationSlice";
+import { setRoleEdit } from "../../../../global/creationSlice";
 
 export default function RoleItem({ item }) {
   const dispatch = useDispatch();
 
   const handleEdit = () => {
-    dispatch(setBranchEdit({ isRoleEdit: true, editRole: item }));
+    dispatch(setRoleEdit({ isRoleEdit: true, editRole: item }));
   };
 
   return (
