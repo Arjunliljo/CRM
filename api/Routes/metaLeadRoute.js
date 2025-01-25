@@ -1,8 +1,12 @@
 import express from "express";
-import { getMetaLeads } from "../Controllers/metaLeadController.js";
+import {
+  getMetaLeads,
+  updateCampaigns,
+} from "../Controllers/metaLeadController.js";
 const router = express.Router();
 // router.use(protect);
 
 router.get("/", getMetaLeads);
+router.patch("/updateCampaigns", updateCampaigns);
 
 export default router;
