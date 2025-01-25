@@ -118,6 +118,7 @@
       justify-content: start;
       padding: 0 1rem;
       cursor: pointer;
+      border: 2px solid variables.$color-blue;
     }
     & select,
     input {
@@ -215,7 +216,8 @@
         }
 
         &:hover {
-          background-color: variables.$color-gray-light;
+          background-color: variables.$color-gray-mid;
+          color: variables.$color-black;
         }
       }
     }
@@ -239,7 +241,8 @@
         }
 
         &:hover {
-          background-color: variables.$color-gray-light;
+          background-color: variables.$color-gray-mid;
+          color: variables.$color-black;
         }
       }
     }

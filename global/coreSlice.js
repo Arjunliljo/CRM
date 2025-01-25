@@ -6,6 +6,7 @@ const coreSlice = createSlice({
     branchNames: [],
     countryNames: [],
     roleNames: [],
+    statusNames: [],
   },
 
   reducers: {
@@ -18,9 +19,12 @@ const coreSlice = createSlice({
     setRoleNames: (state, action) => {
       state.roleNames = action.payload;
     },
+    setStatusNames: (state, action) => {
+      state.statusNames = action.payload;
+    },
   },
 });
 
-export const { setBranchNames, setCountryNames, setRoleNames } = coreSlice.actions;
+export const { setBranchNames, setCountryNames, setRoleNames,setStatusNames } = coreSlice.actions;
 
 export default coreSlice.reducer;

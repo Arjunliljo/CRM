@@ -3,7 +3,7 @@ import { classes } from "../serverdata/serverdatas.js";
 
 const statusSchema = mongoose.Schema(
   {
-    status: {
+    name: {
       type: String,
       required: [true, "Status must have a name"],
     },

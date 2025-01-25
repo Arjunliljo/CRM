@@ -10,6 +10,14 @@
   justify-content: space-between;
   align-items: center;
 
+  &.selected {
+    border: 1px solid variables.$color-blue;
+  }
+
+  &:hover {
+    border-color: variables.$color-gray-mid;
+  }
+
   & .branch-item-actions {
     display: flex;
     gap: 1rem;

@@ -11,10 +11,8 @@ const creationSlice = createSlice({
 
     isRoleEdit: false,
     editRole: {},
-
-    countryNames: [],
-    branchNames: [],
-    roleNames: [],
+    isStatusEdit: false,
+    editStatus: {},
   },
 
   reducers: {
@@ -30,9 +28,13 @@ const creationSlice = createSlice({
       state.isRoleEdit = action.payload.isRoleEdit;
       state.editRole = action.payload.editRole;
     },
+    setStatusEdit: (state, action) => {
+      state.isStatusEdit = action.payload.isStatusEdit;
+      state.editStatus = action.payload.editStatus;
+    },
   },
 });
 
-export const { setBranchEdit, setCountryEdit, setRoleEdit } =
+export const { setBranchEdit, setCountryEdit, setRoleEdit, setStatusEdit } =
   creationSlice.actions;
 export default creationSlice.reducer;

@@ -9,6 +9,7 @@ import {
 const router = express.Router();
 
 router.post("/", createCountry);
+router.patch("/:id", updateCountry);
 router.get("/", getAllCountries);
 router.get("/:id", getCountry);
 router.patch("/:id", updateCountry);

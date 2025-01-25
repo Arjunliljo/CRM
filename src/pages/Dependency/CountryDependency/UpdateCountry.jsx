@@ -10,10 +10,11 @@ import { refetchCountries } from "../../../apiHooks/useCountries";
 export default function UpdateCountry() {
   const [isLoading, setIsLoading] = useState(false);
   const { editCountry } = useSelector((state) => state.creation);
+
   const [formData, setFormData] = useState({ name: "", description: "" });
   const dispatch = useDispatch();
 
-  // Sync formData with Redux's editBranch
+  // Sync formData with Redux's editCountry
   useEffect(() => {
     if (editCountry) {
       setFormData({
@@ -32,7 +33,7 @@ export default function UpdateCountry() {
     e.preventDefault();
 
     if (!formData.name) {
-      message.error("Please fill in the branch name");
+      message.error("Please fill in the country name");
       return;
     }
 

@@ -1,7 +1,11 @@
-
-function PrimaryBttn({ style, children, onClick }) {
+function PrimaryBttn({ style, children, onClick, type = "button" }) {
   return (
-    <button style={style} className="btn primary-btn" onClick={onClick}>
+    <button
+      type={type}
+      style={style}
+      className="btn primary-btn"
+      onClick={onClick}
+    >
       {children}
     </button>
   );

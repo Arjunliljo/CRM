@@ -10,6 +10,7 @@ const createCountry = catchAsync(async (req, res, next) => {
   // Sanitize
   name = sanitizeInput(name);
   description = sanitizeInput(description);
+  description = sanitizeInput(description);
 
   const newCountry = await Country.create({ name, description });
   if (!newCountry) return next(new AppError("Failed to create country", 400));

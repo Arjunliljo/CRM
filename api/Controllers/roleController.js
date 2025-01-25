@@ -1,5 +1,6 @@
 import Role from "../Models/roleModel.js";
 import getRoleModel from "../Models/roleModel.js";
+import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import { sanitizeInput } from "../Utilities/validation.js";
 
@@ -12,6 +13,7 @@ const createRole = catchAsync(async (req, res, next) => {
 
   // Create a new role in the correct database
   const newRole = await Role.create({ name, description });
+  if (!newRole) return next(new AppError("Failed to create role", 400));
 
   // Send a success response
   return res.status(201).json({
@@ -21,8 +23,10 @@ const createRole = catchAsync(async (req, res, next) => {
   });
 });
 
-const getAllRoles = catchAsync(async (req, res) => {
+const getAllRoles = catchAsync(async (req, res,next) => {
   const roles = await Role.find({});
+  if (!roles) return next(new AppError("Cannot find role", 404));
+
   return res.status(200).json({
     success: true,
     message: "Roles fetched successfully",
@@ -30,11 +34,11 @@ const getAllRoles = catchAsync(async (req, res) => {
   });
 });
 
-const updateRole = catchAsync(async (req, res) => {
+const updateRole = catchAsync(async (req, res,next) => {
   const role = await Role.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
-
+  if (!role) return next(new AppError("Cannot find role", 404));
   return res.status(200).json({
     success: true,
     message: "Roles fetched successfully",

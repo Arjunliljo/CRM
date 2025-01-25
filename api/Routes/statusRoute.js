@@ -3,6 +3,7 @@ import express from "express";
 import {
   createStatus,
   deleteStatus,
+  deleteSubStatus,
   getAllStatus,
   getStatus,
   updateStatus,
@@ -17,4 +18,5 @@ router.post("/", createStatus);
 router.patch("/:id", updateStatus);
 router.delete("/:id", deleteStatus);
 
+router.delete("/substatus/:val", deleteSubStatus);
 export default router;
