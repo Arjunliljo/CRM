@@ -1,5 +1,5 @@
-import Country from "../Models/countriesModel.js";
-import getCountryModel from "../Models/countriesModel.js";
+import Country from "../Models/countryModel.js";
+import getCountryModel from "../Models/countryModel.js";
 import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import { sanitizeInput } from "../Utilities/validation.js";

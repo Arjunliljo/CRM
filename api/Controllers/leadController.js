@@ -1,5 +1,5 @@
 import getBranchModel from "../Models/branchModel.js";
-import getCountryModel from "../Models/countriesModel.js";
+import getCountryModel from "../Models/countryModel.js";
 import getLeadModel from "../Models/leadsModel.js";
 import getStatusModel from "../Models/statusModel.js";
 import getGroupModel from "../Models/userGroupModel.js";
