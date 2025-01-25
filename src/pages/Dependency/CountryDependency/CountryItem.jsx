@@ -1,12 +1,12 @@
 import { EditOutlined } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { setBranchEdit } from "../../../../global/creationSlice";
+import { setCountryEdit } from "../../../../global/creationSlice";
 
 export default function CountryItem({ item }) {
   const dispatch = useDispatch();
 
   const handleEdit = () => {
-    dispatch(setBranchEdit({ isBranchEdit: true, editBranch: item }));
+    dispatch(setCountryEdit({ isCountryEdit: true, editCountry: item }));
   };
 
   return (

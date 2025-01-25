@@ -9,7 +9,7 @@ export default function RoleBasicHolder() {
     name: "",
     description: "",
   });
-  const { editRole, isRoleEdit } = useSelector((state) => state.creation);
+  const { isRoleEdit } = useSelector((state) => state.creation);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,23 +19,22 @@ export default function RoleBasicHolder() {
     }));
   };
 
-  
   return (
-   <div className="profile-edit-container dependancies-holder">
-         <div className="dependancies-content">
-           {isRoleEdit ? (
-             <UpdateRole />
-           ) : (
-             <Role
-               newRole={newRole}
-               setNewRole={setNewRole}
-               handleChange={handleChange}
-             />
-           )}
-         </div>
-         <div className="dependancies-content">
-           <RoleNames setNewRole={setNewRole} />
-         </div>
-       </div>
+    <div className="profile-edit-container dependancies-holder">
+      <div className="dependancies-content">
+        {isRoleEdit ? (
+          <UpdateRole />
+        ) : (
+          <Role
+            newRole={newRole}
+            setNewRole={setNewRole}
+            handleChange={handleChange}
+          />
+        )}
+      </div>
+      <div className="dependancies-content">
+        <RoleNames setNewRole={setNewRole} />
+      </div>
+    </div>
   );
 }

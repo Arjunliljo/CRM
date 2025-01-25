@@ -6,10 +6,10 @@ import { sanitizeInput } from "../Utilities/validation.js";
 
 const createCountry = catchAsync(async (req, res, next) => {
   let { name, description } = req.body;
-  
+
   // Sanitize
   name = sanitizeInput(name);
-  name = sanitizeInput(description);
+  description = sanitizeInput(description);
 
   const newCountry = await Country.create({ name, description });
   if (!newCountry) return next(new AppError("Failed to create country", 400));
@@ -40,9 +40,21 @@ const getCountry = catchAsync(async (req, res) => {
   });
 });
 
+const updateCountry = catchAsync(async (req, res) => {
+  const country = await Country.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+  return res.status(200).json({
+    success: true,
+    message: "Country updated successfully",
+    data: country,
+  });
+});
+
 const deleteCountry = catchAsync(async (req, res) => {
   const Country = getCountryModel(req.db);
   const country = await Country.findByIdAndDelete(req.params.id);
+
   return res.status(200).json({
     success: true,
     message: "Country deleted successfully",
@@ -50,4 +62,10 @@ const deleteCountry = catchAsync(async (req, res) => {
   });
 });
 
-export { createCountry, getAllCountries, getCountry, deleteCountry };
+export {
+  createCountry,
+  getAllCountries,
+  getCountry,
+  updateCountry,
+  deleteCountry,
+};

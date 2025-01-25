@@ -5,15 +5,15 @@ import CountryNames from "./CountryNames";
 import { useSelector } from "react-redux";
 
 export default function CountryBasicHolder() {
-  const [newBranch, setNewBranch] = useState({
+  const [newCountry, setNewCountry] = useState({
     name: "",
     description: "",
   });
-  const { editBranch, isBranchEdit } = useSelector((state) => state.creation);
+  const { isCountryEdit } = useSelector((state) => state.creation);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewBranch((prev) => ({
+    setNewCountry((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -21,18 +21,18 @@ export default function CountryBasicHolder() {
   return (
     <div className="profile-edit-container dependancies-holder">
       <div className="dependancies-content">
-        {isBranchEdit ? (
+        {isCountryEdit ? (
           <UpdateCountry />
         ) : (
           <Country
-            newBranch={newBranch}
-            setNewBranch={setNewBranch}
+            newCountry={newCountry}
+            setNewCountry={setNewCountry}
             handleChange={handleChange}
           />
         )}
       </div>
       <div className="dependancies-content">
-        <CountryNames setNewBranch={setNewBranch} />
+        <CountryNames setNewCountry={setNewCountry} />
       </div>
     </div>
   );

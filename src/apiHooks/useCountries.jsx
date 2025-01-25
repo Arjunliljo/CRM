@@ -14,6 +14,7 @@ export const useCountries = () => {
   });
 
   const countries = data?.data?.data;
+  console.log(countries, "countries");
 
   useEffect(() => {
     if (!countries) return;

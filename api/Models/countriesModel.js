@@ -6,6 +6,7 @@ const countrySchema = mongoose.Schema(
       type: String,
       required: [true, "Country must have a name"],
       unique: true,
+      sparse: true,
     },
     description: {
       type: String,
@@ -15,4 +16,5 @@ const countrySchema = mongoose.Schema(
 );
 
 const Country = mongoose.model("Country", countrySchema);
+
 export default Country;

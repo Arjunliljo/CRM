@@ -5,8 +5,10 @@ const creationSlice = createSlice({
   initialState: {
     isBranchEdit: false,
     editBranch: {},
+
     isCountryEdit: false,
     editCountry: {},
+
     isRoleEdit: false,
     editRole: {},
 
@@ -31,5 +33,6 @@ const creationSlice = createSlice({
   },
 });
 
-export const { setBranchEdit, setCountryEdit, setRoleEdit } = creationSlice.actions;
+export const { setBranchEdit, setCountryEdit, setRoleEdit } =
+  creationSlice.actions;
 export default creationSlice.reducer;

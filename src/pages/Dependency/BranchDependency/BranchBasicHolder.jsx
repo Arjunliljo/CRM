@@ -10,7 +10,7 @@ export default function BranchBasicHolder() {
     description: "",
   });
 
-  const { editBranch, isBranchEdit } = useSelector((state) => state.creation);
+  const { isBranchEdit } = useSelector((state) => state.creation);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -3,25 +3,25 @@ import { message } from "antd";
 import CancelBtn from "../../../components/buttons/CancelBtn";
 import NextBtn from "../../../components/buttons/NextBtn";
 import apiClient from "../../../../config/axiosInstance";
-import { refetchBranches } from "../../../apiHooks/useBranches";
 import { useDispatch, useSelector } from "react-redux";
-import { setBranchEdit } from "../../../../global/creationSlice";
+import { setCountryEdit } from "../../../../global/creationSlice";
+import { refetchCountries } from "../../../apiHooks/useCountries";
 
 export default function UpdateCountry() {
   const [isLoading, setIsLoading] = useState(false);
-  const { editBranch } = useSelector((state) => state.creation);
+  const { editCountry } = useSelector((state) => state.creation);
   const [formData, setFormData] = useState({ name: "", description: "" });
   const dispatch = useDispatch();
 
   // Sync formData with Redux's editBranch
   useEffect(() => {
-    if (editBranch) {
+    if (editCountry) {
       setFormData({
-        name: editBranch.name || "",
-        description: editBranch.description || "",
+        name: editCountry.name || "",
+        description: editCountry.description || "",
       });
     }
-  }, [editBranch]);
+  }, [editCountry]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,18 +38,18 @@ export default function UpdateCountry() {
 
     try {
       setIsLoading(true);
-      await apiClient.patch(`/branch/${editBranch._id}`, formData);
-      refetchBranches();
-      message.success("Branch updated successfully!");
+      await apiClient.patch(`/country/${editCountry._id}`, formData);
+      refetchCountries();
+      message.success("Country updated successfully!");
     } catch (e) {
-      message.error("Error updating branch. Please try again.");
+      message.error("Error updating country. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleCancel = () => {
-    dispatch(setBranchEdit({ isBranchEdit: false, editBranch: {} }));
+    dispatch(setCountryEdit({ isCountryEdit: false, editCountry: {} }));
   };
 
   return (
