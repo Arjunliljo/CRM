@@ -31,7 +31,7 @@ const statusSchema = mongoose.Schema(
       minlength: [3, "Description should be greater than 3 characters"],
     },
   },
-  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
+  { timestamps: true, toJSON: { virtuals: true } }
 );
 
 // Return the Status model using the provided database connection

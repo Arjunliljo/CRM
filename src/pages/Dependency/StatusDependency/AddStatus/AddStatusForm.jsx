@@ -16,7 +16,7 @@ export default function AddStatusForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!newStatus.status) {
+    if (!newStatus.name) {
       message.error("Please fill in the status name");
       return;
     }
@@ -40,13 +40,15 @@ export default function AddStatusForm({
 
       // Reset form after successful submission
       setNewStatus({
-        status: "",
+        name: "",
         isTab: null,
         selectedClass: "",
         description: "",
         subStatuses: [],
       });
+
       refetchStatuses();
+
       message.success("Status created successfully!");
     } catch (e) {
       message.error("Error creating status. Please try again.");
@@ -74,7 +76,7 @@ export default function AddStatusForm({
           <CancelBtn
             onClick={() =>
               setNewStatus({
-                status: "",
+                name: "",
                 isTab: null,
                 selectedClass: "",
                 description: "",

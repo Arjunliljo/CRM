@@ -14,6 +14,7 @@ export default function StatusRow1({ newStatus, setNewStatus, handleChange }) {
       selectedClass: cls,
     }));
   };
+
   return (
     <div className="dependancies-status-box">
       <div className="status-form-group">
@@ -21,7 +22,7 @@ export default function StatusRow1({ newStatus, setNewStatus, handleChange }) {
           type="text"
           placeholder="Status name"
           className="input-formGroup"
-          value={newStatus.status}
+          value={newStatus.name}
           name="status"
           onChange={handleChange}
         />
