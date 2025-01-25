@@ -1,4 +1,5 @@
 import Status from "../Models/statusModel.js";
+
 import getStatusModel from "../Models/statusModel.js";
 import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
@@ -8,17 +9,12 @@ const createStatus = catchAsync(async (req, res, next) => {
   let { status, isTab, subStatuses, selectedClass, description } = req.body;
 
   // Validate and sanitize input
-  status = sanitizeInput(status);
-  selectedClass = sanitizeInput(selectedClass);
-  description = sanitizeInput(description);
+  const sanitizedStatus = sanitizeInput(status);
 
-  const newStatus = await Status.create({
-    status: status,
-    isTab,
-    class: selectedClass,
-    subStatus: subStatuses,
-    description,
-  });
+  // Dynamically get the Status model for the current database connection
+  // const Status = getStatusModel(req.db);
+
+  const newStatus = await Status.create(req.body);
   if (!newStatus) return next(new AppError("Failed to create status", 400));
 
   res.status(201).json({

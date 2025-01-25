@@ -38,6 +38,9 @@ export default function ProfileInfo() {
         <div className="form-group">
           <input className="select-formGroup" placeholder="Login ID" />
         </div>
+        <div className="form-group">
+          <input className="select-formGroup" placeholder="Password" />
+        </div>
 
         <div className="auto-assign">
           <span className="span-assign">Auto Assign</span>

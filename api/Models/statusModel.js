@@ -3,7 +3,7 @@ import { classes } from "../serverdata/serverdatas.js";
 
 const statusSchema = mongoose.Schema(
   {
-    status: {
+    name: {
       type: String,
       required: [true, "Status must have a name"],
     },
@@ -31,10 +31,10 @@ const statusSchema = mongoose.Schema(
       minlength: [3, "Description should be greater than 3 characters"],
     },
   },
-  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
+  { timestamps: true, toJSON: { virtuals: true } }
 );
 
+// Return the Status model using the provided database connection
 const Status = mongoose.model("Status", statusSchema);
 
 export default Status;
-

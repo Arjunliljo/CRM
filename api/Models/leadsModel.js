@@ -12,16 +12,12 @@ const leadSchema = mongoose.Schema(
       enum: ["META", "MANUAL", "OTHER"],
       default: "MANUAL",
     },
-    metaData: {
-      type: Map,
-      of: String,
-      default: new Map(), // Stores additional meta fields from Facebook
-    },
-    leadStatus: {
-      type: String,
-      enum: ["NEW", "CONTACTED", "QUALIFIED", "CONVERTED", "LOST"],
-      default: "NEW",
-    },
+
+    // leadStatus: {
+    //   type: String,
+    //   enum: ["NEW", "CONTACTED", "QUALIFIED", "CONVERTED", "LOST"],
+    //   default: "NEW",
+    // },
     name: {
       type: String,
       required: [true, "Lead must have a name"],
@@ -70,7 +66,7 @@ const leadSchema = mongoose.Schema(
     },
     remark: {
       type: String,
-      maxlength: [100, "Remark should be less than 100 characters"],
+      // maxlength: [100, "Remark should be less than 100 characters"],
       minlength: [3, "Remark should be greater than 3 characters"],
     },
     helpers: {
@@ -92,9 +88,6 @@ const leadSchema = mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-// Dynamically get the Lead model for the specified database connection
-const getLeadModel = (dbConnection) => {
-  return dbConnection.model("Lead", leadSchema);
-};
+const Lead = mongoose.model("Lead", leadSchema);
 
-export default getLeadModel;
+export default Lead;

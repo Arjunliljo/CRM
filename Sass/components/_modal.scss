@@ -1,19 +1,19 @@
 @use "../abstract/variables";
 
 .modal {
-    .ant-modal-content {
-      padding: 2.5rem;
-      border-radius: 12px;
+  .ant-modal-content {
+    padding: 2.5rem;
+    border-radius: 12px;
 
-      .ant-modal-header {
-        margin-bottom: 24px;
+    .ant-modal-header {
+      margin-bottom: 24px;
 
-        .ant-modal-title {
-          font-size: 24px;
-          font-weight: 600;
-        }
+      .ant-modal-title {
+        font-size: 24px;
+        font-weight: 600;
       }
     }
+  }
 
   &__form {
     display: flex;
@@ -25,11 +25,11 @@
       gap: 16px;
     }
 
-    &-input {
+    &-input-text {
       flex: 1;
       width: 100%;
 
-      .ant-input {
+      & input {
         width: 100%;
         height: 40px;
         border-radius: 8px;
@@ -37,6 +37,7 @@
 
         &::placeholder {
           color: variables.$color-black;
+          padding: 10px;
         }
 
         &:focus {
@@ -45,7 +46,7 @@
         }
       }
 
-      &-select {
+      & select {
         width: 100%;
         height: 40px;
         border-radius: 8px;

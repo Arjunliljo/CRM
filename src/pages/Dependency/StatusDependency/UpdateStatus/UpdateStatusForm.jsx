@@ -13,7 +13,7 @@ export default function UpdateStatusForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { editStatus } = useSelector((state) => state.creation);
   const [formData, setFormData] = useState({
-    status: "",
+    name: "",
     isTab: null,
     class: "",
     description: "",
@@ -26,7 +26,7 @@ export default function UpdateStatusForm() {
   useEffect(() => {
     if (editStatus) {
       setFormData({
-        status: editStatus.status || "",
+        name: editStatus.name || "",
         isTab: editStatus.isTab ?? null,
         class: editStatus.class || "",
         description: editStatus.description || "",
@@ -43,7 +43,7 @@ export default function UpdateStatusForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.status) {
+    if (!formData.name) {
       message.error("Please fill in the status name");
       return;
     }

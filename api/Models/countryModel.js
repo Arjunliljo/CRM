@@ -6,6 +6,7 @@ const countrySchema = mongoose.Schema(
       type: String,
       required: [true, "Country must have a name"],
       unique: true,
+      sparse: true,
     },
     description: {
       type: String,

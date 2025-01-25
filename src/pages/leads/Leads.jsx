@@ -12,8 +12,8 @@ import StartApplication from "../../components/Card/ProfileCard/StartApplication
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
 import { useState } from "react";
 import { Button } from "antd";
-import ModalBase from "../../components/Modals/ModalBase";
-import AddLead from "../../components/Modals/ModalComponents/AddLead";
+import ModalBase from "../../components/Forms/ModalBase";
+import AddLead from "../../components/Forms/Leads/AddLead";
 
 const lead = {
   num: 3,
@@ -41,8 +41,24 @@ export default function Leads() {
   const closeModal = () => setIsModalOpen(false);
 
   const handleModal = () => {
-    setIsModalOpen(val => !val)
-  }
+    setIsModalOpen((val) => !val);
+  };
+
+  const [newLead, setNewLead] = useState({
+    name: "",
+    DOM: "",
+    Contact: "",
+    Whatsupp: "",
+    Mail: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewLead((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const ISearchBar = <SearchBar />;
   const IAutoBtn = <AutoBtn />;
@@ -60,9 +76,7 @@ export default function Leads() {
   const ISelector = <Selector />;
 
   const IPrimaryBttn = (
-    <PrimaryBttn onClick={handleModal}>
-      Add Leads
-    </PrimaryBttn>
+    <PrimaryBttn onClick={handleModal}>Add Leads</PrimaryBttn>
   );
 
   const IAllLeads = <AllLeads />;
@@ -110,7 +124,12 @@ export default function Leads() {
 
       {/* Modal for adding a leads */}
       <ModalBase title="Add Lead" isOpen={isModalOpen} closeModal={closeModal}>
-        <AddLead closeModal={closeModal} />
+        <AddLead
+          closeModal={closeModal}
+          newLead={newLead}
+          setNewLead={setNewLead}
+          handleChange={handleChange}
+        />
       </ModalBase>
     </>
   );

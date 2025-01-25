@@ -6,7 +6,7 @@ import UpdateStatusForm from "./UpdateStatus/UpdateStatusForm";
 
 export default function StatusBasicHolder() {
   const [newStatus, setNewStatus] = useState({
-    status: "",
+    name: "",
     isTab: null,
     selectedClass: "",
     description: "",

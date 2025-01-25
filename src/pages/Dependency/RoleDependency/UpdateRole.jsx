@@ -49,7 +49,7 @@ export default function UpdateRole() {
   };
 
   const handleCancel = () => {
-    dispatch(setRoleEdit({ isBranchEdit: false, editRole: {} }));
+    dispatch(setRoleEdit({ isRoleEdit: false, editRole: {} }));
   };
 
   return (

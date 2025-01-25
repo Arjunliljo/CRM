@@ -3,14 +3,14 @@ import { message } from "antd";
 import CancelBtn from "../../../components/buttons/CancelBtn";
 import NextBtn from "../../../components/buttons/NextBtn";
 import apiClient from "../../../../config/axiosInstance";
-import { refetchBranches } from "../../../apiHooks/useBranches";
 import { useDispatch, useSelector } from "react-redux";
-import { setBranchEdit, setCountryEdit } from "../../../../global/creationSlice";
+import { setCountryEdit } from "../../../../global/creationSlice";
 import { refetchCountries } from "../../../apiHooks/useCountries";
 
 export default function UpdateCountry() {
   const [isLoading, setIsLoading] = useState(false);
   const { editCountry } = useSelector((state) => state.creation);
+
   const [formData, setFormData] = useState({ name: "", description: "" });
   const dispatch = useDispatch();
 
@@ -43,7 +43,7 @@ export default function UpdateCountry() {
       refetchCountries();
       message.success("Country updated successfully!");
     } catch (e) {
-      message.error("Error updating Country. Please try again.");
+      message.error("Error updating country. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -60,7 +60,7 @@ export default function UpdateCountry() {
       </div>
 
       <form onSubmit={handleSubmit} className="dependancies-item-box">
-      <div className="form-group">
+        <div className="form-group">
           <input
             type="text"
             name="name"
@@ -76,6 +76,7 @@ export default function UpdateCountry() {
             name="description"
             value={formData.description}
             onChange={handleChange}
+            placeholder="Country Description"
             className="input-formGroup"
             required
           />

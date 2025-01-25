@@ -1,6 +1,8 @@
 import getBranchModel from "../Models/branchModel.js";
-import getCountryModel from "../Models/countryModel.js";
+import getCountryModel from "../Models/countriesModel.js";
+import Lead from "../Models/leadsModel.js";
 import getLeadModel from "../Models/leadsModel.js";
+import Status from "../Models/statusModel.js";
 import getStatusModel from "../Models/statusModel.js";
 import getGroupModel from "../Models/userGroupModel.js";
 import getUserModel from "../Models/userModel.js";
@@ -27,34 +29,8 @@ const createLead = catchAsync(async (req, res) => {
   }
 
   remark = remark ? sanitizeInput(remark) : remark;
-
-  // Validate inputs
-  if (!isValidString(name, { min: 2, max: 50 })) {
-    return res.status(400).json({
-      success: false,
-      message:
-        "Invalid name: must be at least 2 characters long and not contain malicious content.",
-    });
-  }
-
-  if (!isValidString(campaign, { min: 2, max: 50 })) {
-    return res.status(400).json({
-      success: false,
-      message:
-        "Invalid campaign: must be at least 2 characters long and not contain malicious content.",
-    });
-  }
-
-  if (remark && !isValidString(remark, { min: 3, max: 100 })) {
-    return res.status(400).json({
-      success: false,
-      message:
-        "Invalid remark: must be between 3 and 100 characters long, if provided.",
-    });
-  }
-
-  const Lead = getLeadModel(req.db);
-  const Status = getStatusModel(req.db);
+  // const Lead = getLeadModel(req.db);
+  // const Status = getStatusModel(req.db);
 
   // Check if a lead with the same email already exists
   const existingLead = await Lead.findOne({ email });

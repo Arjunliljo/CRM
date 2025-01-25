@@ -5,17 +5,14 @@ const creationSlice = createSlice({
   initialState: {
     isBranchEdit: false,
     editBranch: {},
+
     isCountryEdit: false,
     editCountry: {},
+
     isRoleEdit: false,
     editRole: {},
     isStatusEdit: false,
     editStatus: {},
-
-    countryNames: [],
-    branchNames: [],
-    roleNames: [],
-    statusNames: [],
   },
 
   reducers: {

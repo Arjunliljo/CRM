@@ -10,6 +10,7 @@ const createCountry = catchAsync(async (req, res, next) => {
   // Sanitize
   name = sanitizeInput(name);
   description = sanitizeInput(description);
+  description = sanitizeInput(description);
 
   const newCountry = await Country.create({ name, description });
   if (!newCountry) return next(new AppError("Failed to create country", 400));
@@ -18,18 +19,6 @@ const createCountry = catchAsync(async (req, res, next) => {
     success: true,
     message: "New country created successfully",
     data: newCountry,
-  });
-});
-
-const updateCountry = catchAsync(async (req, res, next) => {
-  const country = await Country.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-  if (!country) return next(new AppError("Cannot find country", 404));
-  return res.status(200).json({
-    success: true,
-    message: "Country updated successfully",
-    data: country,
   });
 });
 
@@ -52,9 +41,21 @@ const getCountry = catchAsync(async (req, res) => {
   });
 });
 
+const updateCountry = catchAsync(async (req, res) => {
+  const country = await Country.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+  return res.status(200).json({
+    success: true,
+    message: "Country updated successfully",
+    data: country,
+  });
+});
+
 const deleteCountry = catchAsync(async (req, res) => {
   const Country = getCountryModel(req.db);
   const country = await Country.findByIdAndDelete(req.params.id);
+
   return res.status(200).json({
     success: true,
     message: "Country deleted successfully",
@@ -66,6 +67,6 @@ export {
   createCountry,
   getAllCountries,
   getCountry,
-  deleteCountry,
   updateCountry,
+  deleteCountry,
 };
