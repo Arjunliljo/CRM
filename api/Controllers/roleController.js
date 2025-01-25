@@ -1,5 +1,4 @@
 import Role from "../Models/roleModel.js";
-import getRoleModel from "../Models/roleModel.js";
 import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import { sanitizeInput } from "../Utilities/validation.js";
@@ -23,7 +22,7 @@ const createRole = catchAsync(async (req, res, next) => {
   });
 });
 
-const getAllRoles = catchAsync(async (req, res,next) => {
+const getAllRoles = catchAsync(async (req, res, next) => {
   const roles = await Role.find({});
   if (!roles) return next(new AppError("Cannot find role", 404));
 
@@ -34,7 +33,7 @@ const getAllRoles = catchAsync(async (req, res,next) => {
   });
 });
 
-const updateRole = catchAsync(async (req, res,next) => {
+const updateRole = catchAsync(async (req, res, next) => {
   const role = await Role.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });

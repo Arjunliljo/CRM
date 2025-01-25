@@ -10,10 +10,10 @@ import { refetchRoles } from "../../../apiHooks/useRoles";
 export default function UpdateRole() {
   const [isLoading, setIsLoading] = useState(false);
   const { editRole } = useSelector((state) => state.creation);
+
   const [formData, setFormData] = useState({ name: "", description: "" });
   const dispatch = useDispatch();
 
-  // Sync formData with Redux's editRole
   useEffect(() => {
     if (editRole) {
       setFormData({
@@ -33,6 +33,7 @@ export default function UpdateRole() {
 
     if (!formData.name) {
       message.error("Please fill in the role name");
+      message.error("Please fill in the role name");
       return;
     }
 
@@ -41,7 +42,11 @@ export default function UpdateRole() {
       await apiClient.patch(`/role/${editRole._id}`, formData);
       refetchRoles();
       message.success("Role updated successfully!");
+      await apiClient.patch(`/role/${editRole._id}`, formData);
+      refetchRoles();
+      message.success("Role updated successfully!");
     } catch (e) {
+      message.error("Error updating role. Please try again.");
       message.error("Error updating role. Please try again.");
     } finally {
       setIsLoading(false);
@@ -66,7 +71,7 @@ export default function UpdateRole() {
             value={formData.name}
             onChange={handleChange}
             placeholder="Role Name"
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>
@@ -76,7 +81,7 @@ export default function UpdateRole() {
             value={formData.description}
             onChange={handleChange}
             placeholder="Role Description"
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>

@@ -1,0 +1,50 @@
+@use "../abstract/variables" as variables;
+@use "../abstract/mixins" as mixins;
+
+.forms-status-item {
+  background-color: variables.$color-white;
+  width: 100%;
+  height: 3.5rem;
+  border-radius: variables.$radius-sm;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 0 1rem;
+  cursor: pointer;
+}
+.forms-select {
+  width: 100%;
+  height: 3rem;
+  padding: 0 1rem;
+  border-radius: variables.$radius-md;
+  border: none;
+  outline: none;
+  color: variables.$color-text-gray;
+}
+.forms-textarea {
+  width: 100%;
+  height: 3rem;
+  padding: 0 1rem;
+  border-radius: variables.$radius-md;
+  border: none;
+  outline: none;
+  color: variables.$color-text-gray;
+}
+.forms-input {
+  width: 100%;
+  height: 3rem;
+  padding: 0 1rem;
+  border-radius: variables.$radius-md;
+  border: none;
+  outline: none;
+  color: variables.$color-text-gray;
+}
+
+.forms-scroll-textarea {
+  height: 8rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem !important;
+  resize: none;
+  width: 100% !important;
+  @include mixins.removeScrollbar;
+}

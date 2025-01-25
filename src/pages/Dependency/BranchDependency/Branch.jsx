@@ -48,7 +48,7 @@ export default function Branch({ newBranch, setNewBranch, handleChange }) {
             value={newBranch.name}
             onChange={handleChange}
             placeholder="Branch Name"
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>
@@ -57,7 +57,7 @@ export default function Branch({ newBranch, setNewBranch, handleChange }) {
             name="description"
             value={newBranch.description}
             onChange={handleChange}
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>

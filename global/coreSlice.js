@@ -25,6 +25,7 @@ const coreSlice = createSlice({
   },
 });
 
-export const { setBranchNames, setCountryNames, setRoleNames,setStatusNames } = coreSlice.actions;
+export const { setBranchNames, setCountryNames, setRoleNames, setStatusNames } =
+  coreSlice.actions;
 
 export default coreSlice.reducer;

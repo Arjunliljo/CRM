@@ -16,11 +16,7 @@ export default function WorkItemTop({ item }) {
           <span className="work-item-content-sm-bold">{item.id}</span>
         </div>
       </div>
-      <HomeIcon
-        path="message"
-        color="#9a9e9a"
-        style={{ transform: "rotate(270deg)" }}
-      />
+      <HomeIcon path="message" color="#9a9e9a" />
     </div>
   );
 }

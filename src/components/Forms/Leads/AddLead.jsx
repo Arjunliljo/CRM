@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CancelBtn from "../../buttons/CancelBtn";
 import PrimaryBttn from "../../buttons/PrimaryBttn";
-import { Input } from "antd";
+import { Input, message } from "antd";
 import NextBtn from "../../buttons/NextBtn";
 import CountrySelector from "./CountrySelector";
 import UniversitySelector from "./UniversitySelector";
@@ -23,8 +23,8 @@ export default function AddLead({
     try {
       setIsLoading(true);
       const res = await apiClient.post("/lead", newLead);
-      setNewLead({ name: "", DOM: "", Contact: "", Whatsupp: "", Mail: "" });
-      refetchBranches();
+      setNewLead({ name: "", dob: "", Contact: "", Whatsupp: "", Mail: "" });
+      refetchLeads();
       message.success("Branch created successfully!");
     } catch (e) {
       setIsLoading(false);
@@ -49,10 +49,10 @@ export default function AddLead({
           </div>
           <div className="modal__form-input-text">
             <input
-              type="text"
-              name="DOM"
+              type="date"
+              name="dob"
               onChange={handleChange}
-              placeholder="DOM"
+              placeholder="dob"
               className="input-formGroup"
               required
             />
@@ -107,7 +107,9 @@ export default function AddLead({
 
         <div className="modal__form-buttons">
           <CancelBtn onClick={closeModal}>Cancel</CancelBtn>
-          <NextBtn>Add</NextBtn>
+          <NextBtn onClick={handleSubmit} isLoading={isLoading}>
+            Add
+          </NextBtn>
         </div>
       </form>
     </>

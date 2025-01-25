@@ -49,6 +49,19 @@ export default function University() {
   const handleModal = () => {
     setIsModalOpen((val) => !val);
   };
+
+  const [newUniversity, setNewUniversity] = useState({
+    name: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewUniversity((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
   const IContents = arr?.map((university, index) => (
@@ -102,7 +115,12 @@ export default function University() {
         isOpen={isModalOpen}
         closeModal={closeModal}
       >
-        <AddUniversity closeModal={closeModal} />
+        <AddUniversity
+          closeModal={closeModal}
+          newUniversity={newUniversity}
+          setNewUniversity={setNewUniversity}
+          handleChange={handleChange}
+        />
       </ModalBase>
     </>
   );

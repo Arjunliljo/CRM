@@ -9,7 +9,7 @@ export default function Tabs() {
       <div className="content-section-item-box">
         {arr.map((item, index) => (
           <div className="form-group" key={index}>
-            <div className="status-item">Tabs</div>
+            <div className="forms-status-item">Tabs</div>
           </div>
         ))}
       </div>

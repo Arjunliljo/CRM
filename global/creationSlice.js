@@ -8,6 +8,8 @@ const creationSlice = createSlice({
 
     isCountryEdit: false,
     editCountry: {},
+    isRoleEdit: false,
+    editRole: {},
 
     isRoleEdit: false,
     editRole: {},

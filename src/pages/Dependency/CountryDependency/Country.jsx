@@ -37,7 +37,7 @@ export default function Country({ newCountry, setNewCountry, handleChange }) {
             value={newCountry.name}
             onChange={handleChange}
             placeholder="Country Name"
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>
@@ -46,7 +46,7 @@ export default function Country({ newCountry, setNewCountry, handleChange }) {
             name="description"
             value={newCountry.description}
             onChange={handleChange}
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>

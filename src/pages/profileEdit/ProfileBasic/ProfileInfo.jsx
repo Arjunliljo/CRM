@@ -13,7 +13,7 @@ export default function ProfileInfo() {
       </div>
       <div className="content-section-item-box">
         <div className="form-group">
-          <select className="select-formGroup">
+          <select className="forms-select">
             <option value="" disabled selected>
               Role
             </option>
@@ -21,7 +21,7 @@ export default function ProfileInfo() {
         </div>
 
         <div className="form-group">
-          <select className="select-formGroup">
+          <select className="forms-select">
             <option value="" disabled selected>
               Branch
             </option>
@@ -29,14 +29,14 @@ export default function ProfileInfo() {
         </div>
 
         <div className="form-group">
-          <select className="select-formGroup">
+          <select className="forms-select">
             <option value="" disabled selected>
               Country
             </option>
           </select>
         </div>
         <div className="form-group">
-          <input className="select-formGroup" placeholder="Login ID" />
+          <input className="forms-select" placeholder="Login ID" />
         </div>
         <div className="form-group">
           <input className="select-formGroup" placeholder="Password" />

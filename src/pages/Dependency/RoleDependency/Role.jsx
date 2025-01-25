@@ -41,7 +41,7 @@ export default function Role({newRole, setNewRole, handleChange}) {
             value={newRole.name}
             onChange={handleChange}
             placeholder="Role Name"
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>
@@ -50,7 +50,7 @@ export default function Role({newRole, setNewRole, handleChange}) {
             name="description"
             value={newRole.description}
             onChange={handleChange}
-            className="input-formGroup"
+            className="forms-input"
             required
           />
         </div>

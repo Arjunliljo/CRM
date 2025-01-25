@@ -63,9 +63,7 @@ export default function StatusNames({ setNewStatus }) {
         </div>
 
         <div className="dependancies-branch-names-left">
-          <div
-            className="content-section-head"
-          >
+          <div className="content-section-head">
             <h2>Sub Status</h2>
           </div>
           {selectedStatus ? (
