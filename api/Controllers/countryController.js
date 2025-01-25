@@ -1,5 +1,4 @@
-import Country from "../Models/countriesModel.js";
-import getCountryModel from "../Models/countriesModel.js";
+import Country from "../Models/countryModel.js";
 import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import { sanitizeInput } from "../Utilities/validation.js";
@@ -53,7 +52,6 @@ const updateCountry = catchAsync(async (req, res) => {
 });
 
 const deleteCountry = catchAsync(async (req, res) => {
-  const Country = getCountryModel(req.db);
   const country = await Country.findByIdAndDelete(req.params.id);
 
   return res.status(200).json({

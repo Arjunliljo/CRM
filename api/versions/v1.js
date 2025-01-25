@@ -5,6 +5,8 @@ import countryRoute from "../Routes/countryRoute.js";
 import leadRoute from "../Routes/leadRoute.js";
 import statusRoute from "../Routes/statusRoute.js";
 import userRoute from "../Routes/userRoute.js";
+import courseRoute from "../Routes/courseRoute.js";
+import universityRoute from "../Routes/universityRoute.js";
 import metaLeadRoute from "../Routes/metaLeadRoute.js";
 
 const router = express.Router();
@@ -39,5 +41,8 @@ router.use("/country", countryRoute);
 router.use("/lead", leadRoute);
 router.use("/role", roleRoute);
 router.use("/status", statusRoute);
+router.use("/course", courseRoute);
+router.use("/university", universityRoute);
+
 
 export default router;
