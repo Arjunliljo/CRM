@@ -2,6 +2,7 @@ import { createContext, useContext } from "react";
 import { useBranches } from "../../apiHooks/useBranches";
 import { useCountries } from "../../apiHooks/useCountries";
 import { useLeads } from "../../apiHooks/useLeads";
+import { useUniversity } from "../../apiHooks/useUniversity";
 
 const ApiContext = createContext();
 
@@ -9,12 +10,13 @@ function ApiProvider({ children }) {
   const branchConfigs = useBranches();
   const countryConfigs = useCountries();
   const leadsConfigs = useLeads();
+  const universityConfigs = useUniversity();
 
   console.log(leadsConfigs, "///////");
 
   return (
     <ApiContext.Provider
-      value={{ branchConfigs, countryConfigs, leadsConfigs }}
+      value={{ branchConfigs, countryConfigs, leadsConfigs, universityConfigs }}
     >
       {children}
     </ApiContext.Provider>
