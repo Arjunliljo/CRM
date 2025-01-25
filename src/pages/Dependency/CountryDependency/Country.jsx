@@ -5,7 +5,7 @@ import apiClient from "../../../../config/axiosInstance";
 import { refetchCountries } from "../../../apiHooks/useCountries";
 import { message } from "antd";
 
-export default function Country(newCountry, setNewCountry, handleChange) {
+export default function Country({newCountry, setNewCountry, handleChange}) {
   const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();

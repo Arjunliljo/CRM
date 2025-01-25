@@ -1,12 +1,12 @@
-import { EditOutlined } from "@mui/icons-material";
+import { Delete, EditOutlined } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { setBranchEdit } from "../../../../global/creationSlice";
 
-export default function RoleItem({ item }) {
+export default function StatusItem({ item }) {
   const dispatch = useDispatch();
 
   const handleEdit = () => {
-    dispatch(setBranchEdit({ isRoleEdit: true, editRole: item }));
+    dispatch(setBranchEdit({ isBranchEdit: true, editBranch: item }));
   };
 
   return (
@@ -16,6 +16,9 @@ export default function RoleItem({ item }) {
         <EditOutlined
           sx={{ color: "darkblue", fontSize: "1.2rem" }}
           onClick={handleEdit}
+        />
+         <Delete
+          sx={{ color: "darkblue", fontSize: "1.2rem" }}
         />
       </div>
     </div>

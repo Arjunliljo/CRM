@@ -1,7 +1,8 @@
 import { useState } from "react";
-import CountryBtn from "../../../components/buttons/CountryBtn";
+import CancelBtn from "../../../../components/buttons/CancelBtn";
+import NextBtn from "../../../../components/buttons/NextBtn";
 
-export default function StatusRow() {
+export default function StatusRow1() {
   const [isTab, setIsTab] = useState(null); // Yes/No selection
   const [selectedClass, setSelectedClass] = useState(""); // Class selection
 
@@ -9,21 +10,21 @@ export default function StatusRow() {
   const handleClassSelection = (cls) => setSelectedClass(cls);
 
   return (
-    <div className="content-section">
-      <div className="content-section-head">
-        <h2>Add New Status</h2>
+    <div className="content-section dependancies">
+      <div className="content-section-head" style={{ height: "fit-content" }}>
+        <h2>Add new Status</h2>
       </div>
 
-      <div className="content-section-item-box">
-        <div className="form-group">
+      <form className="dependancies-status-box">
+        <div className="status-form-group">
           <input
             type="text"
             placeholder="Status name"
-            className="forms-input"
+            className="input-formGroup"
           />
         </div>
 
-        <div className="form-group">
+        <div className="status-form-group">
           <p>Is Tab?</p>
           <div className="tab-buttons">
             <button
@@ -41,7 +42,7 @@ export default function StatusRow() {
           </div>
         </div>
 
-        <div className="form-group">
+        <div className="status-form-group">
           <p>Select 1 class</p>
           <div className="class-select">
             {["Early", "Moderate", "Middle", "Finish"].map((cls) => (
@@ -55,14 +56,14 @@ export default function StatusRow() {
             ))}
           </div>
         </div>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Description"
-            className="forms-input"
-          />
+        <div className="status-form-group">
+          <textarea placeholder="Description"></textarea>
         </div>
-      </div>
+        <div className="modal__form-buttons" style={{ marginTop: "2rem" }}>
+          <CancelBtn>Cancel</CancelBtn>
+          <NextBtn style={{ backgroundColor: "#0075fc" }}>Save</NextBtn>
+        </div>
+      </form>
     </div>
   );
 }

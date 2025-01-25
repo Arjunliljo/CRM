@@ -10,6 +10,11 @@ export default function CountryBasicHolder() {
     description: "",
   });
   const { editBranch, isBranchEdit } = useSelector((state) => state.creation);
+  const [newCountry, setNewCountry] = useState({
+    name: "",
+    description: "",
+  });
+  const { editRole, isCountryEdit } = useSelector((state) => state.creation);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,6 +38,20 @@ export default function CountryBasicHolder() {
       </div>
       <div className="dependancies-content">
         <CountryNames setNewBranch={setNewBranch} />
+      </div>
+      <div className="dependancies-content">
+        {isCountryEdit ? (
+          <UpdateCountry />
+        ) : (
+          <Country
+            newCountry={newCountry}
+            setNewCountry={setNewCountry}
+            handleChange={handleChange}
+          />
+        )}
+      </div>
+      <div className="dependancies-content">
+        <CountryNames setNewCountry={setNewCountry} />
       </div>
     </div>
   );

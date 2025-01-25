@@ -12,12 +12,6 @@ const leadSchema = mongoose.Schema(
       enum: ["META", "MANUAL", "OTHER"],
       default: "MANUAL",
     },
-
-    // leadStatus: {
-    //   type: String,
-    //   enum: ["NEW", "CONTACTED", "QUALIFIED", "CONVERTED", "LOST"],
-    //   default: "NEW",
-    // },
     name: {
       type: String,
       required: [true, "Lead must have a name"],
