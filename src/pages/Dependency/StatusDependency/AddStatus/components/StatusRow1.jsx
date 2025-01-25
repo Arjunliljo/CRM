@@ -1,10 +1,10 @@
 import { classes } from "../../../../../../api/serverdata/serverdatas";
 
-export default function StatusRow1({ newStatus, setNewStatus, handleChange }) {
+export default function StatusRow1({ newStatus, setNewStatus }) {
   const handleTabSelection = (value) => {
     setNewStatus((prev) => ({
       ...prev,
-      isTab: value, // Pass boolean directly
+      isTab: value,
     }));
   };
 
@@ -12,6 +12,21 @@ export default function StatusRow1({ newStatus, setNewStatus, handleChange }) {
     setNewStatus((prev) => ({
       ...prev,
       selectedClass: cls,
+    }));
+  };
+
+  const handleStatusChange = (e) => {
+    const { value } = e.target;
+    setNewStatus((prev) => ({
+      ...prev,
+      name: value,
+    }));
+  };
+  const handleDescriptionChange = (e) => {
+    const { value } = e.target;
+    setNewStatus((prev) => ({
+      ...prev,
+      description: value,
     }));
   };
 
@@ -24,7 +39,7 @@ export default function StatusRow1({ newStatus, setNewStatus, handleChange }) {
           className="input-formGroup"
           value={newStatus.name}
           name="status"
-          onChange={handleChange}
+          onChange={handleStatusChange}
         />
       </div>
 
@@ -69,7 +84,7 @@ export default function StatusRow1({ newStatus, setNewStatus, handleChange }) {
           placeholder="Description"
           name="description"
           value={newStatus.description}
-          onChange={handleChange}
+          onChange={handleDescriptionChange}
         />
       </div>
     </div>

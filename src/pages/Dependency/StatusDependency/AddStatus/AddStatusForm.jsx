@@ -7,12 +7,9 @@ import { refetchStatuses } from "../../../../apiHooks/useStatuses";
 import { message } from "antd";
 import apiClient from "../../../../../config/axiosInstance";
 
-export default function AddStatusForm({
-  newStatus,
-  setNewStatus,
-  handleChange,
-}) {
+export default function AddStatusForm({ newStatus, setNewStatus }) {
   const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,7 +33,7 @@ export default function AddStatusForm({
     try {
       setIsLoading(true);
 
-      const res = await apiClient.post("/status", newStatus);
+      await apiClient.post("/status", newStatus);
 
       // Reset form after successful submission
       setNewStatus({
@@ -64,11 +61,7 @@ export default function AddStatusForm({
       </div>
       <form onSubmit={handleSubmit}>
         <div className="dependancies-content-row">
-          <StatusRow1
-            newStatus={newStatus}
-            setNewStatus={setNewStatus}
-            handleChange={handleChange}
-          />
+          <StatusRow1 newStatus={newStatus} setNewStatus={setNewStatus} />
           <StatusRow2 newStatus={newStatus} setNewStatus={setNewStatus} />
         </div>
 

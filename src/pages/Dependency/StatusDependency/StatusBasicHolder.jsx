@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import StatusNames from "./StatusNames";
 import AddStatusForm from "./AddStatus/AddStatusForm";
@@ -12,15 +12,7 @@ export default function StatusBasicHolder() {
     description: "",
     subStatuses: [],
   });
-  const { editStatus, isStatusEdit } = useSelector((state) => state.creation);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewStatus((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const { isStatusEdit } = useSelector((state) => state.creation);
 
   return (
     <div className="profile-edit-container dependancies-holder">
@@ -28,11 +20,7 @@ export default function StatusBasicHolder() {
         {isStatusEdit ? (
           <UpdateStatusForm />
         ) : (
-          <AddStatusForm
-            newStatus={newStatus}
-            setNewStatus={setNewStatus}
-            handleChange={handleChange}
-          />
+          <AddStatusForm newStatus={newStatus} setNewStatus={setNewStatus} />
         )}
       </div>
       <div className="dependancies-content">

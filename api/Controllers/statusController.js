@@ -3,14 +3,8 @@ import Status from "../Models/statusModel.js";
 import getStatusModel from "../Models/statusModel.js";
 import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
-import { sanitizeInput } from "../Utilities/validation.js";
 
 const createStatus = catchAsync(async (req, res, next) => {
-  let { status, isTab, subStatuses, selectedClass, description } = req.body;
-
-  // Validate and sanitize input
-  const sanitizedStatus = sanitizeInput(status);
-
   // Dynamically get the Status model for the current database connection
   // const Status = getStatusModel(req.db);
 
