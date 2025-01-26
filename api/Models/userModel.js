@@ -82,8 +82,6 @@ const userSchema = mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-const getUserModel = (dbConnection) => {
-  return dbConnection.model("User", userSchema);
-};
+const User = mongoose.model("User", userSchema);
 
-export default getUserModel;
+export default User;

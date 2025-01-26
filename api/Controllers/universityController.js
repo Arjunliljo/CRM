@@ -1,35 +1,23 @@
-import Country from "../Models/countryModel.js";
-import Course from "../Models/courseModal.js";
 import University from "../Models/universityModel.js";
-import AppError from "../Utilities/appError.js";
-import catchAsync from "../Utilities/catchAsync.js";
-import { sanitizeInput } from "../Utilities/validation.js";
 
-const createUniversity = catchAsync(async (req, res, next) => {
-  let { name, countryId, qualification } = req.body;
+import {
+  createOne,
+  deleteOne,
+  getAll,
+  getOne,
+  updateOne,
+} from "./handlerFactory.js";
 
-  // Sanitize and validate inputs
-  name = sanitizeInput(name);
-  qualification = sanitizeInput(qualification);
+const createUniversity = createOne(University);
+const updateUniversity = updateOne(University);
+const deleteUniversity = deleteOne(University);
+const getUniversity = getOne(University);
+const getAllUniversity = getAll(University);
 
-  //check country
-  const existingCountry = await Country.findById(countryId);
-  if (!existingCountry) {
-    return next(new AppError("Invalid country ID, country not found", 400));
-  }
-  // create new university
-  const newUniversity = await University.create({
-    university:name,
-    country: countryId,
-    qualification,
-  });
-  if (!newUniversity)
-    return next(new AppError("Failed to create University", 400));
-
-  return res.status(201).json({
-    success: true,
-    message: "University created successfully",
-    data: newUniversity,
-  });
-});
-export { createUniversity };
+export {
+  createUniversity,
+  updateUniversity,
+  deleteUniversity,
+  getUniversity,
+  getAllUniversity,
+};

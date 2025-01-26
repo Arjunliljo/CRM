@@ -11,8 +11,6 @@ const creationSlice = createSlice({
     isRoleEdit: false,
     editRole: {},
 
-    isRoleEdit: false,
-    editRole: {},
     isStatusEdit: false,
     editStatus: {},
   },

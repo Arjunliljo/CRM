@@ -2,18 +2,16 @@ import express from "express";
 
 import {
   addUser,
-  dropUser,
-  getUsers,
-  userGroup,
   updateUser,
+  deleteUser,
+  getAllUsers,
 } from "../Controllers/userController.js";
 const router = express.Router();
 
 // User or staff cruds - admin only will do
 router.post("/", addUser);
-router.get("/", getUsers);
+router.get("/", getAllUsers);
 router.patch("/", updateUser);
-router.delete("/:id", dropUser);
-router.post("/userGroup", userGroup);
+router.delete("/:id", deleteUser);
 
 export default router;

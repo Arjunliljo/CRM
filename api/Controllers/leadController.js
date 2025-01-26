@@ -6,7 +6,7 @@ import getStatusModel from "../Models/statusModel.js";
 import getGroupModel from "../Models/userGroupModel.js";
 import getUserModel from "../Models/userModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
-import { isValidString, sanitizeInput } from "../Utilities/validation.js";
+import { sanitizeInput } from "../Utilities/validation.js";
 
 const createLead = catchAsync(async (req, res) => {
   let { name, email, phone, campaign, countries } = req.body;

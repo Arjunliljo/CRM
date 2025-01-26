@@ -1,12 +1,10 @@
 /* global process */
-import mongoose from "mongoose";
-import leadSchema from "../Models/leadsModel.js";
+
 import {
   fetchAdAccounts,
   fetchCampaigns,
   fetchLeadForms,
   fetchLeads,
-  saveLeadData,
 } from "../Utilities/facebookLeads.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import Campaign from "../Models/campaignModel.js";
