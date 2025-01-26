@@ -64,20 +64,19 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    status: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Status",
-    },
-    branch: [
+
+    branches: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Branch",
       },
     ],
-    country: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Country",
-    },
+    countries: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Country",
+      },
+    ],
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

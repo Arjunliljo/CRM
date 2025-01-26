@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CountrySelector from "../../../components/Selectors/UpdateUser/CountrySelector";
 
 export default function ProfileInfo() {
   const [isActive, setIsActive] = useState(false);
@@ -19,7 +20,6 @@ export default function ProfileInfo() {
             </option>
           </select>
         </div>
-
         <div className="form-group">
           <select className="forms-select">
             <option value="" disabled selected>
@@ -27,21 +27,13 @@ export default function ProfileInfo() {
             </option>
           </select>
         </div>
-
-        <div className="form-group">
-          <select className="forms-select">
-            <option value="" disabled selected>
-              Country
-            </option>
-          </select>
-        </div>
+        <CountrySelector />
         <div className="form-group">
           <input className="forms-select" placeholder="Login ID" />
         </div>
         <div className="form-group">
           <input className="forms-select" placeholder="Password" />
         </div>
-
         <div className="auto-assign">
           <span className="span-assign">Auto Assign</span>
           <button

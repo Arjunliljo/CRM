@@ -4,7 +4,7 @@ export default function ProfileBasic() {
   return (
     <div className="content-section">
       <div className="content-section-head">
-        <h2>Personal Details</h2>
+        <h2 className="small-heading">Personal Details</h2>
         <button className="upload-btn">Upload Photo</button>
       </div>
 

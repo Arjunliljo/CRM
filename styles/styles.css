@@ -69,6 +69,12 @@ textarea::placeholder {
   color: #000000;
 }
 
+.small-heading {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
 .body-bg {
   background: linear-gradient(to bottom, #f9f9f9, #c4ecf7, #b3e7f5);
   position: fixed;
@@ -3051,8 +3057,14 @@ F .log .message-area-textarea-container {
 .profile-content {
   display: flex;
   gap: 3rem;
-  padding: 20px;
+  padding: 1.5rem;
   width: 50%;
+}
+.profile-content-dynamic {
+  width: 100%;
+  padding: 1.5rem;
+  height: 100%;
+  overflow-y: scroll;
 }
 .profile-content .content-section {
   flex: 1;
@@ -3076,69 +3088,6 @@ F .log .message-area-textarea-container {
   gap: 1rem;
   overflow-y: scroll;
 }
-.profile-content .content-section .form-group p {
-  font-size: 0.8rem;
-  color: #000000;
-  margin-bottom: 0.5rem;
-  padding: 0 0.5rem;
-  font-weight: 500;
-}
-.profile-content .content-section .form-group-sub-status {
-  /* Scrollbar styling */
-}
-.profile-content .content-section .form-group-sub-status::-webkit-scrollbar {
-  width: 8px;
-}
-.profile-content .content-section .form-group-sub-status::-webkit-scrollbar-track {
-  background: rgba(0, 117, 252, 0.1);
-  border-radius: 4px;
-}
-.profile-content .content-section .form-group-sub-status::-webkit-scrollbar-thumb {
-  background: rgba(0, 117, 252, 0.5);
-  border-radius: 4px;
-}
-.profile-content .content-section .form-group-sub-status::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 117, 252, 0.7);
-}
-.profile-content .content-section .form-group .tab-buttons {
-  display: flex;
-  gap: 1rem;
-}
-.profile-content .content-section .form-group .tab-buttons button {
-  padding: 10px 20px;
-  border-radius: 1rem;
-  border: 1px solid #dadada;
-  cursor: pointer;
-  background-color: #f9f9f9;
-  color: #444;
-  font-size: 0.8rem;
-}
-.profile-content .content-section .form-group .tab-buttons button.active {
-  background-color: #0075fc;
-  color: #f9f9f9;
-}
-.profile-content .content-section .form-group .tab-buttons button:hover {
-  background-color: #f9f9f9;
-}
-.profile-content .content-section .form-group .class-select {
-  display: flex;
-  gap: 1rem;
-}
-.profile-content .content-section .form-group .class-select button {
-  padding: 10px;
-  border-radius: 1rem;
-  border: 1px solid #dadada;
-  cursor: pointer;
-  background-color: #f9f9f9;
-  color: #444;
-}
-.profile-content .content-section .form-group .class-select button.selected {
-  background-color: #0075fc;
-  color: #f9f9f9;
-}
-.profile-content .content-section .form-group .class-select button:hover {
-  background-color: #f9f9f9;
-}
 .profile-content .upload-btn {
   background-color: #757575;
   color: #f9f9f9;
@@ -3155,6 +3104,29 @@ F .log .message-area-textarea-container {
 .profile-active {
   background-color: #e8e8e8 !important;
   color: #000000 !important;
+}
+
+.dynamic-selector {
+  height: fit-content;
+  max-height: 50%;
+  overflow: scroll;
+  margin-bottom: 3rem;
+}
+.dynamic-selector-list {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.dynamic-selector-list-item {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: 1px solid #0075fc;
+}
+
+.dynamic-selector-list-item.active {
+  background-color: #0075fc;
+  color: #f9f9f9;
 }
 
 .entry-requirements {
