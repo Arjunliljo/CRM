@@ -9,6 +9,7 @@ import apiClient from "../../../../../config/axiosInstance";
 
 export default function AddStatusForm({ newStatus, setNewStatus }) {
   const [isLoading, setIsLoading] = useState(false);
+  console.log(newStatus, "newStatus outside");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +34,7 @@ export default function AddStatusForm({ newStatus, setNewStatus }) {
     try {
       setIsLoading(true);
 
-      await apiClient.post("/status", newStatus);
+      const res = await apiClient.post("/status", newStatus);
 
       // Reset form after successful submission
       setNewStatus({
@@ -49,6 +50,7 @@ export default function AddStatusForm({ newStatus, setNewStatus }) {
       message.success("Status created successfully!");
     } catch (e) {
       message.error("Error creating status. Please try again.");
+      console.log(e);
     } finally {
       setIsLoading(false);
     }

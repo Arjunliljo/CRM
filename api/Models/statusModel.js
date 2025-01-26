@@ -7,7 +7,7 @@ const statusSchema = mongoose.Schema(
       type: String,
       required: [true, "Status must have a name"],
     },
-    subStatus: {
+    subStatuses: {
       type: [String],
       required: true,
       validate: {

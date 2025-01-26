@@ -10,6 +10,8 @@ export default function StatusItem({ item, setSelectedStatus, isSelected }) {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
+  console.log(item, "item");
+
   const handleEdit = () => {
     dispatch(
       setStatusEdit({
@@ -42,7 +44,7 @@ export default function StatusItem({ item, setSelectedStatus, isSelected }) {
       className={`branch-item ${isSelected ? "selected" : ""}`}
       onClick={() => setSelectedStatus(item)}
     >
-      <div>{item.status}</div>
+      <div>{item.name}</div>
       <div className="branch-item-actions">
         <EditOutlined
           sx={{ color: "darkblue", fontSize: "1.2rem" }}
