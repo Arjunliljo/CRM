@@ -1,5 +1,6 @@
 import { useState } from "react";
-import CountrySelector from "../../../components/Selectors/UpdateUser/CountrySelector";
+import RoleSelector from "../../../components/Selectors/UpdateUser/RoleSelector";
+import { setProfileRole } from "../../../../global/profileSlice";
 
 export default function ProfileInfo() {
   const [isActive, setIsActive] = useState(false);
@@ -10,27 +11,11 @@ export default function ProfileInfo() {
   return (
     <div className="content-section">
       <div className="content-section-head">
-        <h2>Roles</h2>
+        <h2 style={{ opacity: "0" }}>Roles</h2>
       </div>
       <div className="content-section-item-box">
-        <div className="form-group">
-          <select className="forms-select">
-            <option value="" disabled selected>
-              Role
-            </option>
-          </select>
-        </div>
-        <div className="form-group">
-          <select className="forms-select">
-            <option value="" disabled selected>
-              Branch
-            </option>
-          </select>
-        </div>
-        <CountrySelector />
-        <div className="form-group">
-          <input className="forms-select" placeholder="Login ID" />
-        </div>
+        <RoleSelector setter={setProfileRole} />
+
         <div className="form-group">
           <input className="forms-select" placeholder="Password" />
         </div>

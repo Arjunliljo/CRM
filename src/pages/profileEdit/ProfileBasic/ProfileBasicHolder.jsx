@@ -1,4 +1,3 @@
-import React from "react";
 import ProfileBasic from "./ProfileBasic";
 import ProfileInfo from "./ProfileInfo";
 import BranchSelector from "../ProfileDynamicSelectors/BranchSelector";

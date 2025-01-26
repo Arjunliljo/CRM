@@ -28,12 +28,12 @@ export default function BranchSelector() {
     <div className="dynamic-selector">
       <h2 className="small-heading">Branch</h2>
       <div className="dynamic-selector-list">
-        {branches?.map((branch) => (
+        {branches?.map((branch, i) => (
           <span
             className={`dynamic-selector-list-item ${
               selectedBranch.includes(branch) ? "active" : ""
             }`}
-            key={branch.name}
+            key={i}
             onClick={() => handleBranchClick(branch)}
           >
             {branch.name}

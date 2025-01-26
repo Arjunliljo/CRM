@@ -6,8 +6,14 @@ const profileSlice = createSlice({
     countries: [],
     role: {},
     branches: [],
-    loginId: {},
-    password: {},
+    password: "",
+    autoAssign: false,
+    email: "",
+    name: "",
+    contactNumber: "",
+    employeeId: "",
+    addressOne: "",
+    addressTwo: "",
   },
   reducers: {
     setProfileCountries: (state, action) => {
@@ -19,10 +25,37 @@ const profileSlice = createSlice({
     setProfileBranches: (state, action) => {
       state.branches = action.payload;
     },
+    setProfileAutoAssign: (state, action) => {
+      state.autoAssign = action.payload;
+    },
+
+    setProfilePassword: (state, action) => {
+      state.password = action.payload;
+    },
+    setProfileEmail: (state, action) => {
+      state.email = action.payload;
+    },
+    setProfileContactNumber: (state, action) => {
+      state.contactNumber = action.payload;
+    },
+    setProfileName: (state, action) => {
+      state.name = action.payload;
+    },
   },
 });
 
-export const { setProfileCountries, setProfileRole, setProfileBranches } =
-  profileSlice.actions;
+export const {
+  setProfileCountries,
+  setProfileRole,
+  setProfileBranches,
+  setProfileAutoAssign,
+  setProfilePassword,
+  setProfileEmail,
+  setProfileContactNumber,
+  setProfileEmployeeId,
+  setProfileAddressOne,
+  setProfileAddressTwo,
+  setProfileName,
+} = profileSlice.actions;
 
 export default profileSlice.reducer;

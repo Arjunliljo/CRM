@@ -3077,10 +3077,6 @@ F .log .message-area-textarea-container {
   margin-bottom: 20px;
   color: #333;
 }
-.profile-content .content-section-head {
-  height: 5rem;
-  margin-bottom: 0.8rem;
-}
 .profile-content .content-section-item-box {
   flex: 1;
   display: flex;
