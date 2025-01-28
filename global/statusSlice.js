@@ -11,13 +11,7 @@ const statusSlice = createSlice({
   reducers: {
     setStatuses: (state, action) => {
       state.statuses = action.payload;
-      //   state.tabs = action.payload.filter((status) => status.isTab);
-      //   state.countryBasedStatuses = action.payload.filter(
-      //     (status) => status.isCountryBased
-      //   );
-      //   state.applicationStatus = action.payload.filter(
-      //     (status) => status.isApplication
-      //   );
+      state.tabs = action.payload.filter((status) => status.isTab);
     },
   },
 });

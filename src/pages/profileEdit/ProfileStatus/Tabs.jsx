@@ -1,16 +1,46 @@
+import { useDispatch, useSelector } from "react-redux";
 import { defaultTabs } from "../../../../api/Data/getData";
+import { setSelectedTabs } from "../../../../global/profileSlice";
 
 export default function Tabs() {
-  const tabs = defaultTabs;
+  const dispatch = useDispatch();
+
+  const { tabs } = useSelector((state) => state.status);
+  const { selectedTabs } = useSelector((state) => state.profile);
+
+  const allTabs = defaultTabs.concat(tabs);
+
+  const handleTabClick = (tab) => {
+    if (selectedTabs.includes(tab)) {
+      dispatch(setSelectedTabs(selectedTabs.filter((t) => t !== tab)));
+    } else {
+      dispatch(setSelectedTabs([...selectedTabs, tab]));
+    }
+  };
+
+  console.log(selectedTabs, "selectedTabs");
+
   return (
     <div className="content-section main-status-container">
       <div className="content-section-head" style={{ height: "fit-content" }}>
         <h2>Tabs</h2>
       </div>
       <div className="content-section-item-box">
-        {tabs.map((item, index) => (
-          <div className="form-group" key={index}>
-            <div className="forms-status-item">{item.name}</div>
+        {allTabs.map((item, index) => (
+          <div
+            className={`form-group`}
+            key={index}
+            onClick={() => handleTabClick(item)}
+          >
+            <div
+              className={`forms-status-item ${
+                selectedTabs.some((val) => item.name === val.name)
+                  ? "selected"
+                  : ""
+              }`}
+            >
+              {item.name}
+            </div>
           </div>
         ))}
       </div>

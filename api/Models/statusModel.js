@@ -19,6 +19,14 @@ const statusSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isCountryBased: {
+      type: Boolean,
+      default: false,
+    },
+    isApplication: {
+      type: Boolean,
+      default: false,
+    },
     class: {
       type: String,
       required: [true, "Status must have a class"],
