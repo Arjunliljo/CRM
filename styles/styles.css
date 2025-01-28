@@ -4871,7 +4871,12 @@ F .log .message-area-textarea-container {
   border-radius: 1.5rem;
   display: flex;
   flex-direction: column;
-  height: 35rem;
+  height: 30rem;
+  justify-content: space-between;
+}
+.chatbox-container {
+  display: flex;
+  flex-direction: column;
 }
 .chatbox-head {
   display: flex;
