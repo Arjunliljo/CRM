@@ -4,7 +4,13 @@
   border-radius: variables.$radius-lg;
   display: flex;
   flex-direction: column;
-  height: 35rem;
+  height: 30rem;
+  justify-content: space-between;
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+  }
 
   &-head {
     display: flex;

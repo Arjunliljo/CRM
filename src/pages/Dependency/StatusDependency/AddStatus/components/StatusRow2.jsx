@@ -44,13 +44,13 @@ export default function StatusRow2({ newStatus, setNewStatus }) {
           </PrimaryBttn>
         </div>
 
-        <div className="status-form-group-sub-status">
+        {/* <div className="status-form-group-sub-status">
           {newStatus.subStatuses.map((status, index) => (
             <div key={index} className="status-form-group-sub-status-element">
               {status}
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );

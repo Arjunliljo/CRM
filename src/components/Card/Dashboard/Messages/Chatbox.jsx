@@ -21,36 +21,39 @@ function Chatbox({ message, onBack }) {
 
   return (
     <div className="chatbox">
-      <div className="chatbox-head">
-        <div className="chatbox-head-profilehead">
-          <img
-            src={message.avatar}
-            alt={message.name}
-            className="chatbox-head-profilehead-pic"
-          />
-          <div className="chatbox-head-profilehead-online">
-            <h2 className="chatbox-head-title">Arun</h2>
-            <h6>online</h6>
+      <div className="chatbox-container">
+        <div className="chatbox-head">
+          <div className="chatbox-head-profilehead">
+            <img
+              src={message.avatar}
+              alt={message.name}
+              className="chatbox-head-profilehead-pic"
+            />
+            <div className="chatbox-head-profilehead-online">
+              <h2 className="chatbox-head-title">Arun</h2>
+              <h6>online</h6>
+            </div>
           </div>
+          <button className="chatbox-head-back" onClick={onBack}>
+            <HomeIcon path="iconback" color="#ffffff" />
+          </button>
         </div>
-        <button className="chatbox-head-back" onClick={onBack}>
-          <HomeIcon path="iconback" color="#ffffff" />
-        </button>
+        <div className="chatbox-scroll">
+          {chatMessages.map((msg, index) => (
+            <div
+              key={index}
+              className={`chatbox-message ${
+                msg.sender === "You"
+                  ? "chatbox-message-sent"
+                  : "chatbox-message-received"
+              }`}
+            >
+              <p>{msg.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="chatbox-scroll">
-        {chatMessages.map((msg, index) => (
-          <div
-            key={index}
-            className={`chatbox-message ${
-              msg.sender === "You"
-                ? "chatbox-message-sent"
-                : "chatbox-message-received"
-            }`}
-          >
-            <p>{msg.text}</p>
-          </div>
-        ))}
-      </div>
+
       <div className="chatbox-type">
         <textarea
           type="text"

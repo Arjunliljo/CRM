@@ -12,6 +12,7 @@ export default function StatusNames() {
   } = useApi();
 
   const [selectedStatus, setSelectedStatus] = useState(null);
+  const [statusList, setStatusList] = useState([]);
 
   // Set the first status as default when statuses are available
   useEffect(() => {
