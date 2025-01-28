@@ -44,27 +44,67 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
       </div>
 
       <div className="status-form-group">
-        <p>Is Tab?</p>
-        <div className="tab-buttons">
-          <button
-            type="button"
-            className={newStatus.isTab === true ? "active" : ""}
-            onClick={() => handleTabSelection(true)}
-          >
-            Yes
-          </button>
-          <button
-            type="button"
-            className={newStatus.isTab === false ? "active" : ""}
-            onClick={() => handleTabSelection(false)}
-          >
-            No
-          </button>
+        <div>
+          <p>Is Tab?</p>
+          <div className="tab-buttons">
+            <button
+              type="button"
+              className={newStatus.isTab === true ? "active" : ""}
+              onClick={() => handleTabSelection(true)}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              className={newStatus.isTab === false ? "active" : ""}
+              onClick={() => handleTabSelection(false)}
+            >
+              No
+            </button>
+          </div>
+        </div>
+        <div>
+          <p>Is Country?</p>
+          <div className="tab-buttons">
+            <button
+              type="button"
+              className={newStatus.isTab === true ? "active" : ""}
+              onClick={() => handleTabSelection(true)}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              className={newStatus.isTab === false ? "active" : ""}
+              onClick={() => handleTabSelection(false)}
+            >
+              No
+            </button>
+          </div>
+        </div>
+        <div>
+          <p>Is Application?</p>
+          <div className="tab-buttons">
+            <button
+              type="button"
+              className={newStatus.isTab === true ? "active" : ""}
+              onClick={() => handleTabSelection(true)}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              className={newStatus.isTab === false ? "active" : ""}
+              onClick={() => handleTabSelection(false)}
+            >
+              No
+            </button>
+          </div>
         </div>
       </div>
 
       <div className="status-form-group">
-        <p>Select 1 class</p>
+        {/* <p>Select 1 class</p>
         <div className="class-select">
           {classes.map((cls) => (
             <button
@@ -76,7 +116,7 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
               {cls}
             </button>
           ))}
-        </div>
+        </div> */}
       </div>
 
       <div className="status-form-group">

@@ -108,6 +108,9 @@
   }
 
   & .status-form-group {
+    display: flex;
+    gap: 3rem;
+
     & .status-item {
       background-color: variables.$color-white;
       width: 100%;

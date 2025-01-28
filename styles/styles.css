@@ -5034,6 +5034,10 @@ F .log .message-area-textarea-container {
   flex-direction: column;
   gap: 1.5rem;
 }
+.dependancies .status-form-group {
+  display: flex;
+  gap: 3rem;
+}
 .dependancies .status-form-group .status-item {
   background-color: #f9f9f9;
   width: 100%;
