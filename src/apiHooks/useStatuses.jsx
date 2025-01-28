@@ -4,6 +4,7 @@ import queryClient from "../../config/reactQuery";
 import { setStatusNames } from "../../global/coreSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { setStatuses } from "../../global/statusSlice";
 
 export const useStatuses = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export const useStatuses = () => {
   useEffect(() => {
     if (!statuses) return;
     dispatch(setStatusNames(statuses.map((status) => status.name)));
+    dispatch(setStatuses(statuses));
   }, [statuses, dispatch]);
 
   return { statuses, isLoading, error, refetch };

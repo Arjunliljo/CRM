@@ -7,6 +7,8 @@ import universitySlice from "./universitySlice";
 import branchSlice from "./branchSlice";
 import coreSlice from "./coreSlice";
 import creationSlice from "./creationSlice";
+import profileSlice from "./profileSlice";
+import statusSlice from "./statusSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +20,8 @@ const store = configureStore({
     branchmanage: branchSlice,
     core: coreSlice,
     creation: creationSlice,
+    profile: profileSlice,
+    status: statusSlice,
   },
 });
 

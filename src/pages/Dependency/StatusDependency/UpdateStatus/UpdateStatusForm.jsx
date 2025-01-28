@@ -12,12 +12,14 @@ import { useEffect, useState } from "react";
 export default function UpdateStatusForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { editStatus } = useSelector((state) => state.creation);
+  console.log(editStatus, "editStatus");
+
   const [formData, setFormData] = useState({
     name: "",
     isTab: null,
     class: "",
     description: "",
-    subStatus: [],
+    subStatuses: [],
   });
 
   const dispatch = useDispatch();
@@ -30,7 +32,7 @@ export default function UpdateStatusForm() {
         isTab: editStatus.isTab ?? null,
         class: editStatus.class || "",
         description: editStatus.description || "",
-        subStatus: editStatus.subStatus || [],
+        subStatuses: editStatus.subStatuses || [],
       });
     }
   }, [editStatus]);

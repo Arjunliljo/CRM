@@ -6,7 +6,7 @@ export default function UpdateStatusRow2({ formData, setFormData }) {
   const handleSubStatusAdd = (subStatus) => {
     setFormData((prev) => ({
       ...prev,
-      subStatus: [...prev.subStatus, subStatus],
+      subStatuses: [...prev.subStatuses, subStatus],
     }));
   };
 
@@ -44,7 +44,7 @@ export default function UpdateStatusRow2({ formData, setFormData }) {
         </div>
 
         <div className="status-form-group-sub-status">
-          {formData.subStatus.map((status, index) => (
+          {formData.subStatuses.map((status, index) => (
             <div key={index} className="status-form-group-sub-status-element">
               {status}
             </div>

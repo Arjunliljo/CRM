@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setStatusEdit } from "../../../../../../global/creationSlice";
 import { classes } from "../../../../../../api/serverdata/serverdatas";
 
 export default function UpdateStatusRow1({
@@ -29,8 +26,8 @@ export default function UpdateStatusRow1({
           type="text"
           placeholder="Status name"
           className="input-formGroup"
-          value={formData.status}
-          name="status"
+          value={formData.name}
+          name="name"
           onChange={handleChange}
         />
       </div>

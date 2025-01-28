@@ -6,9 +6,9 @@ import { refetchStatuses } from "../../../apiHooks/useStatuses";
 import apiClient from "../../../../config/axiosInstance";
 import { message } from "antd";
 
-export default function StatusNames({ setNewStatus }) {
+export default function StatusNames() {
   const {
-    statusConfigs: { isLoading, statuses },
+    statusConfigs: { statuses },
   } = useApi();
 
   const [selectedStatus, setSelectedStatus] = useState(null);
@@ -68,7 +68,7 @@ export default function StatusNames({ setNewStatus }) {
           </div>
           {selectedStatus ? (
             <>
-              {selectedStatus.subStatus.map((subStatus, index) => (
+              {selectedStatus.subStatuses.map((subStatus, index) => (
                 <div key={index} className="branch-item">
                   <div>{subStatus}</div>
                   <div className="branch-item-actions">
