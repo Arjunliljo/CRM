@@ -18,8 +18,6 @@ export default function Tabs() {
     }
   };
 
-  console.log(selectedTabs, "selectedTabs");
-
   return (
     <div className="content-section main-status-container">
       <div className="content-section-head" style={{ height: "fit-content" }}>
