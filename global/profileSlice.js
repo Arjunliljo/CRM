@@ -16,6 +16,7 @@ const profileSlice = createSlice({
     addressTwo: "",
     mainStatuses: [],
     selectedTabs: [],
+    selectedRoles: [],
   },
   reducers: {
     setProfileCountries: (state, action) => {
@@ -58,6 +59,9 @@ const profileSlice = createSlice({
     setSelectedTabs: (state, action) => {
       state.selectedTabs = action.payload;
     },
+    setSelectedRoles: (state, action) => {
+      state.selectedRoles = action.payload;
+    },
   },
 });
 
@@ -75,6 +79,7 @@ export const {
   setProfileName,
   setProfileMainStatus,
   setSelectedTabs,
+  setSelectedRoles,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

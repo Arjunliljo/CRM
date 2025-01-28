@@ -2,6 +2,7 @@ import { useState } from "react";
 import MainStatus from "./MainStatus";
 import Tabs from "./Tabs";
 import { useSelector } from "react-redux";
+import Roles from "./Roles";
 
 export default function ProfileStatusHolder() {
   const { statuses } = useSelector((state) => state.status);
@@ -16,8 +17,8 @@ export default function ProfileStatusHolder() {
           selectedStatus={selectedStatus}
           statuses={statuses}
         />
-        {/* <SubStatus /> */}
         <Tabs />
+        <Roles />
       </div>
     </div>
   );
