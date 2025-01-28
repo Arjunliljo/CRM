@@ -13,6 +13,7 @@ export default function StatusBasicHolder() {
     subStatuses: [],
   });
   const { isStatusEdit } = useSelector((state) => state.creation);
+  const { statuses } = useSelector((state) => state.status);
 
   return (
     <div className="profile-edit-container dependancies-holder">
@@ -24,7 +25,7 @@ export default function StatusBasicHolder() {
         )}
       </div>
       <div className="dependancies-content">
-        <StatusNames setNewStatus={setNewStatus} />
+        <StatusNames setNewStatus={setNewStatus} statuses={statuses} />
       </div>
     </div>
   );

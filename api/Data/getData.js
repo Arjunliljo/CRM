@@ -1,13 +1,38 @@
-const getBranches = [
-  "Kozhikode",
-  "Kottayam",
-  "Kochi",
-  "Manjeri",
-  "Kannur",
-  "Directors",
-  "Trivandrum",
-  "Corporate",
+export const defaultTabs = [
+  {
+    name: "Dashboard",
+    id: 1,
+  },
+  {
+    name: "Leads",
+    id: 2,
+  },
+  {
+    name: "Student",
+    id: 3,
+  },
+  {
+    name: "University",
+    id: 4,
+  },
+  {
+    name: "Configuration",
+    id: 5,
+  },
+  {
+    name: "Profile-edit",
+    id: 6,
+  },
+  {
+    name: "User",
+    id: 7,
+  },
+  {
+    name: "Profile-card",
+    id: 8,
+  },
+  {
+    name: "Branch-managing",
+    id: 9,
+  },
 ];
-const getBankAccounts = ["RBL", "ICICI", "RAK", "HDFC", "CASH", "BANDAN"];
-
-module.exports = { getBranches, getBankAccounts };

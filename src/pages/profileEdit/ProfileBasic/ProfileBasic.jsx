@@ -11,14 +11,12 @@ import {
 export default function ProfileBasic() {
   const { email, contactNumber, employeeId, addressOne, addressTwo, name } =
     useSelector((state) => state.profile);
-
   const dispatch = useDispatch();
 
   return (
     <div className="content-section">
       <div className="content-section-head">
         <h2 className="small-heading">Personal Details</h2>
-        {/* <button className="upload-btn">Upload Photo</button> */}
       </div>
 
       <div className="content-section-item-box">

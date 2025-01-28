@@ -14,6 +14,7 @@ const profileSlice = createSlice({
     employeeId: "",
     addressOne: "",
     addressTwo: "",
+    mainStatuses: [],
   },
   reducers: {
     setProfileCountries: (state, action) => {
@@ -41,6 +42,18 @@ const profileSlice = createSlice({
     setProfileName: (state, action) => {
       state.name = action.payload;
     },
+    setProfileEmployeeId: (state, action) => {
+      state.employeeId = action.payload;
+    },
+    setProfileAddressOne: (state, action) => {
+      state.addressOne = action.payload;
+    },
+    setProfileAddressTwo: (state, action) => {
+      state.addressTwo = action.payload;
+    },
+    setProfileMainStatus: (state, action) => {
+      state.mainStatuses = action.payload;
+    },
   },
 });
 
@@ -56,6 +69,7 @@ export const {
   setProfileAddressOne,
   setProfileAddressTwo,
   setProfileName,
+  setProfileMainStatus,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;
