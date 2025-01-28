@@ -3,6 +3,7 @@ import ActionButtons from "./ActionButtons";
 import ProfileBasicHolder from "./ProfileBasic/ProfileBasicHolder";
 import ProfileSwitchNav from "./ProfileSwitchNav";
 import ProfileStatusHolder from "./ProfileStatus/ProfileStatusHolder";
+import ProfileDashboardHolder from "./ProfileStatus/ProfileDashboardHolder";
 
 const TABS = ["Profile", "Status", "Dashboard"];
 
@@ -28,6 +29,7 @@ function ProfileUpdateUser() {
       />
       {activeTab === 0 && <ProfileBasicHolder />}
       {activeTab === 1 && <ProfileStatusHolder />}
+      {activeTab === 2 && <ProfileDashboardHolder />}
       <ActionButtons onHandleNext={handleNext} onHandleCancel={handleCancel} />
     </div>
   );
