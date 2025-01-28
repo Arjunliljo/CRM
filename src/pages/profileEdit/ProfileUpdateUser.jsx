@@ -20,6 +20,10 @@ function ProfileUpdateUser() {
     setActiveTab(0);
   };
 
+  const handleCreate = () => {
+    console.log("create");
+  };
+
   return (
     <div className="profileUpdate-main">
       <ProfileSwitchNav
@@ -30,7 +34,12 @@ function ProfileUpdateUser() {
       {activeTab === 0 && <ProfileBasicHolder />}
       {activeTab === 1 && <ProfileStatusHolder />}
       {activeTab === 2 && <ProfileDashboardHolder />}
-      <ActionButtons onHandleNext={handleNext} onHandleCancel={handleCancel} />
+      <ActionButtons
+        onHandleNext={handleNext}
+        onHandleCancel={handleCancel}
+        activeTab={activeTab}
+        onHandleCreate={handleCreate}
+      />
     </div>
   );
 }

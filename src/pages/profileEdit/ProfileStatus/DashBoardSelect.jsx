@@ -1,10 +1,13 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useApi } from "../../../context/apiContext/ApiContext";
 import { setSelectedRoles } from "../../../../global/profileSlice";
+import { useCreateUser } from "../../../hooks/useCreateUser";
+import apiClient from "../../../../config/axiosInstance";
 
 export default function DashBoardSelect() {
   const dispatch = useDispatch();
+
+  const userData = useCreateUser();
 
   const {
     roleConfigs: { roles },
@@ -17,6 +20,10 @@ export default function DashBoardSelect() {
     } else {
       dispatch(setSelectedRoles([...selectedRoles, role]));
     }
+  };
+
+  const handleCreate = async () => {
+    const response = await apiClient.post("/user/create", userData);
   };
 
   return (

@@ -50,9 +50,14 @@ const userSchema = mongoose.Schema(
       maxlength: [20, "Employee ID should be less than 20 characters"],
       minlength: [3, "Employee ID should be greater than 3 characters"],
     },
-    Address: {
+    addressOne: {
       type: String,
       required: [true, "User must have an address"],
+      maxlength: [50, "User address should be less than 50 characters"],
+      minlength: [4, "User address should be greater than 4 characters"],
+    },
+    addressTwo: {
+      type: String,
       maxlength: [50, "User address should be less than 50 characters"],
       minlength: [4, "User address should be greater than 4 characters"],
     },
@@ -75,6 +80,26 @@ const userSchema = mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Country",
+      },
+    ],
+    statuses: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Status",
+      },
+    ],
+    defaultTabs: [String],
+
+    tabs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Status",
+      },
+    ],
+    roles: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Role",
       },
     ],
   },

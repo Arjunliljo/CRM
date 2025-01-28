@@ -1,15 +1,15 @@
 import express from "express";
 
 import {
-  addUser,
   updateUser,
   deleteUser,
   getAllUsers,
 } from "../Controllers/userController.js";
+import { createUser } from "../Controllers/authController.js";
 const router = express.Router();
 
 // User or staff cruds - admin only will do
-router.post("/", addUser);
+router.post("/create", createUser);
 router.get("/", getAllUsers);
 router.patch("/", updateUser);
 router.delete("/:id", deleteUser);

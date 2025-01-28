@@ -27,12 +27,7 @@ const statusSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    class: {
-      type: String,
-      required: [true, "Status must have a class"],
-      enum: classes,
-      default: classes[0],
-    },
+
     description: {
       type: String,
       maxlength: [100, "Description should be less than 100 characters"],
