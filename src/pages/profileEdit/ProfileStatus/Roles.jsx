@@ -1,20 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
-import { defaultTabs } from "../../../../api/Data/getData";
-import { setSelectedTabs } from "../../../../global/profileSlice";
+import { setSelectedRoles } from "../../../../global/profileSlice";
+import { useApi } from "../../../context/apiContext/ApiContext";
 
 export default function Roles() {
   const dispatch = useDispatch();
 
-  const { tabs } = useSelector((state) => state.status);
-  const { selectedTabs } = useSelector((state) => state.profile);
+  const {
+    roleConfigs: { roles },
+  } = useApi();
+  const { selectedRoles } = useSelector((state) => state.profile);
 
-  const allTabs = defaultTabs.concat(tabs);
-
-  const handleTabClick = (tab) => {
-    if (selectedTabs.includes(tab)) {
-      dispatch(setSelectedTabs(selectedTabs.filter((t) => t !== tab)));
+  const handleRoleClick = (role) => {
+    if (selectedRoles.includes(role)) {
+      dispatch(setSelectedRoles(selectedRoles.filter((t) => t !== role)));
     } else {
-      dispatch(setSelectedTabs([...selectedTabs, tab]));
+      dispatch(setSelectedRoles([...selectedRoles, role]));
     }
   };
 
@@ -24,15 +24,15 @@ export default function Roles() {
         <h2>Roles</h2>
       </div>
       <div className="content-section-item-box">
-        {allTabs.map((item, index) => (
+        {roles.map((item, index) => (
           <div
             className={`form-group`}
             key={index}
-            onClick={() => handleTabClick(item)}
+            onClick={() => handleRoleClick(item)}
           >
             <div
               className={`forms-status-item ${
-                selectedTabs.some((val) => item.name === val.name)
+                selectedRoles.some((val) => item.name === val.name)
                   ? "selected"
                   : ""
               }`}
