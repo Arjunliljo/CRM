@@ -8,6 +8,8 @@ export default function CountrySelector() {
     countryConfigs: { countries },
   } = useApi();
 
+  // const countries = [];
+
   const dispatch = useDispatch();
 
   const [selectedCountry, setSelectedCountry] = useState([]);
@@ -28,17 +30,21 @@ export default function CountrySelector() {
     <div className="dynamic-selector">
       <h2 className="small-heading">Country</h2>
       <div className="dynamic-selector-list">
-        {countries?.map((country) => (
-          <span
-            className={`dynamic-selector-list-item ${
-              selectedCountry.includes(country) ? "active" : ""
-            }`}
-            key={country.name}
-            onClick={() => handleCountryClick(country)}
-          >
-            {country.name}
-          </span>
-        ))}
+        {countries?.length > 0 ? (
+          countries.map((country, i) => (
+            <span
+              className={`dynamic-selector-list-item ${
+                selectedCountry.includes(country) ? "active" : ""
+              }`}
+              key={country.name}
+              onClick={() => handleCountryClick(country)}
+            >
+              {country.name}
+            </span>
+          ))
+        ) : (
+          <div className="No-data">No Counties Available</div>
+        )}
       </div>
     </div>
   );

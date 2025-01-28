@@ -20,23 +20,27 @@ export default function MainStatus({ statuses }) {
         <h2>Main Status</h2>
       </div>
       <div className="content-section-item-box">
-        {statuses.map((item, index) => (
-          <div
-            className={`form-group`}
-            key={index}
-            onClick={() => handleSelected(item)}
-          >
+        {statuses?.length > 0 ? (
+          statuses.map((item, index) => (
             <div
-              className={`forms-status-item ${
-                selectedStatuses.some((obj) => obj.name === item.name)
-                  ? "selected"
-                  : ""
-              }`}
+              className={`form-group`}
+              key={index}
+              onClick={() => handleSelected(item)}
             >
-              {item.name}
+              <div
+                className={`forms-status-item ${
+                  selectedStatuses.some((obj) => obj.name === item.name)
+                    ? "selected"
+                    : ""
+                }`}
+              >
+                {item.name}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <div className="No-data">No data available</div>
+        )}
       </div>
     </div>
   );

@@ -24,23 +24,27 @@ export default function Tabs() {
         <h2>Tabs</h2>
       </div>
       <div className="content-section-item-box">
-        {allTabs.map((item, index) => (
-          <div
-            className={`form-group`}
-            key={index}
-            onClick={() => handleTabClick(item)}
-          >
+        {allTabs?.length > 0 ? (
+          allTabs.map((item, index) => (
             <div
-              className={`forms-status-item ${
-                selectedTabs.some((val) => item.name === val.name)
-                  ? "selected"
-                  : ""
-              }`}
+              className={`form-group`}
+              key={index}
+              onClick={() => handleTabClick(item)}
             >
-              {item.name}
+              <div
+                className={`forms-status-item ${
+                  selectedTabs.some((val) => item.name === val.name)
+                    ? "selected"
+                    : ""
+                }`}
+              >
+                {item.name}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <div className="No-data">No Tabs available</div>
+        )}
       </div>
     </div>
   );

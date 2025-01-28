@@ -20,6 +20,8 @@ export default function BranchSelector() {
     );
   };
 
+  // const branches = [];
+
   useEffect(() => {
     dispatch(setProfileBranches(selectedBranch));
   }, [selectedBranch, dispatch]);
@@ -28,17 +30,21 @@ export default function BranchSelector() {
     <div className="dynamic-selector">
       <h2 className="small-heading">Branch</h2>
       <div className="dynamic-selector-list">
-        {branches?.map((branch, i) => (
-          <span
-            className={`dynamic-selector-list-item ${
-              selectedBranch.includes(branch) ? "active" : ""
-            }`}
-            key={i}
-            onClick={() => handleBranchClick(branch)}
-          >
-            {branch.name}
-          </span>
-        ))}
+        {branches?.length > 0 ? (
+          branches.map((branch, i) => (
+            <span
+              className={`dynamic-selector-list-item ${
+                selectedBranch.includes(branch) ? "active" : ""
+              }`}
+              key={i}
+              onClick={() => handleBranchClick(branch)}
+            >
+              {branch.name}
+            </span>
+          ))
+        ) : (
+          <div className="No-data">No branches available</div>
+        )}
       </div>
     </div>
   );
