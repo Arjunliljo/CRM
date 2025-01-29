@@ -4,7 +4,6 @@ import CancelBtn from "../../../components/buttons/CancelBtn";
 import NextBtn from "../../../components/buttons/NextBtn";
 import apiClient from "../../../../config/axiosInstance";
 import { refetchBranches } from "../../../apiHooks/useBranches";
-import { useApi } from "../../../context/apiContext/ApiContext";
 
 export default function Branch({ newBranch, setNewBranch, handleChange }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +17,7 @@ export default function Branch({ newBranch, setNewBranch, handleChange }) {
     }
     try {
       setIsLoading(true);
-      const res = await apiClient.post("/branch", newBranch);
+      await apiClient.post("/branch", newBranch);
       setNewBranch({ name: "", description: "" });
       refetchBranches();
       message.success("Branch created successfully!");
@@ -29,10 +28,6 @@ export default function Branch({ newBranch, setNewBranch, handleChange }) {
       setIsLoading(false);
     }
   };
-
-  // const {
-  //   branchConfig: { isLoading: branchLoading },
-  // } = useApi();
 
   return (
     <div className="content-section dependancies">

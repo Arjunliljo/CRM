@@ -1,7 +1,7 @@
-import User from "../Models/userModel";
+import User from "../Models/userModel.js";
 import jwt from "jsonwebtoken";
-import catchAsync from "../Utilities/catchAsync";
-import AppError from "../Utilities/appError";
+import catchAsync from "../Utilities/catchAsync.js";
+import AppError from "../Utilities/appError.js";
 
 const KEY = process.env.JWT_SECRET;
 

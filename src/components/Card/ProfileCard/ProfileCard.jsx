@@ -5,27 +5,22 @@ import EligiableCourses from "./EligiableCourses";
 import PersonalDetails from "./PersonalDetails";
 import ProfileCardStatus from "./ProfileCardStatus";
 
-export default function ProfileCard({ IDocumentUpload }) {
-  //dummy
-  const lead = {
-    img: "https://via.placeholder.com/100",
-    name: "David Wilson",
-    title: "Student at XYZ Academy",
-    location: "Germany, UK, Canada",
-  };
+export default function ProfileCard({ IDocumentUpload, lead }) {
+  console.log(lead, "lead");
+
   return (
     <div className="profileCard">
       <div className="profileCard-head">
         <div className="profileCard-head-info">
           <div className="profileCard-head-info-details">
-            <div>
+            <div className="profileCard-image-container">
               <img src={lead.img} alt={lead.name} />
             </div>
             <div className="name-bar-name name-small">
               <div>{lead.name}</div>
               <div className="profileCard-head-info-location-card">
                 <span className="profileCard-head-info-location">
-                  {lead.location}
+                  {lead.country}
                 </span>
                 <span className="profileCard-head-info-underline"></span>
               </div>

@@ -11,7 +11,7 @@ function LeftRound() {
         style={{ display: "none" }}
       />
       <label htmlFor="profile-image" className="profile-page__icon-camera">
-        <HomeIcon path="camera" />
+        <HomeIcon path="camera" color="#ffffff" />
       </label>
     </div>
   );

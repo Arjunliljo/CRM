@@ -24,23 +24,27 @@ export default function Roles() {
         <h2>Roles</h2>
       </div>
       <div className="content-section-item-box">
-        {roles.map((item, index) => (
-          <div
-            className={`form-group`}
-            key={index}
-            onClick={() => handleRoleClick(item)}
-          >
+        {roles?.length > 0 ? (
+          roles.map((item, index) => (
             <div
-              className={`forms-status-item ${
-                selectedRoles.some((val) => item.name === val.name)
-                  ? "selected"
-                  : ""
-              }`}
+              className={`form-group`}
+              key={index}
+              onClick={() => handleRoleClick(item)}
             >
-              {item.name}
+              <div
+                className={`forms-status-item ${
+                  selectedRoles.some((val) => item.name === val.name)
+                    ? "selected"
+                    : ""
+                }`}
+              >
+                {item.name}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <div className="No-data">No Roles Available</div>
+        )}
       </div>
     </div>
   );

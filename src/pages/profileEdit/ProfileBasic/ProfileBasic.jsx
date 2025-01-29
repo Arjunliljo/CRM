@@ -18,7 +18,6 @@ export default function ProfileBasic() {
       <div className="content-section-head">
         <h2 className="small-heading">Personal Details</h2>
       </div>
-
       <div className="content-section-item-box">
         <div className="form-group">
           <input

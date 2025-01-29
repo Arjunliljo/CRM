@@ -54,8 +54,11 @@ export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
       <div className="card-body">
         <div className="card-body-top">
           <NameBar lead={lead} />
-          <InfoBtn color="white" bgcl="green">
-            Interested
+          <InfoBtn
+            color="white"
+            bgcl={lead.status === "Interested" ? "green" : lead.statusColor}
+          >
+            {lead.status}
           </InfoBtn>
         </div>
         <div className="card-body-mid">

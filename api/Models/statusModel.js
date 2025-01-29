@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { classes } from "../serverdata/serverdatas.js";
 
 const statusSchema = mongoose.Schema(
   {
@@ -27,7 +26,6 @@ const statusSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-
     description: {
       type: String,
       maxlength: [100, "Description should be less than 100 characters"],
