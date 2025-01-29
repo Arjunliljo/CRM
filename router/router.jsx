@@ -7,17 +7,8 @@ import Students from "../src/pages/Students/Students";
 import University from "../src/pages/Universities/University";
 import ProfileUpdateUser from "../src/pages/profileEdit/ProfileUpdateUser";
 import Branchmanage from "../src/pages/branchmanage/Branchmanage";
-import General from "../src/pages/General/General";
 import Dash from "../src/pages/dashboard/Dash";
 import Dependencies from "../src/pages/Dependency/Dependencies";
-const tabs = ["offerletter", "students", "payments"];
-
-const DynamicRoutes = () => {
-  return tabs.map((tab) => ({
-    path: tab,
-    element: <General />,
-  }));
-};
 
 export const router = createBrowserRouter([
   {
@@ -60,7 +51,6 @@ export const router = createBrowserRouter([
         path: "Profile-card",
         element: <Profilepage />,
       },
-      ...DynamicRoutes(),
     ],
   },
 ]);
