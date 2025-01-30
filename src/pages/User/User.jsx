@@ -38,7 +38,7 @@ export default function User() {
   const { autoUserAssign, curUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const handleNavigate = () => {
-    navigate("/profileEdit");
+    navigate("/Profile-edit");
   };
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;

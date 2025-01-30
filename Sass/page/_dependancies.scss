@@ -109,7 +109,7 @@
 
   & .status-form-group {
     display: flex;
-    gap: 3rem;
+    gap: 1rem;
 
     & .status-item {
       background-color: variables.$color-white;
@@ -127,7 +127,6 @@
       width: 100%;
       height: 2.5rem;
       padding: 0 1rem;
-
       border-radius: variables.$radius-sm;
       border: none;
       outline: none;
@@ -149,7 +148,8 @@
       font-size: variables.$font-size-small;
       color: variables.$color-black;
       margin-bottom: 0.5rem;
-      padding: 0 0.5rem;
+      width: 6rem;
+      // padding: 0 0.5rem;
       font-weight: variables.$font-bold;
     }
 
@@ -201,7 +201,7 @@
 
     & .tab-buttons {
       display: flex;
-      gap: 1rem;
+      gap: 0.5rem;
 
       button {
         padding: 8px 20px;

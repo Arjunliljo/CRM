@@ -11,6 +11,18 @@ export default function UpdateStatusRow1({
       isTab: value,
     }));
   };
+  const handleCountrySelection = (value) => {
+    setFormData((prev) => ({
+      ...prev,
+      isCountry: value,
+    }));
+  };
+  const handleApplicationSelection = (value) => {
+    setFormData((prev) => ({
+      ...prev,
+      isApplication: value,
+    }));
+  };
 
   const handleClassSelection = (cls) => {
     setFormData((prev) => ({
@@ -33,27 +45,67 @@ export default function UpdateStatusRow1({
       </div>
 
       <div className="status-form-group">
-        <p>Is Tab?</p>
-        <div className="tab-buttons">
-          <button
-            type="button"
-            className={formData.isTab === true ? "active" : ""}
-            onClick={() => handleTabSelection(true)}
-          >
-            Yes
-          </button>
-          <button
-            type="button"
-            className={formData.isTab === false ? "active" : ""}
-            onClick={() => handleTabSelection(false)}
-          >
-            No
-          </button>
+        <div>
+          <p>Is Tab?</p>
+          <div className="tab-buttons">
+            <button
+              type="button"
+              className={formData.isTab === true ? "active" : ""}
+              onClick={() => handleTabSelection(true)}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              className={formData.isTab === false ? "active" : ""}
+              onClick={() => handleTabSelection(false)}
+            >
+              No
+            </button>
+          </div>
+        </div>
+        <div>
+          <p>Is Country?</p>
+          <div className="tab-buttons">
+            <button
+              type="button"
+              className={formData.isCountry === true ? "active" : ""}
+              onClick={() => handleCountrySelection(true)}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              className={formData.isCountry === false ? "active" : ""}
+              onClick={() => handleCountrySelection(false)}
+            >
+              No
+            </button>
+          </div>
+        </div>
+        <div>
+          <p>Is Application?</p>
+          <div className="tab-buttons">
+            <button
+              type="button"
+              className={formData.isApplication === true ? "active" : ""}
+              onClick={() => handleApplicationSelection(true)}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              className={formData.isApplication === false ? "active" : ""}
+              onClick={() => handleApplicationSelection(false)}
+            >
+              No
+            </button>
+          </div>
         </div>
       </div>
 
       <div className="status-form-group">
-        <p>Select 1 class</p>
+        {/* <p>Select 1 class</p>
         <div className="class-select">
           {classes.map((cls) => (
             <button
@@ -65,7 +117,7 @@ export default function UpdateStatusRow1({
               {cls}
             </button>
           ))}
-        </div>
+        </div> */}
       </div>
 
       <div className="status-form-group">

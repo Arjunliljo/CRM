@@ -5036,7 +5036,7 @@ F .log .message-area-textarea-container {
 }
 .dependancies .status-form-group {
   display: flex;
-  gap: 3rem;
+  gap: 1rem;
 }
 .dependancies .status-form-group .status-item {
   background-color: #f9f9f9;
@@ -5078,7 +5078,7 @@ F .log .message-area-textarea-container {
   font-size: 0.8rem;
   color: #000000;
   margin-bottom: 0.5rem;
-  padding: 0 0.5rem;
+  width: 6rem;
   font-weight: 500;
 }
 .dependancies .status-form-group-sub-status {
@@ -5124,7 +5124,7 @@ F .log .message-area-textarea-container {
 }
 .dependancies .status-form-group .tab-buttons {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 .dependancies .status-form-group .tab-buttons button {
   padding: 8px 20px;
