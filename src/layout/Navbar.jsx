@@ -20,14 +20,6 @@ export default function Navbar() {
           <span className="li-text">Leads</span>
         </NavLink>
       </li>
-      {/* <li className="learn-more">
-        <NavLink to="/Student">
-          <span className="circle" aria-hidden="true">
-            <HomeIcon path="group" />
-          </span>
-          <span className="li-text">Students</span>
-        </NavLink>
-      </li> */}
 
       <li className="learn-more">
         <NavLink to="/User">
