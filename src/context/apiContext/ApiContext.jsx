@@ -15,7 +15,6 @@ function ApiProvider({ children }) {
   const usersConfigs = useUsers()
 
   useEffect(() => {
-    console.log("users:", branchConfigs);
   }, [statusConfigs]); 
 
 

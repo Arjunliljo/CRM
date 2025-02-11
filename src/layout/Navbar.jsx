@@ -1,7 +1,11 @@
 import { NavLink } from "react-router-dom";
 import HomeIcon from "../components/utils/Icons/HomeIcon";
+import useLogout from "../hooks/useLogout";
 
 export default function Navbar() {
+  
+  const logoutUser = useLogout()
+
   return (
     <nav className="navbar">
       <li className="learn-more">
@@ -59,6 +63,14 @@ export default function Navbar() {
             <HomeIcon path="settings" />
           </span>
           <span className="li-text">Settings</span>
+        </NavLink>
+      </li>
+      <li className="learn-more">
+        <NavLink onClick={logoutUser}>
+          <span className="circle" aria-hidden="true">
+            <HomeIcon path="logout" />
+          </span>
+          <span className="li-text">Logout</span>
         </NavLink>
       </li>
     </nav>

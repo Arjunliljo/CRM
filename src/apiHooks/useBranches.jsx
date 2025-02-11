@@ -14,8 +14,6 @@ export const useBranches = () => {
   });
   
   const branches = data?.data?.data;
-  console.log(branches);
-  
 
   useEffect(() => {
     if (!branches) return;
