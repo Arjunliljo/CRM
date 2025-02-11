@@ -3,21 +3,21 @@ import User from "../Models/userModel.js";
 import jwt from "jsonwebtoken";
 import catchAsync from "../Utilities/catchAsync.js";
 import AppError from "../Utilities/appError.js";
-import bcrypt from "bcrypt"; 
+import bcrypt from "bcrypt";
 import dotenv from "dotenv";
-dotenv.config(); 
+dotenv.config();
 
 const KEY = process.env.JWT_SECRET;
-console.log("key",process.env.JWT_SECRET);
+console.log("key", process.env.JWT_SECRET);
 
 
 const generateToken = (id) => {
   const expiresIn = Math.floor(Date.now() / 1000) + 60 * 60 * 24; // 24 hours
-  return jwt.sign({ id,exp: expiresIn }, KEY);
+  return jwt.sign({ id, exp: expiresIn }, KEY);
 };
 
 const sendToken = (user, statusCode, res) => {
- 
+
 
 
   // res.cookie("token", token, {
@@ -36,7 +36,9 @@ const sendToken = (user, statusCode, res) => {
 };
 
 const createUser = catchAsync(async (req, res, next) => {
-  
+
+  console.log(req.body);
+
 
   const existingUser = await User.findOne({ email: req.body.email });
   if (existingUser) {
@@ -44,18 +46,18 @@ const createUser = catchAsync(async (req, res, next) => {
   }
   const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
-  const newUser = await User.create({
-    ...req.body,
-    password: hashedPassword
-  });
+  // const newUser = await User.create({
+  //   ...req.body,
+  //   password: hashedPassword
+  // });
 
-  sendToken(newUser, 201, res);
+  // sendToken(newUser, 201, res);
 });
 
 const loginUser = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
   console.log(req.body);
-  
+
 
   if (!email || !password) {
     return next(new AppError('Please provide email and password', 400));
@@ -65,7 +67,11 @@ const loginUser = catchAsync(async (req, res, next) => {
     .populate('role')
     .populate('branches')
     .populate('countries')
-    .populate('statuses');
+    .populate('statuses')
+    .populate('tabs')  
+    .populate('roles')
+
+  console.log({ user });
 
   if (!user) {
     return next(new AppError('Invalid email or password', 401));
@@ -81,7 +87,6 @@ const loginUser = catchAsync(async (req, res, next) => {
     throw new AppError("Server failed to create token", 500);
   }
 
-  
   const sanitizedUser = {
     _id: user._id,
     name: user.name,
@@ -92,12 +97,16 @@ const loginUser = catchAsync(async (req, res, next) => {
     branches: user.branches,
     countries: user.countries,
     statuses: user.statuses,
+    defaultTabs: user.defaultTabs, 
+    tabs: user.tabs, 
+    roles: user.roles, 
     autoAssign: user.autoAssign,
     isLeadsAssign: user.isLeadsAssign,
     image: user.image,
-    token:token
+    token: token
   };
 
+  console.log({ sanitizedUser });
   sendToken(sanitizedUser, 200, res);
 });
 

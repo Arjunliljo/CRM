@@ -2847,6 +2847,12 @@ F .log .message-area-textarea-container {
   border-radius: 50%;
   object-fit: cover;
 }
+.logocontainer-greeting {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333; 
+  white-space: nowrap; 
+}
 
 .profile-page {
   border-radius: 8px;

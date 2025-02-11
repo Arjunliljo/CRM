@@ -40,6 +40,8 @@ export default function User() {
   
   const { users } = useSelector((state) => state.users);
   
+  console.log(users);
+  
 
   const navigate = useNavigate();
   const handleNavigate = () => {

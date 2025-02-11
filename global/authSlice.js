@@ -10,7 +10,9 @@ export const loginUser = createAsyncThunk(
         try {
             const response = await apiClient.post('/user/login', credentials);
             Cookies.set('token', response.data.data.user.token, { expires: 7 });
-            return response.data
+            console.log(response.data.data.user);
+
+            return response.data.data.user
         } catch (error) {
             return rejectWithValue('Invalid credentials');
         }
@@ -26,14 +28,19 @@ const authSlice = createSlice({
         isAuthenticated: false,
         tabs: [],
         defaultTabs: [],
-        rols: [],
+        roles: [],
         statuses: [],
+        autoAssign: false
     },
     reducers: {
         logout: (state) => {
             Cookies.remove("token");
             state.user = null;
             state.isAuthenticated = false;
+            state.tabs = null
+            state.defaultTabs = null
+            state.roles = null
+            state.statuses = null
             state.error = null;
         },
         clearError: (state) => {
@@ -47,13 +54,19 @@ const authSlice = createSlice({
                 state.error = null;
             })
             .addCase(loginUser.fulfilled, (state, action) => {
-                console.log(action.payload);
+                console.log("payload", action.payload);
 
                 state.loading = false;
                 state.isAuthenticated = true;
                 state.user = action.payload;
+                state.tabs = action.payload.tabs || [];
+                state.defaultTabs = action.payload.defaultTabs || [];
+                state.roles = action.payload.roles || [];
+                state.statuses = action.payload.statuses || [];
+                state.autoAssign = action.payload.autoAssign || false;
                 state.error = null;
             })
+
             .addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;
                 state.isAuthenticated = false;
