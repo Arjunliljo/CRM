@@ -2,7 +2,6 @@
 import catchAsync from "../Utilities/catchAsync.js";
 import AppError from "../Utilities/appError.js";
 import APIFeatures from "../APIFeatures/APIFeatures.js";
-import User from "../Models/userModel.js";
 
 export const getAll = (Model) => {
   // console.log("herehre");
@@ -22,7 +21,7 @@ export const getAll = (Model) => {
     //   .gstType()
     //   .search();
 
-    const docs = await User.find();
+    const docs = await Model.find();
     console.log(docs);
     
 

@@ -9,6 +9,7 @@ import ProfileUpdateUser from "../src/pages/profileEdit/ProfileUpdateUser";
 import Branchmanage from "../src/pages/branchmanage/Branchmanage";
 import Dash from "../src/pages/dashboard/Dash";
 import Dependencies from "../src/pages/Dependency/Dependencies";
+import Login from "../src/layout/Login/Login";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
       {
         path: "Profile-card",
         element: <Profilepage />,
+      },
+      {
+        path: "login",
+        element: <Login />,
       },
     ],
   },

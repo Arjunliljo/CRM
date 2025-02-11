@@ -11,6 +11,7 @@ import {
 export default function ProfileBasic() {
   const { email, contactNumber, employeeId, addressOne, addressTwo, name } =
     useSelector((state) => state.profile);
+
   const dispatch = useDispatch();
 
   return (
