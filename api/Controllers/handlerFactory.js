@@ -2,23 +2,29 @@
 import catchAsync from "../Utilities/catchAsync.js";
 import AppError from "../Utilities/appError.js";
 import APIFeatures from "../APIFeatures/APIFeatures.js";
+import User from "../Models/userModel.js";
 
 export const getAll = (Model) => {
+  // console.log("herehre");
+
+  
   return catchAsync(async (req, res) => {
-    let filter = {};
-    const features = new APIFeatures(Model, Model.find(filter), req.query);
+    // let filter = {};
+    // const features = new APIFeatures(Model, Model.find(filter), req.query);
 
-    features
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate(await Model.countDocuments())
-      .filterByBranch()
-      .filterByDateRange()
-      .gstType()
-      .search();
+    // features
+    //   .filter()
+    //   .sort()
+    //   .limitFields()
+    //   .paginate(await Model.countDocuments())
+    //   .filterByBranch()
+    //   .filterByDateRange()
+    //   .gstType()
+    //   .search();
 
-    const docs = await features.query;
+    const docs = await User.find();
+    console.log(docs);
+    
 
     res.status(200).json({
       status: "success",
@@ -50,7 +56,7 @@ export const createOne = (Model) => {
     if (!doc) {
       return next(new AppError("Failed to create document", 400));
     }
-
+    
     res.status(201).json({
       status: "success",
       data: doc,

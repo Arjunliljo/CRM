@@ -10,7 +10,7 @@ import { setAutoUserAssign } from "../../../global/userSlice";
 function UserCard({ user, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(user?._id === set?._id);
   const targetRef = useRef(null);
-  const { autoLeadsAssign, curLead } = useSelector((state) => state.user);
+  // const { autoLeadsAssign, curLead } = useSelector((state) => state.user);
 
   useEffect(() => {
     setIsSelected(user?._id === set?._id);
@@ -18,8 +18,11 @@ function UserCard({ user, set, onSet, istoggle, toggle }) {
 
   const dispatch = useDispatch();
   const handleUserSelect = () => {
+    
+    
     if (user._id === set?._id) {
       dispatch(setAutoUserAssign(!toggle));
+      
     } else {
       dispatch(onSet(user));
       if (!toggle) {

@@ -9,6 +9,7 @@ import coreSlice from "./coreSlice";
 import creationSlice from "./creationSlice";
 import profileSlice from "./profileSlice";
 import statusSlice from "./statusSlice";
+import usersSlice from "./usersSlice"
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     creation: creationSlice,
     profile: profileSlice,
     status: statusSlice,
+    users:usersSlice
   },
 });
 

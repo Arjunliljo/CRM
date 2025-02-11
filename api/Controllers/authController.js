@@ -27,8 +27,10 @@ const sendToken = (user, statusCode, res, next) => {
 };
 
 const createUser = catchAsync(async (req, res, next) => {
+  console.log('api called !!!', req.body);
   const user = await User.create(req.body);
-  sendToken(user, 201, res, next);
+  // sendToken(user, 201, res, next);
+  res.status(200).json({message:'user added succesfully'})
 });
 
 export { createUser };

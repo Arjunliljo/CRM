@@ -4,11 +4,20 @@ import ProfileBasicHolder from "./ProfileBasic/ProfileBasicHolder";
 import ProfileSwitchNav from "./ProfileSwitchNav";
 import ProfileStatusHolder from "./ProfileStatus/ProfileStatusHolder";
 import ProfileDashboardHolder from "./ProfileStatus/ProfileDashboardHolder";
+import { useCreateUser } from "../../hooks/useCreateUser";
+import apiClient from "../../../config/axiosInstance";
+import { message } from "antd";
+import { useDispatch } from "react-redux";
+import { resetProfile } from "../../../global/profileSlice";
+
 
 const TABS = ["Profile", "Status", "Dashboard"];
 
 function ProfileUpdateUser() {
   const [activeTab, setActiveTab] = useState(0);
+  const userData = useCreateUser();
+  const dispatch = useDispatch()
+
 
   const handleNext = () => {
     if (activeTab < TABS.length - 1) {
@@ -20,8 +29,12 @@ function ProfileUpdateUser() {
     setActiveTab(0);
   };
 
-  const handleCreate = () => {
-    console.log("create");
+  const handleCreate = async () => {
+    console.log("create", userData);
+    await apiClient.post("/user/create", userData);
+    message.success("User created successfully!");
+    dispatch(resetProfile())
+    setActiveTab(0)
   };
 
   return (

@@ -1,8 +1,9 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useBranches } from "../../apiHooks/useBranches";
 import { useCountries } from "../../apiHooks/useCountries";
 import { useRoles } from "../../apiHooks/useRoles";
 import { useStatuses } from "../../apiHooks/useStatuses";
+import { useUsers } from "../../apiHooks/useUsers";
 
 const ApiContext = createContext();
 
@@ -11,10 +12,16 @@ function ApiProvider({ children }) {
   const countryConfigs = useCountries();
   const roleConfigs = useRoles();
   const statusConfigs = useStatuses();
+  const usersConfigs = useUsers()
+
+  useEffect(() => {
+    console.log("users:", usersConfigs);
+  }, [statusConfigs]); 
+
 
   return (
     <ApiContext.Provider
-      value={{ branchConfigs, countryConfigs, roleConfigs, statusConfigs }}
+      value={{ branchConfigs, countryConfigs, roleConfigs, statusConfigs , usersConfigs }}
     >
       {children}
     </ApiContext.Provider>

@@ -5,7 +5,7 @@ import {
   getOne,
   updateOne,
 } from "../Controllers/handlerFactory";
-import Application from "../Models/ApplicationModel";
+import Application from "../Models/ApplicationModel"
 
 const createApplication = createOne(Application);
 const getAllApplications = getAll(Application);
