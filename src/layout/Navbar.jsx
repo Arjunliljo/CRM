@@ -14,17 +14,20 @@ export default function Navbar() {
   const navItems = [
     { name: "Dashboard", path: "/Dashboard", icon: "home" },
     { name: "Leads", path: "/Leads", icon: "hat" },
-    { name: "University", path: "/User", icon: "tick" },
+    { name: "Student", path: "/Student", icon: "student" }, 
+    { name: "University", path: "/University", icon: "tick" }, 
     { name: "Configuration", path: "/Configuration", icon: "contact" },
-    { name: "Profile", path: "/Profile-edit", icon: "wifi" },
-    { name: "Users", path: "/User", icon: "contact" },
-    { name: "Settings", path: "/Profile-card", icon: "settings" },
+    { name: "Profile-edit", path: "/Profile-edit", icon: "wifi" },
+    { name: "User", path: "/User", icon: "contact" },
+    { name: "Branch-managing", path: "/Branch-managing", icon: "branch" }, 
+    { name: "Profile-card", path: "/Profile-card", icon: "settings" },
   ];
+  
 
   return (
     <nav className="navbar">
       {navItems
-        .filter(item => visibleTabs.includes(item.name)) // Only show allowed tabs
+        .filter(item => visibleTabs.includes(item.name)) 
         .map(item => (
           <li className="learn-more" key={item.name}>
             <NavLink to={item.path}>
