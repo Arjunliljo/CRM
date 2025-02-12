@@ -14,35 +14,42 @@ import NormalButton from "../../components/buttons/NormalButton";
 import UserRight from "../../components/Card/UserRight/UserRight";
 import { useNavigate } from "react-router-dom";
 
-const user = {
-  num: 3,
-  name: "David Martin",
-  img: "https://via.placeholder.com/150",
-  role: "Counsellor",
-  status: "Interested",
-  statusColor: "red",
-  remark:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-  applications: "8 Payments",
-  payments: 5,
-  ongoing: "88 ongoing",
-  state: "Kochi",
-  count: 3,
-};
-const arr = [...Array(500)].map((_, i) => {
-  const obj = { ...user, _id: i };
-  return obj;
-});
+// const user = {
+//   num: 3,
+//   name: "David Martin",
+//   img: "https://via.placeholder.com/150",
+//   role: "Counsellor",
+//   status: "Interested",
+//   statusColor: "red",
+//   remark:
+//     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+//   applications: "8 Payments",
+//   payments: 5,
+//   ongoing: "88 ongoing",
+//   state: "Kochi",
+//   count: 3,
+// };
+// const arr = [...Array(500)].map((_, i) => {
+//   const obj = { ...user, _id: i };
+//   return obj;
+// });
 
 export default function User() {
   const { autoUserAssign, curUser } = useSelector((state) => state.user);
+  // console.log(autoUserAssign);
+  
+  const { users } = useSelector((state) => state.users);
+  
+  console.log(users);
+  
+
   const navigate = useNavigate();
   const handleNavigate = () => {
-    navigate("/profileEdit");
+    navigate("/profile-edit");
   };
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
-  const IContents = arr?.map((user, index) => (
+  const IContents = users?.map((user, index) => (
     <UserCard
       key={index}
       onSet={setCurUser}

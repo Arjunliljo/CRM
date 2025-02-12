@@ -45,4 +45,5 @@ router.use("/course", courseRoute);
 router.use("/university", universityRoute);
 
 
+
 export default router;

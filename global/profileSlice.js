@@ -62,6 +62,26 @@ const profileSlice = createSlice({
     setSelectedRoles: (state, action) => {
       state.selectedRoles = action.payload;
     },
+
+    //reset
+    resetProfile: (state) => {
+      return {
+        countries: [],
+        role: {},
+        branches: [],
+        password: "",
+        autoAssign: false,
+        email: "",
+        name: "",
+        contactNumber: "",
+        employeeId: "",
+        addressOne: "",
+        addressTwo: "",
+        mainStatuses: [],
+        selectedTabs: [],
+        selectedRoles: [],
+      };
+    },
   },
 });
 
@@ -80,6 +100,7 @@ export const {
   setProfileMainStatus,
   setSelectedTabs,
   setSelectedRoles,
+  resetProfile,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

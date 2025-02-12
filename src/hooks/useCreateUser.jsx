@@ -23,6 +23,26 @@ export const useCreateUser = () => {
   const roleIds = selectedRoles.map((role) => role._id);
   const statusIds = mainStatuses.map((status) => status._id);
 
+  const defaultTabesItems = new Set(["Dashboard", "Profile", "Settings"]);
+
+  const { defaultTabs, tabs } = selectedTabs.reduce(
+    (acc, tab) => {
+      if (defaultTabesItems.has(tab.name)) {
+        acc.defaultTabs.push(tab.name);
+      } else {
+        acc.tabs.push(tab);
+      }
+      return acc;
+    },
+    { defaultTabs: [], tabs: [] }
+  );
+
+
+  const filteredTabIds = tabs
+    .filter((tab) => statusIds.includes(tab._id))
+    .map((tab) => tab._id);
+
+
   const userData = {
     name,
     email,
@@ -34,8 +54,8 @@ export const useCreateUser = () => {
     countries: countryIds,
     statuses: statusIds,
     roles: roleIds,
-    defaultTabs: selectedTabs,
-    tabs: selectedTabs,
+    defaultTabs,
+    tabs: filteredTabIds,
     password,
     role: role._id,
     autoAssign,
