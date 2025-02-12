@@ -22,8 +22,6 @@ export const getAll = (Model) => {
     //   .search();
 
     const docs = await Model.find();
-    console.log(docs);
-    
 
     res.status(200).json({
       status: "success",

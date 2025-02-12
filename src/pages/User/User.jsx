@@ -36,7 +36,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function User() {
   const { autoUserAssign, curUser } = useSelector((state) => state.user);
-  // console.log(autoUserAssign);
   
   const { users } = useSelector((state) => state.users);
   

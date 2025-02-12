@@ -11,6 +11,9 @@ export default function MainStatus({ statuses }) {
       ? selectedStatuses.filter((status) => status.name !== item.name)
       : [...selectedStatuses, item];
 
+      console.log(updatedStatuses);
+      
+
     dispatch(setProfileMainStatus(updatedStatuses));
   };
 

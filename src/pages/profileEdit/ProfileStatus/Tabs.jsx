@@ -9,6 +9,8 @@ export default function Tabs() {
   const { selectedTabs } = useSelector((state) => state.profile);
 
   const allTabs = defaultTabs.concat(tabs);
+  console.log("tabes",tabs);
+  
 
   const handleTabClick = (tab) => {
     if (selectedTabs.includes(tab)) {

@@ -46,12 +46,12 @@ const createUser = catchAsync(async (req, res, next) => {
   }
   const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
-  // const newUser = await User.create({
-  //   ...req.body,
-  //   password: hashedPassword
-  // });
+  const newUser = await User.create({
+    ...req.body,
+    password: hashedPassword
+  });
 
-  // sendToken(newUser, 201, res);
+  sendToken(newUser, 201, res);
 });
 
 const loginUser = catchAsync(async (req, res, next) => {
@@ -68,10 +68,10 @@ const loginUser = catchAsync(async (req, res, next) => {
     .populate('branches')
     .populate('countries')
     .populate('statuses')
-    .populate('tabs')  
+    .populate('tabs')
     .populate('roles')
 
-  console.log({ user });
+    console.log(JSON.stringify(user, null, 2));
 
   if (!user) {
     return next(new AppError('Invalid email or password', 401));
@@ -97,9 +97,9 @@ const loginUser = catchAsync(async (req, res, next) => {
     branches: user.branches,
     countries: user.countries,
     statuses: user.statuses,
-    defaultTabs: user.defaultTabs, 
-    tabs: user.tabs, 
-    roles: user.roles, 
+    defaultTabs: user.defaultTabs,
+    tabs: user.tabs,
+    roles: user.roles,
     autoAssign: user.autoAssign,
     isLeadsAssign: user.isLeadsAssign,
     image: user.image,

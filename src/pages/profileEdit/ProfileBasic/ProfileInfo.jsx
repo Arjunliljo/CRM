@@ -19,7 +19,7 @@ export default function ProfileInfo() {
   };
 
   const handleRoleChange = (e) => {
-    dispatch(setProfileRole(e.target.value));
+    dispatch(setProfileRole(e));
   };
 
   return (

@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "sass": "sass --watch --poll --no-source-map sass/main.scss:styles/styles.css"
   },
+
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
@@ -34,7 +35,9 @@
     "react-icons": "^5.4.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.1",
-    "sass": "^1.83.0"
+    "sass": "^1.83.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

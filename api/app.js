@@ -3,9 +3,17 @@ import cors from "cors";
 import AppError from "./Utilities/appError.js";
 import versionOne from "./versions/v1.js";
 import globalErrorHandler from "./Utilities/globalErrorhandler.js";
-
+import http from 'http'
+import { handleSocketEvents } from "./config/socketConfig.js";
 const app = express();
 
+const server = http.createServer(app);
+const io = handleSocketEvents(server);
+
+// Store io instance in app (if needed for broadcasting)
+app.set("socket.io", io);
+
+//middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(addDbNameToRequest);
@@ -16,6 +24,7 @@ app.use(
     methods: "GET,POST,PATCH,PUT,DELETE",
   })
 );
+
 
 // Define routes BEFORE error handling
 app.use("/api/v2", versionOne);
