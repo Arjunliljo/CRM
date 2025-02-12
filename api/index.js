@@ -36,7 +36,7 @@ async function connectToDatabase() {
   }
 }
 
-// **Initialize HTTP Server and Attach Socket.io**
+//socket server
 const server = createServer(app);
 const io = new SocketIOServer(server, {
   cors: {
@@ -57,13 +57,12 @@ io.on("connection", (socket) => {
     console.log("recived", data);
 
     socket.to(data.chatId).emit("receiveMessage" , data)
-    
-  })
 
+  })
 
   socket.on("disconnect", (data) => {
     console.log("User disconnected",data);
-    
+
   });
 });
 
@@ -78,12 +77,3 @@ io.on("connection", (socket) => {
     console.error("Failed to start server:", err.message);
   }
 })();
-
-
-
-
-
-
-
-
-

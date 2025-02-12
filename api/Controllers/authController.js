@@ -62,7 +62,7 @@ const loginUser = catchAsync(async (req, res, next) => {
     .populate('tabs')
     .populate('roles')
 
-    console.log(JSON.stringify(user, null, 2));
+    // console.log(JSON.stringify(user, null, 2));
 
   if (!user) {
     return next(new AppError('Invalid email or password', 401));
@@ -72,7 +72,8 @@ const loginUser = catchAsync(async (req, res, next) => {
   // if (!isPasswordCorrect) {
   //   return next(new AppError('Invalid email or password', 401));
   // }
-  console.log( user.password);
+
+  console.log(user.password , "password");
   const isPasswordCorrect = password === user.password;
   if (!isPasswordCorrect) {
     return next(new AppError('Invalid email or password', 401));
@@ -103,7 +104,7 @@ const loginUser = catchAsync(async (req, res, next) => {
     token: token
   };
 
-  console.log({ sanitizedUser });
+
   sendToken(sanitizedUser, 200, res);
 });
 

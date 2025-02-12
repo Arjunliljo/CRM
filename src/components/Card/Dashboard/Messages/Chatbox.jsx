@@ -32,7 +32,7 @@ function Chatbox({ message, onBack }) {
       console.log("receved message", data);
       setChatMessages((prevMessages) => [...prevMessages, data]);
     });
-    
+
     return () => {
       socket.off("receiveMessage");
       socket.off("disconnect")
@@ -54,7 +54,6 @@ function Chatbox({ message, onBack }) {
       console.warn("Empty message cannot be sent");
     }
   };
-
 
 
   return (
