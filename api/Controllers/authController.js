@@ -72,6 +72,7 @@ const loginUser = catchAsync(async (req, res, next) => {
   // if (!isPasswordCorrect) {
   //   return next(new AppError('Invalid email or password', 401));
   // }
+  console.log( user.password);
   const isPasswordCorrect = password === user.password;
   if (!isPasswordCorrect) {
     return next(new AppError('Invalid email or password', 401));
