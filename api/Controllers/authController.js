@@ -8,8 +8,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const KEY = process.env.JWT_SECRET;
-console.log("key", process.env.JWT_SECRET);
-
 
 const generateToken = (id) => {
   const expiresIn = Math.floor(Date.now() / 1000) + 60 * 60 * 24; // 24 hours
@@ -17,8 +15,6 @@ const generateToken = (id) => {
 };
 
 const sendToken = (user, statusCode, res) => {
-
-
 
   // res.cookie("token", token, {
   //   httpOnly: true,
@@ -37,18 +33,15 @@ const sendToken = (user, statusCode, res) => {
 
 const createUser = catchAsync(async (req, res, next) => {
 
-  console.log(req.body);
-
-
   const existingUser = await User.findOne({ email: req.body.email });
   if (existingUser) {
     return next(new AppError('Email already registered', 400));
   }
-  const hashedPassword = await bcrypt.hash(req.body.password, 12);
+  // const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
   const newUser = await User.create({
     ...req.body,
-    password: hashedPassword
+    // password: hashedPassword
   });
 
   sendToken(newUser, 201, res);
@@ -56,8 +49,6 @@ const createUser = catchAsync(async (req, res, next) => {
 
 const loginUser = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(req.body);
-
 
   if (!email || !password) {
     return next(new AppError('Please provide email and password', 400));
@@ -77,10 +68,15 @@ const loginUser = catchAsync(async (req, res, next) => {
     return next(new AppError('Invalid email or password', 401));
   }
 
-  const isPasswordCorrect = await bcrypt.compare(password, user.password);
+  // const isPasswordCorrect = await bcrypt.compare(password, user.password);
+  // if (!isPasswordCorrect) {
+  //   return next(new AppError('Invalid email or password', 401));
+  // }
+  const isPasswordCorrect = password === user.password;
   if (!isPasswordCorrect) {
     return next(new AppError('Invalid email or password', 401));
   }
+
 
   const token = generateToken(user._id);
   if (!token) {
