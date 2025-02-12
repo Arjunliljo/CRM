@@ -17,7 +17,12 @@ export const useCreateUser = () => {
     selectedTabs,
     selectedRoles,
   } = useSelector((state) => state.profile);
+  console.log("mainStatuses", mainStatuses );
+  console.log("selected roles", selectedRoles );
+  console.log("role", role);
+  
 
+  
   const countryIds = countries.map((country) => country._id);
   const branchIds = branches.map((branch) => branch._id);
   const roleIds = selectedRoles.map((role) => role._id);

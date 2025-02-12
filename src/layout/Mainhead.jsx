@@ -3,9 +3,12 @@ import { useLocation } from "react-router-dom";
 import icon from "./../assets/Icons/mlq-01pro.svg";
 import { CiBellOn } from "react-icons/ci";
 import profile from "./../assets/profilepic.avif";
+import { useSelector } from "react-redux";
 
 function Mainhead() {
   const location = useLocation(); // Access the current route
+  const user = useSelector((state) => state.auth.user)
+  
 
   // Map routes to their corresponding titles
   const getPageTitle = () => {
@@ -33,7 +36,7 @@ function Mainhead() {
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    
+
     if (hour < 12) {
       return "Good Morning";
     } else if (hour < 18) {
@@ -43,10 +46,11 @@ function Mainhead() {
     }
   };
 
+  
   return (
     <div className="logocontainer">
       <img src={icon} alt="" className="logocontainer-rightlogo" />
-      <span className="logocontainer-greeting ">{getGreeting()} 👋</span>
+      <span className="logocontainer-greeting ">{getGreeting() } {user && user.name}👋</span>
       <div className="logocontainer-leftlead">
         <h2>{getPageTitle()}</h2>
         <div className="logocontainer-leftlead-bell">

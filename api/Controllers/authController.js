@@ -46,12 +46,12 @@ const createUser = catchAsync(async (req, res, next) => {
   }
   const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
-  // const newUser = await User.create({
-  //   ...req.body,
-  //   password: hashedPassword
-  // });
+  const newUser = await User.create({
+    ...req.body,
+    password: hashedPassword
+  });
 
-  // sendToken(newUser, 201, res);
+  sendToken(newUser, 201, res);
 });
 
 const loginUser = catchAsync(async (req, res, next) => {
@@ -71,7 +71,9 @@ const loginUser = catchAsync(async (req, res, next) => {
     .populate('tabs')  
     .populate('roles')
 
-  console.log({ user });
+    console.log(JSON.stringify(user, null, 2));
+
+
 
   if (!user) {
     return next(new AppError('Invalid email or password', 401));

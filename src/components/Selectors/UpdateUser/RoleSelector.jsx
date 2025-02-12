@@ -12,8 +12,10 @@ export default function RoleSelector({ setter }) {
   if (!roles) return <SmallLoader />;
 
   const handleChange = (event) => {
+    
     const selectedRole = roles.find((role) => role.name === event.target.value);
     if (selectedRole) {
+      
       dispatch(setter({ id: selectedRole._id, name: selectedRole.name }));
     }
   };

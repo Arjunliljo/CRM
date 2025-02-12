@@ -25,7 +25,7 @@ export default function Login() {
     try {
       const result = await dispatch(loginUser(credentials)).unwrap();
       if (result) {
-        navigate('/dashboard');
+        navigate('/dashboard'); 
       }
     } catch (err) {
       console.log('Login failed');

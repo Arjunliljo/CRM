@@ -37,10 +37,10 @@ const authSlice = createSlice({
             Cookies.remove("token");
             state.user = null;
             state.isAuthenticated = false;
-            state.tabs = null
-            state.defaultTabs = null
-            state.roles = null
-            state.statuses = null
+            state.tabs = []
+            state.defaultTabs = []
+            state.roles = []
+            state.statuses = []
             state.error = null;
         },
         clearError: (state) => {

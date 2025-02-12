@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import PrimaryBttn from "../../buttons/PrimaryBttn";
 import HomeIcon from "../../utils/Icons/HomeIcon";
 import ActivityLog from "../ProfileCard/ActivityLog";
@@ -9,6 +10,7 @@ import UserPersonalEdit from "./UserPersonalEdit";
 import UserPosition from "./UserPosition";
 
 function UserRight() {
+
   const lead = {
     img: "https://via.placeholder.com/100",
     name: "College De Paris",
@@ -16,6 +18,9 @@ function UserRight() {
     location: "France",
     year: "2",
   };
+  const currUser = useSelector((state)=> state.currUser)
+  console.log(currUser);
+  
   return (
     <div className="UserRightCard">
       <div className="UserRightCard-head-info-details">
