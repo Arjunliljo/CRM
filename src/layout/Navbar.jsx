@@ -23,7 +23,6 @@ export default function Navbar() {
     { name: "Profile-card", path: "/Profile-card", icon: "settings" },
   ];
 
-
   return (
     <nav className="navbar">
       {navItems
