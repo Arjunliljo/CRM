@@ -21,14 +21,11 @@ export default function AddStatusForm({ newStatus, setNewStatus }) {
       message.error("Please select Yes or No for Tab");
       return;
     }
-    if (!newStatus.selectedClass) {
-      message.error("Please select a class");
-      return;
-    }
-    if (!newStatus.subStatuses || newStatus.subStatuses.length === 0) {
-      message.error("Please add at least one sub-status");
-      return;
-    }
+
+    // if (!newStatus.subStatuses || newStatus.subStatuses.length === 0) {
+    //   message.error("Please add at least one sub-status");
+    //   return;
+    // }
 
     try {
       setIsLoading(true);
@@ -48,6 +45,8 @@ export default function AddStatusForm({ newStatus, setNewStatus }) {
 
       message.success("Status created successfully!");
     } catch (e) {
+      console.log(e, "error");
+
       message.error("Error creating status. Please try again.");
     } finally {
       setIsLoading(false);
