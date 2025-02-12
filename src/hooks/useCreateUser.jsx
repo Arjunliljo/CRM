@@ -17,16 +17,23 @@ export const useCreateUser = () => {
     selectedTabs,
     selectedRoles,
   } = useSelector((state) => state.profile);
-  
+
   const countryIds = countries.map((country) => country._id);
   const branchIds = branches.map((branch) => branch._id);
   const roleIds = selectedRoles.map((role) => role._id);
   const statusIds = mainStatuses.map((status) => status._id);
 
-  console.log(role);
-  
-
-  const defaultTabesItems = new Set(["Dashboard", "Profile", "Settings"]);
+  const defaultTabesItems = new Set([
+    "Dashboard",
+    "Leads",
+    "Student",
+    "University",
+    "Configuration",
+    "Profile-edit",
+    "User",
+    "Branch-managing",
+    "Profile-card",
+  ]);
 
   const { defaultTabs, tabs } = selectedTabs.reduce(
     (acc, tab) => {
@@ -45,7 +52,6 @@ export const useCreateUser = () => {
     .filter((tab) => statusIds.includes(tab._id))
     .map((tab) => tab._id);
 
-
   const userData = {
     name,
     email,
@@ -60,7 +66,7 @@ export const useCreateUser = () => {
     defaultTabs,
     tabs: filteredTabIds,
     password,
-    role: role._id,
+    role: role.id,
     autoAssign,
   };
 
