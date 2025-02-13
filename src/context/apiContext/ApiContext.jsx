@@ -12,15 +12,19 @@ function ApiProvider({ children }) {
   const countryConfigs = useCountries();
   const roleConfigs = useRoles();
   const statusConfigs = useStatuses();
-  const usersConfigs = useUsers()
+  const usersConfigs = useUsers();
 
-  useEffect(() => {
-  }, [statusConfigs]); 
-
+  useEffect(() => {}, [statusConfigs]);
 
   return (
     <ApiContext.Provider
-      value={{ branchConfigs, countryConfigs, roleConfigs, statusConfigs , usersConfigs }}
+      value={{
+        branchConfigs,
+        countryConfigs,
+        roleConfigs,
+        statusConfigs,
+        usersConfigs,
+      }}
     >
       {children}
     </ApiContext.Provider>

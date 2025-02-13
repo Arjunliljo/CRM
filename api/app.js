@@ -3,8 +3,9 @@ import cors from "cors";
 import AppError from "./Utilities/appError.js";
 import versionOne from "./versions/v1.js";
 import globalErrorHandler from "./Utilities/globalErrorhandler.js";
-import http from 'http'
+import http from "http";
 import { handleSocketEvents } from "./config/socketConfig.js";
+import cookieParser from "cookie-parser";
 const app = express();
 
 const server = http.createServer(app);
@@ -16,15 +17,16 @@ app.set("socket.io", io);
 //middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 // app.use(addDbNameToRequest);
 
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
     methods: "GET,POST,PATCH,PUT,DELETE",
+    credentials: true,
   })
 );
-
 
 // Define routes BEFORE error handling
 app.use("/api/v2", versionOne);

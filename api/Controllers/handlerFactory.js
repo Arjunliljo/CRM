@@ -6,7 +6,7 @@ import APIFeatures from "../APIFeatures/APIFeatures.js";
 export const getAll = (Model) => {
   // console.log("herehre");
 
-  
+
   return catchAsync(async (req, res) => {
     // let filter = {};
     // const features = new APIFeatures(Model, Model.find(filter), req.query);
@@ -48,12 +48,13 @@ export const getOne = (Model, type = "id") => {
 
 export const createOne = (Model) => {
   return catchAsync(async (req, res, next) => {
+    console.log(req.body);
     const doc = await Model.create(req.body);
 
     if (!doc) {
       return next(new AppError("Failed to create document", 400));
     }
-    
+
     res.status(201).json({
       status: "success",
       data: doc,

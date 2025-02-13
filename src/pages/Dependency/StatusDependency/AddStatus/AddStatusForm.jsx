@@ -21,18 +21,14 @@ export default function AddStatusForm({ newStatus, setNewStatus }) {
       message.error("Please select Yes or No for Tab");
       return;
     }
-    if (!newStatus.selectedClass) {
-      message.error("Please select a class");
-      return;
-    }
-    if (!newStatus.subStatuses || newStatus.subStatuses.length === 0) {
-      message.error("Please add at least one sub-status");
-      return;
-    }
+
+    // if (!newStatus.subStatuses || newStatus.subStatuses.length === 0) {
+    //   message.error("Please add at least one sub-status");
+    //   return;
+    // }
 
     try {
       setIsLoading(true);
-
       await apiClient.post("/status", newStatus);
 
       // Reset form after successful submission

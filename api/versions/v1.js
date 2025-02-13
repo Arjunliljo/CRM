@@ -46,5 +46,4 @@ router.use("/course", courseRoute);
 router.use("/university", universityRoute);
 router.use("/chat",chatRoute)
 
-
 export default router;

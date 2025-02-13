@@ -7,7 +7,6 @@ import app from "./app.js";
 import { createServer } from "http";
 import { Server as SocketIOServer } from "socket.io";
 const dbConnectionString = process.env.PRIMARY_STR || "";
-
 const PORT = process.env.PORT || 3000;
 
 let isConnected = false;
