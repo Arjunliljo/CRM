@@ -61,7 +61,6 @@ const loginUser = catchAsync(async (req, res, next) => {
     .populate('statuses')
     .populate('tabs')
     .populate('roles')
-
     // console.log(JSON.stringify(user, null, 2));
 
   if (!user) {
