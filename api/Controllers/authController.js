@@ -14,12 +14,14 @@ const generateToken = (id) => {
 };
 
 const sendToken = (user, statusCode, res) => {
-  // res.cookie("token", token, {
-  //   httpOnly: true,
-  //   sameSite: "none",
-  //   secure: true,
-  //   maxAge: 24 * 60 * 60 * 1000,
-  // });
+  const token = generateToken(user._id);
+
+  res.cookie("token", token, {
+    httpOnly: true,
+    // sameSite: "none",
+    secure: true,
+    maxAge: 24 * 60 * 60 * 1000,
+  });
 
   res.status(statusCode).json({
     status: "success",
@@ -34,11 +36,11 @@ const createUser = catchAsync(async (req, res, next) => {
   if (existingUser) {
     return next(new AppError("Email already registered", 400));
   }
-  // const hashedPassword = await bcrypt.hash(req.body.password, 12);
+  const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
   const newUser = await User.create({
     ...req.body,
-    // password: hashedPassword
+    password: hashedPassword,
   });
 
   sendToken(newUser, 201, res);
@@ -64,11 +66,7 @@ const loginUser = catchAsync(async (req, res, next) => {
     return next(new AppError("Invalid email or password", 401));
   }
 
-  // const isPasswordCorrect = await bcrypt.compare(password, user.password);
-  // if (!isPasswordCorrect) {
-  //   return next(new AppError('Invalid email or password', 401));
-  // }
-  const isPasswordCorrect = password === user.password;
+  const isPasswordCorrect = await bcrypt.compare(password, user.password);
   if (!isPasswordCorrect) {
     return next(new AppError("Invalid email or password", 401));
   }
@@ -101,4 +99,45 @@ const loginUser = catchAsync(async (req, res, next) => {
   sendToken(sanitizedUser, 200, res);
 });
 
-export { createUser, loginUser };
+const verify = catchAsync(async (req, res, next) => {
+  let isLoggedIn = false;
+  // 1) Get the token and check its there
+  console.log(req.cookies, "req.cookies");
+
+  const token = req.cookies.token;
+
+  if (!token)
+    return res
+      .status(401)
+      .json({ status: "Failed", message: "Logged in failed", isLoggedIn });
+
+  // 2) Varify token
+  const decode = jwt.verify(token, KEY);
+  const user = await User.findById(decode.id);
+  if (!user) {
+    return res.status(404).json({
+      status: "Failed",
+      message: "The User belong to this token is not exist",
+      isLoggedIn,
+    });
+  }
+
+  isLoggedIn = true;
+
+  res.status(200).json({
+    status: "Success",
+    message: "Successfully Logged in",
+    isLoggedIn,
+    user,
+  });
+});
+
+const logout = catchAsync(async (req, res) => {
+  res.clearCookie("token");
+  res.status(200).json({
+    status: "Success",
+    message: "Successfully Logged out",
+  });
+});
+
+export { createUser, loginUser, verify, logout };

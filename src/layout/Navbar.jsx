@@ -1,16 +1,18 @@
 import { NavLink } from "react-router-dom";
 import HomeIcon from "../components/utils/Icons/HomeIcon";
-import useLogout from "../hooks/useLogout";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import apiClient from "../../config/axiosInstance";
+import { logout } from "../../global/authSlice";
 
 export default function Navbar() {
-  const logoutUser = useLogout();
+  const dispatch = useDispatch();
 
-  const { defaultTabs = [], tabs = [] } = useSelector((state) => state.auth);
+  const { defaultTabs, tabs } = useSelector((state) => state.auth);
   const userTabs = tabs.map((tab) => tab.name);
 
-  const { defaultTabs = [], tabs = [] } = useSelector((state) => state.auth);
-  const userTabs = tabs.map((tab) => tab.name);
+  console.log(tabs, "tabs");
+  console.log(defaultTabs, "defaultTabs");
+
   const visibleTabs = [...new Set([...defaultTabs, ...userTabs])];
 
   const navItems = [
@@ -24,6 +26,11 @@ export default function Navbar() {
     { name: "Branch-managing", path: "/Branch-managing", icon: "branch" },
     { name: "Profile-card", path: "/Profile-card", icon: "settings" },
   ];
+
+  const logoutUser = async () => {
+    await apiClient.post("/user/logout");
+    dispatch(logout());
+  };
 
   return (
     <nav className="navbar">
