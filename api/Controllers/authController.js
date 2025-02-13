@@ -1,4 +1,3 @@
-
 import User from "../Models/userModel.js";
 import jwt from "jsonwebtoken";
 import catchAsync from "../Utilities/catchAsync.js";
@@ -15,27 +14,25 @@ const generateToken = (id) => {
 };
 
 const sendToken = (user, statusCode, res) => {
-
   // res.cookie("token", token, {
   //   httpOnly: true,
   //   sameSite: "none",
   //   secure: true,
-  //   maxAge: 24 * 60 * 60 * 1000
+  //   maxAge: 24 * 60 * 60 * 1000,
   // });
 
   res.status(statusCode).json({
     status: "success",
     data: {
-      user
-    }
+      user,
+    },
   });
 };
 
 const createUser = catchAsync(async (req, res, next) => {
-
   const existingUser = await User.findOne({ email: req.body.email });
   if (existingUser) {
-    return next(new AppError('Email already registered', 400));
+    return next(new AppError("Email already registered", 400));
   }
   // const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
@@ -51,21 +48,20 @@ const loginUser = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return next(new AppError('Please provide email and password', 400));
+    return next(new AppError("Please provide email and password", 400));
   }
 
-  const user = await User.findOne({ email }).select('+password')
-    .populate('role')
-    .populate('branches')
-    .populate('countries')
-    .populate('statuses')
-    .populate('tabs')
-    .populate('roles')
-
-    console.log(JSON.stringify(user, null, 2));
+  const user = await User.findOne({ email })
+    .select("+password")
+    .populate("role")
+    .populate("branches")
+    .populate("countries")
+    .populate("statuses")
+    .populate("tabs")
+    .populate("roles");
 
   if (!user) {
-    return next(new AppError('Invalid email or password', 401));
+    return next(new AppError("Invalid email or password", 401));
   }
 
   // const isPasswordCorrect = await bcrypt.compare(password, user.password);
@@ -74,9 +70,8 @@ const loginUser = catchAsync(async (req, res, next) => {
   // }
   const isPasswordCorrect = password === user.password;
   if (!isPasswordCorrect) {
-    return next(new AppError('Invalid email or password', 401));
+    return next(new AppError("Invalid email or password", 401));
   }
-
 
   const token = generateToken(user._id);
   if (!token) {
@@ -99,7 +94,7 @@ const loginUser = catchAsync(async (req, res, next) => {
     autoAssign: user.autoAssign,
     isLeadsAssign: user.isLeadsAssign,
     image: user.image,
-    token: token
+    token: token,
   };
 
   console.log({ sanitizedUser });

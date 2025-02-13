@@ -29,7 +29,6 @@ export default function AddStatusForm({ newStatus, setNewStatus }) {
 
     try {
       setIsLoading(true);
-
       await apiClient.post("/status", newStatus);
 
       // Reset form after successful submission
@@ -45,8 +44,6 @@ export default function AddStatusForm({ newStatus, setNewStatus }) {
 
       message.success("Status created successfully!");
     } catch (e) {
-      console.log(e, "error");
-
       message.error("Error creating status. Please try again.");
     } finally {
       setIsLoading(false);
