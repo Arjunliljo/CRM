@@ -6,6 +6,7 @@ import leadRoute from "../Routes/leadRoute.js";
 import statusRoute from "../Routes/statusRoute.js";
 import userRoute from "../Routes/userRoute.js";
 import courseRoute from "../Routes/courseRoute.js";
+import chatRoute from "../Routes/chatRoute.js";
 import universityRoute from "../Routes/universityRoute.js";
 import metaLeadRoute from "../Routes/metaLeadRoute.js";
 
@@ -43,7 +44,7 @@ router.use("/role", roleRoute);
 router.use("/status", statusRoute);
 router.use("/course", courseRoute);
 router.use("/university", universityRoute);
-
+router.use("/chat",chatRoute)
 
 
 export default router;

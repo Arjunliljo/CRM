@@ -14,13 +14,13 @@ export default function ProfileCard({ IDocumentUpload, lead }) {
         <div className="profileCard-head-info">
           <div className="profileCard-head-info-details">
             <div className="profileCard-image-container">
-              <img src={lead.img} alt={lead.name} />
+              <img src={ lead && lead.img} alt={ lead && lead.name} />
             </div>
             <div className="name-bar-name name-small">
-              <div>{lead.name}</div>
+              <div>{lead && lead.name}</div>
               <div className="profileCard-head-info-location-card">
                 <span className="profileCard-head-info-location">
-                  {lead.country}
+                  {lead && lead.country}
                 </span>
                 <span className="profileCard-head-info-underline"></span>
               </div>
