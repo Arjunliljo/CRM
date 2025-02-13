@@ -39,7 +39,6 @@ function Chatbox({ message, onBack }) {
       });
 
       socket.emit("sendMessage", { ...response.data.data, chatId });
-      // setChatMessages((prevMessages) => [...prevMessages, response.data.data]);
       setInputMessage("");
     } else {
       console.warn("Empty message cannot be sent");
