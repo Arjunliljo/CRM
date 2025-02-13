@@ -13,12 +13,10 @@ const chatSchema = mongoose.Schema(
         messages: [{
             content: {
                 type: String,
-                required: true
             },
             sender: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User',
-                required: true
             },
             time: {
                 type: Date,

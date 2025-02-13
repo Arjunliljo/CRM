@@ -8,56 +8,46 @@ import { useSelector } from "react-redux";
 function Chatbox({ message, onBack }) {
   const [inputMessage, setInputMessage] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
-
-
-
-  // const handleSendMessage = () => {
-  //   if (inputMessage.trim()) {
-  //     setChatMessages((prevMessages) => [
-  //       ...prevMessages,
-  //       { sender: "You", text: inputMessage },
-  //     ]);
-  //     setInputMessage("");
-  //   } else {
-  //     console.warn("Empty message cannot be sent");
-  //   }
-  // };
-
-
-  const chatId = "random-room-123";
-
+  const user = useSelector((state)=>state.auth)
+  const chatId = message.id;
+console.log(user , "user")
   useEffect(() => {
-    // Join the chat room when component mounts
     socket.emit("joinChat", chatId);
 
+    // Initialize chat messages with existing messages if any
+    if (Array.isArray(message.message)) {
+      setChatMessages(message.message.map(msg => ({
+        text: msg,
+        sender: "other"
+      })));
+    } else if (message.message){
+      setChatMessages([{
+        text: message.message,
+        sender: "other"
+      }]);
+    }
     // Listen for incoming messages
     socket.on("receiveMessage", (data) => {
-      console.log("receved message", data);
       setChatMessages((prevMessages) => [...prevMessages, data]);
     });
 
     return () => {
       socket.off("receiveMessage");
-      socket.off("disconnect")
+      socket.off("disconnect");
     };
-  }, [chatId]);
+  }, [chatId, message.message]);
 
   const handleSendMessage = () => {
     if (inputMessage.trim()) {
-      const messageData = { sender: "You", text: inputMessage, chatId };
+      const messageData = { sender: user.user._id, content: inputMessage, chatId };
 
-      // Emit message to the server
       socket.emit("sendMessage", messageData);
-
-      // Update local state (to see own message instantly)
       setChatMessages((prevMessages) => [...prevMessages, messageData]);
-
       setInputMessage("");
     } else {
       console.warn("Empty message cannot be sent");
     }
   };
-
 
   return (
     <div className="chatbox">
