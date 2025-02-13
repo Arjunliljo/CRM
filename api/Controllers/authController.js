@@ -102,7 +102,6 @@ const loginUser = catchAsync(async (req, res, next) => {
 const verify = catchAsync(async (req, res, next) => {
   let isLoggedIn = false;
   // 1) Get the token and check its there
-  console.log(req.cookies, "req.cookies");
 
   const token = req.cookies.token;
 

@@ -10,9 +10,6 @@ export default function Navbar() {
   const { defaultTabs, tabs } = useSelector((state) => state.auth);
   const userTabs = tabs.map((tab) => tab.name);
 
-  console.log(tabs, "tabs");
-  console.log(defaultTabs, "defaultTabs");
-
   const visibleTabs = [...new Set([...defaultTabs, ...userTabs])];
 
   const navItems = [
