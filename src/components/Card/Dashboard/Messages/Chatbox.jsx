@@ -4,45 +4,58 @@ import { BorderAllRounded } from "@mui/icons-material";
 import HomeIcon from "../../../utils/Icons/HomeIcon";
 import socket from "../../../../../config/socketConfig";
 import { useSelector } from "react-redux";
+import apiClient from "../../../../../config/axiosInstance";
 
 function Chatbox({ message, onBack }) {
   const [inputMessage, setInputMessage] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
-  const user = useSelector((state)=>state.auth)
+  const user = useSelector((state) => state.auth);
   const chatId = message.id;
-console.log(user , "user")
+
   useEffect(() => {
     socket.emit("joinChat", chatId);
 
     // Initialize chat messages with existing messages if any
     if (Array.isArray(message.message)) {
-      setChatMessages(message.message.map(msg => ({
-        text: msg,
-        sender: "other"
-      })));
-    } else if (message.message){
-      setChatMessages([{
-        text: message.message,
-        sender: "other"
-      }]);
+      setChatMessages(
+        message.message.map((msg) => ({
+          text: msg,
+          sender: "other",
+        }))
+      );
+    } else if (message.message) {
+      setChatMessages([
+        {
+          text: message.message,
+          sender: "other",
+        },
+      ]);
     }
-    // Listen for incoming messages
+
     socket.on("receiveMessage", (data) => {
-      setChatMessages((prevMessages) => [...prevMessages, data]);
+      console.log(data, "received data");
     });
 
     return () => {
       socket.off("receiveMessage");
       socket.off("disconnect");
     };
-  }, [chatId, message.message]);
+  }, [chatId]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (inputMessage.trim()) {
-      const messageData = { sender: user.user._id, content: inputMessage, chatId };
+      const messageData = {
+        sender: user.user._id,
+        content: inputMessage,
+        chatId,
+      };
+      const response = await apiClient.patch("chat/update", {
+        chatId,
+        message: messageData,
+      });
 
-      socket.emit("sendMessage", messageData);
-      setChatMessages((prevMessages) => [...prevMessages, messageData]);
+      socket.emit("sendMessage", { ...response.data.data, chatId });
+      // setChatMessages((prevMessages) => [...prevMessages, response.data.data]);
       setInputMessage("");
     } else {
       console.warn("Empty message cannot be sent");
@@ -72,10 +85,11 @@ console.log(user , "user")
           {chatMessages.map((msg, index) => (
             <div
               key={index}
-              className={`chatbox-message ${msg.sender === "You"
+              className={`chatbox-message ${
+                msg.sender === "You"
                   ? "chatbox-message-sent"
                   : "chatbox-message-received"
-                }`}
+              }`}
             >
               <p>{msg.text}</p>
             </div>

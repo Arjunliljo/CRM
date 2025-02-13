@@ -4,6 +4,7 @@ import { useCountries } from "../../apiHooks/useCountries";
 import { useRoles } from "../../apiHooks/useRoles";
 import { useStatuses } from "../../apiHooks/useStatuses";
 import { useUsers } from "../../apiHooks/useUsers";
+import { useChats } from "../../apiHooks/useChats";
 
 const ApiContext = createContext();
 
@@ -13,6 +14,7 @@ function ApiProvider({ children }) {
   const roleConfigs = useRoles();
   const statusConfigs = useStatuses();
   const usersConfigs = useUsers();
+  const chatsConfigs = useChats();
 
   useEffect(() => {}, [statusConfigs]);
 
@@ -24,6 +26,7 @@ function ApiProvider({ children }) {
         roleConfigs,
         statusConfigs,
         usersConfigs,
+        chatsConfigs,
       }}
     >
       {children}
