@@ -11,6 +11,7 @@ import profileSlice from "./profileSlice";
 import statusSlice from "./statusSlice";
 import usersSlice from "./usersSlice"
 import authSlice from "./authSlice"
+import chatSlice from "./chatSlice"
 
 const store = configureStore({
   reducer: {
@@ -25,7 +26,8 @@ const store = configureStore({
     profile: profileSlice,
     status: statusSlice,
     users:usersSlice,
-    auth:authSlice
+    auth:authSlice,
+    chat:chatSlice
   },
 });
 

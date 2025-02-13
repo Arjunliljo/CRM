@@ -3,55 +3,49 @@ import catchAsync from "../Utilities/catchAsync.js";
 
 export const createChat = catchAsync(async (req, res) => {
 
-  if (!req.body.users || req.body.users.length !== 2) {
-      return res.status(400).json({
-          status: "fail",
-          message: "Please provide exactly two users for the chat"
-      });
+  if (!req.body.users?.length === 2) {
+    return res.status(400).json({
+      status: "fail",
+      message: "Please provide exactly two users for the chat"
+    });
   }
 
   const existingChat = await Chat.findOne({
-      users: { $all: req.body.users }
-  }).populate({
-      path: 'users',
-      select: '_id name image'
-  });
+    users: { $all: req.body.users }
+  }).populate('users', '_id name image');
 
   if (existingChat) {
-      return res.status(200).json({
-          status: "success",
-          data: existingChat
-      });
+    return res.status(200).json({
+      status: "success",
+      data: existingChat
+    });
   }
 
   const newChat = await Chat.create({
-      users: req.body.users,
-      messages: []
-  });
-
-  const populatedChat = await Chat.findById(newChat._id).populate({
-      path: 'users',
-      select: '_id name image'
-  });
+    users: req.body.users,
+    messages: []
+  }).then(chat => chat.populate('users', '_id name image'));
 
   res.status(201).json({
-      status: "success",
-      data: populatedChat
+    status: "success",
+    data: newChat
   });
-
 });
 
 export const updateChat = catchAsync(async (req, res, next) => {
     const { chatId, message } = req.body;
+
+    const newMessage = {
+        content: message.content,
+        sender: message.sender,
+        time: new Date()
+    };
+
     const chat = await Chat.findByIdAndUpdate(
         chatId,
         {
             $push: {
-                messages: {
-                    content: message.content,
-                    sender: message.sender,
-                    time: new Date()
-                }
+                messages: newMessage
             }
         },
         {
@@ -72,14 +66,23 @@ export const updateChat = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
         status: "success",
-        data: chat
+        data: newMessage
     });
 });
 
 export const getChats = catchAsync(async (req, res, next) => {
-    const chats = await Chat.find();
+    const { userId } = req.query;
+    if (!userId) {
+        return res.status(400).json({
+            status: "fail",
+            message: "User ID is required"
+        });
+    }
+
+    const chats = await Chat.find({ users: { $in: userId } }).populate('users', '_id name image');
+
     res.status(200).json({
         status: "success",
         data: chats
-    });
+      });
 });

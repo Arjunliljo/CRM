@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("/create", createChat);
 router.get("/", getChats);
-router.put("/update", updateChat);
+router.patch("/update", updateChat);
 // router.patch("/:id", updateChat);
 
 export default router;
