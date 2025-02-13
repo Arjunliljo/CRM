@@ -76,6 +76,7 @@ export default function Messages() {
   ];
 
   const handleSelectMessage = (message) => {
+    console.log(message, "message from handle select message");
     setSelectedMessage(message);
   };
 
@@ -142,8 +143,7 @@ export default function Messages() {
                 const message = {
                   id: chat._id,
                   name: otherUser.name,
-                  message:
-                    chat.messages[chat.messages.length - 1].content || "",
+                  message: chat.messages,
                   time: chat.updatedAt,
                   avatar: otherUser.image,
                   unread: chat.unread || false,

@@ -24,7 +24,7 @@ export default function MessageItem({ message, onClick }) {
           </div>
           <div className="message-item__name-text-container">
             <h3 className="message-item__name">{message.name}</h3>
-            <p className="message-item__text">{message.message}</p>
+            <p className="message-item__text">{message.message[message.message.length - 1]?.content || message.message}</p>
           </div>
         </div>
       </div>

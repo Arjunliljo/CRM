@@ -12,25 +12,9 @@ function Chatbox({ message, onBack }) {
   const user = useSelector((state) => state.auth);
   const chatId = message.id;
 
+
   useEffect(() => {
     socket.emit("joinChat", chatId);
-
-    // Initialize chat messages with existing messages if any
-    if (Array.isArray(message.message)) {
-      setChatMessages(
-        message.message.map((msg) => ({
-          text: msg,
-          sender: "other",
-        }))
-      );
-    } else if (message.message) {
-      setChatMessages([
-        {
-          text: message.message,
-          sender: "other",
-        },
-      ]);
-    }
 
     socket.on("receiveMessage", (data) => {
       console.log(data, "received data");
@@ -73,7 +57,7 @@ function Chatbox({ message, onBack }) {
               className="chatbox-head-profilehead-pic"
             />
             <div className="chatbox-head-profilehead-online">
-              <h2 className="chatbox-head-title">Arun</h2>
+              <h2 className="chatbox-head-title">{message.name}</h2>
               <h6>online</h6>
             </div>
           </div>
@@ -82,16 +66,16 @@ function Chatbox({ message, onBack }) {
           </button>
         </div>
         <div className="chatbox-scroll">
-          {chatMessages.map((msg, index) => (
+          {message.message.map((msg, index) => (
             <div
               key={index}
               className={`chatbox-message ${
-                msg.sender === "You"
+                msg.sender === user.user._id
                   ? "chatbox-message-sent"
                   : "chatbox-message-received"
               }`}
             >
-              <p>{msg.text}</p>
+              <p>{msg.content}</p>
             </div>
           ))}
         </div>
