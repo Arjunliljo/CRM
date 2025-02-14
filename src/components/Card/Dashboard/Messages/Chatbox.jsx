@@ -12,12 +12,18 @@ function Chatbox({ message, onBack }) {
   const user = useSelector((state) => state.auth);
   const chatId = message.id;
 
+  useEffect(() => {
+    if (message?.message) {
+      setChatMessages(message.message);
+    }
+  }, [message , chatId]);
+
 
   useEffect(() => {
     socket.emit("joinChat", chatId);
 
     socket.on("receiveMessage", (data) => {
-      console.log(data, "received data");
+      setChatMessages((prevMessages) => [...prevMessages, data]);
     });
 
     return () => {
@@ -51,12 +57,12 @@ function Chatbox({ message, onBack }) {
         <div className="chatbox-head">
           <div className="chatbox-head-profilehead">
             <img
-              src={message.avatar}
-              alt={message.name}
+              src={message && message.avatar}
+              alt={message && message.name}
               className="chatbox-head-profilehead-pic"
             />
             <div className="chatbox-head-profilehead-online">
-              <h2 className="chatbox-head-title">{message.name}</h2>
+              <h2 className="chatbox-head-title">{message && message.name}</h2>
               <h6>online</h6>
             </div>
           </div>
@@ -65,7 +71,7 @@ function Chatbox({ message, onBack }) {
           </button>
         </div>
         <div className="chatbox-scroll">
-          {message.message.map((msg, index) => (
+          { chatMessages && chatMessages.map((msg, index) => (
             <div
               key={index}
               className={`chatbox-message ${

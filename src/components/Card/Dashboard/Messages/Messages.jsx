@@ -14,9 +14,6 @@ export default function Messages() {
   const [selectedUser, setSelectedUser] = useState(null);
   const currentUser = useSelector((state) => state.auth);
   const chats = useSelector((state) => state.chat.chats);
-  console.log(chats, "chats from messages");
-
-  console.log(currentUser, "current user");
 
   const messages = [
     {
@@ -76,7 +73,6 @@ export default function Messages() {
   ];
 
   const handleSelectMessage = (message) => {
-    console.log(message, "message from handle select message");
     setSelectedMessage(message);
   };
 
