@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import CountryBtn from "../../../buttons/CountryBtn";
 import { BorderAllRounded } from "@mui/icons-material";
 import HomeIcon from "../../../utils/Icons/HomeIcon";
@@ -13,6 +13,15 @@ function Chatbox({ message, onBack }) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const user = useSelector((state) => state.auth);
   const chatId = message.id;
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatMessages]);
 
   useEffect(() => {
     if (message?.message) {
@@ -91,6 +100,7 @@ function Chatbox({ message, onBack }) {
               <p>{msg.content}</p>
             </div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
       </div>
 

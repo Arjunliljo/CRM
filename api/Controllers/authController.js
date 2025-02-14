@@ -62,7 +62,6 @@ const loginUser = catchAsync(async (req, res, next) => {
     .populate("tabs")
     .populate("roles");
 
-    console.log(user)
 
   if (!user) {
     return next(new AppError("Invalid email or password", 401));
@@ -99,22 +98,18 @@ const loginUser = catchAsync(async (req, res, next) => {
     token: token,
   };
 
-  console.log({ sanitizedUser });
   sendToken(sanitizedUser, 200, res);
 });
 
 
 const verify = catchAsync(async (req, res, next) => {
   let isLoggedIn = false;
-  // 1) Get the token and check its there
-  console.log(req.cookies, "req.cookies");
-
   const token = req.cookies.token;
 
   if (!token)
     return res
       .status(401)
-      .json({ status: "Failed", message: "Logged in failed", isLoggedIn });
+      .json({ status: "Failed", message: "Logged in failed.", isLoggedIn });
 
   // 2) Varify token
   const decode = jwt.verify(token, KEY);
@@ -122,7 +117,7 @@ const verify = catchAsync(async (req, res, next) => {
   if (!user) {
     return res.status(404).json({
       status: "Failed",
-      message: "The User belong to this token is not exist",
+      message: "The User belong to this token is not exist.",
       isLoggedIn,
     });
   }
