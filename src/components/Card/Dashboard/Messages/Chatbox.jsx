@@ -5,10 +5,12 @@ import HomeIcon from "../../../utils/Icons/HomeIcon";
 import socket from "../../../../../config/socketConfig";
 import { useSelector } from "react-redux";
 import apiClient from "../../../../../config/axiosInstance";
+import EmojiPicker from 'emoji-picker-react';
 
 function Chatbox({ message, onBack }) {
   const [inputMessage, setInputMessage] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const user = useSelector((state) => state.auth);
   const chatId = message.id;
 
@@ -16,13 +18,13 @@ function Chatbox({ message, onBack }) {
     if (message?.message) {
       setChatMessages(message.message);
     }
-  }, [message , chatId]);
-
+  }, [message, chatId]);
 
   useEffect(() => {
     socket.emit("joinChat", chatId);
 
     socket.on("receiveMessage", (data) => {
+      console.log(data, "recived data");
       setChatMessages((prevMessages) => [...prevMessages, data]);
     });
 
@@ -31,6 +33,12 @@ function Chatbox({ message, onBack }) {
       socket.off("disconnect");
     };
   }, [chatId]);
+
+  const onEmojiClick = (emojiObject) => {
+    console.log(emojiObject.emoji, "emojiObject");
+    setInputMessage(prevInput => prevInput + emojiObject.emoji);
+    setShowEmojiPicker(false);
+  };
 
   const handleSendMessage = async () => {
     if (inputMessage.trim()) {
@@ -71,7 +79,7 @@ function Chatbox({ message, onBack }) {
           </button>
         </div>
         <div className="chatbox-scroll">
-          { chatMessages && chatMessages.map((msg, index) => (
+          {chatMessages && chatMessages.map((msg, index) => (
             <div
               key={index}
               className={`chatbox-message ${
@@ -87,13 +95,35 @@ function Chatbox({ message, onBack }) {
       </div>
 
       <div className="chatbox-type">
-        <textarea
-          type="text"
-          className="chatbox-type-input"
-          placeholder="Type message..."
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-        ></textarea>
+      <button
+            className="emoji-button"
+            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '1.5rem',
+              padding: '5px'
+            }}
+          >
+            😊
+          </button>
+        <div className="chatbox-input-container" style={{ position: 'relative' }}>
+
+          {showEmojiPicker && (
+            <div style={{ position: 'absolute', bottom: '100%', left: '0', zIndex: 1 }}>
+              <EmojiPicker onEmojiClick={onEmojiClick} />
+            </div>
+          )}
+          <textarea
+            type="text"
+            className="chatbox-type-input"
+            placeholder="Type message..."
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            style={{ width: 'calc(100% - 50px)' }}
+          />
+        </div>
         <CountryBtn
           style={{
             paddingLeft: "6.5px",

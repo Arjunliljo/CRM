@@ -16,7 +16,7 @@ const dispatch = useDispatch()
   });
 
   const chats = data?.data?.data;
-  // console.log(chats)
+console.log(chats)
 
   useEffect(()=>{
   if(chats){
