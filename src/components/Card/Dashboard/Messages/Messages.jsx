@@ -3,77 +3,22 @@ import ArrowBlue from "../../../buttons/ArrowBlue";
 import HomeIcon from "../../../utils/Icons/HomeIcon";
 import MessageItem from "./MessageItem";
 import Chatbox from "./Chatbox";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UsersList from "./UsersList";
 import apiClient from "../../../../../config/axiosInstance";
+import { setSelectedMessage } from "../../../../../global/chatSlice";
 
 // ... existing code ...
 export default function Messages() {
-  const [selectedMessage, setSelectedMessage] = useState(null);
   const [showUsersList, setShowUsersList] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const currentUser = useSelector((state) => state.auth);
   const chats = useSelector((state) => state.chat.chats);
-
-  const messages = [
-    {
-      id: 1,
-      name: "Arun",
-      message: ["Hi Aswathi, I'd like to invite you to...", "fefe"],
-      time: "9:30pm",
-      avatar:
-        "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
-      unread: true,
-    },
-    {
-      id: 11,
-      name: "Arun",
-      message: ["Hi Aswathi, I'd like to invite you to...", "fefe"],
-      time: "9:30pm",
-      avatar:
-        "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
-      unread: true,
-    },
-    {
-      id: 1,
-      name: "Arun",
-      message: ["Hi Aswathi, I'd like to invite you to...", "fefe"],
-      time: "9:30pm",
-      avatar:
-        "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
-      unread: true,
-    },
-    {
-      id: 11,
-      name: "Arun",
-      message: ["Hi Aswathi, I'd like to invite you to...", "fefe"],
-      time: "9:30pm",
-      avatar:
-        "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
-      unread: true,
-    },
-    {
-      id: 1,
-      name: "Arun",
-      message: ["Hi Aswathi, I'd like to invite you to...", "fefe"],
-      time: "9:30pm",
-      avatar:
-        "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
-      unread: true,
-    },
-    {
-      id: 11,
-      name: "Arun",
-      message: ["Hi Aswathi, I'd like to invite you to...", "fefe"],
-      time: "9:30pm",
-      avatar:
-        "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
-      unread: true,
-    },
-  ];
+  const selectedMessage = useSelector((state) => state.chat.selectedMessage);
+  const dispatch = useDispatch();
 
   const handleSelectMessage = (message) => {
-    setSelectedMessage(message);
+    dispatch(setSelectedMessage(message));
   };
 
   const handleSelectUser = async (user) => {
@@ -91,8 +36,7 @@ export default function Messages() {
         .image,
       unread: true,
     };
-
-    setSelectedMessage(message);
+    dispatch(setSelectedMessage(message));
   };
 
   return (
@@ -100,7 +44,7 @@ export default function Messages() {
       {selectedMessage ? (
         <Chatbox
           message={selectedMessage}
-          onBack={() => setSelectedMessage(null)}
+          onBack={() => dispatch(setSelectedMessage(null))}
         />
       ) : showUsersList ? (
         <UsersList
@@ -115,7 +59,6 @@ export default function Messages() {
               <HomeIcon path="plus" color="#ffffff" />
             </ArrowBlue>
           </div>
-          {/* ... rest of the existing messages list code ... */}
           <div className="messages__search">
             <input
               type="text"
@@ -125,13 +68,6 @@ export default function Messages() {
           </div>
           <div className="messages-scroll">
             <div className="messages__list">
-              {/* {messages.map((message) => (
-                <MessageItem
-                  key={message.id}
-                  message={message}
-                  onClick={handleSelectMessage} // Pass the click handler
-                />
-              ))} */}
               {chats.map((chat) => {
                 const otherUser = chat.users.find(
                   (u) => u._id !== currentUser.user._id

@@ -1,4 +1,5 @@
 export default function MessageItem({ message, onClick }) {
+console.log(message, "message item ");
 
   const formatTime = (timestamp) => {
     const date = new Date(timestamp);
@@ -29,7 +30,7 @@ export default function MessageItem({ message, onClick }) {
         </div>
       </div>
       {message.unread && <span className="message-item__unread">1</span>}
-      <span className="message-item__time">{formatTime(message.time)}</span>
+      <span className="message-item__time">{formatTime(message.message[message.message.length - 1]?.time)}</span>
     </div>
   );
 }

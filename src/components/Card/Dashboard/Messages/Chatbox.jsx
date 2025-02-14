@@ -3,9 +3,10 @@ import CountryBtn from "../../../buttons/CountryBtn";
 import { BorderAllRounded } from "@mui/icons-material";
 import HomeIcon from "../../../utils/Icons/HomeIcon";
 import socket from "../../../../../config/socketConfig";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import apiClient from "../../../../../config/axiosInstance";
 import EmojiPicker from 'emoji-picker-react';
+import { setSelectedMessage } from "../../../../../global/chatSlice";
 
 function Chatbox({ message, onBack }) {
   const [inputMessage, setInputMessage] = useState("");
@@ -13,11 +14,14 @@ function Chatbox({ message, onBack }) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const user = useSelector((state) => state.auth);
   const chatId = message.id;
+  const dispatch = useDispatch();
   const messagesEndRef = useRef(null);
+console.log(message.name, "message chatbox");
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
 
   useEffect(() => {
     scrollToBottom();
@@ -33,7 +37,9 @@ function Chatbox({ message, onBack }) {
     socket.emit("joinChat", chatId);
 
     socket.on("receiveMessage", (data) => {
-      console.log(data, "recived data");
+      console.log(data, "recived data chatbox");
+      setChatMessages((prevMessages) => [...prevMessages, data]);
+      dispatch(setSelectedMessage(data));
       setChatMessages((prevMessages) => [...prevMessages, data]);
     });
 
@@ -50,6 +56,7 @@ function Chatbox({ message, onBack }) {
   };
 
   const handleSendMessage = async () => {
+console.log(chatId, "chatId");
     if (inputMessage.trim()) {
       const messageData = {
         sender: user.user._id,
@@ -74,8 +81,8 @@ function Chatbox({ message, onBack }) {
         <div className="chatbox-head">
           <div className="chatbox-head-profilehead">
             <img
-              src={message && message.avatar}
-              alt={message && message.name}
+              src={message?.avatar || ''}
+              alt={message?.name || ''}
               className="chatbox-head-profilehead-pic"
             />
             <div className="chatbox-head-profilehead-online">
