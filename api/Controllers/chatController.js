@@ -38,7 +38,8 @@ export const updateChat = catchAsync(async (req, res, next) => {
     const newMessage = {
         content: message.content,
         sender: message.sender,
-        time: new Date()
+        time: new Date(),
+        chatId: chatId
     };
 
     const chat = await Chat.findByIdAndUpdate(
@@ -70,19 +71,40 @@ export const updateChat = catchAsync(async (req, res, next) => {
     });
 });
 
+// export const getChats = catchAsync(async (req, res, next) => {
+//     const { userId } = req.query;
+//     console.log("userId", userId);
+//     if (!userId) {
+//         return res.status(400).json({
+//             status: "fail",
+//             message: "User ID is required"
+//         });
+//     }
+
+//     const chats = await Chat.find({ users: { $in: userId } }).populate('users', '_id name image');
+
+//     res.status(200).json({
+//         status: "success",
+//         data: chats
+//       });
+// });
 export const getChats = catchAsync(async (req, res, next) => {
-    const { userId } = req.query;
-    if (!userId) {
-        return res.status(400).json({
-            status: "fail",
-            message: "User ID is required"
-        });
-    }
+  const { userId } = req.query;
 
-    const chats = await Chat.find({ users: { $in: userId } }).populate('users', '_id name image');
-
-    res.status(200).json({
-        status: "success",
-        data: chats
+  if (!userId) {
+      return res.status(400).json({
+          status: "fail",
+          message: "User ID is required"
       });
+  }
+
+  const chats = await Chat.find({
+      users: userId  // Removed $in operator since we're looking for an exact match
+  }).populate('users', '_id name image')
+    .populate('messages');  // Add this line to populate messages
+
+  res.status(200).json({
+      status: "success",
+      data: chats
+  });
 });

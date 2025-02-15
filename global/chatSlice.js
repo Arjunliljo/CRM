@@ -1,43 +1,56 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const chatSlice = createSlice({
-  name: "chat",
+  name: 'chat',
   initialState: {
-    autoChatsAssign: false,
-    chats: [],
     selectedMessage: null,
+    chats: [],
   },
   reducers: {
-    setAutoChatsAssign: (state, action) => {
-      state.autoChatsAssign = action.payload;
-
-      if (!action.payload) {
-        state.chats = [];
-      }
-    },
-    setChats(state, action) {
+    setChats: (state, action) => {
       state.chats = action.payload;
+    },
+    setSelectedMessage: (state, action) => {
+      state.selectedMessage = action.payload;
+    },
+    updateSelectedMessage: (state, action) => {
 
-      if (action.payload) {
-        state.autoChatsAssign = true;
+      if (state.selectedMessage) {
+        state.selectedMessage.message.push({
+          content: action.payload.content,
+          sender: action.payload.sender,
+          time: action.payload.time
+        });
       }
     },
-    setSelectedMessage(state, action) {
-        state.selectedMessage = action.payload;
-        // If payload contains a chat id and message data
-        if (action.payload?.chatId) {
-            // Find the chat in chats array
-            const chat = state.chats.find(chat => chat._id === action.payload.chatId);
-            if (chat) {
-                // Add the new message to chat messages array
-                console.log(chat.messages, "chat");
-                chat.messages.push(action.payload);
-            }
-        }
-    },
+    updateChats: (state, action) => {
+      const { chatId, message } = action.payload;
+      const chatIndex = state.chats.findIndex(chat => chat._id === chatId);
+      if (chatIndex !== -1) {
+        // Remove the console.log and handle the message object directly
+        state.chats[chatIndex].messages.push({
+          chatId: message.chatId,
+          content: message.content,
+          sender: message.sender,
+          time: message.time
+        });
+        state.chats[chatIndex].lastMessage = {
+          chatId: message.chatId,
+          content: message.content,
+          sender: message.sender,
+          time: message.time
+        };
+      }
+    }
   },
 });
 
-export const { setAutoChatsAssign, setChats, setSelectedMessage } = chatSlice.actions;
+// Export all actions
+export const {
+  setChats,
+  setSelectedMessage,
+  updateSelectedMessage,
+  updateChats
+} = chatSlice.actions;
 
 export default chatSlice.reducer;

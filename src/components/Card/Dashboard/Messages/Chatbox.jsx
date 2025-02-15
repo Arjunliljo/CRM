@@ -6,74 +6,76 @@ import socket from "../../../../../config/socketConfig";
 import { useDispatch, useSelector } from "react-redux";
 import apiClient from "../../../../../config/axiosInstance";
 import EmojiPicker from 'emoji-picker-react';
-import { setSelectedMessage } from "../../../../../global/chatSlice";
+import { updateSelectedMessage } from "../../../../../global/chatSlice";
+
 
 function Chatbox({ message, onBack }) {
   const [inputMessage, setInputMessage] = useState("");
-  const [chatMessages, setChatMessages] = useState([]);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const user = useSelector((state) => state.auth);
-  const chatId = message.id;
+  const selectedMessage = useSelector((state) => state.chat.selectedMessage);
+  const chatId = selectedMessage.id;
   const dispatch = useDispatch();
   const messagesEndRef = useRef(null);
-console.log(message.name, "message chatbox");
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+console.log("selectedMessage", selectedMessage);
 
   useEffect(() => {
     scrollToBottom();
-  }, [chatMessages]);
+  }, [selectedMessage]);
 
-  useEffect(() => {
-    if (message?.message) {
-      setChatMessages(message.message);
-    }
-  }, [message, chatId]);
 
-  useEffect(() => {
+useEffect(() => {
+  if (chatId) {
     socket.emit("joinChat", chatId);
+  }
+  socket.on("receiveMessage", (data) => {
+    // Update Redux state for both sender and receiver
+console.log('data', data)
+    if (data.chatId === chatId) {
+      // Ensure we're updating with the complete message data
+      dispatch(updateSelectedMessage(data));
+    }
+  });
 
-    socket.on("receiveMessage", (data) => {
-      console.log(data, "recived data chatbox");
-      setChatMessages((prevMessages) => [...prevMessages, data]);
-      dispatch(setSelectedMessage(data));
-      setChatMessages((prevMessages) => [...prevMessages, data]);
-    });
-
-    return () => {
-      socket.off("receiveMessage");
-      socket.off("disconnect");
-    };
-  }, [chatId]);
-
-  const onEmojiClick = (emojiObject) => {
-    console.log(emojiObject.emoji, "emojiObject");
-    setInputMessage(prevInput => prevInput + emojiObject.emoji);
-    setShowEmojiPicker(false);
+  return () => {
+    socket.off("receiveMessage");
+    if (chatId) {
+      socket.emit("leaveChat", chatId);
+    }
   };
+}, [chatId, dispatch, selectedMessage]);
 
-  const handleSendMessage = async () => {
-console.log(chatId, "chatId");
-    if (inputMessage.trim()) {
-      const messageData = {
-        sender: user.user._id,
-        content: inputMessage,
-        chatId,
-      };
+
+
+const handleSendMessage = async () => {
+  if (inputMessage.trim()) {
+    const messageData = {
+      sender: user.user._id,
+      content: inputMessage,
+      chatId,
+    };
+
+    try {
       const response = await apiClient.patch("chat/update", {
         chatId,
         message: messageData,
       });
 
-      socket.emit("sendMessage", { ...response.data.data, chatId });
+
+      socket.emit("sendMessage", response.data.data);
       setInputMessage("");
-    } else {
-      console.warn("Empty message cannot be sent");
+    } catch (error) {
+      console.error("Failed to send message:", error);
     }
-  };
+  }
+};
+
+// ... existing code ...
 
   return (
     <div className="chatbox">
@@ -95,7 +97,7 @@ console.log(chatId, "chatId");
           </button>
         </div>
         <div className="chatbox-scroll">
-          {chatMessages && chatMessages.map((msg, index) => (
+          {selectedMessage && selectedMessage.message.map((msg, index) => (
             <div
               key={index}
               className={`chatbox-message ${
@@ -112,21 +114,20 @@ console.log(chatId, "chatId");
       </div>
 
       <div className="chatbox-type">
-      <button
-            className="emoji-button"
-            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '1.5rem',
-              padding: '5px'
-            }}
-          >
-            😊
-          </button>
+        <button
+          className="emoji-button"
+          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '1.5rem',
+            padding: '5px'
+          }}
+        >
+          😊
+        </button>
         <div className="chatbox-input-container" style={{ position: 'relative' }}>
-
           {showEmojiPicker && (
             <div style={{ position: 'absolute', bottom: '100%', left: '0', zIndex: 1 }}>
               <EmojiPicker onEmojiClick={onEmojiClick} />
@@ -157,5 +158,4 @@ console.log(chatId, "chatId");
     </div>
   );
 }
-
 export default Chatbox;

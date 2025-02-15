@@ -44,8 +44,15 @@ const io = new SocketIOServer(server, {
   },
 });
 
+
+
 io.on("connection", (socket) => {
   console.log("A user connected");
+
+  socket.on("setup", (userId) => {
+    socket.userId = userId;
+    console.log(`User setup completed: ${userId}`);
+  });
 
   socket.on("joinChat", (chatId) => {
     socket.join(chatId);
@@ -56,6 +63,8 @@ io.on("connection", (socket) => {
     console.log("received", data);
 
     io.to(data.chatId).emit("receiveMessage", data);
+    io.emit("receiveMessage", data);
+
 
   })
 
