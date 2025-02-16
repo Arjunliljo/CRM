@@ -1,5 +1,5 @@
 export default function MessageItem({ message, onClick }) {
-console.log(message, "message item ");
+console.log("message item called  ");
 
   const formatTime = (timestamp) => {
     const date = new Date(timestamp);
@@ -11,7 +11,7 @@ console.log(message, "message item ");
     };
     return date.toLocaleString('en-IN', options);
   };
-
+ 
   return (
     <div
       key={message.id}

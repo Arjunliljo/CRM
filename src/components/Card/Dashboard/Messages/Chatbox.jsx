@@ -6,8 +6,7 @@ import socket from "../../../../../config/socketConfig";
 import { useDispatch, useSelector } from "react-redux";
 import apiClient from "../../../../../config/axiosInstance";
 import EmojiPicker from 'emoji-picker-react';
-import { updateSelectedMessage } from "../../../../../global/chatSlice";
-
+import { updateSelectedMessage, updateChats } from "../../../../../global/chatSlice";
 
 function Chatbox({ message, onBack }) {
   const [inputMessage, setInputMessage] = useState("");
@@ -22,60 +21,48 @@ function Chatbox({ message, onBack }) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-console.log("selectedMessage", selectedMessage);
-
   useEffect(() => {
     scrollToBottom();
   }, [selectedMessage]);
 
-
-useEffect(() => {
-  if (chatId) {
-    socket.emit("joinChat", chatId);
-  }
-  socket.on("receiveMessage", (data) => {
-    // Update Redux state for both sender and receiver
-console.log('data', data)
-    if (data.chatId === chatId) {
-      // Ensure we're updating with the complete message data
-      dispatch(updateSelectedMessage(data));
-    }
-  });
-
-  return () => {
-    socket.off("receiveMessage");
+  useEffect(() => {
     if (chatId) {
-      socket.emit("leaveChat", chatId);
+      socket.emit("joinChat", chatId);
+    }
+
+    return () => {
+      if (chatId) {
+        socket.emit("leaveChat", chatId);
+      }
+    };
+  }, [chatId]);
+
+  const onEmojiClick = (emojiObject) => {
+    setInputMessage(prevInput => prevInput + emojiObject.emoji);
+  };
+
+  const handleSendMessage = async () => {
+    if (inputMessage.trim()) {
+      const messageData = {
+        sender: user.user._id,
+        content: inputMessage,
+        chatId,
+      };
+
+      try {
+        const response = await apiClient.patch("chat/update", {
+          chatId,
+          message: messageData,
+        });
+        dispatch(updateSelectedMessage(response.data.data));
+        dispatch(updateChats({ chatId, message: response.data.data }));
+        socket.emit("sendMessage", response.data.data);
+        setInputMessage("");
+      } catch (error) {
+        console.error("Failed to send message:", error);
+      }
     }
   };
-}, [chatId, dispatch, selectedMessage]);
-
-
-
-const handleSendMessage = async () => {
-  if (inputMessage.trim()) {
-    const messageData = {
-      sender: user.user._id,
-      content: inputMessage,
-      chatId,
-    };
-
-    try {
-      const response = await apiClient.patch("chat/update", {
-        chatId,
-        message: messageData,
-      });
-
-
-      socket.emit("sendMessage", response.data.data);
-      setInputMessage("");
-    } catch (error) {
-      console.error("Failed to send message:", error);
-    }
-  }
-};
-
-// ... existing code ...
 
   return (
     <div className="chatbox">
@@ -158,4 +145,16 @@ const handleSendMessage = async () => {
     </div>
   );
 }
+
 export default Chatbox;
+
+
+
+
+
+
+
+
+
+
+

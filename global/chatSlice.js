@@ -14,6 +14,7 @@ const chatSlice = createSlice({
       state.selectedMessage = action.payload;
     },
     updateSelectedMessage: (state, action) => {
+      console.log("action.payload", action.payload);
 
       if (state.selectedMessage) {
         state.selectedMessage.message.push({
@@ -24,10 +25,12 @@ const chatSlice = createSlice({
       }
     },
     updateChats: (state, action) => {
+      
       const { chatId, message } = action.payload;
+         
       const chatIndex = state.chats.findIndex(chat => chat._id === chatId);
       if (chatIndex !== -1) {
-        // Remove the console.log and handle the message object directly
+       
         state.chats[chatIndex].messages.push({
           chatId: message.chatId,
           content: message.content,
