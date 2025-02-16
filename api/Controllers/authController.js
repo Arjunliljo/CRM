@@ -95,7 +95,6 @@ const loginUser = catchAsync(async (req, res, next) => {
     token: token,
   };
 
-  console.log({ sanitizedUser });
   sendToken(sanitizedUser, 200, res);
 });
 

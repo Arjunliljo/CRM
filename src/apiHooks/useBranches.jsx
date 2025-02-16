@@ -12,7 +12,7 @@ export const useBranches = () => {
     queryKey: ["branches"],
     queryFn: () => apiClient.get("/branch"),
   });
-  
+
   const branches = data?.data?.data;
 
   useEffect(() => {

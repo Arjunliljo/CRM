@@ -16,6 +16,8 @@ function ApiProvider({ children }) {
   const usersConfigs = useUsers();
   const chatsConfigs = useChats();
 
+  console.log(roleConfigs, "role configs");
+
   useEffect(() => {}, [statusConfigs]);
 
   return (
