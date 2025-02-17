@@ -30,6 +30,8 @@ const getMetaLeads = catchAsync(async (req, res) => {
 
     const campaignLeads = await fetchLeads(formId, accessToken);
 
+    if (campaignLeads.length === 0) return acc;
+
     return [...acc, formatLeads(campaignLeads, campaign)];
   }, Promise.resolve([]));
 
