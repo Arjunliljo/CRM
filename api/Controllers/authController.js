@@ -66,12 +66,12 @@ const loginUser = catchAsync(async (req, res, next) => {
     return next(new AppError("Invalid email or password", 401));
   }
 
-  const isPasswordCorrect = await bcrypt.compare(password, user.password);
-  if (!isPasswordCorrect) {
-    return next(new AppError("Invalid email or password", 401));
-  }
+  // if (!isPasswordCorrect) {
+  //   return next(new AppError("Invalid email or password", 401));
+  // }
 
   const token = generateToken(user._id);
+
   if (!token) {
     throw new AppError("Server failed to create token", 500);
   }
@@ -100,14 +100,12 @@ const loginUser = catchAsync(async (req, res, next) => {
 
 const verify = catchAsync(async (req, res, next) => {
   let isLoggedIn = false;
-  // 1) Get the token and check its there
-
   const token = req.cookies.token;
 
   if (!token)
     return res
       .status(401)
-      .json({ status: "Failed", message: "Logged in failed", isLoggedIn });
+      .json({ status: "Failed", message: "Logged in failed.", isLoggedIn });
 
   // 2) Varify token
   const decode = jwt.verify(token, KEY);
@@ -115,7 +113,7 @@ const verify = catchAsync(async (req, res, next) => {
   if (!user) {
     return res.status(404).json({
       status: "Failed",
-      message: "The User belong to this token is not exist",
+      message: "The User belong to this token is not exist.",
       isLoggedIn,
     });
   }

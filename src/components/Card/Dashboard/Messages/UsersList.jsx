@@ -12,7 +12,7 @@ const currentUser = useSelector(state=>state.auth)
       <div className="messages__header">
         <h2 className="title">Users</h2>
         <ArrowBlue onClick={onBack}>
-          <HomeIcon path="arrow-left" color="#ffffff" />
+          <HomeIcon path="iconback" color="#ffffff" />
         </ArrowBlue>
       </div>
 

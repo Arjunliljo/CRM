@@ -1,102 +1,58 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedMessage } from "../../../../../global/chatSlice";
+import { refetchChats } from "../../../../apiHooks/useChats";
+import apiClient from "../../../../../config/axiosInstance";
+import Chatbox from "./Chatbox";
+import UsersList from "./UsersList";
 import ArrowBlue from "../../../buttons/ArrowBlue";
 import HomeIcon from "../../../utils/Icons/HomeIcon";
 import MessageItem from "./MessageItem";
-import Chatbox from "./Chatbox";
-import { useSelector } from "react-redux";
-import UsersList from "./UsersList";
-import apiClient from "../../../../../config/axiosInstance";
 
-// ... existing code ...
 export default function Messages() {
-  const [selectedMessage, setSelectedMessage] = useState(null);
   const [showUsersList, setShowUsersList] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
   const currentUser = useSelector((state) => state.auth);
   const chats = useSelector((state) => state.chat.chats);
-  console.log(chats, "chats from messages");
-
-  console.log(currentUser, "current user");
-
-  const messages = [
-    {
-      id: 1,
-      name: "Arun",
-      message: ["Hi Aswathi, I'd like to invite you to...", "fefe"],
-      time: "9:30pm",
-      avatar:
-        "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
-      unread: true,
-    },
-    {
-      id: 11,
-      name: "Arun",
-      message: ["Hi Aswathi, I'd like to invite you to...", "fefe"],
-      time: "9:30pm",
-      avatar:
-        "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
-      unread: true,
-    },
-    {
-      id: 1,
-      name: "Arun",
-      message: ["Hi Aswathi, I'd like to invite you to...", "fefe"],
-      time: "9:30pm",
-      avatar:
-        "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
-      unread: true,
-    },
-    {
-      id: 11,
-      name: "Arun",
-      message: ["Hi Aswathi, I'd like to invite you to...", "fefe"],
-      time: "9:30pm",
-      avatar:
-        "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
-      unread: true,
-    },
-    {
-      id: 1,
-      name: "Arun",
-      message: ["Hi Aswathi, I'd like to invite you to...", "fefe"],
-      time: "9:30pm",
-      avatar:
-        "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
-      unread: true,
-    },
-    {
-      id: 11,
-      name: "Arun",
-      message: ["Hi Aswathi, I'd like to invite you to...", "fefe"],
-      time: "9:30pm",
-      avatar:
-        "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
-      unread: true,
-    },
-  ];
+  const selectedMessage = useSelector((state) => state.chat.selectedMessage);
+  const dispatch = useDispatch();
 
   const handleSelectMessage = (message) => {
-    console.log(message, "message from handle select message");
-    setSelectedMessage(message);
+    dispatch(setSelectedMessage(message));
+
+    // Mark messages as read when selecting a chat
+    // if (message.unread) {
+    //   apiClient.post(`chat/markAsRead/${message.id}`)
+    //     .then(() => {
+    //       refetchChats(); // Update the chat list to reflect read status
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error marking messages as read:", error);
+    //     });
+    // }
   };
 
   const handleSelectUser = async (user) => {
-    const chat = await apiClient.post("chat/create", {
-      users: [currentUser.user._id, user._id],
-    });
+    try {
+      const chat = await apiClient.post("chat/create", {
+        users: [currentUser.user._id, user._id],
+      });
 
-    const message = {
-      id: chat.data.data._id,
-      name: chat.data.data.users.find((u) => u._id !== currentUser.user._id)
-        .name,
-      message: "",
-      time: chat.data.data.createdAt,
-      avatar: chat.data.data.users.find((u) => u._id !== currentUser.user._id)
-        .image,
-      unread: true,
-    };
+      const message = {
+        id: chat.data.data._id,
+        name: chat.data.data.users.find((u) => u._id !== currentUser.user._id)
+          .name,
+        message: [], 
+        time: chat.data.data.createdAt,
+        avatar: chat.data.data.users.find((u) => u._id !== currentUser.user._id)
+          .image,
+        unread: false,
+      };
 
-    setSelectedMessage(message);
+      dispatch(setSelectedMessage(message));
+      refetchChats(); 
+    } catch (error) {
+      console.error("Error creating chat:", error);
+    }
   };
 
   return (
@@ -104,7 +60,7 @@ export default function Messages() {
       {selectedMessage ? (
         <Chatbox
           message={selectedMessage}
-          onBack={() => setSelectedMessage(null)}
+          onBack={() => dispatch(setSelectedMessage(null))}
         />
       ) : showUsersList ? (
         <UsersList
@@ -116,10 +72,9 @@ export default function Messages() {
           <div className="messages__header">
             <h2 className="title">Messages</h2>
             <ArrowBlue onClick={() => setShowUsersList(true)}>
-              <HomeIcon path="plus" color="#ffffff" />
+              <HomeIcon path="plus" color="#ffffff"/>
             </ArrowBlue>
           </div>
-          {/* ... rest of the existing messages list code ... */}
           <div className="messages__search">
             <input
               type="text"
@@ -129,13 +84,6 @@ export default function Messages() {
           </div>
           <div className="messages-scroll">
             <div className="messages__list">
-              {/* {messages.map((message) => (
-                <MessageItem
-                  key={message.id}
-                  message={message}
-                  onClick={handleSelectMessage} // Pass the click handler
-                />
-              ))} */}
               {chats.map((chat) => {
                 const otherUser = chat.users.find(
                   (u) => u._id !== currentUser.user._id
@@ -143,7 +91,7 @@ export default function Messages() {
                 const message = {
                   id: chat._id,
                   name: otherUser.name,
-                  message: chat.messages,
+                  message: chat.messages || [], // Ensure messages is always an array
                   time: chat.updatedAt,
                   avatar: otherUser.image,
                   unread: chat.unread || false,

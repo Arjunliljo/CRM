@@ -44,8 +44,15 @@ const io = new SocketIOServer(server, {
   },
 });
 
+
+
 io.on("connection", (socket) => {
   console.log("A user connected");
+
+  socket.on("setup", (userId) => {
+    socket.userId = userId;
+    console.log(`User setup completed: ${userId}`);
+  });
 
   socket.on("joinChat", (chatId) => {
     socket.join(chatId);
@@ -54,14 +61,24 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage",(data)=>{
     console.log("received", data);
-
-    io.to(data.chatId).emit("receiveMessage", data);
-
+    
+    // Emit to specific chat room for real-time chat updates
+    socket.to(data.chatId).emit("receiveMessage", data);
+    
+    // Emit globally for updating chat lists/notifications
+    socket.broadcast.emit("newMessage", {
+      chatId: data.chatId,
+      message: data
+    });
   })
+
+  socket.on("leaveChat", (chatId) => {
+    socket.leave(chatId);
+    console.log(`User left chat: ${chatId}`);
+  });
 
   socket.on("disconnect", (data) => {
     console.log("User disconnected",data);
-
   });
 });
 

@@ -7,11 +7,16 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
       isTab: value,
     }));
   };
-
-  const handleClassSelection = (cls) => {
+  const handleCountrySelection = (value) => {
     setNewStatus((prev) => ({
       ...prev,
-      selectedClass: cls,
+      isCountryBased: value,
+    }));
+  };
+  const handleApplicationSelection = (value) => {
+    setNewStatus((prev) => ({
+      ...prev,
+      isApplication: value,
     }));
   };
 
@@ -68,15 +73,15 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
           <div className="tab-buttons">
             <button
               type="button"
-              className={newStatus.isTab === true ? "active" : ""}
-              onClick={() => handleTabSelection(true)}
+              className={newStatus.isCountryBased === true ? "active" : ""}
+              onClick={() => handleCountrySelection(true)}
             >
               Yes
             </button>
             <button
               type="button"
-              className={newStatus.isTab === false ? "active" : ""}
-              onClick={() => handleTabSelection(false)}
+              className={newStatus.isCountryBased === false ? "active" : ""}
+              onClick={() => handleCountrySelection(false)}
             >
               No
             </button>
@@ -87,15 +92,15 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
           <div className="tab-buttons">
             <button
               type="button"
-              className={newStatus.isTab === true ? "active" : ""}
-              onClick={() => handleTabSelection(true)}
+              className={newStatus.isApplication === true ? "active" : ""}
+              onClick={() => handleApplicationSelection(true)}
             >
               Yes
             </button>
             <button
               type="button"
-              className={newStatus.isTab === false ? "active" : ""}
-              onClick={() => handleTabSelection(false)}
+              className={newStatus.isApplication === false ? "active" : ""}
+              onClick={() => handleApplicationSelection(false)}
             >
               No
             </button>

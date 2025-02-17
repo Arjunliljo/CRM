@@ -8,6 +8,8 @@ export default function StatusBasicHolder() {
   const [newStatus, setNewStatus] = useState({
     name: "",
     isTab: null,
+    isCountryBased: null,
+    isApplication: null,
     selectedClass: "",
     description: "",
     subStatuses: [],

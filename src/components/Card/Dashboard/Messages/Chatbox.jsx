@@ -1,30 +1,45 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import CountryBtn from "../../../buttons/CountryBtn";
 import { BorderAllRounded } from "@mui/icons-material";
 import HomeIcon from "../../../utils/Icons/HomeIcon";
 import socket from "../../../../../config/socketConfig";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import apiClient from "../../../../../config/axiosInstance";
+import EmojiPicker from 'emoji-picker-react';
+import { updateSelectedMessage, updateChats } from "../../../../../global/chatSlice";
 
 function Chatbox({ message, onBack }) {
   const [inputMessage, setInputMessage] = useState("");
-  const [chatMessages, setChatMessages] = useState([]);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const user = useSelector((state) => state.auth);
-  const chatId = message.id;
+  const selectedMessage = useSelector((state) => state.chat.selectedMessage);
+  const chatId = selectedMessage.id;
+  const dispatch = useDispatch();
+  const messagesEndRef = useRef(null);
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
-    socket.emit("joinChat", chatId);
+    scrollToBottom();
+  }, [selectedMessage]);
 
-    socket.on("receiveMessage", (data) => {
-      console.log(data, "received data");
-    });
+  useEffect(() => {
+    if (chatId) {
+      socket.emit("joinChat", chatId);
+    }
 
     return () => {
-      socket.off("receiveMessage");
-      socket.off("disconnect");
+      if (chatId) {
+        socket.emit("leaveChat", chatId);
+      }
     };
   }, [chatId]);
+
+  const onEmojiClick = (emojiObject) => {
+    setInputMessage(prevInput => prevInput + emojiObject.emoji);
+  };
 
   const handleSendMessage = async () => {
     if (inputMessage.trim()) {
@@ -33,16 +48,19 @@ function Chatbox({ message, onBack }) {
         content: inputMessage,
         chatId,
       };
-      const response = await apiClient.patch("chat/update", {
-        chatId,
-        message: messageData,
-      });
 
-      socket.emit("sendMessage", { ...response.data.data, chatId });
-      // setChatMessages((prevMessages) => [...prevMessages, response.data.data]);
-      setInputMessage("");
-    } else {
-      console.warn("Empty message cannot be sent");
+      try {
+        const response = await apiClient.patch("chat/update", {
+          chatId,
+          message: messageData,
+        });
+        dispatch(updateSelectedMessage(response.data.data));
+        dispatch(updateChats({ chatId, message: response.data.data }));
+        socket.emit("sendMessage", response.data.data);
+        setInputMessage("");
+      } catch (error) {
+        console.error("Failed to send message:", error);
+      }
     }
   };
 
@@ -52,12 +70,12 @@ function Chatbox({ message, onBack }) {
         <div className="chatbox-head">
           <div className="chatbox-head-profilehead">
             <img
-              src={message.avatar}
-              alt={message.name}
+              src={message?.avatar || ''}
+              alt={message?.name || ''}
               className="chatbox-head-profilehead-pic"
             />
             <div className="chatbox-head-profilehead-online">
-              <h2 className="chatbox-head-title">{message.name}</h2>
+              <h2 className="chatbox-head-title">{message && message.name}</h2>
               <h6>online</h6>
             </div>
           </div>
@@ -66,7 +84,7 @@ function Chatbox({ message, onBack }) {
           </button>
         </div>
         <div className="chatbox-scroll">
-          {message.message.map((msg, index) => (
+          {selectedMessage && selectedMessage.message.map((msg, index) => (
             <div
               key={index}
               className={`chatbox-message ${
@@ -78,17 +96,39 @@ function Chatbox({ message, onBack }) {
               <p>{msg.content}</p>
             </div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
       </div>
 
       <div className="chatbox-type">
-        <textarea
-          type="text"
-          className="chatbox-type-input"
-          placeholder="Type message..."
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-        ></textarea>
+        <button
+          className="emoji-button"
+          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '1.5rem',
+            padding: '5px'
+          }}
+        >
+          😊
+        </button>
+        <div className="chatbox-input-container" style={{ position: 'relative' }}>
+          {showEmojiPicker && (
+            <div style={{ position: 'absolute', bottom: '100%', left: '0', zIndex: 1 }}>
+              <EmojiPicker onEmojiClick={onEmojiClick} />
+            </div>
+          )}
+          <textarea
+            type="text"
+            className="chatbox-type-input"
+            placeholder="Type message..."
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            style={{ width: 'calc(100% - 50px)' }}
+          />
+        </div>
         <CountryBtn
           style={{
             paddingLeft: "6.5px",
@@ -107,3 +147,14 @@ function Chatbox({ message, onBack }) {
 }
 
 export default Chatbox;
+
+
+
+
+
+
+
+
+
+
+
