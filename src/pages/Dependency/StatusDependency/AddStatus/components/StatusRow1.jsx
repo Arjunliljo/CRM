@@ -1,5 +1,3 @@
-import { classes } from "../../../../../../api/serverdata/serverdatas";
-
 export default function StatusRow1({ newStatus, setNewStatus }) {
   const handleTabSelection = (value) => {
     setNewStatus((prev) => ({
@@ -106,22 +104,6 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
             </button>
           </div>
         </div>
-      </div>
-
-      <div className="status-form-group">
-        {/* <p>Select 1 class</p>
-        <div className="class-select">
-          {classes.map((cls) => (
-            <button
-              type="button"
-              key={cls}
-              className={newStatus.selectedClass === cls ? "selected" : ""}
-              onClick={() => handleClassSelection(cls)}
-            >
-              {cls}
-            </button>
-          ))}
-        </div> */}
       </div>
 
       <div className="status-form-group">

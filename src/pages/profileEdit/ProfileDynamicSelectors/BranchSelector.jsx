@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useApi } from "../../../context/apiContext/ApiContext";
 import { useDispatch } from "react-redux";
 import { setProfileBranches } from "../../../../global/profileSlice";
-import { useBranches } from "../../../apiHooks/useBranches";
 
 export default function BranchSelector() {
   const {

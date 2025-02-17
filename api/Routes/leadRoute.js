@@ -4,7 +4,7 @@ import {
   assignLeadsToUsers,
   branchLeadAssignment,
   createLead,
-  receiveLeads,
+  getAllLeads,
 } from "../Controllers/leadController.js";
 const router = express.Router();
 
@@ -12,7 +12,7 @@ const router = express.Router();
 
 // Lead cruds - admin only will do
 router.post("/", createLead);
-router.get("/", receiveLeads);
+router.get("/", getAllLeads);
 // router.put("/", updateLead);
 // router.delete("/", dropLead);
 

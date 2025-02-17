@@ -13,25 +13,7 @@ import DocumentUpload from "../../components/smallComponents/DocumentUpload";
 import { useState } from "react";
 import ModalBase from "../../components/Forms/ModalBase";
 import AddLead from "../../components/Forms/Leads/AddLead";
-
-// const lead = {
-//   num: 3,
-//   name: "John Doe",
-//   img: "https://via.placeholder.com/150",
-//   number: 1234567890,
-//   status: "Interested",
-//   statusColor: "red",
-//   remark:
-//     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-//   applications: 2,
-//   attempts: 1,
-//   country: "Germany",
-//   count: 3,
-// };
-// const arr = [...Array(500)].map((_, i) => {
-//   const obj = { ...lead, _id: i };
-//   return obj;
-// });
+import { useIDGetStatuses } from "../../../api/Utilities/helper";
 
 const names = [
   "Aarav",
@@ -183,11 +165,12 @@ const countries = [
 ];
 const img =
   "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg";
+
 const arr = [...Array(100)].map((_, i) => ({
   num: 1,
   name: names[i % names.length], // Cycle through the names
   img,
-  number: Math.floor(1000000000 + Math.random() * 9000000000), // Random 10-digit number
+  number: Math.floor(1000000000 + Math.random() * 9000000000),
   status: statuses[i % statuses.length], // Cycle through statuses
   statusColor: ["red", "green", "blue", "brown"][i % 4], // Random color cycling
   remark: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
@@ -200,6 +183,8 @@ const arr = [...Array(100)].map((_, i) => ({
 
 export default function Leads() {
   const { autoLeadsAssign, curLead } = useSelector((state) => state.leads);
+
+  const statusObj = useIDGetStatuses("obj");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
@@ -244,12 +229,11 @@ export default function Leads() {
   );
 
   const IAllLeads = <AllLeads />;
-  const ISelectorOne = <Selector />;
+  const ISelectorOne = <Selector optionsObj={statusObj} />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
   const ISelectorFour = <Selector />;
   const ISelectorFive = <Selector />;
-
   const IStartApplication = <StartApplication />;
 
   const TopLeft = [
@@ -288,7 +272,6 @@ export default function Leads() {
         StartApplication={IStartApplication}
       />
 
-      {/* Modal for adding a leads */}
       <ModalBase title="Add Lead" isOpen={isModalOpen} closeModal={closeModal}>
         <AddLead
           closeModal={closeModal}
