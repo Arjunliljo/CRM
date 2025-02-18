@@ -5,9 +5,11 @@ import {
   branchLeadAssignment,
   createLead,
   getAllLeads,
-  uploadLeadFile
+  uploadLeadFile,
+  updateLeadDocuments
 } from "../Controllers/leadController.js";
 import upload from "../middlewares/uploadMiddlware.js";
+import deleteFile from "../middlewares/deleteFile.js";
 const router = express.Router();
 
 // router.use(protect);
@@ -21,5 +23,6 @@ router.get("/", getAllLeads);
 router.post("/uploadLeadFile",upload, uploadLeadFile);
 router.post("/branchLeadAssignment", branchLeadAssignment); //distribute leads to branch
 router.post("/assignLeadsToUsers", assignLeadsToUsers); //distribute leads to users
+router.patch("/updateLeadDocuments", deleteFile, updateLeadDocuments);
 
 export default router;

@@ -1,8 +1,7 @@
 import multer from "multer";
-import uploadFileToS3 from "../Utilities/b2Services.js";
+import {uploadFileToS3} from "../Utilities/b2Services.js";
 import dotenv from 'dotenv';
 dotenv.config();
-
 const storage = multer.memoryStorage();
 const multerUpload = multer({ storage }).single("docfile");
 
@@ -18,14 +17,18 @@ const upload = (req, res, next) => {
       if (!req.file) {
         return res.status(400).json({ error: "No file provided" });
       }
+      console.log(req.file, "req.file from upload");
 
+      // Add timestamp to filename
+      const timestamp = Date.now();
+      const fileName = `${timestamp}-${req.file.originalname}`;
+      const fullPath = `documents/${ req.body.userId}/${fileName}`;
 
       const s3UploadResult = await uploadFileToS3(
         process.env.AWS_S3_BUCKET_NAME,
-        req.file.originalname,
         req.file.buffer,
         req.file.mimetype,
-        req.body.userId
+        fullPath
       );
       req.s3File = s3UploadResult;
 

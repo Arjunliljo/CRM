@@ -220,15 +220,33 @@ const uploadLeadFile = catchAsync(async (req, res) => {
       message: "No file upload details found"
     });
   }
+  console.log(req.body, "req.body from uploadLeadFile");
+  const { fileName, fileUrl } = req.s3File;
 
-  const { fileName, fileId, fileUrl } = req.s3File;
+  await Lead.findByIdAndUpdate(req.body?.leadId, {
+    $push: { documents: { name: fileName, url: fileUrl } }
+  });
 
   return res.status(200).json({
     success: true,
     message: "File uploaded successfully",
-    data: { fileName, fileId, fileUrl }
   });
 });
 
+const updateLeadDocuments = catchAsync(async (req, res) => {
+  console.log(req.body, "req.body from updateLeadDocuments");
+  const { leadId, documentObj } = req.body;
 
-export { createLead, branchLeadAssignment, assignLeadsToUsers ,getAllLeads , uploadLeadFile};
+  await Lead.findByIdAndUpdate(leadId, {
+    $pull: { documents: { name: documentObj.name }}
+  });
+
+  return res.status(200).json({
+    success: true,
+    message: "File deleted successfully",
+  });
+
+});
+
+
+export { createLead, branchLeadAssignment, assignLeadsToUsers ,getAllLeads , uploadLeadFile , updateLeadDocuments};
