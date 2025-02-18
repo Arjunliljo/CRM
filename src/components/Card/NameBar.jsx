@@ -10,7 +10,7 @@ export default function NameBar({ lead }) {
         <div>{lead.name}</div>
         <div className="name-bar-name-whatsapp">
           <img src={whatsapp} alt={lead.title} className="icon" />
-          <span className="card-number">{lead.number}</span>
+          <span className="card-number">{lead.phone}</span>
         </div>
       </div>
     </div>

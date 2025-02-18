@@ -14,6 +14,7 @@ import { useState } from "react";
 import ModalBase from "../../components/Forms/ModalBase";
 import AddLead from "../../components/Forms/Leads/AddLead";
 import { useIDGetStatuses } from "../../../api/Utilities/helper";
+import { useApi } from "../../context/apiContext/ApiContext";
 
 const names = [
   "Aarav",
@@ -184,6 +185,8 @@ const arr = [...Array(100)].map((_, i) => ({
 export default function Leads() {
   const { autoLeadsAssign, curLead } = useSelector((state) => state.leads);
 
+  const { leadsConfigs } = useApi();
+
   const statusObj = useIDGetStatuses("obj");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -211,7 +214,7 @@ export default function Leads() {
 
   const ISearchBar = <SearchBar />;
   const IAutoBtn = <AutoBtn />;
-  const IContents = arr?.map((lead, index) => (
+  const IContents = leadsConfigs?.leads?.map((lead, index) => (
     <LeadCard
       key={index}
       onSet={setCurLead}

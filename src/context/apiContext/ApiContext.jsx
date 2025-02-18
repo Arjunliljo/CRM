@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext } from "react";
 import { useBranches } from "../../apiHooks/useBranches";
 import { useCountries } from "../../apiHooks/useCountries";
 import { useRoles } from "../../apiHooks/useRoles";
@@ -18,8 +18,6 @@ function ApiProvider({ children }) {
   const chatsConfigs = useChats();
   const leadsConfigs = useLeads();
 
-  console.log(leadsConfigs, "leadsConfigs");
-
   return (
     <ApiContext.Provider
       value={{
@@ -29,6 +27,7 @@ function ApiProvider({ children }) {
         statusConfigs,
         usersConfigs,
         chatsConfigs,
+        leadsConfigs,
       }}
     >
       {children}
