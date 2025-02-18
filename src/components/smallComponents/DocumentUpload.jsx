@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function DocumentUpload() {
   const [documents, setDocuments] = useState(6);
   const [uploadedFiles, setUploadedFiles] = useState({});
+  const currentLead = useSelector((state) => state.leads.curLead);
 
   const handleAddCard = () => {
     setDocuments((prev) => prev + 1);
@@ -14,6 +16,8 @@ function DocumentUpload() {
       [index]: file,
     }));
   };
+
+  console.log(currentLead, "currentLead");
 
   return (
     <div className="document-upload">

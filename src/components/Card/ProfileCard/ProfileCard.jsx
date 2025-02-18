@@ -6,7 +6,6 @@ import PersonalDetails from "./PersonalDetails";
 import ProfileCardStatus from "./ProfileCardStatus";
 
 export default function ProfileCard({ IDocumentUpload, lead }) {
-  console.log(lead, "lead");
 
   return (
     <div className="profileCard">

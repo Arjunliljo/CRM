@@ -18,7 +18,6 @@ function ApiProvider({ children }) {
   const chatsConfigs = useChats();
   const leadsConfigs = useLeads();
 
-  console.log(leadsConfigs, "leadsConfigs");
 
   return (
     <ApiContext.Provider
@@ -29,6 +28,7 @@ function ApiProvider({ children }) {
         statusConfigs,
         usersConfigs,
         chatsConfigs,
+        leadsConfigs,
       }}
     >
       {children}
