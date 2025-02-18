@@ -18,7 +18,6 @@ const leadSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      required: [true, "Lead must have an email"],
       maxlength: [30, "Email should be less than 30 characters"],
       minlength: [3, "Email should be greater than 3 characters"],
       lowercase: true,
@@ -36,7 +35,6 @@ const leadSchema = mongoose.Schema(
     },
     campaign: {
       type: String,
-      required: [true, "Lead must have a campaign"],
     },
     branch: {
       type: mongoose.Schema.Types.ObjectId,
@@ -76,7 +74,16 @@ const leadSchema = mongoose.Schema(
       ],
     },
     documents: {
-      type: [String],
+      type: [
+        {
+          name: {
+            type: String,
+          },
+          url: {
+            type: String,
+          },
+        },
+      ],
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }

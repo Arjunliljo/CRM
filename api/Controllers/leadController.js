@@ -211,4 +211,24 @@ const assignLeadsToUsers = catchAsync(async (req, res) => {
   });
 });
 
-export { createLead, branchLeadAssignment, assignLeadsToUsers ,getAllLeads};
+
+const uploadLeadFile = catchAsync(async (req, res) => {
+
+  if (!req.s3File) {
+    return res.status(400).json({
+      success: false,
+      message: "No file upload details found"
+    });
+  }
+
+  const { fileName, fileId, fileUrl } = req.s3File;
+
+  return res.status(200).json({
+    success: true,
+    message: "File uploaded successfully",
+    data: { fileName, fileId, fileUrl }
+  });
+});
+
+
+export { createLead, branchLeadAssignment, assignLeadsToUsers ,getAllLeads , uploadLeadFile};
