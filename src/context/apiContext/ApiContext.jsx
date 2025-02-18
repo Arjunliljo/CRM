@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext } from "react";
 import { useBranches } from "../../apiHooks/useBranches";
 import { useCountries } from "../../apiHooks/useCountries";
 import { useRoles } from "../../apiHooks/useRoles";
@@ -17,7 +17,6 @@ function ApiProvider({ children }) {
   const usersConfigs = useUsers();
   const chatsConfigs = useChats();
   const leadsConfigs = useLeads();
-
 
   return (
     <ApiContext.Provider

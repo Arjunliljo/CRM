@@ -34,13 +34,6 @@ export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
     }, 500);
   };
 
-  // useEffect(() => {
-  //   if (targetRef.current) {
-  //     const grid = wrapGrid(targetRef.current);
-  //     return () => grid.unwrapGrid();
-  //   }
-  // }, []);
-
   return (
     <div
       className={`card ${isSelected ? "selectedCard" : ""}`}
@@ -77,7 +70,7 @@ export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
                 color="#00b100"
                 style={{ transform: "rotate(270deg)" }}
               />
-              <p>{lead.applications} Applications</p>
+              <p>{lead.application?.length} Applications</p>
             </div>
             <div className="card-body-bottom-icons-item">
               <HomeIcon
@@ -91,7 +84,7 @@ export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
         </div>
 
         <div className="card-body-bottom-country">
-          <CountryBtn>{lead.country}</CountryBtn>
+          <CountryBtn>{lead.country || "N/A"}</CountryBtn>
           <div className="card-body-bottom-country-count">3</div>
         </div>
       </div>

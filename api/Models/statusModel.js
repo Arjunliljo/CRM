@@ -38,6 +38,10 @@ const statusSchema = mongoose.Schema(
         validator: (v) => Array.isArray(v),
       },
     },
+    color: {
+      type: String,
+      default: "#000000",
+    },
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );

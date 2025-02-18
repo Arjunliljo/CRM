@@ -30,6 +30,10 @@ const leadSchema = mongoose.Schema(
     campaign: {
       type: String,
     },
+    attemps: {
+      type: Number,
+      default: 1,
+    },
     branch: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Branch",
@@ -64,6 +68,7 @@ const leadSchema = mongoose.Schema(
         {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Country",
+          default: "N/A",
         },
       ],
     },
@@ -73,9 +78,11 @@ const leadSchema = mongoose.Schema(
         {
           name: {
             type: String,
+            required: [true, "Document must have a name"],
           },
           url: {
             type: String,
+            required: [true, "Document must have a url"],
           },
         },
       ],
@@ -86,6 +93,11 @@ const leadSchema = mongoose.Schema(
         ref: "Application",
       },
     ],
+    img: {
+      type: String,
+      default:
+        "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
+    },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
