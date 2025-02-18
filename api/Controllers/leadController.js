@@ -211,4 +211,4 @@ const assignLeadsToUsers = catchAsync(async (req, res) => {
   });
 });
 
-export { createLead, receiveLeads, branchLeadAssignment, assignLeadsToUsers };
+export { createLead, branchLeadAssignment, assignLeadsToUsers ,getAllLeads};

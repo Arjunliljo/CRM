@@ -24,56 +24,17 @@ const accessToken="EAAP7ZCBheEt8BO7tHrDkWmZBBZBrW6v5p1PwyTjfL9JjYSDjlcNdi76usT90
 
   // Fetch campaigns for each ad account
   const campaigns = await fetchCampaigns(adAccountId, accessToken);
-
-<<<<<<< HEAD:api/Controllers/metaLeadController.js
-  if (!adAccounts || adAccounts.length === 0) {
-     return res.status(404).json({ error: "No ad accounts found" });
-  }
-=======
   const leads = await campaigns.reduce(async (promise, campaign) => {
     const acc = await promise;
     const formId = campaign.ads.data?.[0]?.id;
     if (!formId) return acc;
->>>>>>> a9281c302f298bd469198c1bdd924a9ece2acec7:api/Controllers/Meta/metaLeadController.js
 
     const campaignLeads = await fetchLeads(formId, accessToken);
 
     if (campaignLeads.length === 0) return acc;
 
-<<<<<<< HEAD:api/Controllers/metaLeadController.js
-    // Fetch campaigns for each ad account
-    const campaigns = await fetchCampaigns(adAccountId, accessToken);
-
-    for (const campaign of campaigns) {
-      const campaignId = campaign.id;
-      const campaignName = campaign.name;
-
-      // Fetch lead forms for each campaign
-      const adSets = await fetchLeadForms(campaignId, accessToken);
-
-      for (const adSet of adSets) {
-        if (adSet.leadgen_forms) {
-          for (const form of adSet.leadgen_forms) {
-            const formId = form.id;
-
-            // Fetch leads from the lead form
-            const leads = await fetchLeads(formId, accessToken);
-            console.log(leads, "leads");
-            allLeads.push(...leads);
-
-            // const LeadModel = dbConnection.model("Lead", leadSchema);
-            // for (const lead of leads) {
-            //   await saveLeadData(lead, campaignName, LeadModel);
-            // }
-          }
-        }
-      }
-    }
-  }
-=======
     return [...acc, formatLeads(campaignLeads, campaign)];
   }, Promise.resolve([]));
->>>>>>> a9281c302f298bd469198c1bdd924a9ece2acec7:api/Controllers/Meta/metaLeadController.js
 
   // Send response with all collected leads
   res.status(200).json({
@@ -83,8 +44,6 @@ const accessToken="EAAP7ZCBheEt8BO7tHrDkWmZBBZBrW6v5p1PwyTjfL9JjYSDjlcNdi76usT90
   });
 });
 
-<<<<<<< HEAD:api/Controllers/metaLeadController.js
-=======
 const getCampaigns = catchAsync(async (req, res) => {
   const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
   const campaigns = await fetchCampaigns(adAccountId, accessToken);
@@ -99,6 +58,7 @@ const getCampaigns = catchAsync(async (req, res) => {
     message: "Campaigns fetched successfully",
   });
 });
+
 const getForms = catchAsync(async (req, res) => {
   const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
   const campaignId = "6654861567950";
@@ -110,7 +70,6 @@ const getForms = catchAsync(async (req, res) => {
     message: "Campaigns fetched successfully",
   });
 });
->>>>>>> a9281c302f298bd469198c1bdd924a9ece2acec7:api/Controllers/Meta/metaLeadController.js
 
 const updateCampaigns = catchAsync(async (req, res) => {
   const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
@@ -152,9 +111,4 @@ const updateCampaigns = catchAsync(async (req, res) => {
     message: "New campaigns fetched and added successfully",
   });
 });
-<<<<<<< HEAD:api/Controllers/metaLeadController.js
-export { getMetaLeads, updateCampaigns };
-=======
-
 export { getMetaLeads, updateCampaigns, getCampaigns, getForms };
->>>>>>> a9281c302f298bd469198c1bdd924a9ece2acec7:api/Controllers/Meta/metaLeadController.js

@@ -22,15 +22,12 @@ async function fetchAdAccounts(accessToken) {
 }
 
 // Function to fetch campaigns for a given Ad Account
-<<<<<<< HEAD
- async function fetchCampaigns(adAccountId, accessToken) {
-  // to remove 'act_'
-  const formattedAccountId = adAccountId.replace('act_', '');
-=======
+
+
 async function fetchCampaigns(adAccountId, accessToken, type = "active") {
   // to remove 'act_'
   const formattedAccountId = adAccountId.replace("act_", "");
->>>>>>> a9281c302f298bd469198c1bdd924a9ece2acec7
+
 
   try {
     const response = await axios.get(
@@ -49,11 +46,7 @@ async function fetchCampaigns(adAccountId, accessToken, type = "active") {
 }
 
 // Function to fetch lead forms for a given campaign
-<<<<<<< HEAD
  async function fetchLeadForms(campaignId, accessToken) {
-=======
-async function fetchLeadForms(campaignId, accessToken) {
->>>>>>> a9281c302f298bd469198c1bdd924a9ece2acec7
   const response = await axios.get(
     `https://graph.facebook.com/v14.0/${campaignId}/adsets?fields=id,name,leadgen_forms&access_token=${accessToken}`,
     { httpsAgent: agent }
