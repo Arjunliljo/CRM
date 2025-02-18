@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 
 function Selector({
-  options = ["Option 1", "Option 2", "Option 3"],
+  optionsObj = [{ option: "Option 1", value: "Option 1" }],
   set = "Option 1",
   onSet = () => {},
 }) {
@@ -14,9 +14,9 @@ function Selector({
   return (
     <div className="select-container">
       <select className="custom-select" onChange={handleChange} value={set}>
-        {options.map((option, index) => (
+        {optionsObj.map((option, index) => (
           <option key={index} value={option}>
-            {option}
+            {option.name}
           </option>
         ))}
       </select>

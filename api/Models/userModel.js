@@ -106,6 +106,14 @@ const userSchema = mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
+userSchema.pre("save", async function (next) {
+  await this.populate({
+    path: "statuses",
+    model: "Status",
+  });
+  next();
+});
+
 const User = mongoose.model("User", userSchema);
 
 export default User;

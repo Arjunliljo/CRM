@@ -31,6 +31,13 @@ const statusSchema = mongoose.Schema(
       maxlength: [100, "Description should be less than 100 characters"],
       minlength: [3, "Description should be greater than 3 characters"],
     },
+    countries: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Country",
+      validate: {
+        validator: (v) => Array.isArray(v),
+      },
+    },
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );

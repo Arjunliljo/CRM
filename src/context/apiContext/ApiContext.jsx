@@ -6,7 +6,6 @@ import { useStatuses } from "../../apiHooks/useStatuses";
 import { useUsers } from "../../apiHooks/useUsers";
 import { useChats } from "../../apiHooks/useChats";
 
-
 const ApiContext = createContext();
 
 function ApiProvider({ children }) {
@@ -16,8 +15,6 @@ function ApiProvider({ children }) {
   const statusConfigs = useStatuses();
   const usersConfigs = useUsers();
   const chatsConfigs = useChats();
-
-  useEffect(() => {}, [statusConfigs]);
 
   return (
     <ApiContext.Provider

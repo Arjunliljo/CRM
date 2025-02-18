@@ -3,7 +3,7 @@ import Lead from "../Models/leadsModel.js";
 import getLeadModel from "../Models/leadsModel.js";
 import Status from "../Models/statusModel.js";
 import getStatusModel from "../Models/statusModel.js";
-import getGroupModel from "../Models/userGroupModel.js";
+
 import getUserModel from "../Models/userModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import { sanitizeInput } from "../Utilities/validation.js";
@@ -70,14 +70,7 @@ const createLead = catchAsync(async (req, res) => {
   });
 });
 
-const receiveLeads = catchAsync(async (req, res) => {
-  const dbConnection = req.db;
-  const Lead = getLeadModel(dbConnection);
-  // Register models with the current database connection if not already registered
-  getStatusModel(dbConnection);
-  getBranchModel(dbConnection);
-  getGroupModel(dbConnection);
-
+const getAllLeads = catchAsync(async (req, res) => {
   // Fetch leads and populate all status IDs
   const leads = await Lead.find({})
     .populate("status") // Populates the `status` array

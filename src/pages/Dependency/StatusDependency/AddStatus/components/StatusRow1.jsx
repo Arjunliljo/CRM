@@ -1,5 +1,3 @@
-import { classes } from "../../../../../../api/serverdata/serverdatas";
-
 export default function StatusRow1({ newStatus, setNewStatus }) {
   const handleTabSelection = (value) => {
     setNewStatus((prev) => ({
@@ -7,11 +5,16 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
       isTab: value,
     }));
   };
-
-  const handleClassSelection = (cls) => {
+  const handleCountrySelection = (value) => {
     setNewStatus((prev) => ({
       ...prev,
-      selectedClass: cls,
+      isCountryBased: value,
+    }));
+  };
+  const handleApplicationSelection = (value) => {
+    setNewStatus((prev) => ({
+      ...prev,
+      isApplication: value,
     }));
   };
 
@@ -68,15 +71,15 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
           <div className="tab-buttons">
             <button
               type="button"
-              className={newStatus.isTab === true ? "active" : ""}
-              onClick={() => handleTabSelection(true)}
+              className={newStatus.isCountryBased === true ? "active" : ""}
+              onClick={() => handleCountrySelection(true)}
             >
               Yes
             </button>
             <button
               type="button"
-              className={newStatus.isTab === false ? "active" : ""}
-              onClick={() => handleTabSelection(false)}
+              className={newStatus.isCountryBased === false ? "active" : ""}
+              onClick={() => handleCountrySelection(false)}
             >
               No
             </button>
@@ -87,36 +90,20 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
           <div className="tab-buttons">
             <button
               type="button"
-              className={newStatus.isTab === true ? "active" : ""}
-              onClick={() => handleTabSelection(true)}
+              className={newStatus.isApplication === true ? "active" : ""}
+              onClick={() => handleApplicationSelection(true)}
             >
               Yes
             </button>
             <button
               type="button"
-              className={newStatus.isTab === false ? "active" : ""}
-              onClick={() => handleTabSelection(false)}
+              className={newStatus.isApplication === false ? "active" : ""}
+              onClick={() => handleApplicationSelection(false)}
             >
               No
             </button>
           </div>
         </div>
-      </div>
-
-      <div className="status-form-group">
-        {/* <p>Select 1 class</p>
-        <div className="class-select">
-          {classes.map((cls) => (
-            <button
-              type="button"
-              key={cls}
-              className={newStatus.selectedClass === cls ? "selected" : ""}
-              onClick={() => handleClassSelection(cls)}
-            >
-              {cls}
-            </button>
-          ))}
-        </div> */}
       </div>
 
       <div className="status-form-group">
