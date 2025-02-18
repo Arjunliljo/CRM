@@ -11,7 +11,7 @@ export const useStatuses = () => {
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["statuses"],
-    queryFn: () => apiClient.get("/status"),
+    queryFn: () => apiClient.get("/status?sort=priority"),
   });
 
   const statuses = data?.data?.data;

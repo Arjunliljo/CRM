@@ -44,6 +44,8 @@ export default function AddStatusForm({ newStatus, setNewStatus }) {
 
       message.success("Status created successfully!");
     } catch (e) {
+      console.log(e);
+
       message.error("Error creating status. Please try again.");
     } finally {
       setIsLoading(false);

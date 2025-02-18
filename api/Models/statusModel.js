@@ -42,9 +42,21 @@ const statusSchema = mongoose.Schema(
       type: String,
       default: "#000000",
     },
+    priority: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
+
+statusSchema.pre("save", async function (next) {
+  if (this.isNew) {
+    const count = await mongoose.model("Status").countDocuments();
+    this.priority = count + 1;
+  }
+  next();
+});
 
 // Return the Status model using the provided database connection
 const Status = mongoose.model("Status", statusSchema);

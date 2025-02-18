@@ -23,11 +23,9 @@ async function fetchAdAccounts(accessToken) {
 
 // Function to fetch campaigns for a given Ad Account
 
-
 async function fetchCampaigns(adAccountId, accessToken, type = "active") {
   // to remove 'act_'
   const formattedAccountId = adAccountId.replace("act_", "");
-
 
   try {
     const response = await axios.get(
@@ -46,7 +44,7 @@ async function fetchCampaigns(adAccountId, accessToken, type = "active") {
 }
 
 // Function to fetch lead forms for a given campaign
- async function fetchLeadForms(campaignId, accessToken) {
+async function fetchLeadForms(campaignId, accessToken) {
   const response = await axios.get(
     `https://graph.facebook.com/v14.0/${campaignId}/adsets?fields=id,name,leadgen_forms&access_token=${accessToken}`,
     { httpsAgent: agent }
@@ -56,12 +54,25 @@ async function fetchCampaigns(adAccountId, accessToken, type = "active") {
 
 // Function to fetch lead data for a specific lead form
 async function fetchLeads(formId, accessToken) {
-  const response = await axios.get(
-    `https://graph.facebook.com/v21.0/${formId}/leads?access_token=${accessToken}`,
-    { httpsAgent: agent }
-  );
+  try {
+    const response = await axios.get(
+      `https://graph.facebook.com/v21.0/${formId}/leads?fields=id,created_time,field_data,form_id,campaign_name,messaging_replies&limit=1000&access_token=${accessToken}`,
+      { httpsAgent: agent }
+    );
 
-  return response.data.data;
+    if (!response.data || !response.data.data) {
+      console.log(`No leads found for form ID: ${formId}`);
+      return [];
+    }
+
+    return response.data.data;
+  } catch (error) {
+    console.error(
+      "Error fetching leads:",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
 }
 
 // Function to save the lead data into the database
