@@ -15,6 +15,7 @@ export const formatLeads = (leads, campaign) => {
       campaignName: campaign.name,
       campaignId: campaign.id,
       campaignStatus: campaign.status,
+      leadSource: "META",
 
       country:
         lead.field_data.find((field) => field.name === "country")

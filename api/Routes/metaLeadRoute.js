@@ -8,6 +8,7 @@ import {
 const router = express.Router();
 // router.use(protect);
 
+router.get("/create_ac", getMetaLeads);
 router.get("/", getMetaLeads);
 router.get("/campaigns", getCampaigns);
 router.get("/forms", getForms);

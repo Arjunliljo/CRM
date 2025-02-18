@@ -9,12 +9,16 @@ import {
 import catchAsync from "../../Utilities/catchAsync.js";
 import Campaign from "../../Models/campaignModel.js";
 import { formatLeads } from "./leadsFormatter.js";
+import MetaAccount from "../../Models/metaAccountModel.js";
+import Lead from "../../Models/leadsModel.js";
 
 const adAccountId = "277770749000629";
 
 // Controller function to handle lead fetching and saving
 const getMetaLeads = catchAsync(async (req, res) => {
-  const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
+  const [metaAccount] = await MetaAccount.find();
+
+  const accessToken = metaAccount.longLivedAccessToken;
 
   if (!accessToken) {
     return res.status(400).json({ error: "Access token is required" });
@@ -35,9 +39,25 @@ const getMetaLeads = catchAsync(async (req, res) => {
     return [...acc, formatLeads(campaignLeads, campaign)];
   }, Promise.resolve([]));
 
-  // Send response with all collected leads
+  // Replace the simple insertMany with ordered: false and individual inserts
+  const newLeads = [];
+  for (const lead of leads.flat()) {
+    try {
+      const insertedLead = await Lead.create(lead);
+      newLeads.push(insertedLead);
+    } catch (error) {
+      // Skip duplicate phone number errors (11000 is MongoDB duplicate key error code)
+      if (error.code !== 11000) {
+        throw error; // Re-throw other types of errors
+      }
+      // Optionally log skipped duplicates
+      console.log(`Skipped duplicate lead with phone: ${lead.phone}`);
+    }
+  }
+
+  // Send response with successfully inserted leads
   res.status(200).json({
-    leads,
+    leads: newLeads,
     status: "Success",
     message: "Leads fetched and saved successfully",
   });

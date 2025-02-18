@@ -9,9 +9,6 @@ export const useLeads = () => {
   });
 
   const leads = data?.data?.data;
-
-  console.log(leads, "ooooo");
-
   return { leads, isLoading, error, refetch };
 };
 

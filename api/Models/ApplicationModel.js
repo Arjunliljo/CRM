@@ -6,6 +6,10 @@ const applicationModel = mongoose.Schema(
       type: String,
       required: [true, "Application must have a studentId"],
     },
+    lead: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Lead",
+    },
     courseId: {
       type: String,
       required: [true, "Application must have a courseId"],
@@ -21,6 +25,18 @@ const applicationModel = mongoose.Schema(
     remark: {
       type: String,
       required: [true, "Application must have a remark"],
+    },
+    documents: {
+      type: [
+        {
+          name: {
+            type: String,
+          },
+          url: {
+            type: String,
+          },
+        },
+      ],
     },
   },
   { timestamps: true }
