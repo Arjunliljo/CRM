@@ -1,5 +1,4 @@
 /* global process */
-
 import {
   fetchAdAccounts,
   fetchCampaigns,
@@ -10,8 +9,11 @@ import catchAsync from "../Utilities/catchAsync.js";
 import Campaign from "../Models/campaignModel.js";
 
 // Controller function to handle lead fetching and saving
-const getMetaLeads = catchAsync(async (req, res) => {
-  const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
+const accessToken="EAAP7ZCBheEt8BO7tHrDkWmZBBZBrW6v5p1PwyTjfL9JjYSDjlcNdi76usT90vwgRZAGysfEmMhSz2fyAsaYx7SB2l80UA4J1BOp3f1ALdSvIz9B5ROtiee2YrAYNC92KIpwcCst0ZAOEPXcvY2JZB0V13nNW6uJ0XalBddkhJkWPjGReiZBBEfQ3eDfmqkFwZAJmIWPDAA3miRgMPUZCDAPpIqxThbE9pYrknjZCp1FoUR9wQZD"
+
+// process.env.FACEBOOK_ACCESS_TOKEN
+
+  const getMetaLeads = catchAsync(async (req, res) => {
 
   if (!accessToken) {
     return res.status(400).json({ error: "Access token is required" });
@@ -21,7 +23,7 @@ const getMetaLeads = catchAsync(async (req, res) => {
   const adAccounts = await fetchAdAccounts(accessToken);
 
   if (!adAccounts || adAccounts.length === 0) {
-    return res.status(404).json({ error: "No ad accounts found" });
+     return res.status(404).json({ error: "No ad accounts found" });
   }
 
   // Store all leads
@@ -48,7 +50,6 @@ const getMetaLeads = catchAsync(async (req, res) => {
             // Fetch leads from the lead form
             const leads = await fetchLeads(formId, accessToken);
             console.log(leads, "leads");
-
             allLeads.push(...leads);
 
             // const LeadModel = dbConnection.model("Lead", leadSchema);
@@ -67,6 +68,7 @@ const getMetaLeads = catchAsync(async (req, res) => {
     message: "Leads fetched and saved successfully",
   });
 });
+
 
 const updateCampaigns = catchAsync(async (req, res) => {
   const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;

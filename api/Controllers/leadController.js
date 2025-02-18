@@ -146,9 +146,10 @@ const branchLeadAssignment = catchAsync(async (req, res) => {
     // Move to the next branch
     branchIndex = (branchIndex + 1) % branches.length;
   }
-
   console.log("Leads successfully assigned to branches.");
+
 });
+
 
 const assignLeadsToUsers = catchAsync(async (req, res) => {
   const User = getUserModel(req.db);

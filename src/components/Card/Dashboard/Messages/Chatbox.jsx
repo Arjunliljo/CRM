@@ -11,11 +11,13 @@ import { updateSelectedMessage, updateChats } from "../../../../../global/chatSl
 function Chatbox({ message, onBack }) {
   const [inputMessage, setInputMessage] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const user = useSelector((state) => state.auth);
   const selectedMessage = useSelector((state) => state.chat.selectedMessage);
   const chatId = selectedMessage.id;
   const dispatch = useDispatch();
   const messagesEndRef = useRef(null);
+  const typingTimeoutRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -28,14 +30,40 @@ function Chatbox({ message, onBack }) {
   useEffect(() => {
     if (chatId) {
       socket.emit("joinChat", chatId);
+
+      socket.on("typing", ({ chatId: typingChatId }) => {
+        if (typingChatId === chatId) {
+          setIsTyping(true);
+        }
+      });
+
+      socket.on("stopTyping", ({ chatId: typingChatId }) => {
+        if (typingChatId === chatId) {
+          setIsTyping(false);
+        }
+      });
     }
 
     return () => {
       if (chatId) {
         socket.emit("leaveChat", chatId);
+        socket.off("typing");
+        socket.off("stopTyping");
       }
     };
   }, [chatId]);
+
+  const handleTyping = () => {
+    socket.emit("typing", { chatId });
+
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+    }
+
+    typingTimeoutRef.current = setTimeout(() => {
+      socket.emit("stopTyping", { chatId });
+    }, 2000);
+  };
 
   const onEmojiClick = (emojiObject) => {
     setInputMessage(prevInput => prevInput + emojiObject.emoji);
@@ -58,6 +86,7 @@ function Chatbox({ message, onBack }) {
         dispatch(updateChats({ chatId, message: response.data.data }));
         socket.emit("sendMessage", response.data.data);
         setInputMessage("");
+        socket.emit("stopTyping", { chatId });
       } catch (error) {
         console.error("Failed to send message:", error);
       }
@@ -76,7 +105,7 @@ function Chatbox({ message, onBack }) {
             />
             <div className="chatbox-head-profilehead-online">
               <h2 className="chatbox-head-title">{message && message.name}</h2>
-              <h6>online</h6>
+              <h6>{isTyping ? "typing..." : "online"}</h6>
             </div>
           </div>
           <button className="chatbox-head-back" onClick={onBack}>
@@ -125,7 +154,10 @@ function Chatbox({ message, onBack }) {
             className="chatbox-type-input"
             placeholder="Type message..."
             value={inputMessage}
-            onChange={(e) => setInputMessage(e.target.value)}
+            onChange={(e) => {
+              setInputMessage(e.target.value);
+              handleTyping();
+            }}
             style={{ width: 'calc(100% - 50px)' }}
           />
         </div>
@@ -147,14 +179,3 @@ function Chatbox({ message, onBack }) {
 }
 
 export default Chatbox;
-
-
-
-
-
-
-
-
-
-
-

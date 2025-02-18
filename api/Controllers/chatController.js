@@ -100,8 +100,10 @@ export const getChats = catchAsync(async (req, res, next) => {
 
   const chats = await Chat.find({
       users: userId  // Removed $in operator since we're looking for an exact match
-  }).populate('users', '_id name image')
-    .populate('messages');  // Add this line to populate messages
+  })
+  .populate('users', '_id name image')
+  .populate('messages')
+  .sort({ updatedAt: -1 }); // Sort by updatedAt in descending order to get latest chats first
 
   res.status(200).json({
       status: "success",

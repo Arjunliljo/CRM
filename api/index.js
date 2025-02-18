@@ -44,8 +44,6 @@ const io = new SocketIOServer(server, {
   },
 });
 
-
-
 io.on("connection", (socket) => {
   console.log("A user connected");
 
@@ -71,6 +69,14 @@ io.on("connection", (socket) => {
       message: data
     });
   })
+
+  socket.on("typing", ({ chatId }) => {
+    socket.to(chatId).emit("typing", { chatId });
+  });
+
+  socket.on("stopTyping", ({ chatId }) => {
+    socket.to(chatId).emit("stopTyping", { chatId });
+  });
 
   socket.on("leaveChat", (chatId) => {
     socket.leave(chatId);

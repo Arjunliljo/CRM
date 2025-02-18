@@ -18,10 +18,9 @@ async function fetchAdAccounts(accessToken) {
   }
 }
 
-
 // Function to fetch campaigns for a given Ad Account
  async function fetchCampaigns(adAccountId, accessToken) {
-  // to remove 'act_' 
+  // to remove 'act_'
   const formattedAccountId = adAccountId.replace('act_', '');
 
   try {
@@ -38,7 +37,6 @@ async function fetchAdAccounts(accessToken) {
 
 // Function to fetch lead forms for a given campaign
  async function fetchLeadForms(campaignId, accessToken) {
-
   const response = await axios.get(
     `https://graph.facebook.com/v14.0/${campaignId}/adsets?fields=id,leadgen_forms&access_token=${accessToken}`,
     { httpsAgent: agent }
