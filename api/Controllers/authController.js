@@ -98,7 +98,7 @@ const loginUser = catchAsync(async (req, res, next) => {
   sendToken(sanitizedUser, 200, res);
 });
 
-const verify = catchAsync(async (req, res, next) => {
+const verify = catchAsync(async (req, res) => {
   let isLoggedIn = false;
   const token = req.cookies.token;
 

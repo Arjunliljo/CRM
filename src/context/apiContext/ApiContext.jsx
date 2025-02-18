@@ -5,6 +5,7 @@ import { useRoles } from "../../apiHooks/useRoles";
 import { useStatuses } from "../../apiHooks/useStatuses";
 import { useUsers } from "../../apiHooks/useUsers";
 import { useChats } from "../../apiHooks/useChats";
+import { useLeads } from "../../apiHooks/useLeads";
 
 const ApiContext = createContext();
 
@@ -15,6 +16,9 @@ function ApiProvider({ children }) {
   const statusConfigs = useStatuses();
   const usersConfigs = useUsers();
   const chatsConfigs = useChats();
+  const leadsConfigs = useLeads();
+
+  console.log(leadsConfigs, "leadsConfigs");
 
   return (
     <ApiContext.Provider

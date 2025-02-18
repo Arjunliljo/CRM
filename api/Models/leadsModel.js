@@ -5,7 +5,7 @@ const leadSchema = mongoose.Schema(
     leadId: {
       type: String,
       unique: true,
-      sparse: true, // Allows null/undefined values to not trigger unique constraint
+      sparse: true,
     },
     leadSource: {
       type: String,
@@ -25,13 +25,7 @@ const leadSchema = mongoose.Schema(
     phone: {
       type: String,
       required: [true, "Lead must have a phone number"],
-      validate: {
-        validator: function (value) {
-          return value.length >= 10 && value.length <= 13;
-        },
-        message:
-          "Enter a valid phone number with a length between 10 and 13 digits",
-      },
+      unique: true,
     },
     campaign: {
       type: String,
@@ -43,10 +37,10 @@ const leadSchema = mongoose.Schema(
     status: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Status", //not required because meta will not have status
+        ref: "Status",
       },
     ],
-    // to check student or leads (become student when they assigned to branch )
+
     isStudent: {
       type: Boolean,
       default: false,
@@ -73,6 +67,7 @@ const leadSchema = mongoose.Schema(
         },
       ],
     },
+
     documents: {
       type: [
         {
@@ -85,6 +80,12 @@ const leadSchema = mongoose.Schema(
         },
       ],
     },
+    application: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Application",
+      },
+    ],
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

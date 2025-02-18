@@ -8,15 +8,16 @@ import {
 import catchAsync from "../../Utilities/catchAsync.js";
 import Campaign from "../../Models/campaignModel.js";
 import { formatLeads } from "./leadsFormatter.js";
+import MetaAccount from "../../Models/metaAccountModel.js";
+import Lead from "../../Models/leadsModel.js";
 
 const adAccountId = "277770749000629";
 
 // Controller function to handle lead fetching and saving
-const accessToken="EAAP7ZCBheEt8BO7tHrDkWmZBBZBrW6v5p1PwyTjfL9JjYSDjlcNdi76usT90vwgRZAGysfEmMhSz2fyAsaYx7SB2l80UA4J1BOp3f1ALdSvIz9B5ROtiee2YrAYNC92KIpwcCst0ZAOEPXcvY2JZB0V13nNW6uJ0XalBddkhJkWPjGReiZBBEfQ3eDfmqkFwZAJmIWPDAA3miRgMPUZCDAPpIqxThbE9pYrknjZCp1FoUR9wQZD"
+const getMetaLeads = catchAsync(async (req, res) => {
+  const [metaAccount] = await MetaAccount.find();
 
-// process.env.FACEBOOK_ACCESS_TOKEN
-
-  const getMetaLeads = catchAsync(async (req, res) => {
+  const accessToken = metaAccount.longLivedAccessToken;
 
   if (!accessToken) {
     return res.status(400).json({ error: "Access token is required" });
@@ -36,9 +37,25 @@ const accessToken="EAAP7ZCBheEt8BO7tHrDkWmZBBZBrW6v5p1PwyTjfL9JjYSDjlcNdi76usT90
     return [...acc, formatLeads(campaignLeads, campaign)];
   }, Promise.resolve([]));
 
-  // Send response with all collected leads
+  // Replace the simple insertMany with ordered: false and individual inserts
+  const newLeads = [];
+  for (const lead of leads.flat()) {
+    try {
+      const insertedLead = await Lead.create(lead);
+      newLeads.push(insertedLead);
+    } catch (error) {
+      // Skip duplicate phone number errors (11000 is MongoDB duplicate key error code)
+      if (error.code !== 11000) {
+        throw error; // Re-throw other types of errors
+      }
+      // Optionally log skipped duplicates
+      console.log(`Skipped duplicate lead with phone: ${lead.phone}`);
+    }
+  }
+
+  // Send response with successfully inserted leads
   res.status(200).json({
-    leads,
+    leads: newLeads,
     status: "Success",
     message: "Leads fetched and saved successfully",
   });
