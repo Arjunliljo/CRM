@@ -213,16 +213,16 @@ const uploadLeadFile = catchAsync(async (req, res) => {
     return res.status(400).json({
       success: false,
       message: "No file upload details found",
+      message: "No file upload details found",
     });
   }
 
   console.log(req.body, "req.body from uploadLeadFile");
   const { fileName, fileUrl } = req.s3File;
-  const { leadId , content , isImportant} = req.body;
 
- const updatedLead = await Lead.findByIdAndUpdate(leadId, {
-    $push: { documents: { name: content, url: fileUrl, isImportant} }
-  }, { new: true })
+  await Lead.findByIdAndUpdate(req.body?.leadId, {
+    $push: { documents: { name: fileName, url: fileUrl } },
+  });
 
   return res.status(200).json({
     success: true,
@@ -235,7 +235,7 @@ const updateLeadDocuments = catchAsync(async (req, res) => {
   const { leadId, documentObj } = req.body;
 
   await Lead.findByIdAndUpdate(leadId, {
-    $pull: { documents: { name: documentObj.name }}
+    $pull: { documents: { name: documentObj.name } },
   });
 
   return res.status(200).json({
@@ -244,4 +244,11 @@ const updateLeadDocuments = catchAsync(async (req, res) => {
   });
 });
 
-export { createLead, branchLeadAssignment, assignLeadsToUsers ,getAllLeads , uploadLeadFile , updateLeadDocuments};
+export {
+  createLead,
+  branchLeadAssignment,
+  assignLeadsToUsers,
+  getAllLeads,
+  uploadLeadFile,
+  updateLeadDocuments,
+};
