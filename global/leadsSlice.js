@@ -21,14 +21,18 @@ const leadsSlice = createSlice({
         state.autoLeadsAssign = true;
       }
     },
-    updateCurLeadDocuments(state, action) {
+    removeCurLeadDocument(state, action) {
       state.curLead.documents = state.curLead.documents.filter(
         doc => doc._id !== action.payload
       );
     },
+    updateCurLeadDocuments(state, action) {
+
+      state.curLead.documents = action.payload;
+    },
   },
 });
 
-export const { setAutoLeadsAssign, setCurLead , updateCurLeadDocuments} = leadsSlice.actions;
+export const { setAutoLeadsAssign, setCurLead , updateCurLeadDocuments , removeCurLeadDocument} = leadsSlice.actions;
 
 export default leadsSlice.reducer;

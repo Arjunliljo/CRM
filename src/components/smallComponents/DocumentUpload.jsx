@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import apiClient from "../../../config/axiosInstance";
 import HomeIcon from "../utils/Icons/HomeIcon";
-import { updateCurLeadDocuments } from "../../../global/leadsSlice";
+import { removeCurLeadDocument , updateCurLeadDocuments} from "../../../global/leadsSlice";
 
 function DocumentUpload() {
   const [documents, setDocuments] = useState(1);
@@ -10,8 +10,6 @@ function DocumentUpload() {
   const [documentDetails, setDocumentDetails] = useState({});
   const currentLead = useSelector((state) => state.leads.curLead);
   const dispatch = useDispatch();
-
-  console.log(documentDetails, "documentDetails");
 
   const handleAddCard = () => {
     setDocuments((prev) => prev + 1);
@@ -46,13 +44,19 @@ function DocumentUpload() {
     formData.append("isImportant", Boolean(details.isImportant));
 
     try {
-      await apiClient.post("/lead/uploadLeadFile", formData, {
+      const response = await apiClient.post("/lead/uploadLeadFile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      });
+        });
 
-      // Clear the details after successful upload
+      setUploadedFiles(prev => {
+        const newFiles = {...prev};
+        delete newFiles[index];
+        return newFiles;
+      });
+      dispatch(updateCurLeadDocuments(response?.data?.data));
+
       setDocumentDetails(prev => {
         const newDetails = {...prev};
         delete newDetails[index];
@@ -70,16 +74,29 @@ function DocumentUpload() {
         documentObj: doc
       });
 
-      console.log("Document deleted successfully");
-      dispatch(updateCurLeadDocuments(doc._id));
+      dispatch(removeCurLeadDocument(doc._id));
     } catch (error) {
       console.error("Error deleting document:", error);
     }
   };
 
-  const handleDownload = (docUrl) => {
-    window.open(docUrl, '_blank');
+  const handleDownload = async (docUrl) => {
+    try {
+      const response = await fetch(docUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = docUrl.split('/').pop(); // Extract filename from URL
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error("Error downloading document:", error);
+    }
   };
+
 
   return (
     <div className="document-upload">
@@ -114,7 +131,7 @@ function DocumentUpload() {
                 />
               </div>
               <div
-                onClick={() => handleDownload(doc.name)}
+                onClick={() => handleDownload(doc.url)}
                 style={{
                   cursor: 'pointer'
                 }}
@@ -132,7 +149,7 @@ function DocumentUpload() {
               </div>
             </div>
             <label style={{ marginLeft: '50px' }}>
-              {doc.name.split('/').pop()}
+              {doc.name}
               <input
                 type="file"
                 onChange={(e) => handleFileChange(index + 1, e.target.files[0])}
@@ -150,7 +167,7 @@ function DocumentUpload() {
             >
               <label>
                 {uploadedFiles[actualIndex]
-                  ? uploadedFiles[actualIndex].name
+                  ?uploadedFiles[actualIndex].name
                   : "+"}
                 <input
                   type="file"
@@ -196,7 +213,7 @@ function DocumentUpload() {
                   </button>
                 </div>
               )}
-            </div>
+          </div>
           );
         })}
       </div>

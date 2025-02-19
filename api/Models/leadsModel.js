@@ -49,7 +49,6 @@ const leadSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-
     // to check student shared to users
     isSharedToUsers: {
       type: Boolean,
@@ -84,6 +83,10 @@ const leadSchema = mongoose.Schema(
           url: {
             type: String,
             required: [true, "Document must have a url"],
+          },
+          isImportant: {
+            type: Boolean,
+            default: false,
           },
         },
       ],
