@@ -1,4 +1,4 @@
-import DocumentUpload from "../../smallComponents/DocumentUpload";
+import { useEffect, useState } from "react";
 import Tracker from "../../smallComponents/Tracker";
 import ActivityLog from "./ActivityLog";
 import EligiableCourses from "./EligiableCourses";
@@ -6,6 +6,11 @@ import PersonalDetails from "./PersonalDetails";
 import ProfileCardStatus from "./ProfileCardStatus";
 
 export default function ProfileCard({ IDocumentUpload, lead }) {
+  const [isApplication, setIsApplication] = useState(false);
+
+  useEffect(() => {
+    setIsApplication(lead?.application?.length > 0);
+  }, [lead]);
 
   return (
     <div className="profileCard">
@@ -13,7 +18,7 @@ export default function ProfileCard({ IDocumentUpload, lead }) {
         <div className="profileCard-head-info">
           <div className="profileCard-head-info-details">
             <div className="profileCard-image-container">
-              <img src={ lead && lead.img} alt={ lead && lead.name} />
+              <img src={lead && lead.img} alt={lead && lead.name} />
             </div>
             <div className="name-bar-name name-small">
               <div>{lead && lead.name}</div>
@@ -41,7 +46,11 @@ export default function ProfileCard({ IDocumentUpload, lead }) {
         </div>
       </div>
       <div className="profileCard-journy">
-        <Tracker completedStep={3} />
+        {isApplication ? (
+          <Tracker completedStep={3} />
+        ) : (
+          <div>No Application Found</div>
+        )}
       </div>
       <div className="profileCard-boxes">
         <PersonalDetails />

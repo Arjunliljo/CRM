@@ -26,6 +26,14 @@ const applicationModel = mongoose.Schema(
       type: String,
       required: [true, "Application must have a remark"],
     },
+    university: {
+      type: String,
+      required: [true, "Application must have a university"],
+    },
+    country: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Country",
+    },
     documents: {
       type: [
         {
