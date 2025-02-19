@@ -6,10 +6,16 @@ import NameBar from "./NameBar";
 
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setAutoLeadsAssign } from "../../../global/leadsSlice";
+import { setLeadDetailToggle } from "../../../global/leadsSlice";
+import { useApi } from "../../context/apiContext/ApiContext";
+import { getStatusName } from "../../service/nameFinders";
 
-export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
+export default function LeadCard({ lead, set, onSet, toggle }) {
   const [isSelected, setIsSelected] = useState(lead?._id === set?._id);
+
+  const {
+    statusConfigs: { statuses },
+  } = useApi();
   const targetRef = useRef(null);
 
   useEffect(() => {
@@ -17,13 +23,16 @@ export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
   }, [set, lead]);
 
   const dispatch = useDispatch();
+
+  const statusName = getStatusName(lead?.status, statuses);
+
   const handleLeadSelect = () => {
     if (lead._id === set?._id) {
-      dispatch(setAutoLeadsAssign(!toggle));
+      dispatch(setLeadDetailToggle(!toggle));
     } else {
       dispatch(onSet(lead));
       if (!toggle) {
-        dispatch(setAutoLeadsAssign(false));
+        dispatch(setLeadDetailToggle(false));
       }
     }
     setTimeout(() => {
@@ -45,13 +54,13 @@ export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
         <Mover num={lead.num} />
       </div>
       <div className="card-body">
-        <div className="card-body-top">
+        <div className="card-body-top" style={{ textWrap: "nowrap" }}>
           <NameBar lead={lead} />
           <InfoBtn
             color="white"
-            bgcl={lead.status === "Interested" ? "green" : lead.statusColor}
+            bgcl={lead?.status === "Interested" ? "green" : "black"}
           >
-            {lead.status}
+            {statusName}
           </InfoBtn>
         </div>
         <div className="card-body-mid">
@@ -70,7 +79,7 @@ export default function LeadCard({ lead, set, onSet, istoggle, toggle }) {
                 color="#00b100"
                 style={{ transform: "rotate(270deg)" }}
               />
-              <p>{lead.application?.length} Applications</p>
+              <p>{lead?.application?.length} Applications</p>
             </div>
             <div className="card-body-bottom-icons-item">
               <HomeIcon

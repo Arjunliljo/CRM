@@ -6,7 +6,11 @@ import MainBody from "../../layout/MainBody/MainBody";
 import Selector from "../../components/Selectors/Selector";
 import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import AllLeads from "../../components/buttons/AllLeads";
-import { setAutoLeadsAssign, setCurLead } from "../../../global/leadsSlice";
+import {
+  setAutoLeadsAssign,
+  setCurLead,
+  setLeadDetailToggle,
+} from "../../../global/leadsSlice";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
@@ -17,7 +21,9 @@ import { useIDGetStatuses } from "../../../api/Utilities/helper";
 import { useApi } from "../../context/apiContext/ApiContext";
 
 export default function Leads() {
-  const { autoLeadsAssign, curLead } = useSelector((state) => state.leads);
+  const { autoLeadsAssign, curLead, leadDetailToggle } = useSelector(
+    (state) => state.leads
+  );
 
   const { leadsConfigs } = useApi();
 
@@ -54,8 +60,8 @@ export default function Leads() {
       onSet={setCurLead}
       set={curLead}
       lead={lead}
-      istoggle={autoLeadsAssign}
-      toggle={setAutoLeadsAssign}
+      istoggle={leadDetailToggle}
+      toggle={setLeadDetailToggle}
     />
   ));
 
@@ -102,7 +108,7 @@ export default function Leads() {
         TopLeft={TopLeft}
         TopRight={TopRight}
         IContents={IContents}
-        switching={autoLeadsAssign}
+        switching={leadDetailToggle}
         BottomLeft={BottomLeft}
         BottomRight={BottomRight}
         ProfileCard={IProfileCard}
