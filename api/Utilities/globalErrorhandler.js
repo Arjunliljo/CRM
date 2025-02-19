@@ -30,31 +30,16 @@ const handleValidationDB = (err) => {
   return new AppError(message, 400);
 };
 
-const handleJsonInvalidToken = () => {
+const handleJsonInvalidToken = (err) => {
   return new AppError("Invalid Token Please login again", 401);
 };
 
-// Handle expired JWT
-const handleJWTExpired = () => {
-  return new AppError("Your token has expired! Please log in again.", 401);
-};
-
-// Handle programming/syntax errors
-const handleDevelopmentError = (err) => {
-  return new AppError(err.message || "Programming error occurred", 500);
-};
-
-// Handle network/connection errors
-const handleConnectionError = () => {
-  return new AppError("Database connection error", 503);
-};
-
-export default function globalErrorHandler(err, req, res) {
+export default function globalErrorHandler(err, req, res, next) {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
   err.isOperational = err.isOperational || false;
 
-  console.log(err.name, "err name");
+  console.log(err);
 
   //   catching invalid id
   if (err.name === "CastError") err = handleInvalidId(err);
@@ -68,18 +53,6 @@ export default function globalErrorHandler(err, req, res) {
 
   //invalid token
   if (err.name === "JsonWebTokenError") err = handleJsonInvalidToken(err);
-
-  // Add these new checks
-  if (err.name === "TokenExpiredError") err = handleJWTExpired();
-  if (err.name === "MongooseServerSelectionError")
-    err = handleConnectionError();
-
-  // Development vs Production error handling
-  if (process.env.NODE_ENV === "development") {
-    err.stack = err.stack; // Include stack trace in development
-  } else {
-    err.stack = undefined; // Remove stack trace in production
-  }
 
   sendErr(err, res);
 }
