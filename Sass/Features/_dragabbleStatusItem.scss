@@ -1,0 +1,28 @@
+.status-item {
+  cursor: move;
+  position: relative;
+}
+
+.status-item.dragging {
+  opacity: 0.5;
+}
+
+.status-item.drop-above::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #2196f3;
+}
+
+.status-item.drop-below::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #2196f3;
+}

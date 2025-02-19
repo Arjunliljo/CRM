@@ -10,6 +10,7 @@ import Campaign from "../../Models/campaignModel.js";
 import { formatLeads } from "./leadsFormatter.js";
 import MetaAccount from "../../Models/metaAccountModel.js";
 import Lead from "../../Models/leadsModel.js";
+import { convertLeads, saveLeads } from "./saveLeads.js";
 
 const adAccountId = "277770749000629";
 
@@ -25,37 +26,17 @@ const getMetaLeads = catchAsync(async (req, res) => {
 
   // Fetch campaigns for each ad account
   const campaigns = await fetchCampaigns(adAccountId, accessToken);
-  const leads = await campaigns.reduce(async (promise, campaign) => {
-    const acc = await promise;
-    const formId = campaign.ads.data?.[0]?.id;
-    if (!formId) return acc;
+  const activeCampaigns = campaigns.filter(
+    (campaign) => campaign.status === "ACTIVE"
+  );
 
-    const campaignLeads = await fetchLeads(formId, accessToken);
+  const leads = await convertLeads(activeCampaigns, accessToken);
+  await saveLeads(leads);
 
-    if (campaignLeads.length === 0) return acc;
-
-    return [...acc, formatLeads(campaignLeads, campaign)];
-  }, Promise.resolve([]));
-
-  // Replace the simple insertMany with ordered: false and individual inserts
-  const newLeads = [];
-  for (const lead of leads.flat()) {
-    try {
-      const insertedLead = await Lead.create(lead);
-      newLeads.push(insertedLead);
-    } catch (error) {
-      // Skip duplicate phone number errors (11000 is MongoDB duplicate key error code)
-      if (error.code !== 11000) {
-        throw error; // Re-throw other types of errors
-      }
-      // Optionally log skipped duplicates
-      console.log(`Skipped duplicate lead with phone: ${lead.phone}`);
-    }
-  }
-
-  // Send response with successfully inserted leads
   res.status(200).json({
-    leads: newLeads,
+    leads,
+    campaigns,
+    activeCampaigns,
     status: "Success",
     message: "Leads fetched and saved successfully",
   });
@@ -63,14 +44,26 @@ const getMetaLeads = catchAsync(async (req, res) => {
 
 const getCampaigns = catchAsync(async (req, res) => {
   const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
-  const campaigns = await fetchCampaigns(adAccountId, accessToken);
 
   if (!accessToken) {
     return res.status(400).json({ error: "Access token is required" });
   }
 
+  const campaigns = await fetchCampaigns(adAccountId, accessToken);
+  const activeCampaigns = campaigns.filter(
+    (campaign) => campaign.status === "ACTIVE"
+  );
+  const forms = campaigns.map((campaign) => campaign.ads.data?.[0]?.id);
+
+  // Use Promise.all to wait for all fetchLeads promises to resolve
+  const leads = await Promise.all(
+    forms.map((form) => fetchLeads(form, accessToken))
+  );
+
   res.status(200).json({
     campaigns,
+    forms,
+    leads,
     result: campaigns.length,
     message: "Campaigns fetched successfully",
   });

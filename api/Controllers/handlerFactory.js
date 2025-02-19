@@ -6,22 +6,21 @@ import APIFeatures from "../APIFeatures/APIFeatures.js";
 export const getAll = (Model) => {
   // console.log("herehre");
 
-
   return catchAsync(async (req, res) => {
-    // let filter = {};
-    // const features = new APIFeatures(Model, Model.find(filter), req.query);
+    let filter = {};
+    const features = new APIFeatures(Model, Model.find(filter), req.query);
 
-    // features
-    //   .filter()
-    //   .sort()
-    //   .limitFields()
-    //   .paginate(await Model.countDocuments())
-    //   .filterByBranch()
-    //   .filterByDateRange()
-    //   .gstType()
-    //   .search();
+    features
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate(await Model.countDocuments())
+      .filterByBranch()
+      .filterByDateRange()
+      .gstType()
+      .search();
 
-    const docs = await Model.find();
+    const docs = await features.query;
 
     res.status(200).json({
       status: "success",

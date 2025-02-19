@@ -5,21 +5,31 @@ import { useApi } from "../../../context/apiContext/ApiContext";
 import { refetchStatuses } from "../../../apiHooks/useStatuses";
 import apiClient from "../../../../config/axiosInstance";
 import { message } from "antd";
+import {
+  handleDragEnd,
+  handleDragLeave,
+  handleDragOver,
+  handleDragStart,
+  handleDrop,
+} from "../../../components/handlers/dragabbleHandlers";
 
 export default function StatusNames() {
   const {
     statusConfigs: { statuses },
   } = useApi();
+  const [localStatuses, setLocalStatuses] = useState(statuses);
+  const [selectedStatus, setSelectedStatus] = useState(statuses[0]);
+  const [draggedIndex, setDraggedIndex] = useState(null);
 
-  const [selectedStatus, setSelectedStatus] = useState(null);
-  const [statusList, setStatusList] = useState([]);
-
-  // Set the first status as default when statuses are available
-  useEffect(() => {
-    if (statuses?.length > 0 && !selectedStatus) {
-      setSelectedStatus(statuses[0]);
-    }
-  }, [statuses, selectedStatus]);
+  // // Initialize local statuses when the API data loads
+  // useEffect(() => {
+  //   if (statuses?.length > 0) {
+  //     setLocalStatuses(statuses);
+  //     if (!selectedStatus) {
+  //       setSelectedStatus(statuses[0]);
+  //     }
+  //   }
+  // }, []);
 
   const handleDeleteSubstatus = async (subStatus) => {
     if (
@@ -38,6 +48,44 @@ export default function StatusNames() {
     }
   };
 
+  const handlePriorityChange = async (e, i, status) => {
+    // First handle the UI update
+    handleDrop(
+      e,
+      i,
+      localStatuses,
+      setLocalStatuses,
+      selectedStatus,
+      setSelectedStatus
+    );
+  };
+
+  useEffect(() => {
+    async function updateStatuses() {
+      try {
+        // Create an array of promises for updating all statuses
+        const updatePromises = localStatuses.map((status, index) =>
+          apiClient.patch(`/status/${status._id}`, {
+            priority: index + 1,
+          })
+        );
+
+        // Wait for all updates to complete
+        await Promise.all(updatePromises);
+        // message.success("Status priorities updated successfully");
+
+        // Optionally refetch to ensure server state
+        // refetchStatuses();
+      } catch (error) {
+        message.error(
+          "Failed to update status priorities, please refresh the page"
+        );
+        console.error("Error updating priorities:", error);
+      }
+    }
+    updateStatuses();
+    console.log(localStatuses, "localStatuses");
+  }, [localStatuses]);
   return (
     <div className="dependancies">
       <div className="dependancies-branch-names">
@@ -45,16 +93,20 @@ export default function StatusNames() {
           <div className="content-section-head">
             <h2>All Status</h2>
           </div>
-          {statuses?.map((val, i) => (
+          {localStatuses?.map((val, i) => (
             <div
               key={i}
               className={`status-item ${
                 selectedStatus === val ? "selected" : ""
               }`}
-              onClick={() => setSelectedStatus(val)}
+              draggable={true}
+              onDragStart={(e) => handleDragStart(e, i, setDraggedIndex)}
+              onDragEnd={(e) => handleDragEnd(e, setDraggedIndex)}
+              onDragOver={(e) => handleDragOver(e, i, draggedIndex)}
+              onDragLeave={(e) => handleDragLeave(e)}
+              onDrop={(e) => handlePriorityChange(e, i, val)}
             >
               <StatusItem
-                key={i}
                 item={val}
                 setSelectedStatus={setSelectedStatus}
                 isSelected={selectedStatus === val}

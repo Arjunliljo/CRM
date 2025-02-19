@@ -10,9 +10,8 @@ export default function StatusItem({ item, setSelectedStatus, isSelected }) {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  console.log(item, "item");
-
-  const handleEdit = () => {
+  const handleEdit = (e) => {
+    e.stopPropagation();
     dispatch(
       setStatusEdit({
         isStatusEdit: true,
@@ -39,18 +38,24 @@ export default function StatusItem({ item, setSelectedStatus, isSelected }) {
       setIsLoading(false);
     }
   };
+
+  const handleClick = (e) => {
+    // Only set selected status if not dragging and not clicking action buttons
+    if (!e.target.closest(".branch-item-actions")) {
+      setSelectedStatus(item);
+    }
+  };
+
   return (
     <div
       className={`branch-item ${isSelected ? "selected" : ""}`}
-      onClick={() => setSelectedStatus(item)}
+      onClick={handleClick}
     >
-      <div>{item.name}</div>
+      <div className="drag-handle">{item.name}</div>
       <div className="branch-item-actions">
         <EditOutlined
           sx={{ color: "darkblue", fontSize: "1.2rem" }}
-          onClick={(e) => {
-            handleEdit();
-          }}
+          onClick={handleEdit}
         />
         <Delete
           sx={{ color: "darkblue", fontSize: "1.2rem" }}
