@@ -29,7 +29,7 @@ async function uploadFileToS3(bucketName, fileBuffer, contentType, fullPath) {
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 async function deleteFileFromS3(bucketName, documentObj, next) {
-  // Extract the path from the full URL
+
   // The path will be everything after the bucket name in the URL
   const filePath = documentObj.url.split('.com/')[1];
 

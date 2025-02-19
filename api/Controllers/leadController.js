@@ -222,9 +222,10 @@ const uploadLeadFile = catchAsync(async (req, res) => {
   }
   console.log(req.body, "req.body from uploadLeadFile");
   const { fileName, fileUrl } = req.s3File;
+  const { content, isImportant } = req.body;
 
   await Lead.findByIdAndUpdate(req.body?.leadId, {
-    $push: { documents: { name: fileName, url: fileUrl } }
+    $push: { documents: { name: content, url: fileUrl, isImportant } }
   });
 
   return res.status(200).json({
@@ -234,8 +235,8 @@ const uploadLeadFile = catchAsync(async (req, res) => {
 });
 
 const updateLeadDocuments = catchAsync(async (req, res) => {
-  console.log(req.body, "req.body from updateLeadDocuments");
   const { leadId, documentObj } = req.body;
+
 
   await Lead.findByIdAndUpdate(leadId, {
     $pull: { documents: { name: documentObj.name }}
