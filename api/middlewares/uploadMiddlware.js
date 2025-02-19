@@ -17,7 +17,6 @@ const upload = (req, res, next) => {
       if (!req.file) {
         return res.status(400).json({ error: "No file provided" });
       }
-      console.log(req.file, "req.file from upload");
 
       // Add timestamp to filename
       const timestamp = Date.now();

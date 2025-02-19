@@ -18,10 +18,6 @@ export const getAllGenerals = getAll(General);
 export const autoAssignLeadsToBranch = catchAsync(async (req, res, next) => {
   const { autoAssignLeadsToBranch } = req.body;
 
-  if (!autoAssignLeadsToBranch) {
-    return next(new AppError("Auto assign leads to branch is required", 400));
-  }
-
   const generals = await General.find();
   if (!generals) {
     return res.status(404).json({
@@ -29,9 +25,13 @@ export const autoAssignLeadsToBranch = catchAsync(async (req, res, next) => {
     });
   }
 
-  const general = await General.findByIdAndUpdate(generals[0]._id, {
-    autoAssignLeadsToBranch,
-  });
+  const general = await General.findByIdAndUpdate(
+    generals[0]._id,
+    {
+      autoAssignLeadsToBranch,
+    },
+    { new: true }
+  );
 
   res.status(200).json({
     message: "Auto assign leads to branch updated",

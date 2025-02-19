@@ -1,6 +1,5 @@
 import express from "express";
-import catchAsync from "../../Utilities/catchAsync.js";
-import General from "../../Models/generalModel.js";
+
 import {
   createGeneral,
   getAllGenerals,
