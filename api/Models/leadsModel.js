@@ -38,12 +38,11 @@ const leadSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Branch",
     },
-    status: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Status",
-      },
-    ],
+    status: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Status",
+      default: "67b5833fbe7074541348db91",
+    },
 
     isStudent: {
       type: Boolean,

@@ -73,7 +73,6 @@ const createLead = catchAsync(async (req, res) => {
 const getAllLeads = catchAsync(async (req, res) => {
   // Fetch leads and populate all status IDs
   const leads = await Lead.find({})
-    .populate("status") // Populates the `status` array
     .populate("branch") // Populate other fields as needed
     .populate("helpers")
     .populate("countries");
@@ -140,9 +139,7 @@ const branchLeadAssignment = catchAsync(async (req, res) => {
     branchIndex = (branchIndex + 1) % branches.length;
   }
   console.log("Leads successfully assigned to branches.");
-
 });
-
 
 const assignLeadsToUsers = catchAsync(async (req, res) => {
   const User = getUserModel(req.db);
@@ -211,20 +208,18 @@ const assignLeadsToUsers = catchAsync(async (req, res) => {
   });
 });
 
-
 const uploadLeadFile = catchAsync(async (req, res) => {
-
   if (!req.s3File) {
     return res.status(400).json({
       success: false,
-      message: "No file upload details found"
+      message: "No file upload details found",
     });
   }
   console.log(req.body, "req.body from uploadLeadFile");
   const { fileName, fileUrl } = req.s3File;
 
   await Lead.findByIdAndUpdate(req.body?.leadId, {
-    $push: { documents: { name: fileName, url: fileUrl } }
+    $push: { documents: { name: fileName, url: fileUrl } },
   });
 
   return res.status(200).json({
@@ -238,15 +233,20 @@ const updateLeadDocuments = catchAsync(async (req, res) => {
   const { leadId, documentObj } = req.body;
 
   await Lead.findByIdAndUpdate(leadId, {
-    $pull: { documents: { name: documentObj.name }}
+    $pull: { documents: { name: documentObj.name } },
   });
 
   return res.status(200).json({
     success: true,
     message: "File deleted successfully",
   });
-
 });
 
-
-export { createLead, branchLeadAssignment, assignLeadsToUsers ,getAllLeads , uploadLeadFile , updateLeadDocuments};
+export {
+  createLead,
+  branchLeadAssignment,
+  assignLeadsToUsers,
+  getAllLeads,
+  uploadLeadFile,
+  updateLeadDocuments,
+};
