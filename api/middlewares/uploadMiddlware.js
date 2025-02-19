@@ -20,14 +20,15 @@ const upload = (req, res, next) => {
 
       // Add timestamp to filename
       const timestamp = Date.now();
-      const fileName = `${timestamp}-${req.file.originalname}`;
+      const fileName = req.file.originalname;
       const fullPath = `documents/${ req.body.userId}/${fileName}`;
 
       const s3UploadResult = await uploadFileToS3(
         process.env.AWS_S3_BUCKET_NAME,
         req.file.buffer,
         req.file.mimetype,
-        fullPath
+        fullPath,
+fileName
       );
       req.s3File = s3UploadResult;
 

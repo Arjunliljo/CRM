@@ -12,6 +12,14 @@ function DocumentUpload() {
   const [showUploadForm, setShowUploadForm] = useState(false);
   const currentLead = useSelector((state) => state.leads.curLead);
   const dispatch = useDispatch();
+  const [editingDocId, setEditingDocId] = useState(null);
+  const [editFormData, setEditFormData] = useState({
+    content: "",
+    isImportant: false,
+    name: ""
+  });
+
+  console.log(currentLead, "currentLead");
 
   const handleAddCard = () => {
     setShowUploadForm(true);
@@ -46,6 +54,7 @@ function DocumentUpload() {
   };
 
   const handleDocumentSubmit = async (index) => {
+
     const file = uploadedFiles[index];
     const details = documentDetails[index];
 
@@ -88,7 +97,7 @@ function DocumentUpload() {
 
   const handleDeleteDocument = (doc) => {
     try {
-      apiClient.patch("/lead/updateLeadDocuments", {
+      apiClient.patch("/lead/deleteLeadDocument", {
         leadId: currentLead._id,
         documentObj: doc
       });
@@ -116,6 +125,33 @@ function DocumentUpload() {
     }
   };
 
+  const handleEditClick = (doc) => {
+    setEditingDocId(doc._id);
+    setEditFormData({
+      content: doc.content || "",
+      isImportant: doc.isImportant || false,
+      name: doc.name || ""
+    });
+  };
+
+  const handleSaveEdit = async (doc) => {
+    try {
+      const response = await apiClient.patch("/lead/updateLeadDocuments", {
+        leadId: currentLead._id,
+        documentObj: {
+          ...doc,
+          content: editFormData.content,
+          isImportant: editFormData.isImportant,
+          name: editFormData.name
+        }
+      });
+
+      dispatch(updateCurLeadDocuments(response?.data?.data));
+      setEditingDocId(null);
+    } catch (error) {
+      console.error("Error updating document:", error);
+    }
+  };
 
   return (
     <div className="document-upload">
@@ -133,9 +169,7 @@ function DocumentUpload() {
             <div style={{ position: 'absolute', top: '5px', left: '5px', display: 'flex', gap: '5px', zIndex: 1 }}>
               <div
                 onClick={() => handleDeleteDocument(doc)}
-                style={{
-                  cursor: 'pointer'
-                }}
+                style={{ cursor: 'pointer' }}
               >
                 <HomeIcon
                   path="delete"
@@ -150,10 +184,23 @@ function DocumentUpload() {
                 />
               </div>
               <div
+                onClick={() => editingDocId === doc._id ? setEditingDocId(null) : handleEditClick(doc)}
+                style={{ cursor: 'pointer' }}
+              >
+                <HomeIcon
+                  path={editingDocId === doc._id ? "close" : "edit"}
+                  style={{
+                    width: '20px',
+                    height: '20px',
+                    backgroundColor: 'white',
+                    borderRadius: '50%',
+                    padding: '2px'
+                  }}
+                />
+              </div>
+              <div
                 onClick={() => handleDownload(doc.url)}
-                style={{
-                  cursor: 'pointer'
-                }}
+                style={{ cursor: 'pointer' }}
               >
                 <HomeIcon
                   path="download"
@@ -167,14 +214,93 @@ function DocumentUpload() {
                 />
               </div>
             </div>
-            <label style={{ marginLeft: '50px' }}>
-              {doc.name}
-              <input
-                type="file"
-                onChange={(e) => handleFileChange(index + 1, e.target.files[0])}
-                style={{ display: "none" }}
-              />
-            </label>
+            {editingDocId === doc._id ? (
+              <div style={{
+                marginLeft: '10px',
+                marginTop: '10px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '4px'
+              }}>
+                <input
+                  type="text"
+                  placeholder="Document name"
+                  value={editFormData.name}
+                  onChange={(e) => setEditFormData(prev => ({
+                    ...prev,
+                    name: e.target.value
+                  }))}
+                  style={{
+                    width: '100%',
+                    padding: '4px',
+                    border: '1px solid #ced4da',
+                    borderRadius: '4px',
+                    backgroundColor: '#f5f5f5',
+                    fontSize: '0.95rem'
+                  }}
+                />
+
+                <div>
+                  <label style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '0.8rem',
+                    color: '#666'
+                  }}>
+                    <input
+                      type="checkbox"
+                      checked={editFormData.isImportant}
+                      onChange={(e) => setEditFormData(prev => ({
+                        ...prev,
+                        isImportant: e.target.checked
+                      }))}
+                      style={{
+                        marginRight: '4px',
+                        transform: 'scale(0.8)'
+                      }}
+                    />
+                    Mark as Important
+                  </label>
+                </div>
+                <button
+                  onClick={() => handleSaveEdit(doc)}
+                  style={{
+                    width: '50%',
+                    padding: '6px',
+                    backgroundColor: '#007bff',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '20px',
+                    cursor: 'pointer',
+                    display: 'block',
+                    margin: '0 auto',
+                    fontSize: '0.85rem',
+                    marginTop: '10px'
+                  }}
+                >
+                  Save
+                </button>
+              </div>
+            ) : (
+              <div className="document-info">
+                <div className="document-icon">
+                  <HomeIcon
+                    path="document"
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                      color: '#007bff',
+                      marginRight: '8px',
+                      marginTop: '5px'
+                    }}
+                  />
+                </div>
+                <div className="document-details">
+                  <label className="document-name">{doc.name}</label>
+                  <span className="document-filename">{doc.filename}</span>
+                </div>
+              </div>
+            )}
           </div>
         ))}
         {uploadForms.map(formIndex => (
@@ -186,7 +312,6 @@ function DocumentUpload() {
             <div style={{ position: 'absolute', top: '5px', left: '5px', zIndex: 1 }}>
               <div
                 onClick={() => {
-                  // Move delete handler directly into onClick
                   setUploadForms(prev => prev.filter(idx => idx !== formIndex));
                   setDocumentDetails(prev => {
                     const newDetails = {...prev};
@@ -214,41 +339,80 @@ function DocumentUpload() {
                 />
               </div>
             </div>
-            {/* Upload form content */}
-            <div style={{ marginTop: '10px' }}>
+
+            <div className="document-upload-form" style={{
+              margin: '5px 0',
+              padding: '5px',
+              borderRadius: '8px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '4px'
+            }}>
               <input
                 type="text"
                 placeholder="Document content"
                 value={documentDetails[formIndex]?.content || ""}
                 onChange={(e) => setDocumentDetails(prev => ({
                   ...prev,
-                  [formIndex]: {
-                    ...prev[formIndex],
-                    content: e.target.value
-                  }
+                  [formIndex]: { ...prev[formIndex], content: e.target.value }
                 }))}
+                style={{
+                  width: '100%',
+                  padding: '4px',
+                  border: '1px solid #ced4da',
+                  borderRadius: '4px',
+                  backgroundColor: '#f5f5f5',
+                  fontSize: '0.95rem'
+                }}
               />
-              <div style={{ marginTop: '5px' }}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={documentDetails[formIndex]?.isImportant || false}
-                    onChange={(e) => setDocumentDetails(prev => ({
-                      ...prev,
-                      [formIndex]: {
-                        ...prev[formIndex],
-                        isImportant: e.target.checked
-                      }
-                    }))}
-                  />
-                  Mark as Important
-                </label>
-              </div>
 
-              <label className="file-select-button" style={{ display: 'block', marginTop: '5px' }}>
-                {uploadedFiles[formIndex]
-                  ? uploadedFiles[formIndex].name
-                  : "Select File"}
+              <label style={{
+                display: 'flex',
+                alignItems: 'center',
+                fontSize: '0.8rem',
+                color: '#666'
+              }}>
+                <input
+                  type="checkbox"
+                  checked={documentDetails[formIndex]?.isImportant || false}
+                  onChange={(e) => setDocumentDetails(prev => ({
+                    ...prev,
+                    [formIndex]: { ...prev[formIndex], isImportant: e.target.checked }
+                  }))}
+                  style={{
+                    marginRight: '4px',
+                    transform: 'scale(0.8)'
+                  }}
+                />
+                Mark as Important
+              </label>
+
+              <label style={{
+                display: 'block',
+                padding: '4px 6px',
+                backgroundColor: '#e9ecef',
+                border: '1px dashed #adb5bd',
+                borderRadius: '4px',
+                textAlign: 'center',
+                cursor: 'pointer',
+                marginBottom: '5px',
+                width: '150px',
+                margin: '0 auto',
+              }}>
+                {uploadedFiles[formIndex] ? (
+                  <span style={{
+                    display: 'block',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    fontSize: '0.85rem',
+                    maxWidth: '140px',
+                  }}>
+                    {uploadedFiles[formIndex].name}
+                  </span>
+                ) : (
+                  <span style={{ fontSize: '0.85rem' }}>Select File</span>
+                )}
                 <input
                   type="file"
                   onChange={(e) => handleFileChange(formIndex, e.target.files[0])}
@@ -259,9 +423,20 @@ function DocumentUpload() {
               {uploadedFiles[formIndex] && (
                 <button
                   onClick={() => handleDocumentSubmit(formIndex)}
-                  style={{ marginTop: '5px' }}
+                  style={{
+                    width: '50%',
+                    marginTop: '10px',
+                    padding: '6px',
+                    backgroundColor: '#007bff',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '20px',
+                    cursor: 'pointer',
+                    display: 'block',
+                    margin: '0 auto',
+                  }}
                 >
-                  Upload Document
+                  Upload
                 </button>
               )}
             </div>

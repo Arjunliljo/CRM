@@ -14,6 +14,7 @@ import { useState } from "react";
 import ModalBase from "../../components/Forms/ModalBase";
 import AddLead from "../../components/Forms/Leads/AddLead";
 import { useIDGetStatuses } from "../../../api/Utilities/helper";
+import { useIDGetRoles } from "../../../api/Utilities/helper";
 import { useApi } from "../../context/apiContext/ApiContext";
 
 export default function Leads() {
@@ -22,6 +23,8 @@ export default function Leads() {
   const { leadsConfigs } = useApi();
 
   const statusObj = useIDGetStatuses("obj");
+  const rolesObj = useIDGetRoles("obj");
+
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
@@ -69,7 +72,7 @@ export default function Leads() {
   const ISelectorOne = <Selector optionsObj={statusObj} />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
-  const ISelectorFour = <Selector />;
+  const ISelectorFour = <Selector optionsObj={rolesObj} />;
   const ISelectorFive = <Selector />;
   const IStartApplication = <StartApplication />;
 

@@ -1,7 +1,7 @@
 import s3 from "../config/bucketConfig.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 
-async function uploadFileToS3(bucketName, fileBuffer, contentType, fullPath) {
+async function uploadFileToS3(bucketName, fileBuffer, contentType, fullPath , fileName) {
 
   const params = {
     Bucket: bucketName,
@@ -17,8 +17,9 @@ async function uploadFileToS3(bucketName, fileBuffer, contentType, fullPath) {
     const fileUrl = `https://${bucketName}.s3.amazonaws.com/${fullPath}`;
 
     return {
-      fileName: fullPath,
+      fullPath,
       fileUrl,
+      fileName
     };
   } catch (err) {
     console.error('Error uploading file to AWS S3:', err);

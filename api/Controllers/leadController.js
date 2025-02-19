@@ -207,23 +207,60 @@ const assignLeadsToUsers = catchAsync(async (req, res) => {
     message: "Leads have been successfully distributed among users.",
   });
 });
-
 const uploadLeadFile = catchAsync(async (req, res) => {
   if (!req.s3File) {
     return res.status(400).json({
       success: false,
-      message: "No file upload details found",
-      message: "No file upload details found",
+      message: "No file upload details found"
     });
   }
 
-  console.log(req.body, "req.body from uploadLeadFile");
-  const { fileName, fileUrl } = req.s3File;
+  const { fileUrl, fileName  } = req.s3File;
   const { leadId, content, isImportant } = req.body;
+  console.log(req.s3File, "req.s3File");
 
- const updatedLead = await Lead.findByIdAndUpdate(leadId, {
-    $push: { documents: { name: content, url: fileUrl , isImportant } },
-  });
+
+  // First check if lead exists
+  const lead = await Lead.findById(leadId);
+  console.log(lead, "lead");
+
+  if (!lead) {
+    return res.status(404).json({
+      success: false,
+      message: "Lead not found"
+    });
+  }
+
+  // Validate required fields
+  if (!content || !fileName || !fileUrl) {
+    return res.status(400).json({
+      success: false,
+      message: "Missing required document fields"
+    });
+  }
+
+  const documentData = {
+    name: content,
+    filename: fileName,
+    url: fileUrl,
+    isImportant: isImportant === 'true'
+  };
+
+  const updatedLead = await Lead.findByIdAndUpdate(
+    leadId,
+    {
+      $push: { documents: documentData },
+    },
+    { new: true}
+  );
+
+  console.log(updatedLead, "updatedLead");
+  if (!updatedLead) {
+    return res.status(404).json({
+      success: false,
+      message: "Lead not found"
+    });
+  }
 
   return res.status(200).json({
     success: true,
@@ -232,7 +269,7 @@ const uploadLeadFile = catchAsync(async (req, res) => {
   });
 });
 
-const updateLeadDocuments = catchAsync(async (req, res) => {
+const deleteLeadDocument = catchAsync(async (req, res) => {
   const { leadId, documentObj } = req.body;
 
   await Lead.findByIdAndUpdate(leadId, {
@@ -245,6 +282,28 @@ const updateLeadDocuments = catchAsync(async (req, res) => {
   });
 });
 
+const updateLeadDocuments = catchAsync(async (req, res) => {
+  const { leadId, documentObj } = req.body;
+
+  const updatedLead = await Lead.findOneAndUpdate(
+    { _id: leadId, "documents._id": documentObj._id  },
+    {
+      $set: {
+        "documents.$.name": documentObj.name,
+        "documents.$.isImportant": documentObj.isImportant
+      }
+    },
+    { new: true }
+  );
+
+
+  return res.status(200).json({
+    success: true,
+    message: "Document updated successfully",
+    data: updatedLead.documents,
+  });
+});
+
 export {
   createLead,
   branchLeadAssignment,
@@ -252,4 +311,5 @@ export {
   getAllLeads,
   uploadLeadFile,
   updateLeadDocuments,
+  deleteLeadDocument
 };

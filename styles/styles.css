@@ -5391,6 +5391,41 @@ F .log .message-area-textarea-container {
   background: linear-gradient(90deg, transparent, #e8e8e8);
   animation: btn-anim1 1s linear infinite;
 }
+.document-info {
+  display: flex;
+  align-items: flex-start;  /* Changed from center to flex-start */
+  padding: 30px 10px 10px 10px;  /* Adjusted padding */
+  width: 100%;
+}
+
+.document-icon {
+  min-width: 24px;  /* Added min-width */
+  margin-right: 8px;
+}
+
+.document-details {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1;  /* Added flex: 1 */
+}
+.document-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+.document-filename {
+  color: #6c757d;
+  font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
 
 @keyframes btn-anim1 {
   0% {
