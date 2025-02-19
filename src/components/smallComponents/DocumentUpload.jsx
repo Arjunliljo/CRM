@@ -6,20 +6,23 @@ import { removeCurLeadDocument , updateCurLeadDocuments} from "../../../global/l
 
 function DocumentUpload() {
   const [documents, setDocuments] = useState(1);
+  const [uploadForms, setUploadForms] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState({});
   const [documentDetails, setDocumentDetails] = useState({});
+  const [showUploadForm, setShowUploadForm] = useState(false);
   const currentLead = useSelector((state) => state.leads.curLead);
   const dispatch = useDispatch();
 
   const handleAddCard = () => {
+    setShowUploadForm(true);
     const newIndex = documents;
-    setDocuments((prev) => prev + 1);
-    // Initialize document details when adding new card
+    setDocuments(prev => prev + 1);
+    setUploadForms(prev => [...prev, newIndex]);
     setDocumentDetails(prev => ({
       ...prev,
       [newIndex]: {
         content: "",
-        isImportant: true  // Set default to true
+        isImportant: false
       }
     }));
   };
@@ -30,14 +33,16 @@ function DocumentUpload() {
       [index]: file,
     }));
 
-    // Show input for document details
-    setDocumentDetails(prev => ({
-      ...prev,
-      [index]: {
-        content: "",
-        isImportant: false
-      }
-    }));
+    // Don't reset document details when file changes
+    if (!documentDetails[index]) {
+      setDocumentDetails(prev => ({
+        ...prev,
+        [index]: {
+          content: "",
+          isImportant: false
+        }
+      }));
+    }
   };
 
   const handleDocumentSubmit = async (index) => {
@@ -57,13 +62,18 @@ function DocumentUpload() {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        });
+      });
 
+      // Remove the submitted form from uploadForms
+      setUploadForms(prev => prev.filter(formIndex => formIndex !== index));
+
+      // Clean up the uploaded files and document details
       setUploadedFiles(prev => {
         const newFiles = {...prev};
         delete newFiles[index];
         return newFiles;
       });
+
       dispatch(updateCurLeadDocuments(response?.data?.data));
 
       setDocumentDetails(prev => {
@@ -167,15 +177,30 @@ function DocumentUpload() {
             </label>
           </div>
         ))}
-        {Array.from({ length: documents - (currentLead?.documents?.length || 0) - 1 }).map((_, index) => {
-          const actualIndex = index + (currentLead?.documents?.length || 0) + 1;
-          return (
-            <div
-              key={`new-${index}`}
-              className="document-upload-document-container-add-on"
-              style={{ position: 'relative' }}
-            >
-              <div style={{ position: 'absolute', top: '5px', left: '5px', zIndex: 1 }}>
+        {uploadForms.map(formIndex => (
+          <div
+            key={formIndex}
+            className="document-upload-document-container-add-on"
+            style={{ position: 'relative' }}
+          >
+            <div style={{ position: 'absolute', top: '5px', left: '5px', zIndex: 1 }}>
+              <div
+                onClick={() => {
+                  // Move delete handler directly into onClick
+                  setUploadForms(prev => prev.filter(idx => idx !== formIndex));
+                  setDocumentDetails(prev => {
+                    const newDetails = {...prev};
+                    delete newDetails[formIndex];
+                    return newDetails;
+                  });
+                  setUploadedFiles(prev => {
+                    const newFiles = {...prev};
+                    delete newFiles[formIndex];
+                    return newFiles;
+                  });
+                }}
+                style={{ cursor: 'pointer' }}
+              >
                 <HomeIcon
                   path="delete"
                   style={{
@@ -184,77 +209,64 @@ function DocumentUpload() {
                     color: 'red',
                     backgroundColor: 'white',
                     borderRadius: '50%',
-                    padding: '2px',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => {
-                    setDocumentDetails(prev => {
-                      const newDetails = {...prev};
-                      delete newDetails[actualIndex];
-                      return newDetails;
-                    });
-                    setUploadedFiles(prev => {
-                      const newFiles = {...prev};
-                      delete newFiles[actualIndex];
-                      return newFiles;
-                    });
-                    setDocuments(prev => prev - 1);
+                    padding: '2px'
                   }}
                 />
-              </div>
-              <div style={{ marginTop: '10px' }}>
-                <input
-                  type="text"
-                  placeholder="Document content"
-                  value={documentDetails[actualIndex]?.content || ""}
-                  onChange={(e) => setDocumentDetails(prev => ({
-                    ...prev,
-                    [actualIndex]: {
-                      ...prev[actualIndex],
-                      content: e.target.value
-                    }
-                  }))}
-                />
-                <div style={{ marginTop: '5px' }}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={documentDetails[actualIndex]?.isImportant || false}
-                      onChange={(e) => setDocumentDetails(prev => ({
-                        ...prev,
-                        [actualIndex]: {
-                          ...prev[actualIndex],
-                          isImportant: e.target.checked
-                        }
-                      }))}
-                    />
-                    Mark as Important
-                  </label>
-                </div>
-
-                <label className="file-select-button" style={{ display: 'block', marginTop: '5px' }}>
-                  {uploadedFiles[actualIndex]
-                    ? uploadedFiles[actualIndex].name
-                    : "Select File"}
-                  <input
-                    type="file"
-                    onChange={(e) => handleFileChange(actualIndex, e.target.files[0])}
-                    style={{ display: "none" }}
-                  />
-                </label>
-
-                {uploadedFiles[actualIndex] && (
-                  <button
-                    onClick={() => handleDocumentSubmit(actualIndex)}
-                    style={{ marginTop: '5px' }}
-                  >
-                    Upload Document
-                  </button>
-                )}
               </div>
             </div>
-          );
-        })}
+            {/* Upload form content */}
+            <div style={{ marginTop: '10px' }}>
+              <input
+                type="text"
+                placeholder="Document content"
+                value={documentDetails[formIndex]?.content || ""}
+                onChange={(e) => setDocumentDetails(prev => ({
+                  ...prev,
+                  [formIndex]: {
+                    ...prev[formIndex],
+                    content: e.target.value
+                  }
+                }))}
+              />
+              <div style={{ marginTop: '5px' }}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={documentDetails[formIndex]?.isImportant || false}
+                    onChange={(e) => setDocumentDetails(prev => ({
+                      ...prev,
+                      [formIndex]: {
+                        ...prev[formIndex],
+                        isImportant: e.target.checked
+                      }
+                    }))}
+                  />
+                  Mark as Important
+                </label>
+              </div>
+
+              <label className="file-select-button" style={{ display: 'block', marginTop: '5px' }}>
+                {uploadedFiles[formIndex]
+                  ? uploadedFiles[formIndex].name
+                  : "Select File"}
+                <input
+                  type="file"
+                  onChange={(e) => handleFileChange(formIndex, e.target.files[0])}
+                  style={{ display: "none" }}
+                />
+              </label>
+
+              {uploadedFiles[formIndex] && (
+                <button
+                  onClick={() => handleDocumentSubmit(formIndex)}
+                  style={{ marginTop: '5px' }}
+                >
+                  Upload Document
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
