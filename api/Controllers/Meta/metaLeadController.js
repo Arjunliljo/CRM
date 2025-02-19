@@ -7,9 +7,7 @@ import {
 } from "../../Utilities/facebookLeads.js";
 import catchAsync from "../../Utilities/catchAsync.js";
 import Campaign from "../../Models/campaignModel.js";
-import { formatLeads } from "./leadsFormatter.js";
 import MetaAccount from "../../Models/metaAccountModel.js";
-import Lead from "../../Models/leadsModel.js";
 import { convertLeads, saveLeads } from "./saveLeads.js";
 
 const adAccountId = "277770749000629";
@@ -30,13 +28,11 @@ const getMetaLeads = catchAsync(async (req, res) => {
     (campaign) => campaign.status === "ACTIVE"
   );
 
-  const leads = await convertLeads(activeCampaigns, accessToken);
+  const leads = await convertLeads(campaigns, accessToken);
   await saveLeads(leads);
 
   res.status(200).json({
     leads,
-    campaigns,
-    activeCampaigns,
     status: "Success",
     message: "Leads fetched and saved successfully",
   });
@@ -50,9 +46,7 @@ const getCampaigns = catchAsync(async (req, res) => {
   }
 
   const campaigns = await fetchCampaigns(adAccountId, accessToken);
-  const activeCampaigns = campaigns.filter(
-    (campaign) => campaign.status === "ACTIVE"
-  );
+
   const forms = campaigns.map((campaign) => campaign.ads.data?.[0]?.id);
 
   // Use Promise.all to wait for all fetchLeads promises to resolve
