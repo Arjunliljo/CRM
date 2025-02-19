@@ -12,7 +12,16 @@ function DocumentUpload() {
   const dispatch = useDispatch();
 
   const handleAddCard = () => {
+    const newIndex = documents;
     setDocuments((prev) => prev + 1);
+    // Initialize document details when adding new card
+    setDocumentDetails(prev => ({
+      ...prev,
+      [newIndex]: {
+        content: "",
+        isImportant: true  // Set default to true
+      }
+    }));
   };
 
   const handleFileChange = (index, file) => {
@@ -164,56 +173,86 @@ function DocumentUpload() {
             <div
               key={`new-${index}`}
               className="document-upload-document-container-add-on"
+              style={{ position: 'relative' }}
             >
-              <label>
-                {uploadedFiles[actualIndex]
-                  ?uploadedFiles[actualIndex].name
-                  : "+"}
-                <input
-                  type="file"
-                  onChange={(e) => handleFileChange(actualIndex, e.target.files[0])}
-                  style={{ display: "none" }}
+              <div style={{ position: 'absolute', top: '5px', left: '5px', zIndex: 1 }}>
+                <HomeIcon
+                  path="delete"
+                  style={{
+                    width: '20px',
+                    height: '20px',
+                    color: 'red',
+                    backgroundColor: 'white',
+                    borderRadius: '50%',
+                    padding: '2px',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => {
+                    setDocumentDetails(prev => {
+                      const newDetails = {...prev};
+                      delete newDetails[actualIndex];
+                      return newDetails;
+                    });
+                    setUploadedFiles(prev => {
+                      const newFiles = {...prev};
+                      delete newFiles[actualIndex];
+                      return newFiles;
+                    });
+                    setDocuments(prev => prev - 1);
+                  }}
                 />
-              </label>
-              {documentDetails[actualIndex] && (
-                <div style={{ marginTop: '10px' }}>
+              </div>
+              <div style={{ marginTop: '10px' }}>
+                <input
+                  type="text"
+                  placeholder="Document content"
+                  value={documentDetails[actualIndex]?.content || ""}
+                  onChange={(e) => setDocumentDetails(prev => ({
+                    ...prev,
+                    [actualIndex]: {
+                      ...prev[actualIndex],
+                      content: e.target.value
+                    }
+                  }))}
+                />
+                <div style={{ marginTop: '5px' }}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={documentDetails[actualIndex]?.isImportant || false}
+                      onChange={(e) => setDocumentDetails(prev => ({
+                        ...prev,
+                        [actualIndex]: {
+                          ...prev[actualIndex],
+                          isImportant: e.target.checked
+                        }
+                      }))}
+                    />
+                    Mark as Important
+                  </label>
+                </div>
+
+                <label className="file-select-button" style={{ display: 'block', marginTop: '5px' }}>
+                  {uploadedFiles[actualIndex]
+                    ? uploadedFiles[actualIndex].name
+                    : "Select File"}
                   <input
-                    type="text"
-                    placeholder="Document content"
-                    value={documentDetails[actualIndex].content}
-                    onChange={(e) => setDocumentDetails(prev => ({
-                      ...prev,
-                      [actualIndex]: {
-                        ...prev[actualIndex],
-                        content: e.target.value
-                      }
-                    }))}
+                    type="file"
+                    onChange={(e) => handleFileChange(actualIndex, e.target.files[0])}
+                    style={{ display: "none" }}
                   />
-                  <div style={{ marginTop: '5px' }}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={documentDetails[actualIndex].isImportant}
-                        onChange={(e) => setDocumentDetails(prev => ({
-                          ...prev,
-                          [actualIndex]: {
-                            ...prev[actualIndex],
-                            isImportant: Boolean(e.target.checked)
-                          }
-                        }))}
-                      />
-                      Mark as Important
-                    </label>
-                  </div>
+                </label>
+
+                {uploadedFiles[actualIndex] && (
                   <button
                     onClick={() => handleDocumentSubmit(actualIndex)}
                     style={{ marginTop: '5px' }}
                   >
                     Upload Document
                   </button>
-                </div>
-              )}
-          </div>
+                )}
+              </div>
+            </div>
           );
         })}
       </div>

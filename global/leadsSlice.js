@@ -27,7 +27,6 @@ const leadsSlice = createSlice({
       );
     },
     updateCurLeadDocuments(state, action) {
-
       state.curLead.documents = action.payload;
     },
   },
