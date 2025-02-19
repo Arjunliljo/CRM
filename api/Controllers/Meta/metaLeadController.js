@@ -9,6 +9,7 @@ import catchAsync from "../../Utilities/catchAsync.js";
 import Campaign from "../../Models/campaignModel.js";
 import MetaAccount from "../../Models/metaAccountModel.js";
 import { convertLeads, saveLeads } from "./saveLeads.js";
+import { leadsToBranchAutoAssigner } from "../../auto/leadsToBranchAutoAssigner.js";
 
 const adAccountId = "277770749000629";
 
@@ -24,12 +25,14 @@ const getMetaLeads = catchAsync(async (req, res) => {
 
   // Fetch campaigns for each ad account
   const campaigns = await fetchCampaigns(adAccountId, accessToken);
+
   const activeCampaigns = campaigns.filter(
     (campaign) => campaign.status === "ACTIVE"
   );
 
   const leads = await convertLeads(campaigns, accessToken);
   await saveLeads(leads);
+  await leadsToBranchAutoAssigner();
 
   res.status(200).json({
     leads,
@@ -105,7 +108,7 @@ const updateCampaigns = catchAsync(async (req, res) => {
     // Insert only new campaigns that do not exist already
     await Campaign.insertMany(newCampaigns, { ordered: false }).catch(
       (error) => {
-        if (error.code !== 11000) throw error; // Ignore duplicate key errors, rethrow others
+        if (error.code !== 11000) throw error;
       }
     );
   }

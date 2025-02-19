@@ -48,10 +48,14 @@ const leadSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    // to check student shared to users
-    isSharedToUsers: {
-      type: Boolean,
-      default: false,
+    users: {
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      default: [],
     },
     remark: {
       type: String,

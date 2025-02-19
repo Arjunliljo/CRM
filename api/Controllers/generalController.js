@@ -1,5 +1,4 @@
 import General from "../Models/generalModel.js";
-import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import {
   createOne,

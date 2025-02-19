@@ -1,7 +1,13 @@
 import Lead from "../Models/leadsModel.js";
 import Branch from "../Models/branchModel.js";
+import General from "../Models/generalModel.js";
 
 export const leadsToBranchAutoAssigner = async () => {
+  const gen = await General.find({});
+
+  const { autoAssignLeadsToBranch } = gen[0];
+  if (!autoAssignLeadsToBranch) return;
+
   //find all leads which don't have the branch
   const leads = await Lead.find({ branch: { $exists: false } });
 
