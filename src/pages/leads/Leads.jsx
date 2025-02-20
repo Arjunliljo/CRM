@@ -13,7 +13,11 @@ import DocumentUpload from "../../components/smallComponents/DocumentUpload";
 import { useState } from "react";
 import ModalBase from "../../components/Forms/ModalBase";
 import AddLead from "../../components/Forms/Leads/AddLead";
-import { useIDGetStatusesArray, useIDGetBranchesArray, useIDGetCountriesArray } from "../../../api/Utilities/helper";
+import {
+  useIDGetStatusesArray,
+  useIDGetBranchesArray,
+  useIDGetCountriesArray,
+} from "../../../api/Utilities/helper";
 import { useIDGetRolesArray } from "../../../api/Utilities/helper";
 import { useApi } from "../../context/apiContext/ApiContext";
 import ProfileCardStatus from "../../components/Card/ProfileCard/ProfileCardStatus";
@@ -22,7 +26,6 @@ import ActivityLog from "../../components/Card/ProfileCard/ActivityLog";
 import apiClient from "../../../config/axiosInstance";
 import { refetchCommens } from "../../apiHooks/useCommens";
 import { message } from "antd";
-import { useKey } from "../../hooks/useKey";
 
 export default function Leads() {
   const { curLead, leadDetailToggle } = useSelector((state) => state.leads);
@@ -36,7 +39,7 @@ export default function Leads() {
     commonsConfigs: { commons },
   } = useApi();
 
-  console.log(commons,"commons");
+  console.log(commons, "commons");
 
   const { autoAssignLeadsToBranch } = commons;
 
@@ -73,6 +76,7 @@ export default function Leads() {
       await apiClient.patch("/general/auto-assign", {
         autoAssignLeadsToBranch: val,
       });
+
       refetchCommens();
     } catch (error) {
       message.error("Failed to update Auto Assign Leads to Branch");
@@ -122,10 +126,7 @@ export default function Leads() {
     <div key="selector-three">{ISelectorThree}</div>,
   ];
 
-  const BottomRight = [
-    <div key="selector-four">{ISelectorFour}</div>,
-
-  ];
+  const BottomRight = [<div key="selector-four">{ISelectorFour}</div>];
 
   const IDocumentUpload = <DocumentUpload />;
   const IProfileCardStatus = (

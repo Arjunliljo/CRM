@@ -9,11 +9,12 @@ export default function AutoBtn({ style, callBack = () => {}, isAuto }) {
 
   const handleClick = async () => {
     onSet((val) => !val);
+    callBack(!set);
   };
 
-  useEffect(() => {
-    callBack(set);
-  }, [set, callBack]);
+  // useEffect(() => {
+  //   callBack(set);
+  // }, [set, callBack]);
 
   return (
     <button
