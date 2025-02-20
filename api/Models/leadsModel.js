@@ -84,6 +84,10 @@ const leadSchema = mongoose.Schema(
             type: String,
             required: [true, "Document must have a name"],
           },
+          filename: {
+            type: String,
+            required: [true, "Document must have a filename"],
+          },
           url: {
             type: String,
             required: [true, "Document must have a url"],

@@ -53,14 +53,31 @@ const loginUser = catchAsync(async (req, res, next) => {
     return next(new AppError("Please provide email and password", 400));
   }
 
-  const user = await User.findOne({ email })
-    .select("+password")
-    .populate("role")
-    .populate("branches")
-    .populate("countries")
-    .populate("statuses")
-    .populate("tabs")
-    .populate("roles");
+ // Fixed query with proper population
+ const user = await User.findOne({ email })
+ .select("+password")
+ .populate({
+   path: "role",
+   select: "name description _id"
+ })
+ .populate("branches")
+ .populate("countries")
+ .populate({
+   path: "statuses",
+   select: "name _id"
+ })
+ .populate({
+   path: "tabs",
+   select: "name _id"
+ })
+ .populate({
+   path: "roles",
+   select: "name"
+ });
+
+ console.log("User object:", JSON.stringify(user, null, 2));
+ console.log("Populated statuses:", user.statuses);
+ console.log("Populated roles:", user.roles);
 
   if (!user) {
     return next(new AppError("Invalid email or password", 401));

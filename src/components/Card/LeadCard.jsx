@@ -16,6 +16,7 @@ export default function LeadCard({ lead, set, onSet, toggle }) {
   const {
     statusConfigs: { statuses },
   } = useApi();
+
   const targetRef = useRef(null);
 
   useEffect(() => {

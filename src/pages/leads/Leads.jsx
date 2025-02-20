@@ -6,11 +6,7 @@ import MainBody from "../../layout/MainBody/MainBody";
 import Selector from "../../components/Selectors/Selector";
 import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import AllLeads from "../../components/buttons/AllLeads";
-import {
-  setAutoLeadsAssign,
-  setCurLead,
-  setLeadDetailToggle,
-} from "../../../global/leadsSlice";
+import { setCurLead, setLeadDetailToggle } from "../../../global/leadsSlice";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
@@ -18,6 +14,7 @@ import { useState } from "react";
 import ModalBase from "../../components/Forms/ModalBase";
 import AddLead from "../../components/Forms/Leads/AddLead";
 import { useIDGetStatuses } from "../../../api/Utilities/helper";
+import { useIDGetRoles } from "../../../api/Utilities/helper";
 import { useApi } from "../../context/apiContext/ApiContext";
 
 export default function Leads() {
@@ -28,6 +25,7 @@ export default function Leads() {
   const { leadsConfigs } = useApi();
 
   const statusObj = useIDGetStatuses("obj");
+  const rolesObj = useIDGetRoles("obj");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
@@ -75,7 +73,7 @@ export default function Leads() {
   const ISelectorOne = <Selector optionsObj={statusObj} />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
-  const ISelectorFour = <Selector />;
+  const ISelectorFour = <Selector optionsObj={rolesObj} />;
   const ISelectorFive = <Selector />;
   const IStartApplication = <StartApplication />;
 

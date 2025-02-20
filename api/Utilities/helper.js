@@ -15,18 +15,28 @@ export const dbConnector = async (primaryDbConnection) => {
 };
 
 export const useIDGetStatuses = (type = "name") => {
-  const { statuses: statusIds } = useSelector((state) => state.auth);
+  const { statuses } = useSelector((state) => state.auth);
 
-  const {
-    statusConfigs: { statuses },
-  } = useApi();
+  // const status = useSelector((state) => state.auth);
+  // console.log(status);
 
-  let curStatuses = [];
-  curStatuses = statuses?.filter((status) => statusIds.includes(status._id));
 
-  if (type === "name") {
-    return curStatuses.map((status) => status.name);
-  }
+  // const {
+  //   statusConfigs: { statuses },
+  // } = useApi();
 
-  return curStatuses;
+  // let curStatuses = [];
+  // curStatuses = statuses?.filter((status) => statusIds.includes(status._id));
+
+  // if (type === "name") {
+  //   return curStatuses.map((status) => status.name);
+  // }
+
+  return statuses;
+};
+
+export const useIDGetRoles = (type = "name") => {
+  const { roles } = useSelector((state) => state.auth);
+  console.log(roles, "roles");
+  return roles;
 };
