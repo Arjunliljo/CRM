@@ -1,10 +1,15 @@
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 
-export default function AutoBtn({ style, set, onSet }) {
-  const dispatch = useDispatch();
-  const handleClick = () => {
-    dispatch(onSet(!set));
+export default function AutoBtn({ style, callBack = () => {} }) {
+  const [set, onSet] = useState(false);
+
+  const handleClick = async () => {
+    onSet((val) => !val);
   };
+
+  useEffect(() => {
+    callBack(set);
+  }, [set, callBack]);
 
   return (
     <button

@@ -15,8 +15,10 @@ export const dbConnector = async (primaryDbConnection) => {
 };
 
 export const useIDGetStatusesArray = (allStatuses) => {
+  const { user } = useSelector((state) => state.auth);
+  const statusIds = user?.statuses;
 
-  const statusIds = useSelector((state) => state.auth.user.statuses);
+  if (!statusIds || !allStatuses) return [];
 
   let curStatuses = [];
   if (statusIds && allStatuses) {
@@ -29,13 +31,14 @@ export const useIDGetStatusesArray = (allStatuses) => {
 };
 
 export const useIDGetRolesArray = (allRoles) => {
-  const rolesIds = useSelector((state) => state.auth.user.roles);
+  const { user } = useSelector((state) => state.auth);
+  const rolesIds = user?.roles;
+
+  if (!rolesIds || !allRoles) return [];
 
   let curRoles = [];
   if (rolesIds && allRoles) {
-    curRoles = allRoles.filter((role) =>
-        rolesIds.includes(role._id)
-    );
+    curRoles = allRoles.filter((role) => rolesIds.includes(role._id));
   }
 
   return curRoles;

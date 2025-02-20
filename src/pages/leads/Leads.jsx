@@ -19,11 +19,13 @@ import { useApi } from "../../context/apiContext/ApiContext";
 import ProfileCardStatus from "../../components/Card/ProfileCard/ProfileCardStatus";
 import EligiableCourses from "../../components/Card/ProfileCard/EligiableCourses";
 import ActivityLog from "../../components/Card/ProfileCard/ActivityLog";
+import apiClient from "../../../config/axiosInstance";
 
 export default function Leads() {
   const { autoLeadsAssign, curLead, leadDetailToggle } = useSelector(
     (state) => state.leads
   );
+  const { user } = useSelector((state) => state.auth);
 
   const {
     leadsConfigs,
@@ -57,8 +59,23 @@ export default function Leads() {
     }));
   };
 
+  const handleAutoBtn = async (val) => {
+    try {
+      const response = await apiClient.patch("/leads/auto-assign", {
+        autoAssignLeadsToBranch: val,
+      });
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const ISearchBar = <SearchBar />;
-  const IAutoBtn = <AutoBtn />;
+  const IAutoBtn = (
+    <AutoBtn callBack={handleAutoBtn} isAuto={autoLeadsAssign} />
+  );
+
   const IContents = leadsConfigs?.leads?.map((lead, index) => (
     <LeadCard
       key={index}
@@ -71,7 +88,6 @@ export default function Leads() {
   ));
 
   const ISelector = <Selector />;
-
   const IPrimaryBttn = (
     <PrimaryBttn onClick={handleModal}>Add Leads</PrimaryBttn>
   );
