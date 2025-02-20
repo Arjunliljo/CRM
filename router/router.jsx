@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "../src/App";
 import Leads from "../src/pages/leads/Leads";
 import Profilepage from "../src/pages/ProfilePage/ProfilePage";
@@ -11,56 +11,72 @@ import Dash from "../src/pages/dashboard/Dash";
 import Dependencies from "../src/pages/Dependency/Dependencies";
 import Login from "../src/layout/Login/Login";
 import General from "../src/pages/general/General";
+import { useSelector } from "react-redux";
 
-export const router = createBrowserRouter([
+const tabses = [
   {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        path: "Dashboard",
-        element: <Dash />,
-      },
-      {
-        path: "Leads",
-        element: <Leads />,
-      },
-      {
-        path: "Student",
-        element: <Students />,
-      },
-      {
-        path: "User",
-        element: <User />,
-      },
-      {
-        path: "University",
-        element: <University />,
-      },
-      {
-        path: "Configuration",
-        element: <Dependencies />,
-      },
-      {
-        path: "Profile-edit",
-        element: <ProfileUpdateUser />,
-      },
-      {
-        path: "Branch-managing",
-        element: <Branchmanage />,
-      },
-      {
-        path: "Profile-card",
-        element: <Profilepage />,
-      },
-      {
-        path: "login",
-        element: <Login />,
-      },
-      {
-        path: "offerLetter",
-        element: <General />,
-      },
-    ],
+    path: "Dashboard",
+    element: <Dash />,
   },
-]);
+  {
+    path: "Leads",
+    element: <Leads />,
+  },
+  {
+    path: "Student",
+    element: <Students />,
+  },
+
+  {
+    path: "User",
+    element: <User />,
+  },
+  {
+    path: "University",
+    element: <University />,
+  },
+  {
+    path: "Configuration",
+    element: <Dependencies />,
+  },
+  {
+    path: "Profile-edit",
+    element: <ProfileUpdateUser />,
+  },
+  {
+    path: "Branch-managing",
+    element: <Branchmanage />,
+  },
+  {
+    path: "Profile-card",
+    element: <Profilepage />,
+  },
+  {
+    path: "login",
+    element: <Login />,
+  },
+  {
+    path: "offerLetter",
+    element: <General />,
+  },
+];
+
+export const router = (tabs) => {
+  const dynamicRoutes = tabs?.map((tab) => {
+    return {
+      path: tab.name,
+      element: <General status={tab} />,
+    };
+  });
+
+  const routes = tabses.concat(dynamicRoutes || []);
+  console.log(routes, "routes");
+
+  return createBrowserRouter([
+    {
+      path: "/",
+      element: <App />,
+      children: routes,
+    },
+  ]);
+};
