@@ -22,7 +22,6 @@ import ActivityLog from "../../components/Card/ProfileCard/ActivityLog";
 import apiClient from "../../../config/axiosInstance";
 import { refetchCommens } from "../../apiHooks/useCommens";
 import { message } from "antd";
-import { useKey } from "../../hooks/useKey";
 
 export default function Leads() {
   const { curLead, leadDetailToggle } = useSelector((state) => state.leads);
@@ -33,6 +32,8 @@ export default function Leads() {
     roleConfigs = {},
     commonsConfigs = {},
   } = useApi() || {};
+
+  console.log(commonsConfigs, "commonsConfigs");
 
   const { statuses = [] } = statusConfigs;
   const { roles = [] } = roleConfigs;
@@ -71,6 +72,7 @@ export default function Leads() {
       await apiClient.patch("/general/auto-assign", {
         autoAssignLeadsToBranch: val,
       });
+
       refetchCommens();
     } catch (error) {
       message.error("Failed to update Auto Assign Leads to Branch");
