@@ -32,14 +32,18 @@ export default function Leads() {
 
   const {
     leadsConfigs,
-    statusConfigs: { statuses },
-    roleConfigs: { roles },
-    branchConfigs: { branches },
-    countryConfigs: { countries },
-    commonsConfigs: { commons },
+    statusConfigs,
+    roleConfigs,
+    branchConfigs,
+    countryConfigs,
+    commonsConfigs,
   } = useApi();
 
-  console.log(commons, "commons");
+  const { statuses = [] } = statusConfigs;
+  const { roles = [] } = roleConfigs;
+  const { branches = [] } = branchConfigs;
+  const { countries = [] } = countryConfigs;
+  const { commons = {} } = commonsConfigs;
 
   const { autoAssignLeadsToBranch } = commons;
 
