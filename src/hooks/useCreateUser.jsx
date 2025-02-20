@@ -47,10 +47,13 @@ export const useCreateUser = () => {
     { defaultTabs: [], tabs: [] }
   );
 
+  // console.log(statusIds, "statusIds");
+  // console.log(tabs, "tabs");
 
-  const filteredTabIds = tabs
-    .filter((tab) => statusIds.includes(tab._id))
-    .map((tab) => tab._id);
+
+  // const filteredTabIds = tabs
+  //   .filter((tab) => statusIds.includes(tab._id))
+  //   .map((tab) => tab._id);
 
   const userData = {
     name,
@@ -64,7 +67,7 @@ export const useCreateUser = () => {
     statuses: statusIds,
     roles: roleIds,
     defaultTabs,
-    tabs: filteredTabIds,
+    tabs: tabs,
     password,
     role: role.id,
     autoAssign,

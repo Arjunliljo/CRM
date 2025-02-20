@@ -119,7 +119,7 @@ function DocumentUpload() {
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+
     } catch (error) {
       console.error("Error downloading document:", error);
     }
