@@ -20,12 +20,12 @@ import ProfileCardStatus from "../../components/Card/ProfileCard/ProfileCardStat
 import EligiableCourses from "../../components/Card/ProfileCard/EligiableCourses";
 import ActivityLog from "../../components/Card/ProfileCard/ActivityLog";
 import apiClient from "../../../config/axiosInstance";
+import { refetchCommens } from "../../apiHooks/useCommens";
+import { message } from "antd";
+import { useKey } from "../../hooks/useKey";
 
 export default function Leads() {
-  const { autoLeadsAssign, curLead, leadDetailToggle } = useSelector(
-    (state) => state.leads
-  );
-  const { user } = useSelector((state) => state.auth);
+  const { curLead, leadDetailToggle } = useSelector((state) => state.leads);
 
   const {
     leadsConfigs,
@@ -33,15 +33,17 @@ export default function Leads() {
     roleConfigs: { roles },
     branchConfigs: { branches },
     countryConfigs: { countries },
-
+    commonsConfigs: { commons },
   } = useApi();
+
+  console.log(commons,"commons");
+
+  const { autoAssignLeadsToBranch } = commons;
 
   const statusObj = useIDGetStatusesArray(statuses);
   const rolesObj = useIDGetRolesArray(roles);
   const branchesObj = useIDGetBranchesArray(branches);
   const countriesObj = useIDGetCountriesArray(countries);
-
-  console.log(branchesObj , countriesObj);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
@@ -68,19 +70,18 @@ export default function Leads() {
 
   const handleAutoBtn = async (val) => {
     try {
-      const response = await apiClient.patch("/leads/auto-assign", {
+      await apiClient.patch("/general/auto-assign", {
         autoAssignLeadsToBranch: val,
       });
-
-      console.log(response);
+      refetchCommens();
     } catch (error) {
-      console.log(error);
+      message.error("Failed to update Auto Assign Leads to Branch");
     }
   };
 
   const ISearchBar = <SearchBar />;
   const IAutoBtn = (
-    <AutoBtn callBack={handleAutoBtn} isAuto={autoLeadsAssign} />
+    <AutoBtn callBack={handleAutoBtn} isAuto={autoAssignLeadsToBranch} />
   );
 
   const IContents = leadsConfigs?.leads?.map((lead, index) => (

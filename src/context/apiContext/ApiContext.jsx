@@ -6,6 +6,7 @@ import { useStatuses } from "../../apiHooks/useStatuses";
 import { useUsers } from "../../apiHooks/useUsers";
 import { useChats } from "../../apiHooks/useChats";
 import { useLeads } from "../../apiHooks/useLeads";
+import { useCommens } from "../../apiHooks/useCommens";
 
 const ApiContext = createContext();
 
@@ -17,6 +18,7 @@ function ApiProvider({ children }) {
   const usersConfigs = useUsers();
   const chatsConfigs = useChats();
   const leadsConfigs = useLeads();
+  const commonsConfigs = useCommens();
 
   return (
     <ApiContext.Provider
@@ -28,6 +30,7 @@ function ApiProvider({ children }) {
         usersConfigs,
         chatsConfigs,
         leadsConfigs,
+        commonsConfigs,
       }}
     >
       {children}

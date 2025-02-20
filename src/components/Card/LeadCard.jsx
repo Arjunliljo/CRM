@@ -12,6 +12,7 @@ import { getStatusName } from "../../service/nameFinders";
 
 export default function LeadCard({ lead, set, onSet, toggle }) {
   const [isSelected, setIsSelected] = useState(lead?._id === set?._id);
+  const [remark, setRemark] = useState("");
 
   const {
     statusConfigs: { statuses },
@@ -44,6 +45,8 @@ export default function LeadCard({ lead, set, onSet, toggle }) {
     }, 500);
   };
 
+
+
   return (
     <div
       className={`card ${isSelected ? "selectedCard" : ""}`}
@@ -68,7 +71,14 @@ export default function LeadCard({ lead, set, onSet, toggle }) {
           <textarea
             type="text"
             placeholder="Add a remark"
-            onClick={(e) => e.preventDefault()}
+            onClick={(e) => e.stopPropagation()}
+            onChange={(e) => setRemark(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                handleRemarkSubmit();
+              }
+            }}
           />
         </div>
 
