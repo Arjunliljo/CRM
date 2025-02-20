@@ -10,6 +10,7 @@ import Branchmanage from "../src/pages/branchmanage/Branchmanage";
 import Dash from "../src/pages/dashboard/Dash";
 import Dependencies from "../src/pages/Dependency/Dependencies";
 import Login from "../src/layout/Login/Login";
+import General from "../src/pages/general/General";
 
 export const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "offerLetter",
+        element: <General />,
       },
     ],
   },

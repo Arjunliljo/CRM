@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import Tracker from "../../smallComponents/Tracker";
-import ActivityLog from "./ActivityLog";
-import EligiableCourses from "./EligiableCourses";
 import PersonalDetails from "./PersonalDetails";
-import ProfileCardStatus from "./ProfileCardStatus";
 
-export default function ProfileCard({ IDocumentUpload, lead }) {
+export default function ProfileCard({
+  IDocumentUpload,
+  lead,
+  IProfileCardStatus,
+  IEligiableCourses,
+  IActivityLog,
+}) {
   const [isApplication, setIsApplication] = useState(false);
 
   useEffect(() => {
@@ -46,19 +49,15 @@ export default function ProfileCard({ IDocumentUpload, lead }) {
         </div>
       </div>
       <div className="profileCard-journy">
-        {isApplication ? (
-          <Tracker completedStep={3} />
-        ) : (
-          <div>No Application Found</div>
-        )}
+        {isApplication ? <Tracker completedStep={3} /> : null}
       </div>
       <div className="profileCard-boxes">
         <PersonalDetails />
-        <ProfileCardStatus />
+        {IProfileCardStatus}
       </div>
       {IDocumentUpload}
-      <EligiableCourses />
-      <ActivityLog />
+      {IEligiableCourses}
+      {IActivityLog}
     </div>
   );
 }

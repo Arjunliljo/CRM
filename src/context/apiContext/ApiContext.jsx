@@ -16,6 +16,7 @@ function ApiProvider({ children }) {
   const statusConfigs = useStatuses();
   const usersConfigs = useUsers();
   const chatsConfigs = useChats();
+
   const leadsConfigs = useLeads();
 
   return (

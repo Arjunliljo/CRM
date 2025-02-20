@@ -6,7 +6,6 @@ import MainBody from "../../layout/MainBody/MainBody";
 import Selector from "../../components/Selectors/Selector";
 import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import AllLeads from "../../components/buttons/AllLeads";
-import { setAutoLeadsAssign, setCurLead } from "../../../global/leadsSlice";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import { setCurGeneral } from "../../../global/generalSlice";
@@ -36,6 +35,9 @@ export default function General() {
   const { autoGeneralsAssign, curGeneral } = useSelector(
     (state) => state.general
   );
+
+  // 1) find offerletter status id in statusesConfigs;
+  // 2) filter leads having a status equal to offerletter status id;
 
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = (

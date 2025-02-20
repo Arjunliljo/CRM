@@ -16,13 +16,19 @@ import AddLead from "../../components/Forms/Leads/AddLead";
 import { useIDGetStatuses } from "../../../api/Utilities/helper";
 import { useIDGetRoles } from "../../../api/Utilities/helper";
 import { useApi } from "../../context/apiContext/ApiContext";
+import ProfileCardStatus from "../../components/Card/ProfileCard/ProfileCardStatus";
+import EligiableCourses from "../../components/Card/ProfileCard/EligiableCourses";
+import ActivityLog from "../../components/Card/ProfileCard/ActivityLog";
 
 export default function Leads() {
   const { autoLeadsAssign, curLead, leadDetailToggle } = useSelector(
     (state) => state.leads
   );
 
-  const { leadsConfigs } = useApi();
+  const {
+    leadsConfigs,
+    statusConfigs: { statuses },
+  } = useApi();
 
   const statusObj = useIDGetStatuses("obj");
   const rolesObj = useIDGetRoles("obj");
@@ -96,8 +102,23 @@ export default function Leads() {
   ];
 
   const IDocumentUpload = <DocumentUpload />;
+  const IProfileCardStatus = (
+    <ProfileCardStatus
+      statuses={statuses?.filter((val) => !val.isApplication)}
+      lead={curLead}
+    />
+  );
+  const IEligiableCourses = <EligiableCourses />;
+  const IActivityLog = <ActivityLog />;
+
   const IProfileCard = (
-    <ProfileCard IDocumentUpload={IDocumentUpload} lead={curLead} />
+    <ProfileCard
+      IDocumentUpload={IDocumentUpload}
+      lead={curLead}
+      IProfileCardStatus={IProfileCardStatus}
+      IEligiableCourses={IEligiableCourses}
+      IActivityLog={IActivityLog}
+    />
   );
 
   return (

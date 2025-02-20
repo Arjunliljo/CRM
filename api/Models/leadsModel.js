@@ -10,7 +10,7 @@ const leadSchema = mongoose.Schema(
 
     leadSource: {
       type: String,
-      enum: ["META", "MANUAL", "OTHER"],
+      enum: ["META", "MANUAL", "OTHER", "WHATSAPP"],
       default: "MANUAL",
     },
     name: {

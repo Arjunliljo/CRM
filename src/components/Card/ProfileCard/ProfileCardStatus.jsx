@@ -2,8 +2,22 @@ import { IoMdArrowForward, IoMdArrowBack } from "react-icons/io";
 import { MdOutlineInterests } from "react-icons/md";
 import { MdDateRange } from "react-icons/md";
 import EligibleBttn from "../../buttons/EligibleBttn";
+import { getStatusName } from "../../../service/nameFinders";
+import { useEffect, useState } from "react";
 
-export default function ProfileCardStatus() {
+export default function ProfileCardStatus({ statuses, lead }) {
+  const statusName = getStatusName(lead?.status, statuses);
+
+  const [status, setStatus] = useState(statusName);
+
+  useEffect(() => {
+    setStatus(statusName);
+  }, [statusName]);
+
+  const handleStatusChange = (e) => {
+    setStatus(e.target.value);
+  };
+
   return (
     <div className="profileCard-box personal-status">
       <div className="personal-details-heading">
@@ -21,9 +35,17 @@ export default function ProfileCardStatus() {
         <span className="personal-status-html-for">Current status</span>
         <div className="select-container">
           <MdOutlineInterests className="select-icon" />
-          <select className="selector-with-icon" name="Interested" id="">
-            <option value="Interested">Interested</option>
-            <option value="Verified">Verified</option>
+          <select
+            className="selector-with-icon"
+            value={status}
+            id=""
+            onChange={handleStatusChange}
+          >
+            {statuses?.map((status) => (
+              <option value={status.name} key={status._id}>
+                {status.name}
+              </option>
+            ))}
           </select>
         </div>
         <span className="personal-status-html-for">Next Followup</span>
