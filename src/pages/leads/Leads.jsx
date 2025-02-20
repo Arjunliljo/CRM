@@ -13,7 +13,7 @@ import DocumentUpload from "../../components/smallComponents/DocumentUpload";
 import { useState } from "react";
 import ModalBase from "../../components/Forms/ModalBase";
 import AddLead from "../../components/Forms/Leads/AddLead";
-import { useIDGetStatusesArray } from "../../../api/Utilities/helper";
+import { useIDGetStatusesArray, useIDGetBranchesArray, useIDGetCountriesArray } from "../../../api/Utilities/helper";
 import { useIDGetRolesArray } from "../../../api/Utilities/helper";
 import { useApi } from "../../context/apiContext/ApiContext";
 import ProfileCardStatus from "../../components/Card/ProfileCard/ProfileCardStatus";
@@ -31,10 +31,17 @@ export default function Leads() {
     leadsConfigs,
     statusConfigs: { statuses },
     roleConfigs: { roles },
+    branchConfigs: { branches },
+    countryConfigs: { countries },
+
   } = useApi();
 
   const statusObj = useIDGetStatusesArray(statuses);
   const rolesObj = useIDGetRolesArray(roles);
+  const branchesObj = useIDGetBranchesArray(branches);
+  const countriesObj = useIDGetCountriesArray(countries);
+
+  console.log(branchesObj , countriesObj);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
@@ -94,8 +101,8 @@ export default function Leads() {
 
   const IAllLeads = <AllLeads />;
   const ISelectorOne = <Selector optionsObj={statusObj} />;
-  const ISelectorTwo = <Selector />;
-  const ISelectorThree = <Selector />;
+  const ISelectorTwo = <Selector optionsObj={branchesObj} />;
+  const ISelectorThree = <Selector optionsObj={countriesObj} />;
   const ISelectorFour = <Selector optionsObj={rolesObj} />;
   const ISelectorFive = <Selector />;
   const IStartApplication = <StartApplication />;
@@ -113,9 +120,10 @@ export default function Leads() {
     <div key="selector-two">{ISelectorTwo}</div>,
     <div key="selector-three">{ISelectorThree}</div>,
   ];
+
   const BottomRight = [
     <div key="selector-four">{ISelectorFour}</div>,
-    <div key="selector-five">{ISelectorFive}</div>,
+
   ];
 
   const IDocumentUpload = <DocumentUpload />;

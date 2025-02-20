@@ -26,7 +26,6 @@ export const useIDGetStatusesArray = (allStatuses) => {
       statusIds.includes(status._id)
     );
   }
-
   return curStatuses;
 };
 
@@ -42,4 +41,30 @@ export const useIDGetRolesArray = (allRoles) => {
   }
 
   return curRoles;
+};
+
+export const useIDGetBranchesArray = (allBranches) => {
+  const { user } = useSelector((state) => state.auth);
+  const branchesIds = user?.branches;
+
+  if (!branchesIds || !allBranches) return [];
+
+  let curBranches = [];
+  if (branchesIds && allBranches) {
+    curBranches = allBranches.filter((branch) => branchesIds.includes(branch._id));
+  }
+  return curBranches;
+};
+
+export const useIDGetCountriesArray = (allCountries) => {
+  const { user } = useSelector((state) => state.auth);
+  const countriesIds = user?.countries;
+
+  if (!countriesIds || !allCountries) return [];
+
+  let curCountries = [];
+  if (countriesIds && allCountries) {
+    curCountries = allCountries.filter((country) => countriesIds.includes(country._id));
+  }
+  return curCountries;
 };

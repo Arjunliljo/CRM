@@ -28,7 +28,7 @@ const upload = (req, res, next) => {
         req.file.buffer,
         req.file.mimetype,
         fullPath,
-fileName
+        fileName
       );
       req.s3File = s3UploadResult;
 

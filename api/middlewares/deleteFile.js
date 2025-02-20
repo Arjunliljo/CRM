@@ -16,7 +16,7 @@ const deleteFile = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error("Error deleting file:", error);
+
     return res.status(500).json({ error: "Failed to delete file" });
   }
 };

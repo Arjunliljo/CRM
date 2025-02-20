@@ -166,6 +166,24 @@ function DocumentUpload() {
             className="document-upload-document-container-add-on"
             style={{ position: 'relative' }}
           >
+            {doc.isImportant && (
+              <div style={{
+                position: 'absolute',
+                top: '5px',
+                right: '5px',
+                zIndex: 1
+              }}>
+                <HomeIcon
+                  path="star"
+                  style={{
+                    width: '20px',
+                    height: '20px',
+                    color: '#FFD700',
+                    filter: 'drop-shadow(0px 0px 1px rgba(0,0,0,0.3))'
+                  }}
+                />
+              </div>
+            )}
             <div style={{ position: 'absolute', top: '5px', left: '5px', display: 'flex', gap: '5px', zIndex: 1 }}>
               <div
                 onClick={() => handleDeleteDocument(doc)}
