@@ -31,6 +31,8 @@ import PersonalDetails from "../../components/Card/ProfileCard/PersonalDetails";
 export default function Leads() {
   const { curLead, leadDetailToggle } = useSelector((state) => state.leads);
 
+console.log(curLead,"curLead")
+
   const {
     leadsConfigs,
     statusConfigs,
@@ -52,6 +54,8 @@ export default function Leads() {
   const rolesObj = useIDGetRolesArray(roles);
   const branchesObj = useIDGetBranchesArray(branches);
   const countriesObj = useIDGetCountriesArray(countries);
+
+
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
@@ -90,14 +94,14 @@ export default function Leads() {
   };
 
   const handleRemarkSubmit = async (remark , leadId) => {
-
+    console.log(remark,leadId,"remark")
     try {
       const response = await apiClient.patch(`/lead/updateLeadRemark`, {
         leadId: leadId,
         remark,
       });
       console.log(response);
-      dispatch(updateLeadRemark(remark));
+      dispatch(updateLeadRemark(remark ));
       message.success("Remark updated successfully");
     } catch (error) {
       console.error("Error updating lead remark:", error);
@@ -213,13 +217,29 @@ export default function Leads() {
       onUpdate={handleUpdateDocument}
     />
   );
-const IPersonalDetails = <PersonalDetails lead={curLead} />
+
+
+const handlePersonalDetailsSubmit = async (details) => {
+console.log(details,"details")
+try{
+  const response = await apiClient.patch("/lead/updateLeadPersonalDetails", {
+    leadId: curLead._id,
+    details
+  });
+  return true;
+}catch(error){
+  console.error("Error updating lead personal details:", error);
+  return false;
+}
+}
+const IPersonalDetails = curLead && <PersonalDetails lead={curLead} onSubmit={handlePersonalDetailsSubmit} />
 
   const IProfileCardStatus = (
     <ProfileCardStatus
       statuses={statuses?.filter((val) => !val.isApplication)}
-      lead={curLead}
+      lead={ curLead && curLead}
       countries={countries}
+      onsubmit={handleRemarkSubmit}
     />
   );
   const IEligiableCourses = <EligiableCourses />;
@@ -233,6 +253,7 @@ const IPersonalDetails = <PersonalDetails lead={curLead} />
       IEligiableCourses={IEligiableCourses}
       IActivityLog={IActivityLog}
       personalDetails={IPersonalDetails}
+      onsubmit={handleRemarkSubmit}
     />
   );
 
@@ -247,7 +268,6 @@ const IPersonalDetails = <PersonalDetails lead={curLead} />
         BottomRight={BottomRight}
         ProfileCard={IProfileCard}
         StartApplication={IStartApplication}
-        // personalDetails={IPersonalDetails}
       />
 
       <ModalBase title="Add Lead" isOpen={isModalOpen} closeModal={closeModal}>

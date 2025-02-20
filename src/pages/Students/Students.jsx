@@ -8,6 +8,7 @@ import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import AllLeads from "../../components/buttons/AllLeads";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
+import { useApi } from "../../context/apiContext/ApiContext";
 import {
   setAutoStudentsAssign,
   setCurStudent,
@@ -16,6 +17,7 @@ import StudentsCard from "../../components/Card/StudentsCard";
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
 import ModalBase from "../../components/Forms/ModalBase";
 import { useState } from "react";
+import { useIDGetStatusesArray , useIDGetRolesArray , useIDGetBranchesArray , useIDGetCountriesArray } from "../../../api/Utilities/helper";
 
 const names = [
   "Aarav",
@@ -190,6 +192,22 @@ export default function Students() {
     (state) => state.students
   );
 
+const { statusConfigs , roleConfigs , branchConfigs , countryConfigs  } = useApi();
+
+  const { statuses = [] } = statusConfigs;
+  const { roles = [] } = roleConfigs;
+  const { branches = [] } = branchConfigs;
+  const { countries = [] } = countryConfigs;
+  // const { commons = {} } = commonsConfigs;
+
+  // const { autoAssignLeadsToBranch } = commons;
+
+  const statusObj = useIDGetStatusesArray(statuses);
+  const rolesObj = useIDGetRolesArray(roles);
+  const branchesObj = useIDGetBranchesArray(branches);
+  // const countriesObj = useIDGetCountriesArray(countries);
+  console.log(statusObj,"statusObj")
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
 
@@ -209,13 +227,16 @@ export default function Students() {
     />
   ));
 
+
+
   //   const ISelector = <Selector />;
   const IPrimaryBttn = <PrimaryBttn>Add Students</PrimaryBttn>;
   const IAllLeads = <AllLeads />;
   const IDocumentUpload = <DocumentUpload />;
-  const ISelectorOne = <Selector />;
-  const ISelectorTwo = <Selector />;
-  const ISelectorThree = <Selector />;
+  const ISelectorOne = <Selector optionsObj={statusObj} />;
+  const ISelectorTwo = <Selector optionsObj={rolesObj} />;
+  const ISelectorThree = <Selector optionsObj={branchesObj} />;
+
   const IProfileCard = (
     <ProfileCard IDocumentUpload={IDocumentUpload} student={curStudent} />
   );

@@ -305,19 +305,20 @@ const updateLeadDocuments = catchAsync(async (req, res) => {
 });
 
 const updateLeadRemark = catchAsync(async (req, res) => {
-
-  const { leadId, remark } = req.body;
-  if (remark === "" || !leadId) {
-    return res.status(400).json({
-      success: false,
-      message: "Missing required fields",
-    });
-  }
-
+  const {leadId, remark} = req.body;
   await Lead.findByIdAndUpdate(leadId, { remark });
   return res.status(200).json({
     success: true,
     message: "Remark updated successfully",
+  });
+});
+
+const updateLeadPersonalDetails = catchAsync(async (req, res) => {
+  const { leadId, details } = req.body;
+  await Lead.findByIdAndUpdate(leadId, { details });
+  return res.status(200).json({
+    success: true,
+    message: "Personal details updated successfully",
   });
 });
 
@@ -329,5 +330,6 @@ export {
   uploadLeadFile,
   updateLeadDocuments,
   deleteLeadDocument,
-  updateLeadRemark
+  updateLeadRemark,
+  updateLeadPersonalDetails
 };

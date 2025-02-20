@@ -34,6 +34,7 @@ const leadsSlice = createSlice({
       state.curLead.documents = action.payload;
     },
     updateLeadRemark(state, action) {
+console.log(action.payload,"action.payload")
       state.curLead.remark = action.payload;
     },
   },

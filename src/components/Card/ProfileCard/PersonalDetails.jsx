@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   MdOutlineModeEdit,
   MdOutlineLocalPhone,
@@ -9,16 +9,37 @@ import {
 import { FaRegUser, FaWhatsapp } from "react-icons/fa";
 import { GoHome } from "react-icons/go";
 import { IoAdd } from "react-icons/io5";
+import { message } from "antd";
 
-export default function PersonalDetails({lead ,onsubmit}) {
-console.log(lead,"lead")
+export default function PersonalDetails({ lead, onSubmit }) {
   const [isEditing, setIsEditing] = useState(false);
   const [details, setDetails] = useState({
-    name: lead?.name,
-    contact: lead?.phone,
-    email: lead?.email,
-    address: lead?.address,
+    name: '',
+    phone: '',
+    email: '',
+    address: ''
   });
+
+  // Store original details for cancel
+  const [originalDetails, setOriginalDetails] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    address: ''
+  });
+
+  // Update details when lead changes
+  useEffect(() => {
+    const newDetails = {
+      name: lead?.name || '',
+      phone: lead?.phone || '',
+      email: lead?.email || '',
+      address: lead?.address || ''
+    };
+    setDetails(newDetails);
+    setOriginalDetails(newDetails);
+    setIsEditing(false);
+  }, [lead]);
 
   const [cards, setCards] = useState([
     { id: 1, title: "SSLC", percentage: "79%" },
@@ -31,28 +52,30 @@ console.log(lead,"lead")
     { id: 8, title: "HSE", percentage: "79%" },
   ]);
 
-  //to edit mode open
   const handleOpenEdit = () => {
     setIsEditing(true);
   };
 
-  //to close edit mode
   const handleCloseEdit = () => {
     setIsEditing(false);
+    setDetails(originalDetails); // Restore original details on cancel
   };
 
-  //to save form data
   const handleSaveEdit = () => {
     setIsEditing(false);
-    //here : logic for save the data
+    setOriginalDetails(details); // Update original details with new values
+   const res = onSubmit({...details, leadId: lead?._id});
+if(res){
+  setIsEditing(false);
+   message.success("Details updated successfully");
+}
   };
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setDetails((prev) => ({
+    setDetails(prev => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -100,7 +123,7 @@ console.log(lead,"lead")
                 className="personal-details-edit-input"
               />
             ) : (
-              <span>{details.name}</span>
+                <span>{lead?.name}</span>
             )}
           </div>
         </div>
@@ -116,13 +139,13 @@ console.log(lead,"lead")
               {isEditing ? (
                 <input
                   type="text"
-                  name="contact"
-                  value={details.contact}
+                  name="phone"
+                  value={details.phone}
                   onChange={handleChange}
                   className="personal-details-edit-input"
                 />
               ) : (
-                <span>{details.contact}</span>
+                <span>{lead?.phone}</span>
               )}
             </div>
           </div>
@@ -147,7 +170,7 @@ console.log(lead,"lead")
                 className="personal-details-edit-input"
               />
             ) : (
-              <span>{details.email}</span>
+              <span>{lead?.email}</span>
             )}
           </div>
         </div>
@@ -168,7 +191,7 @@ console.log(lead,"lead")
                 className="personal-details-edit-input"
               />
             ) : (
-              <span>{details.address}</span>
+              <span>{lead?.address}</span>
             )}
           </div>
         </div>

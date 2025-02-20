@@ -5537,3 +5537,24 @@ F .log .message-area-textarea-container {
   border-radius: 1rem;
   color: #f9f9f9;
 }
+
+/* DatePicker custom styles */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container {
+  width: 100%;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+  border-radius: 7px;
+  border-width: 1.8px;
+  border-style: solid;
+  border-color: #dadada;
+  height: 2.1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  padding-left: 2.5rem;
+}
