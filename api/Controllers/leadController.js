@@ -304,6 +304,23 @@ const updateLeadDocuments = catchAsync(async (req, res) => {
   });
 });
 
+const updateLeadRemark = catchAsync(async (req, res) => {
+
+  const { leadId, remark } = req.body;
+  if (remark === "" || !leadId) {
+    return res.status(400).json({
+      success: false,
+      message: "Missing required fields",
+    });
+  }
+
+  await Lead.findByIdAndUpdate(leadId, { remark });
+  return res.status(200).json({
+    success: true,
+    message: "Remark updated successfully",
+  });
+});
+
 export {
   createLead,
   branchLeadAssignment,
@@ -311,5 +328,6 @@ export {
   getAllLeads,
   uploadLeadFile,
   updateLeadDocuments,
-  deleteLeadDocument
+  deleteLeadDocument,
+  updateLeadRemark
 };

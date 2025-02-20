@@ -5,7 +5,7 @@ import EligibleBttn from "../../buttons/EligibleBttn";
 import { getStatusName } from "../../../service/nameFinders";
 import { useEffect, useState } from "react";
 
-export default function ProfileCardStatus({ statuses, lead }) {
+export default function ProfileCardStatus({ statuses, lead ,countries }) {
   const statusName = getStatusName(lead?.status, statuses);
 
   const [status, setStatus] = useState(statusName);
@@ -19,7 +19,7 @@ export default function ProfileCardStatus({ statuses, lead }) {
   };
 
   return (
-    <div className="profileCard-box personal-status">
+    <div className="profileCard-box personal-status" >
       <div className="personal-details-heading">
         <span className="name-small">Status</span>
         <div className="icons personal-details-group-icons">
@@ -56,16 +56,32 @@ export default function ProfileCardStatus({ statuses, lead }) {
             <option value="Verified">Verified</option>
           </select>
         </div>
+        <span className="personal-status-html-for">Country</span>
+        <div className="select-container">
+          <MdOutlineInterests className="select-icon" />
+          <select
+            className="selector-with-icon"
+            value={status}
+            id=""
+            onChange={handleStatusChange}
+          >
+            {countries?.map((country) => (
+              <option value={country.name} key={country._id}>
+                {country.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="card-body-mid">
           <textarea
             type="text"
             placeholder="Remark"
-            style={{ height: "12rem" }}
+            style={{ height: "16rem" }}
             onClick={(e) => e.preventDefault()}
           />
         </div>
         <div className="personal-status-bottom-set">
-          <div className="personal-details-heading ">
+          {/* <div className="personal-details-heading ">
             <span className="personal-status-html-for">Updated by</span>
             <div className="icons personal-details-group-icons">
               <span className="arrow-btn">
@@ -75,10 +91,9 @@ export default function ProfileCardStatus({ statuses, lead }) {
                 <IoMdArrowForward className="arrow-btn-element" />
               </span>
             </div>
-          </div>
-          <input type="text" className="selector-with-icon" />
-          <span className="personal-status-html-for">Up next</span>
-          <input type="text" className="selector-with-icon" />
+          </div> */}
+          {/* <input type="text" className="selector-with-icon" /> */}
+
         </div>
         <div className="eligible-head">
           <EligibleBttn>Eligible Course</EligibleBttn>

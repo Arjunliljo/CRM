@@ -1,12 +1,12 @@
 import AutoBtn from "../../components/buttons/AutoBtn";
 import LeadCard from "../../components/Card/LeadCard";
 import SearchBar from "../../components/smallComponents/SearchBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MainBody from "../../layout/MainBody/MainBody";
 import Selector from "../../components/Selectors/Selector";
 import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import AllLeads from "../../components/buttons/AllLeads";
-import { setCurLead, setLeadDetailToggle } from "../../../global/leadsSlice";
+import { removeCurLeadDocument, setCurLead, setLeadDetailToggle, updateCurLeadDocuments, updateLeadRemark } from "../../../global/leadsSlice";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
@@ -26,6 +26,7 @@ import ActivityLog from "../../components/Card/ProfileCard/ActivityLog";
 import apiClient from "../../../config/axiosInstance";
 import { refetchCommens } from "../../apiHooks/useCommens";
 import { message } from "antd";
+import PersonalDetails from "../../components/Card/ProfileCard/PersonalDetails";
 
 export default function Leads() {
   const { curLead, leadDetailToggle } = useSelector((state) => state.leads);
@@ -54,6 +55,7 @@ export default function Leads() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
+  const dispatch = useDispatch();
 
   const handleModal = () => {
     setIsModalOpen((val) => !val);
@@ -87,6 +89,22 @@ export default function Leads() {
     }
   };
 
+  const handleRemarkSubmit = async (remark , leadId) => {
+
+    try {
+      const response = await apiClient.patch(`/lead/updateLeadRemark`, {
+        leadId: leadId,
+        remark,
+      });
+      console.log(response);
+      dispatch(updateLeadRemark(remark));
+      message.success("Remark updated successfully");
+    } catch (error) {
+      console.error("Error updating lead remark:", error);
+      message.error("Error updating lead remark");
+    }
+  };
+
   const ISearchBar = <SearchBar />;
   const IAutoBtn = (
     <AutoBtn callBack={handleAutoBtn} isAuto={autoAssignLeadsToBranch} />
@@ -100,6 +118,7 @@ export default function Leads() {
       lead={lead}
       istoggle={leadDetailToggle}
       toggle={setLeadDetailToggle}
+      onSubmit={handleRemarkSubmit}
     />
   ));
 
@@ -132,11 +151,75 @@ export default function Leads() {
 
   const BottomRight = [<div key="selector-four">{ISelectorFour}</div>];
 
-  const IDocumentUpload = <DocumentUpload />;
+  const handleDocumentSubmit = async (file, details) => {
+    if (!file || !details || !curLead) return;
+
+    const formData = new FormData();
+    formData.append("docfile", file);
+    formData.append("leadId", curLead._id);
+    formData.append("content", details.content);
+    formData.append("isImportant", Boolean(details.isImportant));
+
+    try {
+      const response = await apiClient.post("/lead/uploadLeadFile", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      dispatch(updateCurLeadDocuments(response?.data?.data));
+      return true;
+    } catch (error) {
+      console.error("Error uploading document:", error);
+      return false;
+    }
+  };
+
+  const handleDeleteDocument = async (doc) => {
+    if (!curLead) return;
+    try {
+      await apiClient.patch("/lead/deleteLeadDocument", {
+        leadId: curLead._id,
+        documentObj: doc
+      });
+      dispatch(removeCurLeadDocument(doc._id));
+      return true;
+    } catch (error) {
+      console.error("Error deleting document:", error);
+      return false;
+    }
+  };
+
+  const handleUpdateDocument = async (doc, updatedData) => {
+    if (!curLead) return;
+    try {
+      const response = await apiClient.patch("/lead/updateLeadDocuments", {
+        leadId: curLead._id,
+        documentObj: {
+          ...doc,
+          ...updatedData
+        }
+      });
+      dispatch(updateCurLeadDocuments(response?.data?.data));
+      return true;
+    } catch (error) {
+      console.error("Error updating document:", error);
+      return false;
+    }
+  };
+
+  const IDocumentUpload = curLead && (
+    <DocumentUpload
+      lead={curLead}
+      onUpload={handleDocumentSubmit}
+      onDelete={handleDeleteDocument}
+      onUpdate={handleUpdateDocument}
+    />
+  );
+const IPersonalDetails = <PersonalDetails lead={curLead} />
+
   const IProfileCardStatus = (
     <ProfileCardStatus
       statuses={statuses?.filter((val) => !val.isApplication)}
       lead={curLead}
+      countries={countries}
     />
   );
   const IEligiableCourses = <EligiableCourses />;
@@ -149,6 +232,7 @@ export default function Leads() {
       IProfileCardStatus={IProfileCardStatus}
       IEligiableCourses={IEligiableCourses}
       IActivityLog={IActivityLog}
+      personalDetails={IPersonalDetails}
     />
   );
 
@@ -163,6 +247,7 @@ export default function Leads() {
         BottomRight={BottomRight}
         ProfileCard={IProfileCard}
         StartApplication={IStartApplication}
+        // personalDetails={IPersonalDetails}
       />
 
       <ModalBase title="Add Lead" isOpen={isModalOpen} closeModal={closeModal}>

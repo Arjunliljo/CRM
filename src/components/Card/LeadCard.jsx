@@ -3,6 +3,7 @@ import InfoBtn from "../buttons/InfoBtn";
 import CountryBtn from "../buttons/CountryBtn";
 import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
+import { useKey } from "../../hooks/useKey";
 
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -10,9 +11,12 @@ import { setLeadDetailToggle } from "../../../global/leadsSlice";
 import { useApi } from "../../context/apiContext/ApiContext";
 import { getStatusName } from "../../service/nameFinders";
 
-export default function LeadCard({ lead, set, onSet, toggle }) {
+export default function LeadCard({ lead, set, onSet, toggle , onSubmit }) {
   const [isSelected, setIsSelected] = useState(lead?._id === set?._id);
-  const [remark, setRemark] = useState("");
+  const [remark, setRemark] = useState(lead?.remark || "");
+  const [isTextareaFocused, setIsTextareaFocused] = useState(false);
+  const dispatch = useDispatch();
+
 
   const {
     statusConfigs: { statuses },
@@ -23,8 +27,6 @@ export default function LeadCard({ lead, set, onSet, toggle }) {
   useEffect(() => {
     setIsSelected(lead?._id === set?._id);
   }, [set, lead]);
-
-  const dispatch = useDispatch();
 
   const statusName = getStatusName(lead?.status, statuses);
 
@@ -45,7 +47,12 @@ export default function LeadCard({ lead, set, onSet, toggle }) {
     }, 500);
   };
 
-
+  // Modify the useKey hook to only trigger when the textarea is focused
+  useKey("Enter", () => {
+    if (isTextareaFocused && remark.trim()) {
+      onSubmit(remark, lead._id);
+    }
+  });
 
   return (
     <div
@@ -71,14 +78,11 @@ export default function LeadCard({ lead, set, onSet, toggle }) {
           <textarea
             type="text"
             placeholder="Add a remark"
+            value={remark}
             onClick={(e) => e.stopPropagation()}
             onChange={(e) => setRemark(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault();
-                handleRemarkSubmit();
-              }
-            }}
+            onFocus={() => setIsTextareaFocused(true)}
+            onBlur={() => setIsTextareaFocused(false)}
           />
         </div>
 

@@ -10,13 +10,14 @@ import { FaRegUser, FaWhatsapp } from "react-icons/fa";
 import { GoHome } from "react-icons/go";
 import { IoAdd } from "react-icons/io5";
 
-export default function PersonalDetails() {
+export default function PersonalDetails({lead ,onsubmit}) {
+console.log(lead,"lead")
   const [isEditing, setIsEditing] = useState(false);
   const [details, setDetails] = useState({
-    name: "David Wilson",
-    contact: "9895699452",
-    email: "davidwilson123@gmail.com",
-    address: "Add address",
+    name: lead?.name,
+    contact: lead?.phone,
+    email: lead?.email,
+    address: lead?.address,
   });
 
   const [cards, setCards] = useState([

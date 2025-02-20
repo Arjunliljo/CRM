@@ -7,7 +7,8 @@ import {
   getAllLeads,
   uploadLeadFile,
   updateLeadDocuments,
-  deleteLeadDocument
+  deleteLeadDocument,
+  updateLeadRemark
 } from "../Controllers/leadController.js";
 import upload from "../middlewares/uploadMiddlware.js";
 import deleteFile from "../middlewares/deleteFile.js";
@@ -26,5 +27,6 @@ router.patch("/deleteLeadDocument", deleteFile, deleteLeadDocument);
 router.patch("/updateLeadDocuments", deleteFile, updateLeadDocuments);
 router.post("/branchLeadAssignment", branchLeadAssignment); //distribute leads to branch
 router.post("/assignLeadsToUsers", assignLeadsToUsers); //distribute leads to users
+router.patch("/updateLeadRemark", updateLeadRemark);
 
 export default router;

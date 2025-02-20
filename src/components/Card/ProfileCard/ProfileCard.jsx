@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Tracker from "../../smallComponents/Tracker";
-import PersonalDetails from "./PersonalDetails";
+
 
 export default function ProfileCard({
   IDocumentUpload,
@@ -8,6 +8,7 @@ export default function ProfileCard({
   IProfileCardStatus,
   IEligiableCourses,
   IActivityLog,
+  personalDetails,
 }) {
   const [isApplication, setIsApplication] = useState(false);
 
@@ -52,7 +53,7 @@ export default function ProfileCard({
         {isApplication ? <Tracker completedStep={3} /> : null}
       </div>
       <div className="profileCard-boxes">
-        <PersonalDetails />
+        {personalDetails}
         {IProfileCardStatus}
       </div>
       {IDocumentUpload}

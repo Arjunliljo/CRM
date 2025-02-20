@@ -33,6 +33,9 @@ const leadsSlice = createSlice({
     updateCurLeadDocuments(state, action) {
       state.curLead.documents = action.payload;
     },
+    updateLeadRemark(state, action) {
+      state.curLead.remark = action.payload;
+    },
   },
 });
 
@@ -42,6 +45,7 @@ export const {
   updateCurLeadDocuments,
   removeCurLeadDocument,
   setLeadDetailToggle,
+  updateLeadRemark,
 } = leadsSlice.actions;
 
 export default leadsSlice.reducer;
