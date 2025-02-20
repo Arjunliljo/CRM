@@ -11,7 +11,7 @@ console.log("message item called  ");
     };
     return date.toLocaleString('en-IN', options);
   };
- 
+
   return (
     <div
       key={message.id}

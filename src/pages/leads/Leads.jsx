@@ -13,17 +13,22 @@ import DocumentUpload from "../../components/smallComponents/DocumentUpload";
 import { useState } from "react";
 import ModalBase from "../../components/Forms/ModalBase";
 import AddLead from "../../components/Forms/Leads/AddLead";
-import { useIDGetStatuses } from "../../../api/Utilities/helper";
-import { useIDGetRoles } from "../../../api/Utilities/helper";
+import { useIDGetStatusesArray } from "../../../api/Utilities/helper";
+import { useIDGetRolesArray } from "../../../api/Utilities/helper";
 import { useApi } from "../../context/apiContext/ApiContext";
 
 export default function Leads() {
   const { autoLeadsAssign, curLead } = useSelector((state) => state.leads);
 
   const { leadsConfigs } = useApi();
+  const { statusConfigs } = useApi();
+  const { roleConfigs } = useApi();
 
-  const statusObj = useIDGetStatuses("obj");
-  const rolesObj = useIDGetRoles("obj");
+  const statusObj = useIDGetStatusesArray(statusConfigs.statuses);
+  const rolesObj = useIDGetRolesArray(roleConfigs.roles);
+
+  console.log(statusObj, "statusObj");
+  console.log(rolesObj, "rolesObj");
 
 
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -14,29 +14,29 @@ export const dbConnector = async (primaryDbConnection) => {
   });
 };
 
-export const useIDGetStatuses = (type = "name") => {
-  const { statuses } = useSelector((state) => state.auth);
+export const useIDGetStatusesArray = (allStatuses) => {
 
-  // const status = useSelector((state) => state.auth);
-  // console.log(status);
+  const statusIds = useSelector((state) => state.auth.user.statuses);
 
+  let curStatuses = [];
+  if (statusIds && allStatuses) {
+    curStatuses = allStatuses.filter((status) =>
+      statusIds.includes(status._id)
+    );
+  }
 
-  // const {
-  //   statusConfigs: { statuses },
-  // } = useApi();
-
-  // let curStatuses = [];
-  // curStatuses = statuses?.filter((status) => statusIds.includes(status._id));
-
-  // if (type === "name") {
-  //   return curStatuses.map((status) => status.name);
-  // }
-
-  return statuses;
+  return curStatuses;
 };
 
-export const useIDGetRoles = (type = "name") => {
-  const { roles } = useSelector((state) => state.auth);
-  console.log(roles, "roles");
-  return roles;
+export const useIDGetRolesArray = (allRoles) => {
+  const rolesIds = useSelector((state) => state.auth.user.roles);
+
+  let curRoles = [];
+  if (rolesIds && allRoles) {
+    curRoles = allRoles.filter((role) =>
+        rolesIds.includes(role._id)
+    );
+  }
+
+  return curRoles;
 };
