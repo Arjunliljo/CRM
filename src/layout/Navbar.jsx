@@ -8,21 +8,29 @@ export default function Navbar() {
   const dispatch = useDispatch();
 
   const { defaultTabs, tabs } = useSelector((state) => state.auth);
+
   const userTabs = tabs.map((tab) => tab.name);
 
   const visibleTabs = [...new Set([...defaultTabs, ...userTabs])];
 
-  const navItems = [
-    { name: "Dashboard", path: "/Dashboard", icon: "home" },
-    { name: "Leads", path: "/Leads", icon: "hat" },
-    { name: "Student", path: "/Student", icon: "student" },
-    { name: "University", path: "/University", icon: "tick" },
-    { name: "Configuration", path: "/Configuration", icon: "contact" },
-    { name: "Profile-edit", path: "/Profile-edit", icon: "wifi" },
-    { name: "User", path: "/User", icon: "contact" },
-    { name: "Branch-managing", path: "/Branch-managing", icon: "branch" },
-    { name: "Profile-card", path: "/Profile-card", icon: "settings" },
+  const availableIcons = [
+    "hat",
+    "student",
+    "tick",
+    "contact",
+    "wifi",
+    "branch",
+    "settings",
   ];
+
+  const navItems = visibleTabs.map((tab) => ({
+    name: tab,
+    path: `/${tab}`,
+    icon:
+      tab === "Dashboard"
+        ? "home"
+        : availableIcons[Math.floor(Math.random() * availableIcons.length)],
+  }));
 
   const logoutUser = async () => {
     await apiClient.post("/user/logout");
@@ -31,18 +39,16 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      {navItems
-        .filter((item) => visibleTabs.includes(item.name))
-        .map((item) => (
-          <li className="learn-more" key={item.name}>
-            <NavLink to={item.path}>
-              <span className="circle" aria-hidden="true">
-                <HomeIcon path={item.icon} />
-              </span>
-              <span className="li-text">{item.name}</span>
-            </NavLink>
-          </li>
-        ))}
+      {navItems.map((item) => (
+        <li className="learn-more" key={item.name}>
+          <NavLink to={item.path}>
+            <span className="circle" aria-hidden="true">
+              <HomeIcon path={item.icon} />
+            </span>
+            <span className="li-text">{item.name}</span>
+          </NavLink>
+        </li>
+      ))}
 
       <li className="learn-more">
         <NavLink onClick={logoutUser}>

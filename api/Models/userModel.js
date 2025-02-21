@@ -106,9 +106,9 @@ const userSchema = mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-userSchema.pre("save", async function (next) {
-  await this.populate({
-    path: "statuses",
+userSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "tabs",
     model: "Status",
   });
   next();
