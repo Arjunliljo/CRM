@@ -7,18 +7,22 @@ import { useEffect, useState } from "react";
 import { useKey } from "../../../hooks/useKey";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import NormalButton from "../../buttons/NormalButton";
 
 export default function ProfileCardStatus({ statuses, lead, countries, onsubmit }) {
-  const statusName = getStatusName(lead?.status, statuses);
-  const [status, setStatus] = useState(statusName);
+  const initialStatus = statuses?.find(s => s.name === getStatusName(lead?.status, statuses)) || statuses?.[0];
+  const [status, setStatus] = useState(initialStatus);
   const [remark, setRemark] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState(lead?.country || countries?.[0]?._id || "");
+
+  // Store the full country object
+  const initialCountry = countries?.find(c => c._id === lead?.country) || countries?.[0];
+  const [selectedCountry, setSelectedCountry] = useState(initialCountry);
   const [showPastRemark, setShowPastRemark] = useState(false);
   const [followupDate, setFollowupDate] = useState(new Date());
 
   useEffect(() => {
-    setStatus(statusName);
-  }, [statusName]);
+    setStatus(initialStatus);
+  }, [initialStatus]);
 
   useEffect(() => {
     if (lead?.remark) {
@@ -33,11 +37,14 @@ export default function ProfileCardStatus({ statuses, lead, countries, onsubmit 
   }, [lead?.remark, lead?.pastRemark]);
 
   const handleStatusChange = (e) => {
-    setStatus(e.target.value);
+    // Find the status object that matches the selected name
+    const selectedStatus = statuses.find(s => s.name === e.target.value);
+    setStatus(selectedStatus);
   };
 
   const handleCountryChange = (e) => {
-    setSelectedCountry(e.target.value);
+    const country = countries.find(c => c.name === e.target.value);
+    setSelectedCountry(country);
   };
 
   const handleRemarkChange = (e) => {
@@ -45,7 +52,17 @@ export default function ProfileCardStatus({ statuses, lead, countries, onsubmit 
     setShowPastRemark(false);
   };
 
-  useKey("Enter", () => onsubmit(remark, lead?._id));
+  const handleSave = (e) => {
+    e.preventDefault();
+    const statusData = {
+      status: status?._id,
+      remark: remark,
+      country: selectedCountry?._id, // Send country ID
+      followupDate: followupDate,
+      leadId: lead?._id,
+    }
+    onsubmit(statusData);
+  };
 
   return (
     <div className="profileCard-box personal-status" >
@@ -60,13 +77,13 @@ export default function ProfileCardStatus({ statuses, lead, countries, onsubmit 
           </span>
         </div>
       </div>
-      <form className="personal-status-elements">
+      <form className="personal-status-elements" onSubmit={handleSave}>
         <span className="personal-status-html-for">Current status</span>
         <div className="select-container">
           <MdOutlineInterests className="select-icon" />
           <select
             className="selector-with-icon"
-            value={status}
+            value={status?.name}
             id=""
             onChange={handleStatusChange}
           >
@@ -93,11 +110,11 @@ export default function ProfileCardStatus({ statuses, lead, countries, onsubmit 
           <MdOutlineInterests className="select-icon" />
           <select
             className="selector-with-icon"
-            value={selectedCountry}
+            value={selectedCountry?.name}
             onChange={handleCountryChange}
           >
             {countries?.map((country) => (
-              <option value={country._id} key={country._id}>
+              <option value={country.name} key={country._id}>
                 {country.name}
               </option>
             ))}
@@ -136,7 +153,7 @@ export default function ProfileCardStatus({ statuses, lead, countries, onsubmit 
 
         </div>
         <div className="eligible-head">
-          <EligibleBttn>Eligible Course</EligibleBttn>
+          <EligibleBttn type="submit">Save</EligibleBttn>
         </div>
       </form>
     </div>

@@ -63,51 +63,6 @@ textarea::placeholder {
   color: #757575;
 }
 
-/* jishadscss */
-
-.users-list {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.message-item {
-  display: flex;
-  align-items: center;
-  padding: 12px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.message-item:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-.message-item__avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 12px;
-}
-
-.message-item__content {
-  flex: 1;
-}
-
-.message-item__name {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.message-item__status {
-  margin: 0;
-  font-size: 12px;
-  color: #666;
-}
-
-/* jishadscss */
-
 .chat-text {
   font-size: 0.9rem;
   font-weight: bold;
@@ -803,6 +758,8 @@ textarea::placeholder {
   display: flex;
   flex-direction: column;
   gap: 1.3rem;
+  max-height: 400px;
+  overflow-y: auto;
 }
 .eligiable-courses-card {
   display: flex;
@@ -2892,12 +2849,6 @@ F .log .message-area-textarea-container {
   border-radius: 50%;
   object-fit: cover;
 }
-.logocontainer-greeting {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #333;
-  white-space: nowrap;
-}
 
 .profile-page {
   border-radius: 8px;
@@ -3216,6 +3167,8 @@ F .log .message-area-textarea-container {
   display: flex;
   flex-direction: column;
   gap: 1.3rem;
+  max-height: 700px;
+  overflow-y: auto;
 }
 .university-eligiable-courses-card {
   display: flex;
@@ -5391,41 +5344,6 @@ F .log .message-area-textarea-container {
   background: linear-gradient(90deg, transparent, #e8e8e8);
   animation: btn-anim1 1s linear infinite;
 }
-.document-info {
-  display: flex;
-  align-items: flex-start;  /* Changed from center to flex-start */
-  padding: 30px 10px 10px 10px;  /* Adjusted padding */
-  width: 100%;
-}
-
-.document-icon {
-  min-width: 24px;  /* Added min-width */
-  margin-right: 8px;
-}
-
-.document-details {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  flex: 1;  /* Added flex: 1 */
-}
-.document-name {
-  font-size: 0.9rem;
-  font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 200px;
-}
-
-.document-filename {
-  color: #6c757d;
-  font-size: 0.8rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 200px;
-}
 
 @keyframes btn-anim1 {
   0% {
@@ -5507,6 +5425,35 @@ F .log .message-area-textarea-container {
     top: 100%;
   }
 }
+.status-item {
+  cursor: move;
+  position: relative;
+}
+
+.status-item.dragging {
+  opacity: 0.5;
+}
+
+.status-item.drop-above::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #2196f3;
+}
+
+.status-item.drop-below::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #2196f3;
+}
+
 /*
 *
 *
@@ -5536,25 +5483,4 @@ F .log .message-area-textarea-container {
   background-color: #0075fc;
   border-radius: 1rem;
   color: #f9f9f9;
-}
-
-/* DatePicker custom styles */
-.react-datepicker-wrapper {
-  width: 100%;
-}
-
-.react-datepicker__input-container {
-  width: 100%;
-}
-
-.react-datepicker__input-container input {
-  width: 100%;
-  border-radius: 7px;
-  border-width: 1.8px;
-  border-style: solid;
-  border-color: #dadada;
-  height: 2.1rem;
-  font-size: 1rem;
-  font-weight: 400;
-  padding-left: 2.5rem;
 }

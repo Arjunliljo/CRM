@@ -1,5 +1,6 @@
 import { useState } from "react";
 import HomeIcon from "../utils/Icons/HomeIcon";
+import { message } from "antd";
 
 // function DocumentUpload({lead , onSubmit, onDelete , onEdit , onSave }) {
 //   const [documents, setDocuments] = useState(1);
@@ -507,7 +508,7 @@ function DocumentUpload({ lead, onUpload, onDelete, onUpdate }) {
 
     if (!file || !details) return;
 
-    const success = await onUpload(file, details);
+    const success = await onUpload(file, {...details, leadId: lead._id});
 
     if (success) {
       // Clean up form state
@@ -531,9 +532,34 @@ function DocumentUpload({ lead, onUpload, onDelete, onUpdate }) {
     await onDelete(doc);
   };
 
+  // const handleDownload = async (docUrl) => {
+  //   try {
+  //     console.log(docUrl, "docUrl");
+  //     const response = await fetch(docUrl);
+  //     console.log(response, "response");
+  //     const blob = await response.blob();
+  //     const url = window.URL.createObjectURL(blob);
+  //     const a = document.createElement('a');
+  //     a.href = url;
+  //     a.download = docUrl.split('/').pop();
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     a.remove();
+  //     window.URL.revokeObjectURL(url);
+  //   } catch (error) {
+  //     console.error("Error downloading document:", error);
+  //   }
+  // };
+
   const handleDownload = async (docUrl) => {
     try {
+      console.log(docUrl, "docUrl");
       const response = await fetch(docUrl);
+
+      if (!response.ok) {
+        throw new Error(`Failed to download file: ${response.status} ${response.statusText}`);
+      }
+
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -545,6 +571,7 @@ function DocumentUpload({ lead, onUpload, onDelete, onUpdate }) {
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Error downloading document:", error);
+      message.error("You do not have permission to download this file. Please contact the administrator.");
     }
   };
 

@@ -6,7 +6,14 @@ import MainBody from "../../layout/MainBody/MainBody";
 import Selector from "../../components/Selectors/Selector";
 import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import AllLeads from "../../components/buttons/AllLeads";
-import { removeCurLeadDocument, setCurLead, setLeadDetailToggle, updateCurLeadDocuments, updateLeadRemark } from "../../../global/leadsSlice";
+import {
+  removeCurLeadDocument,
+  setCurLead,
+  setLeadDetailToggle,
+  updateCurLeadDocuments,
+  updateLeadRemark,
+  updateLeadStatus,
+} from "../../../global/leadsSlice";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
@@ -27,11 +34,10 @@ import apiClient from "../../../config/axiosInstance";
 import { refetchCommens } from "../../apiHooks/useCommens";
 import { message } from "antd";
 import PersonalDetails from "../../components/Card/ProfileCard/PersonalDetails";
+import { refetchLeads } from "../../apiHooks/useLeads";
 
 export default function Leads() {
   const { curLead, leadDetailToggle } = useSelector((state) => state.leads);
-
-console.log(curLead,"curLead")
 
   const {
     leadsConfigs,
@@ -54,8 +60,6 @@ console.log(curLead,"curLead")
   const rolesObj = useIDGetRolesArray(roles);
   const branchesObj = useIDGetBranchesArray(branches);
   const countriesObj = useIDGetCountriesArray(countries);
-
-
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
@@ -93,16 +97,17 @@ console.log(curLead,"curLead")
     }
   };
 
-  const handleRemarkSubmit = async (remark , leadId) => {
-    console.log(remark,leadId,"remark")
+  const handleRemarkSubmit = async (remark, leadId) => {
+    console.log(remark, leadId, "remark");
     try {
       const response = await apiClient.patch(`/lead/updateLeadRemark`, {
         leadId: leadId,
         remark,
       });
       console.log(response);
-      dispatch(updateLeadRemark(remark ));
+      // dispatch(updateLeadRemark(remark));
       message.success("Remark updated successfully");
+      refetchLeads()
     } catch (error) {
       console.error("Error updating lead remark:", error);
       message.error("Error updating lead remark");
@@ -160,7 +165,7 @@ console.log(curLead,"curLead")
 
     const formData = new FormData();
     formData.append("docfile", file);
-    formData.append("leadId", curLead._id);
+    formData.append("leadId", details.leadId);
     formData.append("content", details.content);
     formData.append("isImportant", Boolean(details.isImportant));
 
@@ -181,7 +186,7 @@ console.log(curLead,"curLead")
     try {
       await apiClient.patch("/lead/deleteLeadDocument", {
         leadId: curLead._id,
-        documentObj: doc
+        documentObj: doc,
       });
       dispatch(removeCurLeadDocument(doc._id));
       return true;
@@ -198,14 +203,27 @@ console.log(curLead,"curLead")
         leadId: curLead._id,
         documentObj: {
           ...doc,
-          ...updatedData
-        }
+          ...updatedData,
+        },
       });
       dispatch(updateCurLeadDocuments(response?.data?.data));
       return true;
     } catch (error) {
       console.error("Error updating document:", error);
       return false;
+    }
+  };
+
+  const handleStatusCardSubmit = async (status) => {
+    try {
+      const respones = await apiClient.patch("/lead/updateLeadStatus", status);
+      console.log(respones, "status");
+      dispatch(updateLeadStatus(respones?.data?.data));
+      message.success("Status updated successfully");
+      refetchLeads()
+    } catch (error) {
+      console.error("Error updating lead status:", error);
+      message.error("Error updating lead status");
     }
   };
 
@@ -218,31 +236,39 @@ console.log(curLead,"curLead")
     />
   );
 
+  const handlePersonalDetailsSubmit = async (details) => {
+    try {
+      await apiClient.patch("/lead/updateLeadPersonalDetails", {
+        leadId: curLead._id,
+        details,
+      });
+      refetchLeads()
+      return true;
+    } catch (error) {
+      console.error("Error updating lead personal details:", error);
+      return false;
+    }
+  };
 
-const handlePersonalDetailsSubmit = async (details) => {
-console.log(details,"details")
-try{
-  const response = await apiClient.patch("/lead/updateLeadPersonalDetails", {
-    leadId: curLead._id,
-    details
-  });
-  return true;
-}catch(error){
-  console.error("Error updating lead personal details:", error);
-  return false;
-}
-}
-const IPersonalDetails = curLead && <PersonalDetails lead={curLead} onSubmit={handlePersonalDetailsSubmit} />
+  const handleEligibleSave = (universityId) => {
+    console.log("Saving university ID:", universityId);
+  };
+
+
+
+  const IPersonalDetails = curLead && (
+    <PersonalDetails lead={curLead} onSubmit={handlePersonalDetailsSubmit} />
+  );
 
   const IProfileCardStatus = (
     <ProfileCardStatus
       statuses={statuses?.filter((val) => !val.isApplication)}
-      lead={ curLead && curLead}
+      lead={curLead && curLead}
       countries={countries}
-      onsubmit={handleRemarkSubmit}
+      onsubmit={handleStatusCardSubmit}
     />
   );
-  const IEligiableCourses = <EligiableCourses />;
+  const IEligiableCourses = <EligiableCourses onSubmit={handleEligibleSave} />;
   const IActivityLog = <ActivityLog />;
 
   const IProfileCard = (
@@ -267,7 +293,7 @@ const IPersonalDetails = curLead && <PersonalDetails lead={curLead} onSubmit={ha
         BottomLeft={BottomLeft}
         BottomRight={BottomRight}
         ProfileCard={IProfileCard}
-        StartApplication={IStartApplication}
+        // StartApplication={IStartApplication}
       />
 
       <ModalBase title="Add Lead" isOpen={isModalOpen} closeModal={closeModal}>

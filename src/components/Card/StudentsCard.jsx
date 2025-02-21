@@ -6,9 +6,13 @@ import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
 import { useEffect, useRef, useState } from "react";
 import { setAutoStudentsAssign } from "../../../global/studentsSlice";
+import { message } from "antd";
+import { useKey } from "../../hooks/useKey";
 
-function StudentsCard({ student, set, onSet, istoggle, toggle }) {
+function StudentsCard({ student, set, onSet, istoggle, toggle, onsubmit }) {
   const [isSelected, setIsSelected] = useState(student?._id === set?._id);
+  const [remark, setRemark] = useState(student?.remark || "");
+  const [isTextareaFocused, setIsTextareaFocused] = useState(false);
   const targetRef = useRef(null);
 
   useEffect(() => {
@@ -33,6 +37,13 @@ function StudentsCard({ student, set, onSet, istoggle, toggle }) {
     }, 500);
   };
 
+  useKey("Enter", async () => {
+    if (isTextareaFocused && remark.trim()) {
+        onsubmit(remark, student._id);
+
+    }
+  });
+
   return (
     <div
       className={`card ${isSelected ? "selectedCard" : ""}`}
@@ -54,7 +65,11 @@ function StudentsCard({ student, set, onSet, istoggle, toggle }) {
           <textarea
             type="text"
             placeholder="Add a remark"
-            onClick={(e) => e.preventDefault()}
+            value={remark}
+            onClick={(e) => e.stopPropagation()}
+            onChange={(e) => setRemark(e.target.value)}
+            onFocus={() => setIsTextareaFocused(true)}
+            onBlur={() => setIsTextareaFocused(false)}
           />
         </div>
 

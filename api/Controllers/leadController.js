@@ -315,12 +315,27 @@ const updateLeadRemark = catchAsync(async (req, res) => {
 
 const updateLeadPersonalDetails = catchAsync(async (req, res) => {
   const { leadId, details } = req.body;
-  await Lead.findByIdAndUpdate(leadId, { details });
+console.log(details,"details")
+
+  const updatedLead = await Lead.findByIdAndUpdate(leadId, { name: details.name, phone: details.phone, email: details.email, address: details.address }, {new: true});
+console.log("updatedLead",updatedLead)
   return res.status(200).json({
     success: true,
     message: "Personal details updated successfully",
+    // data: updatedLead,
   });
 });
+
+const updateLeadStatus = catchAsync(async (req, res) => {
+  const { leadId, status, remark, country, followupDate } = req.body;
+  const updatedLead = await Lead.findByIdAndUpdate(leadId, { status, remark, country, followupDate } , {new: true});
+  return res.status(200).json({
+    success: true,
+    message: "Lead status updated successfully",
+    data: updatedLead,
+  });
+});
+
 
 export {
   createLead,
@@ -331,5 +346,6 @@ export {
   updateLeadDocuments,
   deleteLeadDocument,
   updateLeadRemark,
-  updateLeadPersonalDetails
+  updateLeadPersonalDetails,
+  updateLeadStatus
 };

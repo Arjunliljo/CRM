@@ -1,7 +1,7 @@
 import AutoBtn from "../../components/buttons/AutoBtn";
 import LeadCard from "../../components/Card/LeadCard";
 import SearchBar from "../../components/smallComponents/SearchBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MainBody from "../../layout/MainBody/MainBody";
 import Selector from "../../components/Selectors/Selector";
 import PrimaryBttn from "../../components/buttons/PrimaryBttn";
@@ -9,240 +9,259 @@ import AllLeads from "../../components/buttons/AllLeads";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import { useApi } from "../../context/apiContext/ApiContext";
-import {
-  setAutoStudentsAssign,
-  setCurStudent,
-} from "../../../global/studentsSlice";
 import StudentsCard from "../../components/Card/StudentsCard";
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
 import ModalBase from "../../components/Forms/ModalBase";
 import { useState } from "react";
-import { useIDGetStatusesArray , useIDGetRolesArray , useIDGetBranchesArray , useIDGetCountriesArray } from "../../../api/Utilities/helper";
-
-const names = [
-  "Aarav",
-  "Aaryan",
-  "Adarsh",
-  "Adithya",
-  "Advik",
-  "Akhil",
-  "Amal",
-  "Anand",
-  "Ananthu",
-  "Anish",
-  "Arjun",
-  "Arvind",
-  "Ashwin",
-  "Bhavana",
-  "Chithra",
-  "Dev",
-  "Dhanush",
-  "Deepak",
-  "Dileep",
-  "Eashan",
-  "Fahad",
-  "Gautham",
-  "Govind",
-  "Hari",
-  "Harikrishnan",
-  "Harsha",
-  "Indrajith",
-  "Jagadeesh",
-  "Jithin",
-  "Jeevan",
-  "Kannan",
-  "Krishna",
-  "Karthik",
-  "Lakshmi",
-  "Lekha",
-  "Madhavan",
-  "Mahesh",
-  "Maya",
-  "Meera",
-  "Mithun",
-  "Mohan",
-  "Nakul",
-  "Nandan",
-  "Narayan",
-  "Nayana",
-  "Nikhil",
-  "Niranjana",
-  "Parvathy",
-  "Pranav",
-  "Pranitha",
-  "Prashanth",
-  "Praveen",
-  "Preetha",
-  "Priya",
-  "Rahul",
-  "Rajeev",
-  "Rakesh",
-  "Ram",
-  "Ravi",
-  "Reshma",
-  "Revathi",
-  "Riya",
-  "Rohit",
-  "Saanvi",
-  "Sagar",
-  "Sandeep",
-  "Santhosh",
-  "Saranya",
-  "Sarath",
-  "Sharath",
-  "Siddharth",
-  "Sreeram",
-  "Suhas",
-  "Sumesh",
-  "Suraj",
-  "Surya",
-  "Swathi",
-  "Tara",
-  "Tejas",
-  "Ujwal",
-  "Usha",
-  "Ved",
-  "Vihaan",
-  "Vignesh",
-  "Vinay",
-  "Vineeth",
-  "Vinu",
-  "Vishnu",
-  "Vivek",
-  "Yash",
-  "Zara",
-  "Zoya",
-  "Akhila",
-  "Ananya",
-  "Arya",
-  "Avani",
-  "Diya",
-  "Ishaan",
-  "Ishika",
-  "Kabir",
-];
-
-const statuses = [
-  "Interested",
-  "Pending",
-  "Not Interested",
-  "Follow Up",
-  "Converted",
-  "Closed",
-  "New Lead",
-  "Attempted",
-  "In Progress",
-  "Prospect",
-  "Lost",
-  "More Info",
-  "Proposal Sent",
-  "Waiting",
-  "Appointment",
-  "Contact",
-  "Cold Lead",
-  "Hot Lead",
-  "Verified",
-  "Unverified",
-];
-
-const countries = [
-  "Germany",
-  "USA",
-  "India",
-  "UK",
-  "France",
-  "Italy",
-  "Brazil",
-  "Russia",
-  "China",
-  "Japan",
-  "Canada",
-  "Australia",
-  "Spain",
-  "Mexico",
-  "South Korea",
-  "South Africa",
-  "Netherlands",
-  "Sweden",
-  "Switzerland",
-  "Argentina",
-];
-const img =
-  "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg";
-const arr = [...Array(100)].map((_, i) => ({
-  num: 1,
-  name: names[i % names.length], // Cycle through the names
-  img,
-  number: Math.floor(1000000000 + Math.random() * 9000000000), // Random 10-digit number
-  status: statuses[i % statuses.length], // Cycle through statuses
-  statusColor: ["red", "green", "blue", "brown"][i % 4], // Random color cycling
-  remark: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-  applications: Math.floor(Math.random() * 5) + 1, // Random between 1-5
-  attempts: Math.floor(Math.random() * 3) + 1,
-  country: countries[i % countries.length],
-  count: Math.floor(Math.random() * 5) + 1,
-  _id: i,
-  counsellor: "Aswathi S",
-  applicationHead: "Shruthi Hassan",
-  university: "SRM",
-}));
+import {
+  useIDGetStatusesArray,
+  useIDGetRolesArray,
+  useIDGetBranchesArray,
+  useIDGetCountriesArray,
+} from "../../../api/Utilities/helper";
+import ProfileCardStatus from "../../components/Card/ProfileCard/ProfileCardStatus";
+import EligiableCourses from "../../components/Card/ProfileCard/EligiableCourses";
+import PersonalDetails from "../../components/Card/ProfileCard/PersonalDetails";
+import { refetchCommens } from "../../apiHooks/useCommens";
+import apiClient from "../../../config/axiosInstance";
+import {
+  removeCurLeadDocument,
+  setCurLead,
+  setLeadDetailToggle,
+  updateCurLeadDocuments,
+  updateLeadRemark,
+  updateLeadStatus,
+} from "../../../global/leadsSlice";
+import { message } from "antd";
+import AddLead from "../../components/Forms/Leads/AddLead";
+import { refetchLeads } from "../../apiHooks/useLeads";
 
 export default function Students() {
-  const { autoStudentsAssign, curStudent } = useSelector(
-    (state) => state.students
-  );
+  const { curLead, leadDetailToggle } = useSelector((state) => state.leads);
 
-const { statusConfigs , roleConfigs , branchConfigs , countryConfigs  } = useApi();
+  const {
+    leadsConfigs,
+    statusConfigs,
+    roleConfigs,
+    branchConfigs,
+    countryConfigs,
+    commonsConfigs,
+  } = useApi();
 
   const { statuses = [] } = statusConfigs;
   const { roles = [] } = roleConfigs;
   const { branches = [] } = branchConfigs;
   const { countries = [] } = countryConfigs;
-  // const { commons = {} } = commonsConfigs;
+  const { commons = {} } = commonsConfigs;
 
-  // const { autoAssignLeadsToBranch } = commons;
+  const { autoAssignLeadsToBranch } = commons;
+  const dispatch = useDispatch();
 
   const statusObj = useIDGetStatusesArray(statuses);
   const rolesObj = useIDGetRolesArray(roles);
   const branchesObj = useIDGetBranchesArray(branches);
   // const countriesObj = useIDGetCountriesArray(countries);
-  console.log(statusObj,"statusObj")
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
+  // const dispatch = useDispatch();
 
   const handleModal = () => {
     setIsModalOpen((val) => !val);
   };
+
+  const [newLead, setNewLead] = useState({
+    name: "",
+    DOM: "",
+    Contact: "",
+    Whatsupp: "",
+    Mail: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewLead((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleAutoBtn = async (val) => {
+    try {
+      await apiClient.patch("/general/auto-assign", {
+        autoAssignLeadsToBranch: val,
+      });
+
+      refetchCommens();
+    } catch (error) {
+      message.error("Failed to update Auto Assign Leads to Branch");
+    }
+  };
+
+  const handleRemarkSubmit = async (remark, leadId) => {
+    console.log(remark, leadId, "remark");
+    try {
+      const response = await apiClient.patch(`/lead/updateLeadRemark`, {
+        leadId: leadId,
+        remark,
+      });
+      console.log(response);
+      // dispatch(updateLeadRemark(remark ));
+      refetchLeads();
+
+      message.success("Remark updated successfully");
+    } catch (error) {
+      console.error("Error updating lead remark:", error);
+      message.error("Error updating lead remark");
+    }
+  };
+
+  const handleDocumentSubmit = async (file, details) => {
+    if (!file || !details || !curLead) return;
+
+    const formData = new FormData();
+    formData.append("docfile", file);
+    formData.append("leadId", curLead._id);
+    formData.append("content", details.content);
+    formData.append("isImportant", Boolean(details.isImportant));
+
+    try {
+      const response = await apiClient.post("/lead/uploadLeadFile", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      dispatch(updateCurLeadDocuments(response?.data?.data));
+      return true;
+    } catch (error) {
+      console.error("Error uploading document:", error);
+      return false;
+    }
+  };
+
+  const handleDeleteDocument = async (doc) => {
+    if (!curLead) return;
+    try {
+      await apiClient.patch("/lead/deleteLeadDocument", {
+        leadId: curLead._id,
+        documentObj: doc,
+      });
+      dispatch(removeCurLeadDocument(doc._id));
+      return true;
+    } catch (error) {
+      console.error("Error deleting document:", error);
+      return false;
+    }
+  };
+
+  const handleUpdateDocument = async (doc, updatedData) => {
+    if (!curLead) return;
+    try {
+      const response = await apiClient.patch("/lead/updateLeadDocuments", {
+        leadId: curLead._id,
+        documentObj: {
+          ...doc,
+          ...updatedData,
+        },
+      });
+      dispatch(updateCurLeadDocuments(response?.data?.data));
+      return true;
+    } catch (error) {
+      console.error("Error updating document:", error);
+      return false;
+    }
+  };
+
+  const handleStatusCardSubmit = async (status) => {
+    try {
+      const respones = await apiClient.patch("/lead/updateLeadStatus", status);
+      console.log(respones, "status");
+      dispatch(updateLeadStatus(respones?.data?.data));
+      refetchLeads();
+      message.success("Status updated successfully");
+    } catch (error) {
+      console.error("Error updating lead status:", error);
+      message.error("Error updating lead status");
+    }
+  };
+
+  const handlePersonalDetailsSubmit = async (details) => {
+    try {
+      await apiClient.patch("/lead/updateLeadPersonalDetails", {
+        leadId: curLead._id,
+        details,
+      });
+      refetchLeads();
+      return true;
+    } catch (error) {
+      console.error("Error updating lead personal details:", error);
+      return false;
+    }
+  };
+
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
-  const IContents = arr?.map((student, index) => (
+  console.log(leadsConfigs, "leadsConfigs?.leads");
+  const IContents = leadsConfigs?.leads?.map((student, index) => (
     <StudentsCard
       key={index}
-      onSet={setCurStudent}
-      set={curStudent}
+      onSet={setCurLead}
+      set={curLead}
       student={student}
-      istoggle={autoStudentsAssign}
-      toggle={setAutoStudentsAssign}
+      istoggle={leadDetailToggle}
+      toggle={setLeadDetailToggle}
+      onsubmit={handleRemarkSubmit}
     />
   ));
 
-
-
   //   const ISelector = <Selector />;
-  const IPrimaryBttn = <PrimaryBttn>Add Students</PrimaryBttn>;
+  const IPrimaryBttn = (
+    <PrimaryBttn onClick={handleModal}>Add Students</PrimaryBttn>
+  );
   const IAllLeads = <AllLeads />;
-  const IDocumentUpload = <DocumentUpload />;
+  const IDocumentUpload = curLead && (
+    <DocumentUpload
+      lead={curLead}
+      onUpload={handleDocumentSubmit}
+      onDelete={handleDeleteDocument}
+      onUpdate={handleUpdateDocument}
+    />
+  );
   const ISelectorOne = <Selector optionsObj={statusObj} />;
   const ISelectorTwo = <Selector optionsObj={rolesObj} />;
   const ISelectorThree = <Selector optionsObj={branchesObj} />;
 
-  const IProfileCard = (
-    <ProfileCard IDocumentUpload={IDocumentUpload} student={curStudent} />
+  const IProfileCardStatus = (
+    <ProfileCardStatus
+      statuses={statuses?.filter((val) => !val.isApplication)}
+      lead={curLead && curLead}
+      countries={countries}
+      onsubmit={handleStatusCardSubmit}
+    />
   );
-  const IStartApplication = <StartApplication />;
 
-  const TopLeft = [<div key="search-bar">{ISearchBar}</div>];
+  const IPersonalDetails = curLead && (
+    <PersonalDetails lead={curLead} onSubmit={handlePersonalDetailsSubmit} />
+  );
+
+  const IEligiableCourses = <EligiableCourses />;
+  const IProfileCard = (
+    <ProfileCard
+      IDocumentUpload={IDocumentUpload}
+      lead={curLead}
+      IProfileCardStatus={IProfileCardStatus}
+      IEligiableCourses={IEligiableCourses}
+      personalDetails={IPersonalDetails}
+    />
+  );
+
+  const IAutoBtn = (
+    <AutoBtn callBack={handleAutoBtn} isAuto={autoAssignLeadsToBranch} />
+  );
+
+  const IStartApplication = <StartApplication />;
+  const TopLeft = [
+    <div key="search-bar">{ISearchBar}</div>,
+    <div key="auto-btn">{IAutoBtn}</div>,
+  ];
   const TopRight = [<div key="primary-btn">{IPrimaryBttn}</div>];
 
   const BottomLeft = [
@@ -262,7 +281,7 @@ const { statusConfigs , roleConfigs , branchConfigs , countryConfigs  } = useApi
         TopLeft={TopLeft}
         TopRight={TopRight}
         IContents={IContents}
-        switching={autoStudentsAssign}
+        switching={leadDetailToggle}
         BottomLeft={BottomLeft}
         BottomRight={BottomRight}
         ProfileCard={IProfileCard}
@@ -273,7 +292,12 @@ const { statusConfigs , roleConfigs , branchConfigs , countryConfigs  } = useApi
         isOpen={isModalOpen}
         closeModal={closeModal}
       >
-        {/* <AddStudent closeModal={closeModal} /> */}
+        <AddLead
+          closeModal={closeModal}
+          newLead={newLead}
+          setNewLead={setNewLead}
+          handleChange={handleChange}
+        />
       </ModalBase>
     </>
   );

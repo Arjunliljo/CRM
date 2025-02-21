@@ -99,6 +99,7 @@ const leadSchema = mongoose.Schema(
         },
       ],
     },
+
     application: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -109,6 +110,10 @@ const leadSchema = mongoose.Schema(
       type: String,
       default:
         "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
+    },
+    followupDate: {
+      type: Date,
+      default: null,
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }

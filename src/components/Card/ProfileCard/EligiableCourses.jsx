@@ -1,9 +1,14 @@
+import NormalButton from "../../buttons/NormalButton";
 import BlackSelector from "../../Selectors/BlackSelector";
+import EligibleBttn from "../../buttons/EligibleBttn";
+import React, { useState } from "react";
 
-export default function EligiableCourses() {
+export default function EligiableCourses({onSubmit}) {
   const Countries = ["Country", "Option 2", "Option 3"];
   const courses = ["UG", "Option 2", "Option 3"];
   const Offer = ["Fees", "Option 2", "Option 3"];
+
+  const [selectedCourseId, setSelectedCourseId] = useState(null);
 
   const handleOptionChange = (newOption) => {
     console.log("Selected Option:", newOption);
@@ -11,31 +16,37 @@ export default function EligiableCourses() {
 
   const eligibleCourses = [
     {
+      _id: "ec1",
       title: "Masters in Advanced Artificial Intelligence",
       university: "University of UK, UK",
       fee: "2000",
     },
     {
+      _id: "ec2",
       title: "Masters in Advanced Artificial Intelligence",
       university: "University of UK, UK",
       fee: null,
     },
     {
+      _id: "ec3",
       title: "Masters in Advanced Artificial Intelligence",
       university: "University of UK, UK",
       fee: null,
     },
     {
+      _id: "ec4",
       title: "Masters in Advanced Artificial Intelligence",
       university: "University of UK, UK",
       fee: null,
     },
     {
+      _id: "ec5",
       title: "Masters in Advanced Artificial Intelligence",
       university: "University of UK, UK",
       fee: null,
     },
     {
+      _id: "ec6",
       title: "Masters in Advanced Artificial Intelligence",
       university: "University of UK, UK",
       fee: null,
@@ -65,9 +76,26 @@ export default function EligiableCourses() {
     },
   ];
 
+  const handleCardClick = (courseId) => {
+    setSelectedCourseId(courseId);
+  };
+
+  const handleSave = () => {
+    if (selectedCourseId) {
+      // console.log("Selected Course ID:", selectedCourseId);
+      onSubmit(selectedCourseId);
+    } else {
+      console.log("No course selected");
+    }
+  };
+
   return (
     <div className="eligiable-courses">
-      <span className="name-small">Eligible Courses</span>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <span className="name-small">Eligible Courses</span>
+        <button className="eligible-head-btn" onClick={handleSave}>save</button>
+      </div>
+
       <div className="eligiable-courses-qualifications">
         <div className="card-number profileCard-head-info-keys">
           {qualifications.map((item, index) => (
@@ -106,23 +134,31 @@ export default function EligiableCourses() {
           }}
         />
       </div>
+
       <div className="eligiable-courses-cards">
         {eligibleCourses.map((course, index) => (
-          <div className="eligiable-courses-card">
+          <div
+            className={`eligiable-courses-card ${
+              selectedCourseId === course._id ? "selected" : ""
+            }`}
+            key={course._id}
+            onClick={() => handleCardClick(course._id)}
+            style={{
+              backgroundColor: selectedCourseId === course._id ? "rgb(216, 255, 216)" : "lightgrey",
+              border: selectedCourseId === course._id ? "1px solid #0075fc" : "none",
+            }}
+          >
             <div className="eligiable-courses-assigners">
-              <span key={index}>{course.title}</span>
+              <span>{course.title}</span>
             </div>
             <div className="eligiable-courses-keys">
-              <div className="eligiable-courses-keys">
-                <span key={index} className="card-number">
-                  {course.university}
-                </span>
-                {course.fee && <span> Fee : ${course.fee}</span>}
-              </div>
+              <span className="card-number">{course.university}</span>
+              {course.fee && <span> Fee : ${course.fee}</span>}
             </div>
           </div>
         ))}
-      </div>  
+      </div>
+
     </div>
   );
 }

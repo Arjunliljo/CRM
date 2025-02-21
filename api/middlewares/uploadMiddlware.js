@@ -17,11 +17,10 @@ const upload = (req, res, next) => {
       if (!req.file) {
         return res.status(400).json({ error: "No file provided" });
       }
-
       // Add timestamp to filename
       const timestamp = Date.now();
       const fileName = req.file.originalname;
-      const fullPath = `documents/${ req.body.userId}/${fileName}`;
+      const fullPath = `documents/${ req.body.leadId}/${fileName}`;
 
       const s3UploadResult = await uploadFileToS3(
         process.env.AWS_S3_BUCKET_NAME,
