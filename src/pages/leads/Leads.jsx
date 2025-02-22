@@ -76,10 +76,10 @@ export default function Leads() {
 
   const [newLead, setNewLead] = useState({
     name: "",
-    DOM: "",
     Contact: "",
-    Whatsupp: "",
     Mail: "",
+    country: "",
+    status: "",
   });
 
   const handleChange = (e) => {
@@ -330,6 +330,8 @@ export default function Leads() {
           newLead={newLead}
           setNewLead={setNewLead}
           handleChange={handleChange}
+          countries={countries}
+          statuses={statuses}
         />
       </ModalBase>
     </>

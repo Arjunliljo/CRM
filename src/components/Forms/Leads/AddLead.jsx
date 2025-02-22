@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React,{ useState } from "react";
 import CancelBtn from "../../buttons/CancelBtn";
-import PrimaryBttn from "../../buttons/PrimaryBttn";
-import { Input, message } from "antd";
+import {  message } from "antd";
 import NextBtn from "../../buttons/NextBtn";
 import CountrySelector from "./CountrySelector";
-import UniversitySelector from "./UniversitySelector";
+import StatusSelector from "./StatusSelector";
 
 export default function AddLead({
   closeModal,
   newLead,
   setNewLead,
   handleChange,
+  countries,
+  statuses,
 }) {
   const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(newLead, "newLead");
     if (!newLead.name) {
       message.error("Please fill in the branch name");
       return;
@@ -33,6 +35,7 @@ export default function AddLead({
       setIsLoading(false);
     }
   };
+
   return (
     <>
       <form onSubmit={handleSubmit} className="modal__form">
@@ -49,10 +52,10 @@ export default function AddLead({
           </div>
           <div className="modal__form-input-text">
             <input
-              type="date"
-              name="dob"
+              type="text"
+              name="email"
               onChange={handleChange}
-              placeholder="dob"
+              placeholder="email"
               className="input-formGroup"
               required
             />
@@ -64,29 +67,7 @@ export default function AddLead({
             type="text"
             name="Contact"
             onChange={handleChange}
-            placeholder="Contact Nunber"
-            className="input-formGroup"
-            required
-          />
-        </div>
-
-        <div className="modal__form-input-text">
-          <input
-            type="text"
-            name="Whatsupp"
-            onChange={handleChange}
-            placeholder="Whatsupp Number"
-            className="input-formGroup"
-            required
-          />
-        </div>
-
-        <div className="modal__form-input-text">
-          <input
-            type="text"
-            name="Mail"
-            onChange={handleChange}
-            placeholder="Mail Id"
+            placeholder="Contact Number"
             className="input-formGroup"
             required
           />
@@ -94,15 +75,11 @@ export default function AddLead({
 
         <div className="modal__form-row">
           <div className="modal__form-input-text">
-            <CountrySelector />
+            <StatusSelector statuses={statuses} />
           </div>
           <div className="modal__form-input-text">
-            <UniversitySelector />
+            <CountrySelector countries={countries} />
           </div>
-        </div>
-
-        <div className="modal__form-input-text">
-          <CountrySelector />
         </div>
 
         <div className="modal__form-buttons">
