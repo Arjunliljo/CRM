@@ -133,12 +133,6 @@ const leadSchema = mongoose.Schema(
       default: "N/A",
     },
 
-    qualification:[ {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Qualification",
-      default: "N/A",
-    }],
-
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

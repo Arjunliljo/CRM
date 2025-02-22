@@ -11,6 +11,9 @@ import {
   updateLeadPersonalDetails,
   updateLeadStatus,
   updateLead,
+  addQualification,
+  removeQualification,
+  editQualification,
 } from "../Controllers/leadController.js";
 import upload from "../middlewares/uploadMiddlware.js";
 import deleteFile from "../middlewares/deleteFile.js";
@@ -27,6 +30,9 @@ router.post("/branchLeadAssignment", branchLeadAssignment); //distribute leads t
 router.patch("/updateLeadRemark", updateLeadRemark);
 router.patch("/updateLeadPersonalDetails", updateLeadPersonalDetails);
 router.patch("/updateLeadStatus", updateLeadStatus);
+router.post("/addQualification", addQualification);
+router.patch("/removeQualification", removeQualification);
+router.patch("/editQualification", editQualification);
 
 // Lead cruds - admin only will do
 router.post("/", createLead);

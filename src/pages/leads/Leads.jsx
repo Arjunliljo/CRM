@@ -38,6 +38,7 @@ import PersonalDetails from "../../components/Card/ProfileCard/PersonalDetails";
 import { refetchLeads } from "../../apiHooks/useLeads";
 import NormalButton from "../../components/buttons/NormalButton";
 import AssingToUser from "./components/AssignToUser";
+import { addQualification, deleteQualification, editQualification } from "./leadsHandler";
 
 export default function Leads() {
   const { curLead, leadDetailToggle, isAssigning, toAssignLeads } = useSelector(
@@ -315,10 +316,21 @@ export default function Leads() {
       return false;
     }
   };
+const handleEligibleSave = (universityId) => {
+  console.log("Saving university ID:", universityId);
+};
 
-  const handleEligibleSave = (universityId) => {
-    console.log("Saving university ID:", universityId);
+  const handleModalSubmit = (newQualification) => {
+    addQualification({...newQualification, leadId: curLead._id },dispatch);
   };
+
+  const handleEditQualification = (updatedQualification) => {
+    editQualification({...updatedQualification, leadId: curLead._id },dispatch);
+  };
+
+  const handleDeleteQualification = (cardId) => {
+    deleteQualification(cardId,curLead._id ,dispatch);
+  }
 
   const IPersonalDetails = curLead && (
     <PersonalDetails
