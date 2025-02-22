@@ -10,8 +10,8 @@ import {
   removeCurLeadDocument,
   setCurLead,
   setLeadDetailToggle,
+  updateCurLead,
   updateCurLeadDocuments,
-  updateLeadRemark,
   updateLeadStatus,
 } from "../../../global/leadsSlice";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
@@ -35,6 +35,11 @@ import { refetchCommens } from "../../apiHooks/useCommens";
 import { message } from "antd";
 import PersonalDetails from "../../components/Card/ProfileCard/PersonalDetails";
 import { refetchLeads } from "../../apiHooks/useLeads";
+import {
+  addQualification,
+  deleteQualification,
+  editQualification,
+} from "./leadsHandler";
 
 export default function Leads() {
   const { curLead, leadDetailToggle } = useSelector((state) => state.leads);
@@ -107,7 +112,7 @@ export default function Leads() {
       console.log(response);
       // dispatch(updateLeadRemark(remark));
       message.success("Remark updated successfully");
-      refetchLeads()
+      refetchLeads();
     } catch (error) {
       console.error("Error updating lead remark:", error);
       message.error("Error updating lead remark");
@@ -220,7 +225,7 @@ export default function Leads() {
       console.log(respones, "status");
       dispatch(updateLeadStatus(respones?.data?.data));
       message.success("Status updated successfully");
-      refetchLeads()
+      refetchLeads();
     } catch (error) {
       console.error("Error updating lead status:", error);
       message.error("Error updating lead status");
@@ -238,11 +243,16 @@ export default function Leads() {
 
   const handlePersonalDetailsSubmit = async (details) => {
     try {
-      await apiClient.patch("/lead/updateLeadPersonalDetails", {
-        leadId: curLead._id,
-        details,
-      });
-      refetchLeads()
+      const response = await apiClient.patch(
+        "/lead/updateLeadPersonalDetails",
+        {
+          leadId: curLead._id,
+          details,
+        }
+      );
+      console.log(response, "response");
+      dispatch(updateCurLead(response?.data?.data));
+      refetchLeads();
       return true;
     } catch (error) {
       console.error("Error updating lead personal details:", error);
@@ -254,10 +264,27 @@ export default function Leads() {
     console.log("Saving university ID:", universityId);
   };
 
+  // const [isMarkModalOpen, setIsMarkModalOpen] = useState(false);
+  // const closeMarkModal = () => setIsMarkModalOpen(false);
 
+  const handleModalSubmit = (newQualification) => {
+    addQualification({ ...newQualification, leadId: curLead._id }, dispatch);
+  };
+  const handleEditQualification = (updatedQualification) => {
+    editQualification({ ...updatedQualification }, dispatch);
+  };
+  const handleDeleteQualification = (cardId) => {
+    deleteQualification(cardId, curLead._id, dispatch);
+  };
 
   const IPersonalDetails = curLead && (
-    <PersonalDetails lead={curLead} onSubmit={handlePersonalDetailsSubmit} />
+    <PersonalDetails
+      lead={curLead}
+      onSubmit={handlePersonalDetailsSubmit}
+      modalSubmit={handleModalSubmit}
+      editQualification={handleEditQualification}
+      deleteQualification={handleDeleteQualification}
+    />
   );
 
   const IProfileCardStatus = (
@@ -280,6 +307,7 @@ export default function Leads() {
       IActivityLog={IActivityLog}
       personalDetails={IPersonalDetails}
       onsubmit={handleRemarkSubmit}
+      // modalSubmit={handleModalSubmit}
     />
   );
 

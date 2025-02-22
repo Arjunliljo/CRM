@@ -49,6 +49,7 @@ const leadSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+
     users: {
       type: [
         {
@@ -58,15 +59,18 @@ const leadSchema = mongoose.Schema(
       ],
       default: [],
     },
+
     remark: {
       type: String,
       // maxlength: [100, "Remark should be less than 100 characters"],
       minlength: [3, "Remark should be greater than 3 characters"],
     },
+
     helpers: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+
     countries: {
       type: [
         {
@@ -106,15 +110,29 @@ const leadSchema = mongoose.Schema(
         ref: "Application",
       },
     ],
+
     img: {
       type: String,
       default:
         "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg",
     },
+
     followupDate: {
       type: Date,
       default: null,
     },
+
+    address: {
+      type: String,
+      default: "N/A",
+    },
+
+    qualification:[ {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Qualification",
+      default: "N/A",
+    }],
+
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

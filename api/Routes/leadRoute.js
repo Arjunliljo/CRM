@@ -10,7 +10,11 @@ import {
   deleteLeadDocument,
   updateLeadRemark,
   updateLeadPersonalDetails,
-  updateLeadStatus
+  updateLeadStatus,
+  addQualification,
+  removeQualification,
+  editQualification,
+
 } from "../Controllers/leadController.js";
 import upload from "../middlewares/uploadMiddlware.js";
 import deleteFile from "../middlewares/deleteFile.js";
@@ -32,5 +36,8 @@ router.post("/assignLeadsToUsers", assignLeadsToUsers); //distribute leads to us
 router.patch("/updateLeadRemark", updateLeadRemark);
 router.patch("/updateLeadPersonalDetails", updateLeadPersonalDetails);
 router.patch("/updateLeadStatus", updateLeadStatus);
-
+router.post("/addQualification", addQualification);
+router.patch("/removeQualification", removeQualification);
+router.patch("/editQualification", editQualification);
+router.patch("/removeQualification", removeQualification);
 export default router;

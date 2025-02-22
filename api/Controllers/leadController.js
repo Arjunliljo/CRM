@@ -3,6 +3,7 @@ import Lead from "../Models/leadsModel.js";
 import getLeadModel from "../Models/leadsModel.js";
 import Status from "../Models/statusModel.js";
 import getStatusModel from "../Models/statusModel.js";
+import Qualification from "../Models/University/qualifications.js";
 
 import getUserModel from "../Models/userModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
@@ -75,7 +76,8 @@ const getAllLeads = catchAsync(async (req, res) => {
   const leads = await Lead.find({})
     .populate("branch") // Populate other fields as needed
     .populate("helpers")
-    .populate("countries");
+    .populate("countries")
+    .populate("qualification");
 
   return res.status(200).json({
     success: true,
@@ -211,14 +213,13 @@ const uploadLeadFile = catchAsync(async (req, res) => {
   if (!req.s3File) {
     return res.status(400).json({
       success: false,
-      message: "No file upload details found"
+      message: "No file upload details found",
     });
   }
 
-  const { fileUrl, fileName  } = req.s3File;
+  const { fileUrl, fileName } = req.s3File;
   const { leadId, content, isImportant } = req.body;
   console.log(req.s3File, "req.s3File");
-
 
   // First check if lead exists
   const lead = await Lead.findById(leadId);
@@ -227,7 +228,7 @@ const uploadLeadFile = catchAsync(async (req, res) => {
   if (!lead) {
     return res.status(404).json({
       success: false,
-      message: "Lead not found"
+      message: "Lead not found",
     });
   }
 
@@ -235,7 +236,7 @@ const uploadLeadFile = catchAsync(async (req, res) => {
   if (!content || !fileName || !fileUrl) {
     return res.status(400).json({
       success: false,
-      message: "Missing required document fields"
+      message: "Missing required document fields",
     });
   }
 
@@ -243,7 +244,7 @@ const uploadLeadFile = catchAsync(async (req, res) => {
     name: content,
     filename: fileName,
     url: fileUrl,
-    isImportant: isImportant === 'true'
+    isImportant: isImportant === "true",
   };
 
   const updatedLead = await Lead.findByIdAndUpdate(
@@ -251,14 +252,14 @@ const uploadLeadFile = catchAsync(async (req, res) => {
     {
       $push: { documents: documentData },
     },
-    { new: true}
+    { new: true }
   );
 
   console.log(updatedLead, "updatedLead");
   if (!updatedLead) {
     return res.status(404).json({
       success: false,
-      message: "Lead not found"
+      message: "Lead not found",
     });
   }
 
@@ -286,16 +287,15 @@ const updateLeadDocuments = catchAsync(async (req, res) => {
   const { leadId, documentObj } = req.body;
 
   const updatedLead = await Lead.findOneAndUpdate(
-    { _id: leadId, "documents._id": documentObj._id  },
+    { _id: leadId, "documents._id": documentObj._id },
     {
       $set: {
         "documents.$.name": documentObj.name,
-        "documents.$.isImportant": documentObj.isImportant
-      }
+        "documents.$.isImportant": documentObj.isImportant,
+      },
     },
     { new: true }
   );
-
 
   return res.status(200).json({
     success: true,
@@ -305,7 +305,7 @@ const updateLeadDocuments = catchAsync(async (req, res) => {
 });
 
 const updateLeadRemark = catchAsync(async (req, res) => {
-  const {leadId, remark} = req.body;
+  const { leadId, remark } = req.body;
   await Lead.findByIdAndUpdate(leadId, { remark });
   return res.status(200).json({
     success: true,
@@ -315,20 +315,33 @@ const updateLeadRemark = catchAsync(async (req, res) => {
 
 const updateLeadPersonalDetails = catchAsync(async (req, res) => {
   const { leadId, details } = req.body;
-console.log(details,"details")
 
-  const updatedLead = await Lead.findByIdAndUpdate(leadId, { name: details.name, phone: details.phone, email: details.email, address: details.address }, {new: true});
-console.log("updatedLead",updatedLead)
+
+  const updatedLead = await Lead.findByIdAndUpdate(
+    leadId,
+    {
+      name: details.name,
+      phone: details.phone,
+      email: details.email,
+      address: details.address,
+    },
+    { new: true }
+  );
+
   return res.status(200).json({
     success: true,
     message: "Personal details updated successfully",
-    // data: updatedLead,
+    data: updatedLead,
   });
 });
 
 const updateLeadStatus = catchAsync(async (req, res) => {
   const { leadId, status, remark, country, followupDate } = req.body;
-  const updatedLead = await Lead.findByIdAndUpdate(leadId, { status, remark, country, followupDate } , {new: true});
+  const updatedLead = await Lead.findByIdAndUpdate(
+    leadId,
+    { status, remark, country, followupDate },
+    { new: true }
+  );
   return res.status(200).json({
     success: true,
     message: "Lead status updated successfully",
@@ -336,6 +349,64 @@ const updateLeadStatus = catchAsync(async (req, res) => {
   });
 });
 
+const addQualification = catchAsync(async (req, res) => {
+  const { leadId, name, mark } = req.body;
+
+  const createdQualification = await Qualification.create({ name, mark });
+  const updatedLead = await Lead.findByIdAndUpdate(
+    leadId,
+    {
+      $push: {
+        qualification: { $each: [createdQualification._id], $position: 0 },
+      },
+    },
+    { new: true }
+  ).populate("qualification");
+  return res.status(200).json({
+    success: true,
+    message: "Qualification added successfully",
+    data: updatedLead,
+  });
+});
+
+const removeQualification = catchAsync(async (req, res) => {
+  const { leadId, qualificationId } = req.body;
+
+  const updatedLead = await Lead.findByIdAndUpdate(
+    leadId,
+    { $pull: { qualification: qualificationId } },
+    { new: true }
+  ).populate("qualification");
+
+
+  await Qualification.findByIdAndDelete(qualificationId);
+
+  return res.status(200).json({
+    success: true,
+    message: "Qualification removed successfully",
+    data: updatedLead,
+  });
+});
+
+const editQualification = catchAsync(async (req, res) => {
+  const { qualificationId, name, mark } = req.body;
+
+  await Qualification.findByIdAndUpdate(
+    qualificationId,
+    { name, mark },
+    { new: true }
+  );
+
+  const updatedLead = await Lead.findOne({
+    qualification: qualificationId,
+  }).populate("qualification");
+
+  return res.status(200).json({
+    success: true,
+    message: "Qualification updated successfully",
+    data: updatedLead,
+  });
+});
 
 export {
   createLead,
@@ -347,5 +418,8 @@ export {
   deleteLeadDocument,
   updateLeadRemark,
   updateLeadPersonalDetails,
-  updateLeadStatus
+  updateLeadStatus,
+  addQualification,
+  removeQualification,
+  editQualification,
 };
