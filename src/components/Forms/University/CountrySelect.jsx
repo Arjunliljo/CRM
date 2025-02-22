@@ -1,4 +1,8 @@
+// import { useApi } from "../../../context/apiContext/ApiContext";
+
 function CountrySelector() {
+  // const { countryConfigs } = useApi();
+  // console.log(countryConfigs);
   return (
     <select className="modal__form-input-text-select" defaultValue="">
       <option value="" disabled>

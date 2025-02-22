@@ -32,11 +32,13 @@ const statusSchema = mongoose.Schema(
       minlength: [3, "Description should be greater than 3 characters"],
     },
     countries: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: "Country",
-      validate: {
-        validator: (v) => Array.isArray(v),
-      },
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Country",
+          default: "N/A",
+        },
+      ],
     },
     color: {
       type: String,

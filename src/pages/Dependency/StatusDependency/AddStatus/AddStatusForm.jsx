@@ -9,6 +9,7 @@ import apiClient from "../../../../../config/axiosInstance";
 
 export default function AddStatusForm({ newStatus, setNewStatus }) {
   const [isLoading, setIsLoading] = useState(false);
+  console.log(newStatus, "newasdsdsdsadsStatus");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,13 +32,15 @@ export default function AddStatusForm({ newStatus, setNewStatus }) {
       setIsLoading(true);
       await apiClient.post("/status", newStatus);
 
-      // Reset form after successful submission
       setNewStatus({
         name: "",
         isTab: null,
         selectedClass: "",
         description: "",
         subStatuses: [],
+        countries: [],
+        isCountryBased: null,
+        isApplication: null,
       });
 
       refetchStatuses();
@@ -55,7 +58,7 @@ export default function AddStatusForm({ newStatus, setNewStatus }) {
   return (
     <div className="content-section dependancies">
       <div className="content-section-head" style={{ height: "fit-content" }}>
-        <h2>Add new Status </h2>
+        <h2>Add new Status</h2>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="dependancies-content-row">
