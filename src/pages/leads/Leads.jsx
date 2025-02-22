@@ -10,8 +10,10 @@ import {
   removeCurLeadDocument,
   setCurLead,
   setIsAssigning,
+  setIsUniversitySelected,
   setLeadDetailToggle,
   setToAssignLeads,
+  updateCurLead,
   updateCurLeadDocuments,
   updateLeadStatus,
 } from "../../../global/leadsSlice";
@@ -38,7 +40,12 @@ import PersonalDetails from "../../components/Card/ProfileCard/PersonalDetails";
 import { refetchLeads } from "../../apiHooks/useLeads";
 import NormalButton from "../../components/buttons/NormalButton";
 import AssingToUser from "./components/AssignToUser";
-import { addQualification, deleteQualification, editQualification } from "./leadsHandler";
+import {
+  addQualification,
+  deleteQualification,
+  editQualification,
+} from "./leadsHandler";
+import { useNavigate } from "react-router-dom";
 
 export default function Leads() {
   const { curLead, leadDetailToggle, isAssigning, toAssignLeads } = useSelector(
@@ -77,11 +84,13 @@ export default function Leads() {
 
   const [newLead, setNewLead] = useState({
     name: "",
-    DOM: "",
-    Contact: "",
-    Whatsupp: "",
-    Mail: "",
+    email: "",
+    phone: "",
+    country: "",
+    status: "",
   });
+
+  console.log(newLead, "newLead");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -89,6 +98,7 @@ export default function Leads() {
       ...prev,
       [name]: value,
     }));
+
   };
 
   const handleAutoBtn = async (val) => {
@@ -111,7 +121,6 @@ export default function Leads() {
       });
       // dispatch(updateLeadRemark(remark));
       message.success("Remark updated successfully");
-      refetchLeads();
       refetchLeads();
     } catch (error) {
       console.error("Error updating lead remark:", error);
@@ -184,6 +193,7 @@ export default function Leads() {
   const ISelectorTwo = <Selector optionsObj={branchesObj} />;
   const ISelectorThree = <Selector optionsObj={countriesObj} />;
   const ISelectorFour = <Selector optionsObj={rolesObj} />;
+
   const IAssingSelectNum = isAssigning ? (
     <NormalButton
       onClick={handleAssignToUser}
@@ -203,7 +213,63 @@ export default function Leads() {
   ) : null;
 
   const ISelectorFive = <Selector />;
-  const IStartApplication = <StartApplication />;
+
+  const handleEligibleCourseClick = (universityId) => {
+    // Update the lead with the selected university
+    if (curLead) {
+      const updatedLead = { ...curLead, isUniversitySelected: universityId };
+      dispatch(setCurLead(updatedLead));
+    }
+    console.log(universityId, "universityId");
+    dispatch(setIsUniversitySelected(universityId ));
+  };
+
+  const canStartApplication = () => {
+    if (!curLead) return false;
+
+    const hasEnoughDocuments = curLead.documents && curLead.documents.length >= 4;
+    const hasMarks = curLead.qualification && curLead.qualification.length > 0;
+    const hasStatus = curLead.status && curLead.status !== "";
+    const hasEligibleCourse = curLead.isUniversitySelected ? true : false; // Updated logic
+
+    console.log(
+      hasEnoughDocuments,
+      hasMarks,
+      hasStatus,
+      hasEligibleCourse,
+      "hasEnoughDocuments, hasMarks, hasStatus, hasEligibleCourse"
+    );
+    return hasEnoughDocuments && hasMarks && hasStatus && hasEligibleCourse;
+  };
+
+
+  const navigate = useNavigate();
+
+  const handleStartApplication = () => {
+    console.log("Start Application");
+
+try {
+  apiClient.post("/application", {
+    lead: curLead._id,
+    course: curLead.isUniversitySelected,
+    status: curLead.status,
+    applicationDate: new Date(),
+    remark: curLead.remark,
+    university: '23456789',
+    country: curLead.country,
+    studentId: '345678945678',
+    documents: curLead.documents,
+  });
+
+  message.success("Application started successfully");
+  navigate('/Student');
+} catch (error) {
+  console.error("Error starting application:", error);
+}
+  };
+
+  const IStartApplication = canStartApplication() ? <StartApplication handleStartApplication={handleStartApplication} /> : null;
+
 
   const TopLeft = [
     <div key="search-bar">{ISearchBar}</div>,
@@ -255,7 +321,7 @@ export default function Leads() {
         documentObj: doc,
       });
       dispatch(removeCurLeadDocument(doc._id));
-      return true;
+      refetchLeads();
     } catch (error) {
       console.error("Error deleting document:", error);
       return false;
@@ -283,10 +349,9 @@ export default function Leads() {
   const handleStatusCardSubmit = async (status) => {
     try {
       const respones = await apiClient.patch("/lead/updateLeadStatus", status);
-      console.log(respones, "status");
+
       dispatch(updateLeadStatus(respones?.data?.data));
       message.success("Status updated successfully");
-      refetchLeads();
       refetchLeads();
     } catch (error) {
       console.error("Error updating lead status:", error);
@@ -305,10 +370,15 @@ export default function Leads() {
 
   const handlePersonalDetailsSubmit = async (details) => {
     try {
-      await apiClient.patch("/lead/updateLeadPersonalDetails", {
-        leadId: curLead._id,
-        details,
-      });
+      const response = await apiClient.patch(
+        "/lead/updateLeadPersonalDetails",
+        {
+          leadId: curLead._id,
+          details,
+        }
+      );
+
+      dispatch(updateCurLead(response?.data?.data));
       refetchLeads();
       return true;
     } catch (error) {
@@ -316,21 +386,21 @@ export default function Leads() {
       return false;
     }
   };
-const handleEligibleSave = (universityId) => {
-  console.log("Saving university ID:", universityId);
-};
 
   const handleModalSubmit = (newQualification) => {
-    addQualification({...newQualification, leadId: curLead._id },dispatch);
+    addQualification({ ...newQualification, leadId: curLead._id }, dispatch);
   };
 
   const handleEditQualification = (updatedQualification) => {
-    editQualification({...updatedQualification, leadId: curLead._id },dispatch);
+    editQualification(
+      { ...updatedQualification, leadId: curLead._id },
+      dispatch
+    );
   };
 
   const handleDeleteQualification = (cardId) => {
-    deleteQualification(cardId,curLead._id ,dispatch);
-  }
+    deleteQualification(cardId, curLead._id, dispatch);
+  };
 
   const IPersonalDetails = curLead && (
     <PersonalDetails
@@ -350,7 +420,9 @@ const handleEligibleSave = (universityId) => {
       onsubmit={handleStatusCardSubmit}
     />
   );
-  const IEligiableCourses = <EligiableCourses onSubmit={handleEligibleSave} />;
+  const IEligiableCourses = (
+    <EligiableCourses onClick={handleEligibleCourseClick} />
+  );
   const IActivityLog = <ActivityLog />;
 
   const IProfileCard = (
@@ -382,7 +454,7 @@ const handleEligibleSave = (universityId) => {
         BottomLeft={BottomLeft}
         BottomRight={BottomRight}
         ProfileCard={IProfileCard}
-        // StartApplication={IStartApplication}
+        StartApplication={IStartApplication}
       />
 
       <ModalBase title="Add Lead" isOpen={isModalOpen} closeModal={closeModal}>
@@ -391,6 +463,8 @@ const handleEligibleSave = (universityId) => {
           newLead={newLead}
           setNewLead={setNewLead}
           handleChange={handleChange}
+          countries={countries}
+          statuses={statuses}
         />
       </ModalBase>
       <ModalBase

@@ -8,13 +8,18 @@ const leadsSlice = createSlice({
     curLead: {},
     isAssigning: false,
     toAssignLeads: [],
+    isUniversitySelected: false,
+
   },
   reducers: {
     setAutoLeadsAssign: (state, action) => {
       state.autoLeadsAssign = action.payload;
     },
     setCurLead(state, action) {
-      state.curLead = action.payload;
+      state.curLead = {
+        ...action.payload,
+        isUniversitySelected: action.payload.isUniversitySelected || false,
+      };
 
       if (action.payload) {
         state.leadDetailToggle = true;
@@ -51,6 +56,9 @@ const leadsSlice = createSlice({
     updateCurLead: (state, action) => {
       state.curLead = action.payload;
     },
+    setIsUniversitySelected: (state, action) => {
+      state.isUniversitySelected = action.payload;
+    },
   },
 });
 
@@ -65,6 +73,7 @@ export const {
   setIsAssigning,
   setToAssignLeads,
   updateCurLead,
+  setIsUniversitySelected,
 } = leadsSlice.actions;
 
 export default leadsSlice.reducer;

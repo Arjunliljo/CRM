@@ -4,8 +4,8 @@ import {
   getAll,
   getOne,
   updateOne,
-} from "../Controllers/handlerFactory";
-import Application from "../Models/ApplicationModel"
+} from "../Controllers/handlerFactory.js";
+import Application from "../Models/ApplicationModel.js"
 
 const createApplication = createOne(Application);
 const getAllApplications = getAll(Application);
