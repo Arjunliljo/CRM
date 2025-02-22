@@ -4,18 +4,31 @@ function Selector({
   optionsObj = [{ option: "Option 1", value: "Option 1" }],
   set = "Option 1",
   onSet = () => {},
+  redux = true,
+  disabled = false,
+  placeholder = "Select Option",
 }) {
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    dispatch(onSet(e.target.value));
+    if (redux) {
+      dispatch(onSet(e.target.value));
+    } else {
+      onSet(e.target.value);
+    }
   };
 
   return (
     <div className="select-container">
-      <select className="custom-select" onChange={handleChange} value={set}>
+      <select
+        className="custom-select"
+        onChange={handleChange}
+        value={set}
+        disabled={disabled}
+      >
+        <option value={""}>{placeholder}</option>
         {optionsObj.map((option, index) => (
-          <option key={index} value={option}>
+          <option key={index} value={option.value}>
             {option.name}
           </option>
         ))}
