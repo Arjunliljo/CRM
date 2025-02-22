@@ -14,3 +14,4 @@ const qualificationSchema = mongoose.Schema({
 const Qualification = mongoose.model("Qualification", qualificationSchema);
 
 export default Qualification;
+  

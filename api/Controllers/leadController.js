@@ -3,6 +3,7 @@ import Lead from "../Models/leadsModel.js";
 import getLeadModel from "../Models/leadsModel.js";
 import Status from "../Models/statusModel.js";
 import getStatusModel from "../Models/statusModel.js";
+import Qualification from "../Models/University/qualifications.js";
 
 import getUserModel from "../Models/userModel.js";
 import AppError from "../Utilities/appError.js";
@@ -76,7 +77,8 @@ const getAllLeads = catchAsync(async (req, res) => {
   const leads = await Lead.find({})
     .populate("branch") // Populate other fields as needed
     .populate("helpers")
-    .populate("countries");
+    .populate("countries")
+    .populate("qualification");
 
   return res.status(200).json({
     success: true,
@@ -147,9 +149,11 @@ const uploadLeadFile = catchAsync(async (req, res) => {
     return res.status(400).json({
       success: false,
       message: "No file upload details found",
+      message: "No file upload details found",
     });
   }
 
+  const { fileUrl, fileName } = req.s3File;
   const { fileUrl, fileName } = req.s3File;
   const { leadId, content, isImportant } = req.body;
   console.log(req.s3File, "req.s3File");
@@ -162,6 +166,7 @@ const uploadLeadFile = catchAsync(async (req, res) => {
     return res.status(404).json({
       success: false,
       message: "Lead not found",
+      message: "Lead not found",
     });
   }
 
@@ -169,6 +174,7 @@ const uploadLeadFile = catchAsync(async (req, res) => {
   if (!content || !fileName || !fileUrl) {
     return res.status(400).json({
       success: false,
+      message: "Missing required document fields",
       message: "Missing required document fields",
     });
   }
@@ -178,6 +184,7 @@ const uploadLeadFile = catchAsync(async (req, res) => {
     filename: fileName,
     url: fileUrl,
     isImportant: isImportant === "true",
+    isImportant: isImportant === "true",
   };
 
   const updatedLead = await Lead.findByIdAndUpdate(
@@ -186,12 +193,14 @@ const uploadLeadFile = catchAsync(async (req, res) => {
       $push: { documents: documentData },
     },
     { new: true }
+    { new: true }
   );
 
   console.log(updatedLead, "updatedLead");
   if (!updatedLead) {
     return res.status(404).json({
       success: false,
+      message: "Lead not found",
       message: "Lead not found",
     });
   }
@@ -221,9 +230,12 @@ const updateLeadDocuments = catchAsync(async (req, res) => {
 
   const updatedLead = await Lead.findOneAndUpdate(
     { _id: leadId, "documents._id": documentObj._id },
+    { _id: leadId, "documents._id": documentObj._id },
     {
       $set: {
         "documents.$.name": documentObj.name,
+        "documents.$.isImportant": documentObj.isImportant,
+      },
         "documents.$.isImportant": documentObj.isImportant,
       },
     },
@@ -238,6 +250,7 @@ const updateLeadDocuments = catchAsync(async (req, res) => {
 });
 
 const updateLeadRemark = catchAsync(async (req, res) => {
+  const { leadId, remark } = req.body;
   const { leadId, remark } = req.body;
   await Lead.findByIdAndUpdate(leadId, { remark });
   return res.status(200).json({
@@ -264,11 +277,17 @@ const updateLeadPersonalDetails = catchAsync(async (req, res) => {
   return res.status(200).json({
     success: true,
     message: "Personal details updated successfully",
-    // data: updatedLead,
+    data: updatedLead,
   });
 });
 
 const updateLeadStatus = catchAsync(async (req, res) => {
+  const { leadId, status, remark, country, followupDate } = req.body;
+  const updatedLead = await Lead.findByIdAndUpdate(
+    leadId,
+    { status, remark, country, followupDate },
+    { new: true }
+  );
   const { leadId } = req.body;
   const updatedLead = await Lead.findByIdAndUpdate(leadId, req.body, {
     new: true,

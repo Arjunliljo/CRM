@@ -111,6 +111,7 @@ export default function Leads() {
       // dispatch(updateLeadRemark(remark));
       message.success("Remark updated successfully");
       refetchLeads();
+      refetchLeads();
     } catch (error) {
       console.error("Error updating lead remark:", error);
       message.error("Error updating lead remark");
@@ -285,6 +286,7 @@ export default function Leads() {
       dispatch(updateLeadStatus(respones?.data?.data));
       message.success("Status updated successfully");
       refetchLeads();
+      refetchLeads();
     } catch (error) {
       console.error("Error updating lead status:", error);
       message.error("Error updating lead status");
@@ -319,7 +321,13 @@ export default function Leads() {
   };
 
   const IPersonalDetails = curLead && (
-    <PersonalDetails lead={curLead} onSubmit={handlePersonalDetailsSubmit} />
+    <PersonalDetails
+      lead={curLead}
+      onSubmit={handlePersonalDetailsSubmit}
+      modalSubmit={handleModalSubmit}
+      editQualification={handleEditQualification}
+      deleteQualification={handleDeleteQualification}
+    />
   );
 
   const IProfileCardStatus = (
@@ -342,6 +350,7 @@ export default function Leads() {
       IActivityLog={IActivityLog}
       personalDetails={IPersonalDetails}
       onsubmit={handleRemarkSubmit}
+      // modalSubmit={handleModalSubmit}
     />
   );
 

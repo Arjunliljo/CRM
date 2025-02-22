@@ -36,10 +36,12 @@ const leadsSlice = createSlice({
       state.curLead.documents = action.payload;
     },
     updateLeadRemark(state, action) {
+      console.log(action.payload, "action.payload");
       state.curLead.remark = action.payload;
     },
     updateLeadStatus(state, action) {
       state.curLead = action.payload;
+    },
     },
     setIsAssigning: (state, action) => {
       state.isAssigning = action.payload;
