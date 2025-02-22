@@ -59,7 +59,7 @@ export default function UpdateStatusRow1({
             <button
               type="button"
               key={cls}
-              className={formData.class === cls ? "selected" : ""}
+              className={formData.selectedClass === cls ? "selected" : ""}
               onClick={() => handleClassSelection(cls)}
             >
               {cls}

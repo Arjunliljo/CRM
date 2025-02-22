@@ -55,7 +55,7 @@ export default function AddStatusForm({ newStatus, setNewStatus }) {
   return (
     <div className="content-section dependancies">
       <div className="content-section-head" style={{ height: "fit-content" }}>
-        <h2>Add new Status</h2>
+        <h2>Add new Status </h2>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="dependancies-content-row">

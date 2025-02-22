@@ -59,6 +59,7 @@ export default function UpdateStatusForm() {
       message.error("Error updating Status. Please try again.");
     } finally {
       setIsLoading(false);
+      dispatch(setStatusEdit({ isBranchEdit: false, editStatus: {} }));
     }
   };
 

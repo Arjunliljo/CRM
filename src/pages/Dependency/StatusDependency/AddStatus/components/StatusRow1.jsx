@@ -1,4 +1,66 @@
+import { useState } from "react";
+import Popover from "react-popover";
+
 export default function StatusRow1({ newStatus, setNewStatus }) {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState("");
+
+  const countries = [
+    "Afghanistan",
+    "Albania",
+    "Algeria",
+    "Andorra",
+    "Angola",
+    "Argentina",
+    "Armenia",
+    "Australia",
+    "Austria",
+    "Azerbaijan",
+    "Bahamas",
+    "Bahrain",
+    "Bangladesh",
+    "Barbados",
+    "Belarus",
+    "Belgium",
+    "Belize",
+    "Benin",
+    "Bhutan",
+    "Bolivia",
+    "Brazil",
+    "Brunei",
+    "Bulgaria",
+    "Burkina Faso",
+    "Burundi",
+    "Cambodia",
+    "Cameroon",
+    "Canada",
+    "Chad",
+    "Chile",
+    "China",
+    "Colombia",
+    "Costa Rica",
+    "Croatia",
+    "Cuba",
+
+    "Madagascar",
+    "Malaysia",
+    "Maldives",
+    "Mali",
+    "Malta",
+    "Mexico",
+    "Moldova",
+    "Monaco",
+    "Mongolia",
+    "Morocco",
+    "Myanmar",
+    "Nepal",
+    "Netherlands",
+    "New Zealand",
+    "Nicaragua",
+    "Nigeria",
+    "North Korea",
+  ];
+
   const handleTabSelection = (value) => {
     setNewStatus((prev) => ({
       ...prev,
@@ -10,6 +72,12 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
       ...prev,
       isCountryBased: value,
     }));
+    if (value) {
+      setIsPopoverOpen(true);
+    } else {
+      setIsPopoverOpen(false);
+      setSelectedCountry("");
+    }
   };
   const handleApplicationSelection = (value) => {
     setNewStatus((prev) => ({
@@ -32,6 +100,50 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
       description: value,
     }));
   };
+
+  const handleCountrySelect = () => {
+    setNewStatus((prev) => ({
+      ...prev,
+      country: selectedCountry,
+    }));
+    setIsPopoverOpen(false);
+  };
+
+  const popoverContent = (
+    <div className="popover-content" style={{ zIndex: 1000 }}>
+      <h3>Select Country</h3>
+      <select
+        value={selectedCountry}
+        onChange={(e) => setSelectedCountry(e.target.value)}
+        style={{ zIndex: 1001 }}
+      >
+        <option value="">Select a country</option>
+        {countries.map((country) => (
+          <option key={country} value={country}>
+            {country}
+          </option>
+        ))}
+      </select>
+      <div className="popover-buttons">
+        <button
+          onClick={handleCountrySelect}
+          disabled={!selectedCountry}
+          className="select-btn"
+        >
+          Select
+        </button>
+        <button
+          onClick={() => {
+            setIsPopoverOpen(false);
+            setSelectedCountry("");
+          }}
+          className="cancel-btn"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="dependancies-status-box">
@@ -69,13 +181,29 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
         <div>
           <p>Is Country?</p>
           <div className="tab-buttons">
-            <button
-              type="button"
-              className={newStatus.isCountryBased === true ? "active" : ""}
-              onClick={() => handleCountrySelection(true)}
+            <Popover
+              isOpen={isPopoverOpen}
+              body={popoverContent}
+              place="below"
+              onOuterAction={() => setIsPopoverOpen(false)}
+              tipSize={0}
+              enterExitTransitionDurationMs={0}
+              className="custom-popover"
+              preferPlace="below"
+              style={{
+                transition: "none",
+                transform: "none",
+                animation: "none",
+              }}
             >
-              Yes
-            </button>
+              <button
+                type="button"
+                className={newStatus.isCountryBased === true ? "active" : ""}
+                onClick={() => handleCountrySelection(true)}
+              >
+                Yes
+              </button>
+            </Popover>
             <button
               type="button"
               className={newStatus.isCountryBased === false ? "active" : ""}
