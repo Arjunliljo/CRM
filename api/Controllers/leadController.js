@@ -1,14 +1,10 @@
-import getBranchModel from "../Models/branchModel.js";
 import Lead from "../Models/leadsModel.js";
-import getLeadModel from "../Models/leadsModel.js";
 import Status from "../Models/statusModel.js";
-import getStatusModel from "../Models/statusModel.js";
 import Qualification from "../Models/University/qualifications.js";
-
-import getUserModel from "../Models/userModel.js";
 import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import { sanitizeInput } from "../Utilities/validation.js";
+import { assignLeadsToUsers } from "./batch/batchAssigners.js";
 
 const createLead = catchAsync(async (req, res) => {
   let { name, email, phone, campaign, countries } = req.body;
@@ -87,61 +83,12 @@ const getAllLeads = catchAsync(async (req, res) => {
   });
 });
 
-const branchLeadAssignment = catchAsync(async (req, res) => {
-  const Branch = getBranchModel(req.db);
-  const Lead = getLeadModel(req.db);
-  const Status = getStatusModel(req.db);
-
-  // Fetch all branches
-  const branches = await Branch.find();
-  if (!branches.length) {
-    throw new Error("No branches available to assign leads.");
-  }
-
-  // Fetch all leads that are
-  // * not yet assigned to branches
-  // * and where isStudent is false
-  const unassignedLeads = await Lead.find({ branch: null, isStudent: false });
-  console.log(unassignedLeads, "unassignedLeads");
-
-  if (!unassignedLeads.length) {
-    throw new Error("No unassigned leads available.");
-  }
-
-  // Fetch the second status
-  const statuses = await Status.find({});
-  if (statuses.length < 2) {
-    return res.status(400).json({
-      success: false,
-      message:
-        "Not enough statuses found to assign to leads, create some status",
-    });
-  }
-  const secondStatusId = statuses[1]._id; // Second status ID
-
-  // Distribute leads among branches
-  let branchIndex = 0;
-  for (const lead of unassignedLeads) {
-    // Assign the lead to the next branch in the list
-    const branch = branches[branchIndex];
-    lead.branch = branch._id;
-
-    // Push the second status into the status array
-    if (!lead.status.includes(secondStatusId._id)) {
-      lead.status.push(secondStatusId._id);
-    }
-
-    // Update other fields
-    lead.isStudent = true;
-    lead.remark = "Leads are assigned to each branch";
-
-    // Save the updated lead
-    await lead.save();
-
-    // Move to the next branch
-    branchIndex = (branchIndex + 1) % branches.length;
-  }
-  console.log("Leads successfully assigned to branches.");
+const leadToUserAssignment = catchAsync(async (req, res) => {
+  await assignLeadsToUsers(req.body.leadIds, req.body.user);
+  return res.status(200).json({
+    success: false,
+    message: "Successfully assigned leads to user",
+  });
 });
 
 const uploadLeadFile = catchAsync(async (req, res) => {
@@ -154,11 +101,9 @@ const uploadLeadFile = catchAsync(async (req, res) => {
 
   const { fileUrl, fileName } = req.s3File;
   const { leadId, content, isImportant } = req.body;
-  console.log(req.s3File, "req.s3File");
 
   // First check if lead exists
   const lead = await Lead.findById(leadId);
-  console.log(lead, "lead");
 
   if (!lead) {
     return res.status(404).json({
@@ -226,8 +171,8 @@ const updateLeadDocuments = catchAsync(async (req, res) => {
     {
       $set: {
         "documents.$.name": documentObj.name,
-        "documents.$.isImportant": documentObj.isImportant
-      }
+        "documents.$.isImportant": documentObj.isImportant,
+      },
     },
     { new: true }
   );
@@ -250,7 +195,6 @@ const updateLeadRemark = catchAsync(async (req, res) => {
 
 const updateLeadPersonalDetails = catchAsync(async (req, res) => {
   const { leadId, details } = req.body;
-  console.log(details, "details");
 
   const updatedLead = await Lead.findByIdAndUpdate(
     leadId,
@@ -331,7 +275,6 @@ const removeQualification = catchAsync(async (req, res) => {
     { new: true }
   ).populate("qualification");
 
-
   await Qualification.findByIdAndDelete(qualificationId);
 
   return res.status(200).json({
@@ -363,7 +306,7 @@ const editQualification = catchAsync(async (req, res) => {
 
 export {
   createLead,
-  branchLeadAssignment,
+  leadToUserAssignment,
   getAllLeads,
   uploadLeadFile,
   updateLeadDocuments,

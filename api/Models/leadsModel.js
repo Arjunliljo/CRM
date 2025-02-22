@@ -56,6 +56,11 @@ const leadSchema = mongoose.Schema(
       default: false,
     },
 
+    assigned: {
+      type: Number,
+      default: 1,
+    },
+
     users: {
       type: [
         {
@@ -132,7 +137,6 @@ const leadSchema = mongoose.Schema(
       type: String,
       default: "N/A",
     },
-
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
