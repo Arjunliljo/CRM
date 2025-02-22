@@ -5,6 +5,7 @@ import Status from "../Models/statusModel.js";
 import getStatusModel from "../Models/statusModel.js";
 
 import getUserModel from "../Models/userModel.js";
+import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import { sanitizeInput } from "../Utilities/validation.js";
 
@@ -141,84 +142,17 @@ const branchLeadAssignment = catchAsync(async (req, res) => {
   console.log("Leads successfully assigned to branches.");
 });
 
-const assignLeadsToUsers = catchAsync(async (req, res) => {
-  const User = getUserModel(req.db);
-  const Lead = getLeadModel(req.db);
-  const Status = getStatusModel(req.db);
-
-  // Get the second status from the Status schema
-  const statuses = await Status.find({});
-  if (statuses.length < 2) {
-    return res.status(400).json({
-      success: false,
-      message:
-        "Not enough statuses found to assign to leads, create some status",
-    });
-  }
-  const secondStatusId = statuses[1]._id; // Second status ID
-
-  // Get all eligible users with `isLeadsAssign` set to true and only one branch
-  const eligibleUsers = await User.find({
-    isLeadsAssign: true,
-  })
-    .populate("branch")
-    .exec();
-
-  const singleBranchUsers = eligibleUsers.filter(
-    (user) => Array.isArray(user.branch) && user.branch.length === 1
-  );
-
-  if (singleBranchUsers.length === 0) {
-    return res.status(400).json({
-      success: false,
-      message:
-        "No eligible users were found for lead assignment. Ensure that there are users with the ability to receive leads",
-    });
-  }
-
-  // Get all leads with `isLead` set to true
-  const leadsToAssign = await Lead.find({ isLead: true });
-
-  if (leadsToAssign.length === 0) {
-    return res.status(400).json({
-      success: false,
-      message: "No leads available for assignment.",
-    });
-  }
-
-  // Distribute leads among eligible users
-  const userCount = singleBranchUsers.length;
-  for (let i = 0; i < leadsToAssign.length; i++) {
-    const lead = leadsToAssign[i];
-    const user = singleBranchUsers[i % userCount]; // Cycle through users
-
-    // Update lead details
-    lead.isLead = false;
-    lead.branch = user.branch[0]._id; // Assign the user's single branch
-    lead.status = lead.status || [];
-    lead.status.push(secondStatusId); // Add second status to the status array
-
-    // Save the updated lead
-    await lead.save();
-  }
-
-  return res.status(200).json({
-    success: true,
-    message: "Leads have been successfully distributed among users.",
-  });
-});
 const uploadLeadFile = catchAsync(async (req, res) => {
   if (!req.s3File) {
     return res.status(400).json({
       success: false,
-      message: "No file upload details found"
+      message: "No file upload details found",
     });
   }
 
-  const { fileUrl, fileName  } = req.s3File;
+  const { fileUrl, fileName } = req.s3File;
   const { leadId, content, isImportant } = req.body;
   console.log(req.s3File, "req.s3File");
-
 
   // First check if lead exists
   const lead = await Lead.findById(leadId);
@@ -227,7 +161,7 @@ const uploadLeadFile = catchAsync(async (req, res) => {
   if (!lead) {
     return res.status(404).json({
       success: false,
-      message: "Lead not found"
+      message: "Lead not found",
     });
   }
 
@@ -235,7 +169,7 @@ const uploadLeadFile = catchAsync(async (req, res) => {
   if (!content || !fileName || !fileUrl) {
     return res.status(400).json({
       success: false,
-      message: "Missing required document fields"
+      message: "Missing required document fields",
     });
   }
 
@@ -243,7 +177,7 @@ const uploadLeadFile = catchAsync(async (req, res) => {
     name: content,
     filename: fileName,
     url: fileUrl,
-    isImportant: isImportant === 'true'
+    isImportant: isImportant === "true",
   };
 
   const updatedLead = await Lead.findByIdAndUpdate(
@@ -251,14 +185,14 @@ const uploadLeadFile = catchAsync(async (req, res) => {
     {
       $push: { documents: documentData },
     },
-    { new: true}
+    { new: true }
   );
 
   console.log(updatedLead, "updatedLead");
   if (!updatedLead) {
     return res.status(404).json({
       success: false,
-      message: "Lead not found"
+      message: "Lead not found",
     });
   }
 
@@ -286,16 +220,15 @@ const updateLeadDocuments = catchAsync(async (req, res) => {
   const { leadId, documentObj } = req.body;
 
   const updatedLead = await Lead.findOneAndUpdate(
-    { _id: leadId, "documents._id": documentObj._id  },
+    { _id: leadId, "documents._id": documentObj._id },
     {
       $set: {
         "documents.$.name": documentObj.name,
-        "documents.$.isImportant": documentObj.isImportant
-      }
+        "documents.$.isImportant": documentObj.isImportant,
+      },
     },
     { new: true }
   );
-
 
   return res.status(200).json({
     success: true,
@@ -305,7 +238,7 @@ const updateLeadDocuments = catchAsync(async (req, res) => {
 });
 
 const updateLeadRemark = catchAsync(async (req, res) => {
-  const {leadId, remark} = req.body;
+  const { leadId, remark } = req.body;
   await Lead.findByIdAndUpdate(leadId, { remark });
   return res.status(200).json({
     success: true,
@@ -315,10 +248,19 @@ const updateLeadRemark = catchAsync(async (req, res) => {
 
 const updateLeadPersonalDetails = catchAsync(async (req, res) => {
   const { leadId, details } = req.body;
-console.log(details,"details")
+  console.log(details, "details");
 
-  const updatedLead = await Lead.findByIdAndUpdate(leadId, { name: details.name, phone: details.phone, email: details.email, address: details.address }, {new: true});
-console.log("updatedLead",updatedLead)
+  const updatedLead = await Lead.findByIdAndUpdate(
+    leadId,
+    {
+      name: details.name,
+      phone: details.phone,
+      email: details.email,
+      address: details.address,
+    },
+    { new: true }
+  );
+  console.log("updatedLead", updatedLead);
   return res.status(200).json({
     success: true,
     message: "Personal details updated successfully",
@@ -327,8 +269,10 @@ console.log("updatedLead",updatedLead)
 });
 
 const updateLeadStatus = catchAsync(async (req, res) => {
-  const { leadId, status, remark, country, followupDate } = req.body;
-  const updatedLead = await Lead.findByIdAndUpdate(leadId, { status, remark, country, followupDate } , {new: true});
+  const { leadId } = req.body;
+  const updatedLead = await Lead.findByIdAndUpdate(leadId, req.body, {
+    new: true,
+  });
   return res.status(200).json({
     success: true,
     message: "Lead status updated successfully",
@@ -336,16 +280,33 @@ const updateLeadStatus = catchAsync(async (req, res) => {
   });
 });
 
+const updateLead = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const updatedLead = await Lead.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
+
+  if (!updatedLead) {
+    return next(new AppError("Failed to update Lead", 400));
+  }
+
+  return res.status(200).json({
+    success: true,
+    message: "Lead updated successfully",
+    data: updatedLead,
+  });
+});
 
 export {
   createLead,
   branchLeadAssignment,
-  assignLeadsToUsers,
   getAllLeads,
   uploadLeadFile,
   updateLeadDocuments,
   deleteLeadDocument,
   updateLeadRemark,
+  updateLead,
   updateLeadPersonalDetails,
-  updateLeadStatus
+  updateLeadStatus,
 };

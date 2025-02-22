@@ -3,6 +3,8 @@ import Selector from "../../../components/Selectors/Selector";
 import { useApi } from "../../../context/apiContext/ApiContext";
 import NextBtn from "../../../components/buttons/NextBtn";
 import { useEffect, useState } from "react";
+import { message } from "antd";
+import apiClient from "../../../../config/axiosInstance";
 
 export default function AssingToUser({ assigningLeads }) {
   const {
@@ -21,6 +23,17 @@ export default function AssingToUser({ assigningLeads }) {
       setSetSelectedUsers(users.filter((user) => user.role === roleId));
     }
   }, [curRole]);
+
+  const handleAssign = async () => {
+    if (setSelectedUsers.length === 0) {
+      message.error("Please select a user");
+      return;
+    }
+    const res = await apiClient.patch(`/lead/${assigningLeads[0]}`, {
+      userId: curUser,
+    });
+    console.log(res);
+  };
 
   return (
     <div className="assign-form">
