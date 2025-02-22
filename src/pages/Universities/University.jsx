@@ -114,8 +114,10 @@ export default function University() {
         title="Add University"
         isOpen={isModalOpen}
         closeModal={closeModal}
+        width="50%"
       >
         <AddUniversity
+          isUpadte={false}
           closeModal={closeModal}
           newUniversity={newUniversity}
           setNewUniversity={setNewUniversity}
