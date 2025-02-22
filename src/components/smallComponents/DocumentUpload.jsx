@@ -460,7 +460,7 @@ import { message } from "antd";
 // export default DocumentUpload;
 
 function DocumentUpload({ lead, onUpload, onDelete, onUpdate }) {
-  const [documents, setDocuments] = useState(1);
+  const [documents, setDocuments] = useState(4);
   const [uploadForms, setUploadForms] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState({});
   const [documentDetails, setDocumentDetails] = useState({});
