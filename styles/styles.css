@@ -5454,6 +5454,19 @@ F .log .message-area-textarea-container {
   background: #2196f3;
 }
 
+.assign-form {
+  display: flex;
+  flex-direction: column;
+}
+.assign-form-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
 /*
 *
 *
@@ -5483,4 +5496,10 @@ F .log .message-area-textarea-container {
   background-color: #0075fc;
   border-radius: 1rem;
   color: #f9f9f9;
+}
+
+.selected-assign {
+  transition: all 0.5s ease-in-out;
+  transform: scale(0.99) !important;
+  background-color: lightgray;
 }

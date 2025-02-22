@@ -1,21 +1,24 @@
 import { Modal } from "antd";
 
-
-export default function ModalBase({ isOpen, closeModal, title, children }) {
+export default function ModalBase({
+  isOpen,
+  closeModal,
+  title,
+  children,
+  centered,
+}) {
   return (
     <Modal
-      title={title}
+      // title={title}
       open={isOpen}
       onCancel={closeModal}
       footer={null}
-      centered
+      centered={centered}
       className="modal"
       forceRender
       mask={true}
     >
-      <div className="modal-content">
-        {children}
-      </div>
+      <div className="modal-content">{children}</div>
     </Modal>
   );
 }

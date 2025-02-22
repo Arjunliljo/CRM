@@ -6,6 +6,8 @@ const leadsSlice = createSlice({
     autoLeadsAssign: false,
     leadDetailToggle: false,
     curLead: {},
+    isAssigning: false,
+    toAssignLeads: [],
   },
   reducers: {
     setAutoLeadsAssign: (state, action) => {
@@ -38,11 +40,15 @@ const leadsSlice = createSlice({
       state.curLead.remark = action.payload;
     },
     updateLeadStatus(state, action) {
-      console.log(action.payload);
       state.curLead = action.payload;
     },
-    updateCurLead(state, action) {
-      state.curLead = action.payload;
+    },
+    setIsAssigning: (state, action) => {
+      state.isAssigning = action.payload;
+      ``;
+    },
+    setToAssignLeads: (state, action) => {
+      state.toAssignLeads = action.payload;
     },
   },
 });
@@ -55,7 +61,8 @@ export const {
   setLeadDetailToggle,
   updateLeadRemark,
   updateLeadStatus,
-  updateCurLead,
+  setIsAssigning,
+  setToAssignLeads,
 } = leadsSlice.actions;
 
 export default leadsSlice.reducer;

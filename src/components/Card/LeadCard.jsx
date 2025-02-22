@@ -11,12 +11,20 @@ import { setLeadDetailToggle } from "../../../global/leadsSlice";
 import { useApi } from "../../context/apiContext/ApiContext";
 import { getStatusName } from "../../service/nameFinders";
 
-export default function LeadCard({ lead, set, onSet, toggle , onSubmit }) {
+export default function LeadCard({
+  lead,
+  set,
+  onSet,
+  toggle,
+  onSubmit,
+  isAssigning,
+  assigninSetter,
+  toAssignLeads,
+}) {
   const [isSelected, setIsSelected] = useState(lead?._id === set?._id);
   const [remark, setRemark] = useState(lead?.remark || "");
   const [isTextareaFocused, setIsTextareaFocused] = useState(false);
   const dispatch = useDispatch();
-
 
   const {
     statusConfigs: { statuses },
@@ -30,7 +38,7 @@ export default function LeadCard({ lead, set, onSet, toggle , onSubmit }) {
 
   const statusName = getStatusName(lead?.status, statuses);
 
-  const handleLeadSelect = () => {
+  const handleLeadNormalSelector = () => {
     if (lead._id === set?._id) {
       dispatch(setLeadDetailToggle(!toggle));
     } else {
@@ -47,6 +55,20 @@ export default function LeadCard({ lead, set, onSet, toggle , onSubmit }) {
     }, 500);
   };
 
+  const handleLeadSelect = () => {
+    if (isAssigning) {
+      if (toAssignLeads.includes(lead)) {
+        dispatch(
+          assigninSetter(toAssignLeads.filter((l) => l._id !== lead._id))
+        );
+      } else {
+        dispatch(assigninSetter([...toAssignLeads, lead]));
+      }
+      return;
+    }
+    handleLeadNormalSelector();
+  };
+
   // Modify the useKey hook to only trigger when the textarea is focused
   useKey("Enter", () => {
     if (isTextareaFocused && remark.trim()) {
@@ -54,9 +76,18 @@ export default function LeadCard({ lead, set, onSet, toggle , onSubmit }) {
     }
   });
 
+  const reAssignChecker = () => {
+    if (toAssignLeads.find((val) => val._id === lead._id)) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <div
-      className={`card ${isSelected ? "selectedCard" : ""}`}
+      className={`card ${isSelected ? "selectedCard" : ""} ${
+        reAssignChecker() ? "selected-assign" : ""
+      }`}
       onClick={handleLeadSelect}
       id={`${lead?._id}`}
       ref={targetRef}

@@ -17,6 +17,12 @@ const leadSchema = mongoose.Schema(
       type: String,
       required: [true, "Lead must have a name"],
     },
+    qualification: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Qualification",
+      },
+    ],
     email: {
       type: String,
       maxlength: [30, "Email should be less than 30 characters"],

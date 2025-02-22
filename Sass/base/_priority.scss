@@ -9,3 +9,9 @@
   border-radius: var.$radius-md;
   color: var.$color-white;
 }
+
+.selected-assign {
+  transition: all 0.5s ease-in-out;
+  transform: scale(0.99) !important;
+  background-color: lightgray;
+}
