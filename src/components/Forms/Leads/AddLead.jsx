@@ -4,31 +4,38 @@ import PrimaryBttn from "../../buttons/PrimaryBttn";
 import { Input, message } from "antd";
 import NextBtn from "../../buttons/NextBtn";
 import CountrySelector from "./CountrySelector";
-import UniversitySelector from "./UniversitySelector";
+import StatusSelector from "./StatusSelector";
+import { refetchLeads } from "../../../apiHooks/useLeads";
+import apiClient from "../../../../config/axiosInstance";
 
 export default function AddLead({
   closeModal,
   newLead,
   setNewLead,
   handleChange,
+  statuses,
+  countries,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!newLead.name) {
-      message.error("Please fill in the branch name");
+    console.log(newLead, "newLead");
+
+    if (!newLead.name || !newLead.email || !newLead.phone || !newLead.status || !newLead.country) {
+      message.error("Please fill in the fields");
       return;
     }
     try {
       setIsLoading(true);
       const res = await apiClient.post("/lead", newLead);
-      setNewLead({ name: "", dob: "", Contact: "", Whatsupp: "", Mail: "" });
+      message.success("Lead created successfully!");
+      setNewLead({ name: "", email: "", phone: "", status: "", country: "" });
       refetchLeads();
-      message.success("Branch created successfully!");
+      closeModal();
     } catch (e) {
-      setIsLoading(false);
-      message.error("Error creating branch. Please try again.");
+      console.log(e, "e");
+      message.error(e.response.data.message);
     } finally {
       setIsLoading(false);
     }
@@ -41,6 +48,7 @@ export default function AddLead({
             <input
               type="text"
               name="name"
+              value={newLead.name}
               onChange={handleChange}
               placeholder="Name"
               className="input-formGroup"
@@ -49,10 +57,11 @@ export default function AddLead({
           </div>
           <div className="modal__form-input-text">
             <input
-              type="date"
-              name="dob"
+              type="email"
+              name="email"
+              value={newLead.email}
               onChange={handleChange}
-              placeholder="dob"
+              placeholder="email"
               className="input-formGroup"
               required
             />
@@ -62,31 +71,10 @@ export default function AddLead({
         <div className="modal__form-input-text">
           <input
             type="text"
-            name="Contact"
+            name="phone"
+            value={newLead.phone}
             onChange={handleChange}
-            placeholder="Contact Nunber"
-            className="input-formGroup"
-            required
-          />
-        </div>
-
-        <div className="modal__form-input-text">
-          <input
-            type="text"
-            name="Whatsupp"
-            onChange={handleChange}
-            placeholder="Whatsupp Number"
-            className="input-formGroup"
-            required
-          />
-        </div>
-
-        <div className="modal__form-input-text">
-          <input
-            type="text"
-            name="Mail"
-            onChange={handleChange}
-            placeholder="Mail Id"
+            placeholder="Contact Number"
             className="input-formGroup"
             required
           />
@@ -94,15 +82,11 @@ export default function AddLead({
 
         <div className="modal__form-row">
           <div className="modal__form-input-text">
-            <CountrySelector />
+            <CountrySelector countries={countries} handleChange={handleChange}/>
           </div>
           <div className="modal__form-input-text">
-            <UniversitySelector />
+            <StatusSelector statuses={statuses} handleChange={handleChange}/>
           </div>
-        </div>
-
-        <div className="modal__form-input-text">
-          <CountrySelector />
         </div>
 
         <div className="modal__form-buttons">

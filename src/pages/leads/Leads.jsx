@@ -1,53 +1,58 @@
-import AutoBtn from "../../components/buttons/AutoBtn";
-import LeadCard from "../../components/Card/LeadCard";
-import SearchBar from "../../components/smallComponents/SearchBar";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import MainBody from "../../layout/MainBody/MainBody";
-import Selector from "../../components/Selectors/Selector";
-import PrimaryBttn from "../../components/buttons/PrimaryBttn";
-import AllLeads from "../../components/buttons/AllLeads";
+import { message } from "antd";
+import { useNavigate } from "react-router-dom";
+import apiClient from "../../../config/axiosInstance";
 import {
   removeCurLeadDocument,
   setCurLead,
   setIsAssigning,
+  setIsUniversitySelected,
   setLeadDetailToggle,
   setToAssignLeads,
-  setIsUniversitySelected,
   updateCurLeadDocuments,
   updateLeadStatus,
   updateCurLead,
 } from "../../../global/leadsSlice";
-import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
-import StartApplication from "../../components/Card/ProfileCard/StartApplication";
-import DocumentUpload from "../../components/smallComponents/DocumentUpload";
-import { useEffect, useState } from "react";
-import ModalBase from "../../components/Forms/ModalBase";
-import AddLead from "../../components/Forms/Leads/AddLead";
 import {
   useIDGetStatusesArray,
   useIDGetBranchesArray,
   useIDGetCountriesArray,
+  useIDGetRolesArray,
 } from "../../../api/Utilities/helper";
-import { useIDGetRolesArray } from "../../../api/Utilities/helper";
 import { useApi } from "../../context/apiContext/ApiContext";
-import ProfileCardStatus from "../../components/Card/ProfileCard/ProfileCardStatus";
-import EligiableCourses from "../../components/Card/ProfileCard/EligiableCourses";
-import ActivityLog from "../../components/Card/ProfileCard/ActivityLog";
-import apiClient from "../../../config/axiosInstance";
 import { refetchCommens } from "../../apiHooks/useCommens";
-import { message } from "antd";
-import PersonalDetails from "../../components/Card/ProfileCard/PersonalDetails";
 import { refetchLeads } from "../../apiHooks/useLeads";
-import NormalButton from "../../components/buttons/NormalButton";
-import AssingToUser from "./components/AssignToUser";
 import {
   addQualification,
   deleteQualification,
   editQualification,
 } from "./leadsHandler";
-import { useNavigate } from "react-router-dom";
+
+// Component imports
+import AutoBtn from "../../components/buttons/AutoBtn";
+import LeadCard from "../../components/Card/LeadCard";
+import SearchBar from "../../components/smallComponents/SearchBar";
+import MainBody from "../../layout/MainBody/MainBody";
+import Selector from "../../components/Selectors/Selector";
+import PrimaryBttn from "../../components/buttons/PrimaryBttn";
+import AllLeads from "../../components/buttons/AllLeads";
+import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
+import StartApplication from "../../components/Card/ProfileCard/StartApplication";
+import DocumentUpload from "../../components/smallComponents/DocumentUpload";
+import ModalBase from "../../components/Forms/ModalBase";
+import AddLead from "../../components/Forms/Leads/AddLead";
+import ProfileCardStatus from "../../components/Card/ProfileCard/ProfileCardStatus";
+import EligiableCourses from "../../components/Card/ProfileCard/EligiableCourses";
+import ActivityLog from "../../components/Card/ProfileCard/ActivityLog";
+import PersonalDetails from "../../components/Card/ProfileCard/PersonalDetails";
+import NormalButton from "../../components/buttons/NormalButton";
+import AssingToUser from "./components/AssignToUser";
 
 export default function Leads() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { curLead, leadDetailToggle, isAssigning, toAssignLeads } = useSelector(
     (state) => state.leads
   );
@@ -66,7 +71,6 @@ export default function Leads() {
   const { branches = [] } = branchConfigs;
   const { countries = [] } = countryConfigs;
   const { commons = {} } = commonsConfigs;
-
   const { autoAssignLeadsToBranch } = commons;
 
   const statusObj = useIDGetStatusesArray(statuses);
@@ -75,13 +79,7 @@ export default function Leads() {
   const countriesObj = useIDGetCountriesArray(countries);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const closeModal = () => setIsModalOpen(false);
-  const dispatch = useDispatch();
-
-  const handleModal = () => {
-    setIsModalOpen((val) => !val);
-  };
-
+  const [assignToUser, setAssignToUser] = useState(false);
   const [newLead, setNewLead] = useState({
     name: "",
     email: "",
@@ -103,7 +101,6 @@ export default function Leads() {
       await apiClient.patch("/general/auto-assign", {
         autoAssignLeadsToBranch: val,
       });
-
       refetchCommens();
     } catch (error) {
       message.error("Failed to update Auto Assign Leads to Branch");
@@ -112,35 +109,28 @@ export default function Leads() {
 
   const handleRemarkSubmit = async (remark, leadId) => {
     try {
-      const response = await apiClient.patch(`/lead/updateLeadRemark`, {
-        leadId: leadId,
+      await apiClient.patch(`/lead/updateLeadRemark`, {
+        leadId,
         remark,
       });
-      // dispatch(updateLeadRemark(remark));
       message.success("Remark updated successfully");
       refetchLeads();
-      refetchLeads();
     } catch (error) {
-      console.error("Error updating lead remark:", error);
       message.error("Error updating lead remark");
     }
   };
 
   const handleAssignLeads = (num) => {
     return () => {
-      if (num === 50) {
-        dispatch(setToAssignLeads(leadsConfigs?.leads?.slice(0, 50)));
-      } else if (num === 10) {
-        dispatch(setToAssignLeads(leadsConfigs?.leads?.slice(0, 10)));
-      } else if (num === 20) {
-        dispatch(setToAssignLeads(leadsConfigs?.leads?.slice(0, 20)));
-      } else if (num === "all") {
-        dispatch(setToAssignLeads(leadsConfigs?.leads));
+      let selectedLeads;
+      if (num === "all") {
+        selectedLeads = leadsConfigs?.leads;
+      } else {
+        selectedLeads = leadsConfigs?.leads?.slice(0, Number(num));
       }
+      dispatch(setToAssignLeads(selectedLeads));
     };
   };
-
-  const [assignToUser, setAssignToUser] = useState(false);
 
   const handleAssignToUser = () => {
     if (toAssignLeads.length === 0) {
@@ -150,145 +140,9 @@ export default function Leads() {
     setAssignToUser(true);
   };
 
-  const ISearchBar = <SearchBar />;
-  const IAutoBtn = (
-    <AutoBtn callBack={handleAutoBtn} isAuto={autoAssignLeadsToBranch} />
-  );
-
-  const IContents = leadsConfigs?.leads?.map((lead, index) => (
-    <LeadCard
-      isAssigning={isAssigning}
-      assigninSetter={setToAssignLeads}
-      key={index}
-      onSet={setCurLead}
-      set={curLead}
-      lead={lead}
-      istoggle={leadDetailToggle}
-      toggle={setLeadDetailToggle}
-      onSubmit={handleRemarkSubmit}
-      toAssignLeads={toAssignLeads}
-    />
-  ));
-
   const handleAssignLeadsToggle = () => {
     dispatch(setIsAssigning(!isAssigning));
   };
-
-  const IAssign = (
-    <NormalButton
-      style={isAssigning ? { backgroundColor: "lightgray" } : {}}
-      onClick={handleAssignLeadsToggle}
-    >
-      Assign Leads
-    </NormalButton>
-  );
-  const IPrimaryBttn = (
-    <PrimaryBttn onClick={handleModal}>Add Leads</PrimaryBttn>
-  );
-
-  const IAllLeads = <AllLeads />;
-  const ISelectorOne = <Selector optionsObj={statusObj} />;
-  const ISelectorTwo = <Selector optionsObj={branchesObj} />;
-  const ISelectorThree = <Selector optionsObj={countriesObj} />;
-  const ISelectorFour = <Selector optionsObj={rolesObj} />;
-  const IAssingSelectNum = isAssigning ? (
-    <NormalButton
-      onClick={handleAssignToUser}
-    >{`Allocate ${toAssignLeads.length}`}</NormalButton>
-  ) : null;
-  const IAssignAll = isAssigning ? (
-    <NormalButton onClick={handleAssignLeads("all")}>{`All`}</NormalButton>
-  ) : null;
-  const IAssignFifty = isAssigning ? (
-    <NormalButton onClick={handleAssignLeads(50)}>{`50`}</NormalButton>
-  ) : null;
-  const IAssignTen = isAssigning ? (
-    <NormalButton onClick={handleAssignLeads(10)}>{`10`}</NormalButton>
-  ) : null;
-  const IAssignTwenty = isAssigning ? (
-    <NormalButton onClick={handleAssignLeads(20)}>{`20`}</NormalButton>
-  ) : null;
-
-  // const ISelectorFive = <Selector />;
-  // const IStartApplication = <StartApplication />;
-  const handleEligibleCourseClick = (universityId) => {
-    // Update the lead with the selected university
-    if (curLead) {
-      const updatedLead = { ...curLead, isUniversitySelected: universityId };
-      dispatch(setCurLead(updatedLead));
-    }
-    console.log(universityId, "universityId");
-    dispatch(setIsUniversitySelected(universityId));
-  };
-
-  const canStartApplication = () => {
-    if (!curLead) return false;
-
-    const hasEnoughDocuments =
-      curLead.documents && curLead.documents.length >= 4;
-    const hasMarks = curLead.qualification && curLead.qualification.length > 0;
-    const hasStatus = curLead.status && curLead.status !== "";
-    const hasEligibleCourse = curLead.isUniversitySelected ? true : false; // Updated logic
-
-    console.log(
-      hasEnoughDocuments,
-      hasMarks,
-      hasStatus,
-      hasEligibleCourse,
-      "hasEnoughDocuments, hasMarks, hasStatus, hasEligibleCourse"
-    );
-    return hasEnoughDocuments && hasMarks && hasStatus && hasEligibleCourse;
-  };
-
-  const navigate = useNavigate();
-
-  const handleStartApplication = () => {
-    console.log("Start Application");
-
-    try {
-      apiClient.post("/application", {
-        lead: curLead._id,
-        course: curLead.isUniversitySelected,
-        status: curLead.status,
-        applicationDate: new Date(),
-        remark: curLead.remark,
-        university: "23456789",
-        country: curLead.country,
-        studentId: "345678945678",
-        documents: curLead.documents,
-      });
-
-      message.success("Application started successfully");
-      navigate("/Student");
-    } catch (error) {
-      console.error("Error starting application:", error);
-    }
-  };
-
-  const IStartApplication = canStartApplication() ? (
-    <StartApplication handleStartApplication={handleStartApplication} />
-  ) : null;
-
-  const TopLeft = [
-    <div key="search-bar">{ISearchBar}</div>,
-    <div key="auto-btn">{IAutoBtn}</div>,
-    <div key="selector">{IAssign}</div>,
-    <div key="assign-select-num">{IAssingSelectNum}</div>,
-    <div key="assign-all">{IAssignAll}</div>,
-    <div key="assign-fifty">{IAssignFifty}</div>,
-    <div key="assign-ten">{IAssignTen}</div>,
-    <div key="assign-twenty">{IAssignTwenty}</div>,
-  ];
-  const TopRight = [<div key="primary-btn">{IPrimaryBttn}</div>];
-
-  const BottomLeft = [
-    <div key="all-leads">{IAllLeads}</div>,
-    <div key="selector-one">{ISelectorOne}</div>,
-    <div key="selector-two">{ISelectorTwo}</div>,
-    <div key="selector-three">{ISelectorThree}</div>,
-  ];
-
-  const BottomRight = [<div key="selector-four">{ISelectorFour}</div>];
 
   const handleDocumentSubmit = async (file, details) => {
     if (!file || !details || !curLead) return;
@@ -319,7 +173,7 @@ export default function Leads() {
         documentObj: doc,
       });
       dispatch(removeCurLeadDocument(doc._id));
-      return true;
+      refetchLeads();
     } catch (error) {
       console.error("Error deleting document:", error);
       return false;
@@ -344,27 +198,48 @@ export default function Leads() {
     }
   };
 
-  const handleStatusCardSubmit = async (status) => {
+  const canStartApplication = () => {
+    if (!curLead) return false;
+
+    const hasEnoughDocuments = curLead.documents?.length >= 4;
+    const hasMarks = curLead.qualification?.length > 0;
+    const hasStatus = Boolean(curLead.status);
+    const hasEligibleCourse = Boolean(curLead.isUniversitySelected);
+
+    return hasEnoughDocuments && hasMarks && hasStatus && hasEligibleCourse;
+  };
+
+  const handleStartApplication = async () => {
     try {
-      const respones = await apiClient.patch("/lead/updateLeadStatus", status);
-      console.log(respones, "status");
-      dispatch(updateLeadStatus(respones?.data?.data));
-      message.success("Status updated successfully");
-      refetchLeads();
+      await apiClient.post("/application", {
+        lead: curLead._id,
+        course: curLead.isUniversitySelected,
+        status: curLead.status,
+        applicationDate: new Date(),
+        remark: curLead.remark,
+        university: "23456789",
+        country: curLead.country,
+        studentId: "345678945678",
+        documents: curLead.documents,
+      });
+
+      message.success("Application started successfully");
+      navigate("/Student");
     } catch (error) {
-      console.error("Error updating lead status:", error);
-      message.error("Error updating lead status");
+      message.error("Error starting application");
     }
   };
 
-  const IDocumentUpload = curLead && (
-    <DocumentUpload
-      lead={curLead}
-      onUpload={handleDocumentSubmit}
-      onDelete={handleDeleteDocument}
-      onUpdate={handleUpdateDocument}
-    />
-  );
+  const handleStatusCardSubmit = async (status) => {
+    try {
+      const response = await apiClient.patch("/lead/updateLeadStatus", status);
+      dispatch(updateLeadStatus(response?.data?.data));
+      message.success("Status updated successfully");
+      refetchLeads();
+    } catch (error) {
+      message.error("Error updating lead status");
+    }
+  };
 
   const handlePersonalDetailsSubmit = async (details) => {
     try {
@@ -375,7 +250,6 @@ export default function Leads() {
           details,
         }
       );
-
       dispatch(updateCurLead(response?.data?.data));
       refetchLeads();
       return true;
@@ -383,9 +257,6 @@ export default function Leads() {
       console.error("Error updating lead personal details:", error);
       return false;
     }
-  };
-  const handleEligibleSave = (universityId) => {
-    console.log("Saving university ID:", universityId);
   };
 
   const handleModalSubmit = (newQualification) => {
@@ -403,6 +274,30 @@ export default function Leads() {
     deleteQualification(cardId, curLead._id, dispatch);
   };
 
+  const handleEligibleCourseClick = (universityId) => {
+    if (curLead) {
+      const updatedLead = { ...curLead, isUniversitySelected: universityId };
+      dispatch(setCurLead(updatedLead));
+    }
+    dispatch(setIsUniversitySelected(universityId));
+  };
+
+  useEffect(() => {
+    if (!isAssigning) {
+      dispatch(setToAssignLeads([]));
+    }
+  }, [isAssigning, dispatch]);
+
+  // UI Components
+  const IDocumentUpload = curLead && (
+    <DocumentUpload
+      lead={curLead}
+      onUpload={handleDocumentSubmit}
+      onDelete={handleDeleteDocument}
+      onUpdate={handleUpdateDocument}
+    />
+  );
+
   const IPersonalDetails = curLead && (
     <PersonalDetails
       lead={curLead}
@@ -416,14 +311,16 @@ export default function Leads() {
   const IProfileCardStatus = (
     <ProfileCardStatus
       statuses={statuses?.filter((val) => !val.isApplication)}
-      lead={curLead && curLead}
+      lead={curLead}
       countries={countries}
       onsubmit={handleStatusCardSubmit}
     />
   );
+
   const IEligiableCourses = (
     <EligiableCourses onClick={handleEligibleCourseClick} />
   );
+
   const IActivityLog = <ActivityLog />;
 
   const IProfileCard = (
@@ -435,15 +332,77 @@ export default function Leads() {
       IActivityLog={IActivityLog}
       personalDetails={IPersonalDetails}
       onsubmit={handleRemarkSubmit}
-      // modalSubmit={handleModalSubmit}
     />
   );
 
-  useEffect(() => {
-    if (!isAssigning) {
-      dispatch(setToAssignLeads([]));
-    }
-  }, [isAssigning, dispatch]);
+  const IStartApplication = canStartApplication() ? (
+    <StartApplication handleStartApplication={handleStartApplication} />
+  ) : null;
+
+  const TopLeft = [
+    <SearchBar key="search-bar" />,
+    <AutoBtn
+      key="auto-btn"
+      callBack={handleAutoBtn}
+      isAuto={autoAssignLeadsToBranch}
+    />,
+    <NormalButton
+      key="assign"
+      style={isAssigning ? { backgroundColor: "lightgray" } : {}}
+      onClick={handleAssignLeadsToggle}
+    >
+      Assign Leads
+    </NormalButton>,
+    isAssigning && (
+      <>
+        <NormalButton key="allocate" onClick={handleAssignToUser}>
+          {`Allocate ${toAssignLeads.length}`}
+        </NormalButton>
+        <NormalButton key="all" onClick={handleAssignLeads("all")}>
+          All
+        </NormalButton>
+        <NormalButton key="fifty" onClick={handleAssignLeads(50)}>
+          50
+        </NormalButton>
+        <NormalButton key="twenty" onClick={handleAssignLeads(20)}>
+          20
+        </NormalButton>
+        <NormalButton key="ten" onClick={handleAssignLeads(10)}>
+          10
+        </NormalButton>
+      </>
+    ),
+  ].filter(Boolean);
+
+  const TopRight = [
+    <PrimaryBttn key="add-lead" onClick={() => setIsModalOpen(true)}>
+      Add Leads
+    </PrimaryBttn>,
+  ];
+
+  const BottomLeft = [
+    <AllLeads key="all-leads" />,
+    <Selector key="status" optionsObj={statusObj} />,
+    <Selector key="branches" optionsObj={branchesObj} />,
+    <Selector key="countries" optionsObj={countriesObj} />,
+  ];
+
+  const BottomRight = [<Selector key="roles" optionsObj={rolesObj} />];
+
+  const IContents = leadsConfigs?.leads?.map((lead, index) => (
+    <LeadCard
+      key={index}
+      isAssigning={isAssigning}
+      assigninSetter={setToAssignLeads}
+      onSet={setCurLead}
+      set={curLead}
+      lead={lead}
+      istoggle={leadDetailToggle}
+      toggle={setLeadDetailToggle}
+      onSubmit={handleRemarkSubmit}
+      toAssignLeads={toAssignLeads}
+    />
+  ));
 
   return (
     <>
@@ -455,12 +414,16 @@ export default function Leads() {
         BottomLeft={BottomLeft}
         BottomRight={BottomRight}
         ProfileCard={IProfileCard}
-        // StartApplication={IStartApplication}
+        StartApplication={IStartApplication}
       />
 
-      <ModalBase title="Add Lead" isOpen={isModalOpen} closeModal={closeModal}>
+      <ModalBase
+        title="Add Lead"
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+      >
         <AddLead
-          closeModal={closeModal}
+          closeModal={() => setIsModalOpen(false)}
           newLead={newLead}
           setNewLead={setNewLead}
           handleChange={handleChange}
@@ -468,6 +431,7 @@ export default function Leads() {
           statuses={statuses}
         />
       </ModalBase>
+
       <ModalBase
         centered={false}
         title="Assign Leads"

@@ -849,7 +849,7 @@ textarea::placeholder {
   display: flex;
   flex-direction: column;
   gap: 1.3rem;
-  max-height: 200px;
+  max-height: 25rem;
   overflow-y: auto;
 }
 .eligiable-courses-card {

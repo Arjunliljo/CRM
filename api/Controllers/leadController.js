@@ -7,13 +7,17 @@ import { sanitizeInput } from "../Utilities/validation.js";
 import { assignLeadsToUsers } from "./batch/batchAssigners.js";
 
 const createLead = catchAsync(async (req, res) => {
-  let { name, email, phone, campaign, countries } = req.body;
+  let { name, email, phone, campaign, countries, status, country } = req.body;
+
+  console.log(req.body, "req.body");
 
   // Sanitize inputs
   name = sanitizeInput(name);
   email = sanitizeInput(email);
   phone = sanitizeInput(phone);
   campaign = sanitizeInput(campaign);
+  status = sanitizeInput(status);
+  country = sanitizeInput(country);
 
   // Determine remark based on whether a country is specified
   let remark =
@@ -26,8 +30,6 @@ const createLead = catchAsync(async (req, res) => {
   }
 
   remark = remark ? sanitizeInput(remark) : remark;
-  // const Lead = getLeadModel(req.db);
-  // const Status = getStatusModel(req.db);
 
   // Check if a lead with the same email already exists
   const existingLead = await Lead.findOne({ email });
@@ -38,26 +40,29 @@ const createLead = catchAsync(async (req, res) => {
     });
   }
 
-  // Get the first status from the Status schema
-  const statuses = await Status.find({});
-  if (statuses.length === 0) {
-    return res.status(400).json({
-      success: false,
-      message: "No statuses found in the system.",
-    });
+  // Get the first status from the Status schema if no status provided
+  let statusId = status;
+  if (!status) {
+    const statuses = await Status.find({});
+    if (statuses.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No statuses found in the system.",
+      });
+    }
+    statusId = statuses[0]._id;
   }
-  const firstStatusId = statuses[0]._id; // First status ID
 
-  // Create a new lead with the first status ID included
+  // Create a new lead with status and countries
   const newLead = await Lead.create({
     name,
     email,
     phone,
     campaign,
     remark,
-    countries,
+    countries: [country],
     isStudent: false,
-    status: [firstStatusId],
+    status: statusId,
   });
 
   // Send a success response
@@ -153,9 +158,12 @@ const uploadLeadFile = catchAsync(async (req, res) => {
 const deleteLeadDocument = catchAsync(async (req, res) => {
   const { leadId, documentObj } = req.body;
 
+  console.log(leadId, documentObj, "leadId, documentObj");
+
   await Lead.findByIdAndUpdate(leadId, {
     $pull: { documents: { name: documentObj.name } },
   });
+  console.log("updatedLead");
 
   return res.status(200).json({
     success: true,
@@ -205,7 +213,7 @@ const updateLeadPersonalDetails = catchAsync(async (req, res) => {
       address: details.address,
     },
     { new: true }
-  );
+  ).populate("qualification");
   console.log("updatedLead", updatedLead);
   return res.status(200).json({
     success: true,
@@ -220,7 +228,7 @@ const updateLeadStatus = catchAsync(async (req, res) => {
     leadId,
     { status, remark, country, followupDate },
     { new: true }
-  );
+  ).populate("qualification");
   return res.status(200).json({
     success: true,
     message: "Lead status updated successfully",

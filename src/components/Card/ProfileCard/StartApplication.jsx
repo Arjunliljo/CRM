@@ -1,9 +1,11 @@
 import SecondryBtn from "../../buttons/SecondryBtn";
 
-export default function StartApplication() {
+function StartApplication({ handleStartApplication }) {
   return (
     <div className="start-application">
-      <SecondryBtn>Start Application</SecondryBtn>
+      <button onClick={handleStartApplication}>Start Application</button>
     </div>
   );
 }
+
+export default StartApplication;

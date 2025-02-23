@@ -1,8 +1,11 @@
-function CountrySelector() {
+function CountrySelector({countries, handleChange}) {
   return (
-    <select className="modal__form-input-text-select" placeholder="Country">
-      <option value="india">India</option>
-      <option value="usa">USA</option>
+    <select className="modal__form-input-text-select" placeholder="Country"  name="country" onChange={handleChange}>
+      {countries?.map((country) => (
+        <option key={country._id} value={country._id}>
+          {country.name}
+        </option>
+      ))}
     </select>
   );
 }

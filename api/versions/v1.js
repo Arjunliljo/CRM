@@ -10,6 +10,7 @@ import universityRoute from "../Routes/University/universityRoute.js";
 import metaLeadRoute from "../Routes/metaLeadRoute.js";
 import metaAccountRoute from "../Routes/metaAccountRoute.js";
 import generalRoute from "../Routes/generalRoute/generalRoute.js";
+import applicationRoute from "../Routes/applicationRoute.js";
 
 const router = express.Router();
 
@@ -24,5 +25,6 @@ router.use("/status", statusRoute);
 router.use("/university", universityRoute);
 router.use("/chat", chatRoute);
 router.use("/general", generalRoute);
+router.use("/application", applicationRoute);
 
 export default router;

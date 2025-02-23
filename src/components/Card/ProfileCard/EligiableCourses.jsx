@@ -1,14 +1,16 @@
 import NormalButton from "../../buttons/NormalButton";
 import BlackSelector from "../../Selectors/BlackSelector";
 import EligibleBttn from "../../buttons/EligibleBttn";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-export default function EligiableCourses({onSubmit}) {
+export default function EligiableCourses({onClick}) {
   const Countries = ["Country", "Option 2", "Option 3"];
   const courses = ["UG", "Option 2", "Option 3"];
   const Offer = ["Fees", "Option 2", "Option 3"];
 
   const [selectedCourseId, setSelectedCourseId] = useState(null);
+
+  const cardRef = useRef(null);
 
   const handleOptionChange = (newOption) => {
     console.log("Selected Option:", newOption);
@@ -77,23 +79,29 @@ export default function EligiableCourses({onSubmit}) {
   ];
 
   const handleCardClick = (courseId) => {
-    setSelectedCourseId(courseId);
+    const newSelectedId = selectedCourseId === courseId ? null : courseId;
+    setSelectedCourseId(newSelectedId);
+    onClick(newSelectedId);
   };
 
-  const handleSave = () => {
-    if (selectedCourseId) {
-      // console.log("Selected Course ID:", selectedCourseId);
-      onSubmit(selectedCourseId);
-    } else {
-      console.log("No course selected");
-    }
-  };
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (cardRef.current && !cardRef.current.contains(event.target)) {
+  //       setSelectedCourseId(null);
+  //       onClick(null);
+  //     }
+  //   };
+
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
   return (
-    <div className="eligiable-courses">
+    <div className="eligiable-courses" ref={cardRef}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <span className="name-small">Eligible Courses</span>
-        <button className="eligible-head-btn" onClick={handleSave}>save</button>
       </div>
 
       <div className="eligiable-courses-qualifications">
