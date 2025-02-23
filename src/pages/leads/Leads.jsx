@@ -51,7 +51,7 @@ export default function Leads() {
   const { curLead, leadDetailToggle, isAssigning, toAssignLeads } = useSelector(
     (state) => state.leads
   );
-
+  
   const {
     leadsConfigs,
     statusConfigs,
@@ -73,10 +73,10 @@ export default function Leads() {
   const rolesObj = useIDGetRolesArray(roles);
   const branchesObj = useIDGetBranchesArray(branches);
   const countriesObj = useIDGetCountriesArray(countries);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleModal = () => {
     setIsModalOpen((val) => !val);
@@ -91,6 +91,7 @@ export default function Leads() {
   });
 
   console.log(newLead, "newLead");
+  console.log(curLead, "curLead");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -216,11 +217,11 @@ export default function Leads() {
 
   const handleEligibleCourseClick = (universityId) => {
     // Update the lead with the selected university
+    console.log(universityId, "universityId");
     if (curLead) {
       const updatedLead = { ...curLead, isUniversitySelected: universityId };
       dispatch(setCurLead(updatedLead));
     }
-    console.log(universityId, "universityId");
     dispatch(setIsUniversitySelected(universityId ));
   };
 
@@ -239,11 +240,11 @@ export default function Leads() {
       hasEligibleCourse,
       "hasEnoughDocuments, hasMarks, hasStatus, hasEligibleCourse"
     );
+    console.log(curLead, "curLead");
     return hasEnoughDocuments && hasMarks && hasStatus && hasEligibleCourse;
   };
 
 
-  const navigate = useNavigate();
 
   const handleStartApplication = () => {
     console.log("Start Application");
@@ -421,7 +422,7 @@ try {
     />
   );
   const IEligiableCourses = (
-    <EligiableCourses onClick={handleEligibleCourseClick} />
+    <EligiableCourses onCourseClick={handleEligibleCourseClick} />
   );
   const IActivityLog = <ActivityLog />;
 

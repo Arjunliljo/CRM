@@ -3,7 +3,7 @@ import BlackSelector from "../../Selectors/BlackSelector";
 import EligibleBttn from "../../buttons/EligibleBttn";
 import React, { useState, useEffect, useRef } from "react";
 
-export default function EligiableCourses({onClick}) {
+export default function EligiableCourses({onCourseClick}) {
   const Countries = ["Country", "Option 2", "Option 3"];
   const courses = ["UG", "Option 2", "Option 3"];
   const Offer = ["Fees", "Option 2", "Option 3"];
@@ -81,7 +81,8 @@ export default function EligiableCourses({onClick}) {
   const handleCardClick = (courseId) => {
     const newSelectedId = selectedCourseId === courseId ? null : courseId;
     setSelectedCourseId(newSelectedId);
-    onClick(newSelectedId);
+    console.log("courseId", courseId);
+    onCourseClick(newSelectedId);
   };
 
   // useEffect(() => {

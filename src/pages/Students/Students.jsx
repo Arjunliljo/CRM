@@ -285,7 +285,7 @@ export default function Students() {
         BottomLeft={BottomLeft}
         BottomRight={BottomRight}
         ProfileCard={IProfileCard}
-        StartApplication={IStartApplication}
+        // StartApplication={IStartApplication}
       />
       <ModalBase
         title="Add Student"

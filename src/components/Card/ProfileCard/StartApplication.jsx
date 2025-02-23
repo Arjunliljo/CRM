@@ -3,7 +3,7 @@ import SecondryBtn from "../../buttons/SecondryBtn";
 function StartApplication({ handleStartApplication }) {
   return (
     <div className="start-application">
-      <button onClick={handleStartApplication}>Start Application</button>
+      <button className="btn secondry-btn" onClick={handleStartApplication}>Start Application</button>
     </div>
   );
 }

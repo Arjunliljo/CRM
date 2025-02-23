@@ -90,10 +90,10 @@ export default function Messages() {
                 );
                 const message = {
                   id: chat._id,
-                  name: otherUser.name,
+                  name: otherUser?.name,
                   message: chat.messages || [], // Ensure messages is always an array
                   time: chat.updatedAt,
-                  avatar: otherUser.image,
+                  avatar: otherUser?.image,
                   unread: chat.unread || false,
                 };
                 return (
