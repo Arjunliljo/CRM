@@ -31,7 +31,7 @@ export default function AssingToUser({ assigningLeads, onClick }) {
       return;
     }
     try {
-      const res = await apiClient.patch("/lead/leadToUserAssignment", {
+      await apiClient.patch("/lead/leadToUserAssignment", {
         leadIds: assigningLeads.map((lead) => lead._id),
         user: setSelectedUsers.find((user) => user.name === curUser),
       });
