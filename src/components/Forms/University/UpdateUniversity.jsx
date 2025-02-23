@@ -4,7 +4,9 @@ import NextBtn from "../../buttons/NextBtn";
 import CourseSelector from "./CourserSelector";
 import ImageUploader from "./ImageUploader";
 import CountrySelector from "./CountrySelect";
-export default function AddUniversity({
+
+export default function UpdateUniversity({
+  isUpadte,
   closeModal,
   newUniversity,
   setNewUniversity,
@@ -58,8 +60,10 @@ export default function AddUniversity({
             placeholder="University Name"
             className="input-formGroup"
             required
+            value={newUniversity.name}
           />
         </div>
+
         <div className="modal__form-input-text">
           <CountrySelector />
         </div>
@@ -68,14 +72,16 @@ export default function AddUniversity({
         staticCourses={staticCourses}
         selectedCourses={selectedCourses}
         handleCourseClick={handleCourseClick}
+        newUniversity={newUniversity}
+        isUpadte={isUpadte}
       />
 
-      <ImageUploader />
+      <ImageUploader newUniversity={newUniversity} isUpadte={isUpadte} />
 
       <div className="modal__form-buttons">
         <CancelBtn onClick={closeModal}>Cancel</CancelBtn>
         <NextBtn type="submit" onClick={handleSubmit}>
-          Add
+          {isUpadte ? "Update" : "Add"}
         </NextBtn>
       </div>
     </form>

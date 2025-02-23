@@ -1,12 +1,24 @@
+import { useState } from "react";
+import PrimaryBttn from "../../buttons/PrimaryBttn";
 import BlackSelector from "../../Selectors/BlackSelector";
+import ModalBase from "../../Forms/ModalBase";
+import AddCourse from "./AddCourse";
 
 function UniversityEligible() {
   const Countries = ["Country", "Option 2", "Option 3"];
   const courses = ["UG", "Option 2", "Option 3"];
   const Offer = ["Fees", "Option 2", "Option 3"];
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const handleOptionChange = (newOption) => {
     console.log("Selected Option:", newOption);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewUniversity((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const eligibleCourses = [
@@ -42,10 +54,26 @@ function UniversityEligible() {
     },
   ];
 
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleModal = () => {
+    setIsModalOpen((val) => !val);
+  };
+
   return (
     <div className="university-eligiable-courses">
-      <div className="name-small" style={{ marginBottom: "1rem" }}>
-        Courses
+      <div
+        className="name-small"
+        style={{
+          marginBottom: "1rem",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <div>Courses</div>
+        <div>
+          <PrimaryBttn onClick={handleModal}>Add Course</PrimaryBttn>
+        </div>
       </div>
       {/* <div className="eligiable-courses-qualifications">
         <div className="card-number profileCard-head-info-keys">
@@ -95,6 +123,13 @@ function UniversityEligible() {
           </div>
         ))}
       </div>
+      <ModalBase
+        title="Add Course"
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+      >
+        <AddCourse closeModal={closeModal} handleChange={handleChange} />
+      </ModalBase>
     </div>
   );
 }

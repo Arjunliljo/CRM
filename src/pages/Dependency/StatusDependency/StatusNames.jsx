@@ -17,6 +17,7 @@ export default function StatusNames() {
   const {
     statusConfigs: { statuses },
   } = useApi();
+
   const [localStatuses, setLocalStatuses] = useState(statuses);
   const [selectedStatus, setSelectedStatus] = useState(statuses[0]);
   const [draggedIndex, setDraggedIndex] = useState(null);
@@ -30,6 +31,10 @@ export default function StatusNames() {
   //     }
   //   }
   // }, []);
+
+  useEffect(() => {
+    setLocalStatuses(statuses);
+  }, [statuses]);
 
   const handleDeleteSubstatus = async (subStatus) => {
     if (
