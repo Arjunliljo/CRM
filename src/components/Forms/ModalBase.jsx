@@ -21,7 +21,6 @@ export default function ModalBase({
       width={width}
     >
       <div className="modal-content">{children}</div>
-      <div className="modal-content">{children}</div>
     </Modal>
   );
 }
