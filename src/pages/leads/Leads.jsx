@@ -12,8 +12,10 @@ import {
   setIsAssigning,
   setLeadDetailToggle,
   setToAssignLeads,
+  setIsUniversitySelected,
   updateCurLeadDocuments,
   updateLeadStatus,
+  updateCurLead,
 } from "../../../global/leadsSlice";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
@@ -43,6 +45,7 @@ import {
   deleteQualification,
   editQualification,
 } from "./leadsHandler";
+import { useNavigate } from "react-router-dom";
 
 export default function Leads() {
   const { curLead, leadDetailToggle, isAssigning, toAssignLeads } = useSelector(
@@ -81,10 +84,10 @@ export default function Leads() {
 
   const [newLead, setNewLead] = useState({
     name: "",
-    DOM: "",
-    Contact: "",
-    Whatsupp: "",
-    Mail: "",
+    email: "",
+    phone: "",
+    country: "",
+    status: "",
   });
 
   const handleChange = (e) => {
@@ -206,8 +209,65 @@ export default function Leads() {
     <NormalButton onClick={handleAssignLeads(20)}>{`20`}</NormalButton>
   ) : null;
 
-  const ISelectorFive = <Selector />;
-  const IStartApplication = <StartApplication />;
+  // const ISelectorFive = <Selector />;
+  // const IStartApplication = <StartApplication />;
+  const handleEligibleCourseClick = (universityId) => {
+    // Update the lead with the selected university
+    if (curLead) {
+      const updatedLead = { ...curLead, isUniversitySelected: universityId };
+      dispatch(setCurLead(updatedLead));
+    }
+    console.log(universityId, "universityId");
+    dispatch(setIsUniversitySelected(universityId));
+  };
+
+  const canStartApplication = () => {
+    if (!curLead) return false;
+
+    const hasEnoughDocuments =
+      curLead.documents && curLead.documents.length >= 4;
+    const hasMarks = curLead.qualification && curLead.qualification.length > 0;
+    const hasStatus = curLead.status && curLead.status !== "";
+    const hasEligibleCourse = curLead.isUniversitySelected ? true : false; // Updated logic
+
+    console.log(
+      hasEnoughDocuments,
+      hasMarks,
+      hasStatus,
+      hasEligibleCourse,
+      "hasEnoughDocuments, hasMarks, hasStatus, hasEligibleCourse"
+    );
+    return hasEnoughDocuments && hasMarks && hasStatus && hasEligibleCourse;
+  };
+
+  const navigate = useNavigate();
+
+  const handleStartApplication = () => {
+    console.log("Start Application");
+
+    try {
+      apiClient.post("/application", {
+        lead: curLead._id,
+        course: curLead.isUniversitySelected,
+        status: curLead.status,
+        applicationDate: new Date(),
+        remark: curLead.remark,
+        university: "23456789",
+        country: curLead.country,
+        studentId: "345678945678",
+        documents: curLead.documents,
+      });
+
+      message.success("Application started successfully");
+      navigate("/Student");
+    } catch (error) {
+      console.error("Error starting application:", error);
+    }
+  };
+
+  const IStartApplication = canStartApplication() ? (
+    <StartApplication handleStartApplication={handleStartApplication} />
+  ) : null;
 
   const TopLeft = [
     <div key="search-bar">{ISearchBar}</div>,
@@ -308,10 +368,15 @@ export default function Leads() {
 
   const handlePersonalDetailsSubmit = async (details) => {
     try {
-      await apiClient.patch("/lead/updateLeadPersonalDetails", {
-        leadId: curLead._id,
-        details,
-      });
+      const response = await apiClient.patch(
+        "/lead/updateLeadPersonalDetails",
+        {
+          leadId: curLead._id,
+          details,
+        }
+      );
+
+      dispatch(updateCurLead(response?.data?.data));
       refetchLeads();
       return true;
     } catch (error) {
@@ -356,7 +421,9 @@ export default function Leads() {
       onsubmit={handleStatusCardSubmit}
     />
   );
-  const IEligiableCourses = <EligiableCourses onSubmit={handleEligibleSave} />;
+  const IEligiableCourses = (
+    <EligiableCourses onClick={handleEligibleCourseClick} />
+  );
   const IActivityLog = <ActivityLog />;
 
   const IProfileCard = (
@@ -397,6 +464,8 @@ export default function Leads() {
           newLead={newLead}
           setNewLead={setNewLead}
           handleChange={handleChange}
+          countries={countries}
+          statuses={statuses}
         />
       </ModalBase>
       <ModalBase
