@@ -25,6 +25,7 @@ function Chatbox({ message, onBack }) {
   const dispatch = useDispatch();
   const messagesEndRef = useRef(null);
   const typingTimeoutRef = useRef(null);
+  const emojiPickerRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -59,6 +60,22 @@ function Chatbox({ message, onBack }) {
       }
     };
   }, [chatId]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        emojiPickerRef.current &&
+        !emojiPickerRef.current.contains(event.target)
+      ) {
+        setShowEmojiPicker(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleTyping = () => {
     socket.emit("typing", { chatId });
@@ -168,14 +185,21 @@ function Chatbox({ message, onBack }) {
         >
           {showEmojiPicker && (
             <div
+              ref={emojiPickerRef}
               style={{
                 position: "absolute",
                 bottom: "100%",
                 left: "0",
                 zIndex: 1,
+                transform: "scale(0.8)",
+                transformOrigin: "bottom left",
               }}
             >
-              <EmojiPicker onEmojiClick={onEmojiClick} />
+              <EmojiPicker
+                onEmojiClick={onEmojiClick}
+                searchDisabled
+                previewConfig={{ showPreview: false }}
+              />
             </div>
           )}
           <div style={{ position: "relative" }}>
