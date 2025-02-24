@@ -4929,12 +4929,10 @@ F .log .message-area-textarea-container {
   border-radius: 1rem;
 }
 .dashbord-container-item-leader {
-  flex: 45;
   border-radius: 1rem;
-  overflow-y: auto;
 }
 .dashbord-container-item-message {
-  flex: 55;
+  flex: 1;
   border-radius: 1rem;
   overflow-y: auto;
 }

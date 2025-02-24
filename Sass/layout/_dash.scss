@@ -38,12 +38,13 @@
       border-radius: 1rem;
     }
     &-leader {
-      flex: 45;
+      // flex: 45;
       border-radius: 1rem;
-      overflow-y: auto;
+      // overflow-y: auto;
     }
     &-message {
-      flex: 55;
+      // flex: 55;
+      flex: 1;
       border-radius: 1rem;
       overflow-y: auto;
     }
