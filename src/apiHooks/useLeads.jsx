@@ -13,7 +13,7 @@ export const useLeads = (statuses, branches, countries) => {
   const branchId = getBranchId(curBranch, branches);
   const countryId = getCountryId(curCountry, countries);
 
-  let endpoint = `/lead?isStudent=false&limit=1000`;
+  let endpoint = `/lead?sort=createdAt&isStudent=false&limit=100`;
 
   if (!curStatus.startsWith("All") && statusId) {
     endpoint += `&status=${statusId}`;

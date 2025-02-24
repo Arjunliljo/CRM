@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setLeadDetailToggle } from "../../../global/leadsSlice";
 import { useApi } from "../../context/apiContext/ApiContext";
-import { getStatusName } from "../../service/nameFinders";
+import { getCountryName, getStatusName } from "../../service/nameFinders";
 
 export default function LeadCard({
   lead,
@@ -28,15 +28,25 @@ export default function LeadCard({
 
   const {
     statusConfigs: { statuses },
+    countryConfigs: { countries },
   } = useApi();
 
   const targetRef = useRef(null);
 
+  const [countryName, setCountryName] = useState(
+    getCountryName(lead?.countries?.[0], countries)
+  );
+  const [statusName, setStatusName] = useState(
+    getStatusName(lead?.status, statuses)
+  );
+
   useEffect(() => {
     setIsSelected(lead?._id === set?._id);
-  }, [set, lead]);
+    setStatusName(getStatusName(lead?.status, statuses));
+    setCountryName(getCountryName(lead?.countries?.[0], countries));
+  }, [set, lead, countries, statuses]);
 
-  const statusName = getStatusName(lead?.status, statuses);
+  console.log(getCountryName(lead?.countries?.[0], countries), "lead");
 
   const handleLeadNormalSelector = () => {
     if (lead._id === set?._id) {
@@ -133,14 +143,14 @@ export default function LeadCard({
                 color="#0075fc"
                 style={{ transform: "rotate(270deg)" }}
               />
-              <p>{lead.attempts} Attempts</p>
+              <p>{lead.attemps} Attempts</p>
             </div>
           </div>
         </div>
 
         <div className="card-body-bottom-country">
-          <CountryBtn>{lead.country || "N/A"}</CountryBtn>
-          <div className="card-body-bottom-country-count">3</div>
+          <CountryBtn>{countryName || "N/A"}</CountryBtn>
+          <div className="card-body-bottom-country-count">{lead?.assigned}</div>
         </div>
       </div>
     </div>

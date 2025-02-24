@@ -17,21 +17,46 @@ export default function ProfileCardStatus({
   const initialStatus =
     statuses?.find((s) => s.name === getStatusName(lead?.status, statuses)) ||
     statuses?.[0];
-  const [status, setStatus] = useState(initialStatus);
-  const [remark, setRemark] = useState("");
 
-  const dispatch = useDispatch();
-
-  // Store the full country object
   const initialCountry =
-    countries?.find((c) => c._id === lead?.country) || countries?.[0];
+    countries?.find((country) => country?._id === lead?.countries?.[0]) ||
+    lead?.countries?.[0];
+
+  const [status, setStatus] = useState(initialStatus);
+  const [remark, setRemark] = useState(lead?.remark || "");
   const [selectedCountry, setSelectedCountry] = useState(initialCountry);
   const [showPastRemark, setShowPastRemark] = useState(false);
   const [followupDate, setFollowupDate] = useState(new Date());
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    setStatus(initialStatus);
-  }, [initialStatus]);
+    const status =
+      statuses?.find((s) => s.name === getStatusName(lead?.status, statuses)) ||
+      statuses?.[0];
+    setStatus(status);
+  }, [lead?.status, statuses]);
+
+  useEffect(() => {
+    const country = countries?.find(
+      (country) => country?._id === lead?.country?.[0]
+    );
+    setSelectedCountry(country);
+  }, [countries, lead?.country]);
+
+  useEffect(() => {
+    const status =
+      statuses?.find((s) => s.name === getStatusName(lead?.status, statuses)) ||
+      statuses?.[0];
+
+    const country = countries?.find(
+      (country) => country?._id === lead?.countries?.[0]
+    );
+    setSelectedCountry(country);
+    setStatus(status);
+    setRemark(lead?.remark);
+    setFollowupDate(lead?.followupDate);
+  }, [lead]);
 
   useEffect(() => {
     if (lead?.remark) {
@@ -53,6 +78,7 @@ export default function ProfileCardStatus({
 
   const handleCountryChange = (e) => {
     const country = countries.find((c) => c.name === e.target.value);
+
     setSelectedCountry(country);
   };
 
@@ -63,14 +89,19 @@ export default function ProfileCardStatus({
 
   const handleSave = (e) => {
     e.preventDefault();
-    const statusData = {
+
+    const filteredCountries = [
+      ...new Set([...lead.countries, selectedCountry?._id]),
+    ];
+
+    const data = {
       status: status?._id,
       remark: remark,
-      country: selectedCountry?._id, // Send country ID
+      countries: lead?.isStudent ? filteredCountries : [selectedCountry?._id],
       followupDate: followupDate,
-      leadId: lead?._id,
     };
-    onsubmit(statusData, dispatch);
+    console.log(selectedCountry, "selCountry");
+    onsubmit(data, dispatch, lead?._id);
   };
 
   return (
@@ -119,12 +150,12 @@ export default function ProfileCardStatus({
           <MdOutlineInterests className="select-icon" />
           <select
             className="selector-with-icon"
-            value={selectedCountry?.name}
+            value={selectedCountry?.name || "Select Country"}
             onChange={handleCountryChange}
           >
             {countries?.map((country) => (
-              <option value={country.name} key={country._id}>
-                {country.name}
+              <option value={country?.name} key={country?._id}>
+                {country?.name}
               </option>
             ))}
           </select>
