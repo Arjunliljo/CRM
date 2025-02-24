@@ -61,6 +61,7 @@ import {
   handleDocumentSubmit,
   handleUpdateDocument,
 } from "./leadHandlers/documentHandler";
+import { refetchLeads } from "../../apiHooks/useLeads";
 
 export default function Leads() {
   const dispatch = useDispatch();
@@ -122,6 +123,7 @@ export default function Leads() {
 
   const handleModalSubmit = (newQualification) => {
     addQualification({ ...newQualification, leadId: curLead._id }, dispatch);
+    refetchLeads();
   };
 
   const handleEditQualification = (updatedQualification) => {
