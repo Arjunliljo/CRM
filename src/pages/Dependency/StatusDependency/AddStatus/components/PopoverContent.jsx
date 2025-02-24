@@ -8,6 +8,7 @@ export default function PopoverContent({
   onSelect,
   onCancel,
   formData,
+  contents,
 }) {
   const { countryConfigs } = useApi();
 
@@ -20,8 +21,10 @@ export default function PopoverContent({
 
   const handleCountryClick = (country) => {
     setSelectedCountry((prev) => {
-      if (prev.includes(country)) {
-        return prev.filter((c) => c !== country);
+      console.log(prev, "prev");
+      const isSelected = prev.some((c) => c._id === country._id);
+      if (isSelected) {
+        return prev.filter((c) => c._id !== country._id);
       }
       return [...prev, country];
     });
@@ -39,22 +42,21 @@ export default function PopoverContent({
           borderRadius: "4px",
         }}
       >
-        {Array.isArray(countryConfigs.countries) &&
-        countryConfigs.countries.length > 0 ? (
-          countryConfigs.countries.map((country) => (
+        {Array.isArray(contents) && contents.length > 0 ? (
+          contents.map((item) => (
             <div
-              key={country._id}
-              onClick={() => handleCountryClick(country._id)}
+              key={item.id}
+              onClick={() => handleCountryClick({ _id: item.id, name: item.name })}
               style={{
                 padding: "5px",
                 cursor: "pointer",
-                backgroundColor: selectedCountry.includes(country._id)
+                backgroundColor: selectedCountry.some((c) => c._id === item.id)
                   ? "#e0e0e0"
                   : "transparent",
                 borderBottom: "1px solid #eee",
               }}
             >
-              {country.name}
+                {item.name}
             </div>
           ))
         ) : (

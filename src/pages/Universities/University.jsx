@@ -18,6 +18,7 @@ import UniversityProfile from "../../components/Card/UniversityRight/UniversityP
 import ModalBase from "../../components/Forms/ModalBase";
 import { useState } from "react";
 import AddUniversity from "../../components/Forms/University/AddUniversity";
+import { useApi } from "../../context/apiContext/ApiContext";
 
 const university = {
   num: 3,
@@ -43,6 +44,8 @@ export default function University() {
   const { autoUniversitysAssign, curUniversity } = useSelector(
     (state) => state.universitys
   );
+
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
 
@@ -50,21 +53,16 @@ export default function University() {
     setIsModalOpen((val) => !val);
   };
 
-  const [newUniversity, setNewUniversity] = useState({
-    name: "",
-  });
+  const { countryConfigs , universityConfigs } = useApi();
+  const { countries = [] } = countryConfigs;
+  const { university = [] } = universityConfigs;
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewUniversity((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+
+
 
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
-  const IContents = arr?.map((university, index) => (
+  const IContents = university?.map((university, index) => (
     <UniversityCard
       key={index}
       onSet={setCurUniversity}
@@ -83,7 +81,7 @@ export default function University() {
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
-  const IProfileCard = <UniversityProfile />;
+  const IProfileCard = <UniversityProfile university={curUniversity} />;
 
   const TopLeft = [<div key="search-bar">{ISelectorOne}</div>];
   const TopRight = [<div key="primary-btn">{IPrimaryBttn}</div>];
@@ -119,9 +117,11 @@ export default function University() {
         <AddUniversity
           isUpadte={false}
           closeModal={closeModal}
-          newUniversity={newUniversity}
-          setNewUniversity={setNewUniversity}
-          handleChange={handleChange}
+          // newUniversity={newUniversity}
+          // setNewUniversity={setNewUniversity}
+          // handleChange={handleChange}
+          countries={countries}
+
         />
       </ModalBase>
     </>

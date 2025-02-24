@@ -12,9 +12,10 @@ export default function ProfileCard({
 }) {
   const [isApplication, setIsApplication] = useState(true);
 
-  // useEffect(() => {
-  //   setIsApplication(lead?.application?.length > 0);
-  // }, [lead]);
+  useEffect(() => {
+    setIsApplication(lead?.application?.length > 0);
+  }, [lead]);
+
   console.log(lead, "lead");
   return (
     <div className="profileCard">

@@ -11,6 +11,7 @@ import metaLeadRoute from "../Routes/metaLeadRoute.js";
 import metaAccountRoute from "../Routes/metaAccountRoute.js";
 import generalRoute from "../Routes/generalRoute/generalRoute.js";
 import applicationRoute from "../Routes/applicationRoute.js";
+import courseRoute from "../Routes/University/courseRoute.js";
 
 const router = express.Router();
 

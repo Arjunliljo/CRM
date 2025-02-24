@@ -25,6 +25,7 @@ export const handleDocumentSubmit = async (file, details, dispatch) => {
 };
 
 export const handleDeleteDocument = async (doc, curLead, dispatch) => {
+  console.log(doc, "doc");
   if (!curLead) return;
   try {
     await apiClient.patch("/lead/deleteLeadDocument", {

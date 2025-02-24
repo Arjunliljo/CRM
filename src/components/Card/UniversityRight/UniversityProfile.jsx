@@ -9,7 +9,8 @@ import UniversityEligible from "../ProfileCard/UniversityEligible";
 import Requirements from "./Requirements";
 import ModalBase from "../../Forms/ModalBase";
 import UpdateUniversity from "../../Forms/University/UpdateUniversity";
-function UniversityProfile() {
+
+function UniversityProfile({ university }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newUniversity, setNewUniversity] = useState({
     name: "University Of United Kingdom",
@@ -31,27 +32,23 @@ function UniversityProfile() {
     }));
   };
 
-  const lead = {
-    img: "https://via.placeholder.com/100",
-    name: "College De Paris",
-    title: "Student at XYZ Academy",
-    location: "France",
-    year: "2",
-  };
+
+console.log(university.courses, "university");
+
   return (
     <div className="UniversityRightCard">
       <div className="UniversityRightCard-head">
         <div className="UniversityRightCard-head-info">
           <div className="UniversityRightCard-head-info-details">
             <div>
-              <img src={lead.img} alt={lead.name} />
+              <img src={university.img} alt={university.name} />
             </div>
             <div className="name-bar-name name-small">
               <div>
-                {lead.name}
+                {university.name}
                 <br></br>
                 <p style={{ fontSize: "1rem", color: "gray" }}>
-                  {lead.location}
+                  {university.location}
                 </p>
               </div>
               <div className="UniversityRightCard-head-info-location-card">
@@ -64,7 +61,7 @@ function UniversityProfile() {
                     Stayback:{" "}
                   </span>
                   <span style={({ color: "black" }, { fontSize: "0.8rem" })}>
-                    {lead.year} Years
+                    {university.year} Years
                   </span>
                 </p>
               </div>
@@ -91,7 +88,7 @@ function UniversityProfile() {
         <PersonalDetails />
         <ProfileCardStatus />
       </div> */}
-      <UniversityEligible />
+      <UniversityEligible  courses={university.courses} />
       {/* <ActivityLog /> */}
       <ModalBase
         title="Update University"

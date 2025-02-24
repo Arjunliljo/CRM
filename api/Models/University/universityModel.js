@@ -5,6 +5,7 @@ const universitySchema = mongoose.Schema(
     name: {
       type: String,
       required: [true, "University must have a name"],
+      unique: true,
     },
     img: {
       type: String,
@@ -29,6 +30,7 @@ const universitySchema = mongoose.Schema(
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
 
 const University = mongoose.model("University", universitySchema);
 

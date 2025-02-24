@@ -7,6 +7,8 @@ import { useUsers } from "../../apiHooks/useUsers";
 import { useChats } from "../../apiHooks/useChats";
 import { useLeads } from "../../apiHooks/useLeads";
 import { useCommens } from "../../apiHooks/useCommens";
+import { useUniversity } from "../../apiHooks/useUniversity";
+import { useQualifications } from "../../apiHooks/useQualifications";
 
 const ApiContext = createContext();
 
@@ -19,6 +21,10 @@ function ApiProvider({ children }) {
   const chatsConfigs = useChats();
   const commonsConfigs = useCommens();
   const leadsConfigs = useLeads(statusConfigs?.statuses);
+  const universityConfigs = useUniversity();
+  const qualificationsConfigs = useQualifications();
+
+  console.log(universityConfigs, "universityConfigs");
 
   return (
     <ApiContext.Provider
@@ -31,6 +37,8 @@ function ApiProvider({ children }) {
         chatsConfigs,
         leadsConfigs,
         commonsConfigs,
+        universityConfigs,
+        qualificationsConfigs,
       }}
     >
       {children}
