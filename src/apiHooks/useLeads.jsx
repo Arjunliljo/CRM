@@ -12,7 +12,7 @@ export const useLeads = (statuses) => {
   const statusId = getStatusId(curStatus, statuses);
   console.log(statusId, "statusId");
 
-  let endpoint = `/lead?isStudent=false`;
+  let endpoint = `/lead?isStudent=false&limit=1000`;
 
   if (!curStatus.startsWith("All")) {
     endpoint += `&status=${statusId}`;
