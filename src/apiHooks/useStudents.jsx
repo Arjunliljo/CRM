@@ -4,16 +4,16 @@ import queryClient from "../../config/reactQuery";
 import { useSelector } from "react-redux";
 import { getStatusId } from "../service/IdFinders";
 
-export const useLeads = (statuses) => {
+export const useStudents = (statuses) => {
   const { curStatus, curSource, curBranch } = useSelector(
     (state) => state.leads
   );
 
   const statusId = getStatusId(curStatus, statuses);
 
-  let endpoint = `/lead?isStudent=false&limit=1000`;
+  let endpoint = `/lead?isStudent=true&limit=1000`;
 
-  if (!curStatus.startsWith("All") && statusId) {
+  if (!curStatus.startsWith("All")) {
     endpoint += `&status=${statusId}`;
   }
 
@@ -26,7 +26,7 @@ export const useLeads = (statuses) => {
   }
   console.log(endpoint);
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["leads", endpoint],
+    queryKey: ["students", endpoint],
     queryFn: () => apiClient.get(endpoint),
   });
 
@@ -34,6 +34,6 @@ export const useLeads = (statuses) => {
   return { leads, isLoading, error, refetch };
 };
 
-export function refetchLeads() {
-  queryClient.invalidateQueries({ queryKey: ["leads"] });
+export function refetchStudents() {
+  queryClient.invalidateQueries({ queryKey: ["students"] });
 }

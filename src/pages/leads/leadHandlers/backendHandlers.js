@@ -40,8 +40,9 @@ export const handleStartApplication = async (curLead, navigate) => {
       documents: curLead.documents,
     });
 
-   await message.success("Application started successfully");
+    await message.success("Application started successfully");
     navigate("/Student");
+    refetchLeads();
   } catch (error) {
     message.error("Error starting application");
   }

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import apiClient from "../../../config/axiosInstance";
+
 import {
-  removeCurLeadDocument,
   setCurLead,
   setIsAssigning,
   setIsUniversitySelected,
@@ -12,7 +11,6 @@ import {
   setLeadsCurBranch,
   setLeadsCurStatus,
   setToAssignLeads,
-  updateCurLeadDocuments,
 } from "../../../global/leadsSlice";
 import {
   useIDGetStatusesArray,
@@ -21,7 +19,7 @@ import {
   useIDGetRolesArray,
 } from "../../../api/Utilities/helper";
 import { useApi } from "../../context/apiContext/ApiContext";
-import { refetchLeads } from "../../apiHooks/useLeads";
+
 import {
   addQualification,
   deleteQualification,
@@ -58,7 +56,11 @@ import {
   handleAssignLeads,
   handleAssignToUser,
 } from "./leadHandlers/assignLeadsHandler";
-import { handleDeleteDocument, handleDocumentSubmit, handleUpdateDocument } from "./leadHandlers/documentHandler";
+import {
+  handleDeleteDocument,
+  handleDocumentSubmit,
+  handleUpdateDocument,
+} from "./leadHandlers/documentHandler";
 
 export default function Leads() {
   const dispatch = useDispatch();
@@ -134,7 +136,6 @@ export default function Leads() {
   };
 
   const handleEligibleCourseClick = (universityId) => {
-    console.log(universityId, "universityId");
     if (curLead) {
       const updatedLead = { ...curLead, isUniversitySelected: universityId };
       dispatch(setCurLead(updatedLead));
@@ -148,7 +149,6 @@ export default function Leads() {
     }
   }, [isAssigning, dispatch]);
 
-  // UI Components
   const IDocumentUpload = curLead && (
     <DocumentUpload
       lead={curLead}
@@ -156,7 +156,9 @@ export default function Leads() {
         handleDocumentSubmit(file, details, dispatch)
       }
       onDelete={(doc) => handleDeleteDocument(doc, curLead, dispatch)}
-      onUpdate={(doc, updatedData) => handleUpdateDocument(doc, updatedData, curLead, dispatch)}
+      onUpdate={(doc, updatedData) =>
+        handleUpdateDocument(doc, updatedData, curLead, dispatch)
+      }
     />
   );
 
@@ -172,7 +174,7 @@ export default function Leads() {
 
   const IProfileCardStatus = (
     <ProfileCardStatus
-      statuses={statuses?.filter((val) => !val.isApplication)}
+      statuses={statuses}
       lead={curLead}
       countries={countries}
       onsubmit={handleStatusCardSubmit}

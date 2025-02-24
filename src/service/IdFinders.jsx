@@ -1,5 +1,5 @@
 export const getStatusId = (statusName, statuses) => {
-  if (!statusName || !statuses) return [];
+  if (!statusName || !statuses) return null;
   return statuses?.find((obj) => obj.name === statusName)?._id;
 };
 export const getRoleId = (role, roles) => {

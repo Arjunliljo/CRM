@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import Tracker from "../../smallComponents/Tracker";
-
 
 export default function ProfileCard({
   IDocumentUpload,
@@ -10,12 +8,6 @@ export default function ProfileCard({
   IActivityLog,
   personalDetails,
 }) {
-  const [isApplication, setIsApplication] = useState(true);
-
-  // useEffect(() => {
-  //   setIsApplication(lead?.application?.length > 0);
-  // }, [lead]);
-  console.log(lead, "lead");
   return (
     <div className="profileCard">
       <div className="profileCard-head">
@@ -50,7 +42,7 @@ export default function ProfileCard({
         </div>
       </div>
       <div className="profileCard-journy">
-        {isApplication ? <Tracker completedStep={3} /> : null}
+        {lead?.isStudent ? <Tracker completedStep={3} /> : null}
       </div>
       <div className="profileCard-boxes">
         {personalDetails}
