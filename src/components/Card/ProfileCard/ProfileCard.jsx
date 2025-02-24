@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useApi } from "../../../context/apiContext/ApiContext";
 import { getRoleName } from "../../../service/nameFinders";
 import Tracker from "../../smallComponents/Tracker";
@@ -20,13 +21,13 @@ export default function ProfileCard({
         <div className="profileCard-head-info">
           <div className="profileCard-head-info-details">
             <div className="profileCard-image-container">
-              <img src={lead && lead.img} alt={lead && lead.name} />
+              <img src={lead?.img} alt={lead?.name} />
             </div>
             <div className="name-bar-name name-small">
-              <div>{lead && lead.name}</div>
+              <div>{lead?.name}</div>
               <div className="profileCard-head-info-location-card">
                 <span className="profileCard-head-info-location">
-                  {lead && lead.country}
+                  {lead?.country}
                 </span>
                 <span className="profileCard-head-info-underline"></span>
               </div>
@@ -35,17 +36,27 @@ export default function ProfileCard({
           </div>
           <div className="profileCard-head-info-right-card">
             <div className="card-number profileCard-head-info-keys">
-              {lead?.users?.map((val) => {
-                const role = getRoleName(val?.role, roles);
-                return (
-                  <>{role ? <span>{role}</span> : <span>Not Assigned</span>}</>
-                );
-              })}
+              {lead?.users?.length > 0 ? (
+                lead?.users?.map((val, index) => {
+                  const role = getRoleName(val?.role, roles);
+                  return (
+                    <span key={`${val._id}-role-${index}`}>
+                      {role || "Not Assigned"}
+                    </span>
+                  );
+                })
+              ) : (
+                <span>Not Assigned</span>
+              )}
             </div>
             <div className="profileCard-head-info-assigners">
-              {lead?.users?.map((val) => {
-                return <span key={val._id}>{val.name}</span>;
-              })}
+              {lead?.users?.length > 0 ? (
+                lead?.users?.map((val, index) => (
+                  <span key={`${val._id}-${index}`}>{val.name}</span>
+                ))
+              ) : (
+                <span>Assign to a user</span>
+              )}
             </div>
           </div>
         </div>

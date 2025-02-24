@@ -46,8 +46,6 @@ export default function LeadCard({
     setCountryName(getCountryName(lead?.countries?.[0], countries));
   }, [set, lead, countries, statuses]);
 
-  console.log(getCountryName(lead?.countries?.[0], countries), "lead");
-
   const handleLeadNormalSelector = () => {
     if (lead._id === set?._id) {
       dispatch(setLeadDetailToggle(!toggle));
