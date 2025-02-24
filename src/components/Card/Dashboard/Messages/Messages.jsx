@@ -41,7 +41,7 @@ export default function Messages() {
         id: chat.data.data._id,
         name: chat.data.data.users.find((u) => u._id !== currentUser.user._id)
           .name,
-        message: [], 
+        message: [],
         time: chat.data.data.createdAt,
         avatar: chat.data.data.users.find((u) => u._id !== currentUser.user._id)
           .image,
@@ -49,7 +49,7 @@ export default function Messages() {
       };
 
       dispatch(setSelectedMessage(message));
-      refetchChats(); 
+      refetchChats();
     } catch (error) {
       console.error("Error creating chat:", error);
     }
@@ -72,7 +72,7 @@ export default function Messages() {
           <div className="messages__header">
             <h2 className="title">Messages</h2>
             <ArrowBlue onClick={() => setShowUsersList(true)}>
-              <HomeIcon path="plus" color="#ffffff"/>
+              <HomeIcon path="plus" color="#ffffff" />
             </ArrowBlue>
           </div>
           <div className="messages__search">
@@ -90,11 +90,11 @@ export default function Messages() {
                 );
                 const message = {
                   id: chat._id,
-                  name: otherUser.name,
-                  message: chat.messages || [], // Ensure messages is always an array
-                  time: chat.updatedAt,
-                  avatar: otherUser.image,
-                  unread: chat.unread || false,
+                  name: otherUser?.name,
+                  message: chat?.messages || [], // Ensure messages is always an array
+                  time: chat?.updatedAt,
+                  avatar: otherUser?.image,
+                  unread: chat?.unread || false,
                 };
                 return (
                   <MessageItem
