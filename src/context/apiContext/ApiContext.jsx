@@ -18,7 +18,12 @@ function ApiProvider({ children }) {
   const usersConfigs = useUsers();
   const chatsConfigs = useChats();
   const commonsConfigs = useCommens();
-  const leadsConfigs = useLeads(statusConfigs?.statuses);
+
+  const leadsConfigs = useLeads(
+    statusConfigs?.statuses,
+    branchConfigs?.branches,
+    countryConfigs?.countries
+  );
 
   return (
     <ApiContext.Provider

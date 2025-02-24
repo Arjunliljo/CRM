@@ -9,7 +9,7 @@ import catchAsync from "../../Utilities/catchAsync.js";
 import Campaign from "../../Models/campaignModel.js";
 import MetaAccount from "../../Models/metaAccountModel.js";
 import { convertLeads, saveLeads } from "./saveLeads.js";
-import { leadsToBranchAutoAssigner } from "../../auto/leadsToBranchAutoAssigner.js";
+import { leadsToBranchAutoAssigner } from "../batch/leadsToBranchAutoAssigner.js";
 
 const adAccountId = "277770749000629";
 
@@ -26,9 +26,9 @@ const getMetaLeads = catchAsync(async (req, res) => {
   // Fetch campaigns for each ad account
   const campaigns = await fetchCampaigns(adAccountId, accessToken);
 
-  const activeCampaigns = campaigns.filter(
-    (campaign) => campaign.status === "ACTIVE"
-  );
+  // const activeCampaigns = campaigns.filter(
+  //   (campaign) => campaign.status === "ACTIVE"
+  // );
 
   const leads = await convertLeads(campaigns, accessToken);
   await saveLeads(leads);
