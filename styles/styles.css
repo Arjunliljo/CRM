@@ -849,7 +849,7 @@ textarea::placeholder {
   display: flex;
   flex-direction: column;
   gap: 1.3rem;
-  max-height: 25rem;
+  max-height: 200px;
   overflow-y: auto;
 }
 .eligiable-courses-card {
@@ -4929,12 +4929,14 @@ F .log .message-area-textarea-container {
   border-radius: 1rem;
 }
 .dashbord-container-item-leader {
-  flex: 1;
+  flex: 45;
   border-radius: 1rem;
+  overflow-y: auto;
 }
 .dashbord-container-item-message {
-  flex: 1;
+  flex: 55;
   border-radius: 1rem;
+  overflow-y: auto;
 }
 
 .chatbox {
