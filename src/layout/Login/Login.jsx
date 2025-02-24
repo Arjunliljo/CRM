@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginUser, selectAuth } from "../../../global/authSlice";
+import Logo from "./../../assets/Icons/mlq-01pro.svg";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({
@@ -36,30 +37,39 @@ export default function Login() {
   return (
     <div className="login-page">
       <div className="login-box">
-        <h2>Login</h2>
+        <img src={Logo} alt="logo" style={{ height: "50px", width: "50px" }} />
+        <h2>Welcome Back</h2>
+        <p className="login-description">
+          Please enter your credentials to access your account
+        </p>
         <form onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}
           <div className="user-box">
             <input
               type="text"
               name="email"
+              id="email"
               value={credentials.email}
               onChange={handleChange}
               required
+              placeholder=" "
             />
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
           </div>
           <div className="user-box">
             <input
               type="password"
               name="password"
+              id="password"
               value={credentials.password}
               onChange={handleChange}
               required
+              placeholder=" "
             />
-            <label>Password</label>
+            <label htmlFor="password">Password</label>
           </div>
-          <button type="submit" disabled={loading}>
+
+          <button type="submit" disabled={loading} className="login-box-button">
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>

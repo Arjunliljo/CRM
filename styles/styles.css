@@ -849,7 +849,7 @@ textarea::placeholder {
   display: flex;
   flex-direction: column;
   gap: 1.3rem;
-  max-height: 25rem;
+  max-height: 200px;
   overflow-y: auto;
 }
 .eligiable-courses-card {
@@ -4718,7 +4718,6 @@ F .log .message-area-textarea-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 }
 .messages-scroll {
   flex: 1;
@@ -4742,8 +4741,8 @@ F .log .message-area-textarea-container {
 .messages__add-btn:hover {
   transform: scale(1.05);
 }
-.messages__search {
-  margin-bottom: 20px;
+.messages__search input {
+  font-family: "Inter", sans-serif;
 }
 .messages__search-input {
   width: 100%;
@@ -4763,7 +4762,6 @@ F .log .message-area-textarea-container {
 .messages__list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   height: fit-content;
 }
 
@@ -4771,8 +4769,9 @@ F .log .message-area-textarea-container {
   display: flex;
   align-items: center;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: 12px;
   height: 10rem;
+  gap: 1rem;
   transition: background-color 0.2s ease;
   position: relative;
   justify-content: space-between;
@@ -4780,7 +4779,7 @@ F .log .message-area-textarea-container {
   cursor: pointer;
 }
 .message-item:hover {
-  background-color: #e8e8e8;
+  background-color: white;
 }
 .message-item__avatar {
   width: 40px;
@@ -4801,19 +4800,20 @@ F .log .message-area-textarea-container {
   justify-content: start;
   align-items: center;
   margin-bottom: 4px;
-  gap: 15px;
+  gap: 1rem;
 }
 .message-item__name-text-container {
   display: flex;
   flex-direction: column;
-  width: 5rem;
+  width: 10rem;
   overflow: hidden;
   gap: 4px;
 }
 .message-item__name {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: #1a1f36;
+  text-transform: capitalize;
 }
 .message-item__time {
   font-size: 12px;
@@ -4843,6 +4843,27 @@ F .log .message-area-textarea-container {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.users-list {
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+}
+.users-list .message-item {
+  margin-bottom: 4px;
+}
+.users-list .message-item__status {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.no-users-message {
+  text-align: center;
+  padding: 20px;
+  color: #666;
 }
 
 .btn-loader {
@@ -4929,12 +4950,12 @@ F .log .message-area-textarea-container {
   border-radius: 1rem;
 }
 .dashbord-container-item-leader {
-  flex: 1;
   border-radius: 1rem;
 }
 .dashbord-container-item-message {
   flex: 1;
   border-radius: 1rem;
+  overflow-y: auto;
 }
 
 .chatbox {
@@ -4965,12 +4986,20 @@ F .log .message-area-textarea-container {
 .chatbox-head-profilehead-online {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+}
+.chatbox-head-profilehead-online h6 {
+  font-size: 12px;
+  font-weight: 400;
+  color: grey;
 }
 .chatbox-head-title {
   display: flex;
   align-items: start;
   justify-content: start;
   font-size: large;
+  text-transform: capitalize;
+  font-weight: 600;
 }
 .chatbox-head-back {
   width: 40px;
@@ -4991,21 +5020,28 @@ F .log .message-area-textarea-container {
   position: static;
 }
 .chatbox-type-input {
-  background: none;
+  background: white;
   resize: none;
   font-size: 12px;
-  height: 25px;
+  height: 40px;
   margin: 0;
-  padding-top: 3px;
-  padding-left: 5px;
+  padding: 5px 10px;
   width: 100%;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid #dadada;
+  outline: none;
+  transition: border-color 0.2s ease;
+  padding-right: 70px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
 }
 .chatbox-type-input::placeholder {
-  font-size: 12px;
+  font-size: 14px;
+  color: rgb(105, 105, 105);
+}
+.chatbox-type-input:focus {
+  border-color: #0075fc;
+  background: rgb(237.1, 237.1, 237.1);
 }
 .chatbox-scroll {
   display: flex;
@@ -5019,11 +5055,15 @@ F .log .message-area-textarea-container {
   display: none;
 }
 .chatbox-scroll p {
-  padding: 2px 0.5rem;
-  border-radius: 1rem;
+  padding: 12px 12px;
+  border-radius: 18px;
   width: fit-content;
-  font-size: 0.7rem;
-  border: 0.1px solid #dadada;
+  max-width: 100%;
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 4px 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
 }
 .chatbox-message {
   margin: 2px 0;
@@ -5035,9 +5075,19 @@ F .log .message-area-textarea-container {
   align-self: flex-end;
   text-align: right;
 }
+.chatbox-message-sent p {
+  background-color: #0075fc;
+  color: white;
+  border-bottom-right-radius: 4px;
+  font-size: 14px;
+}
 .chatbox-message-received {
-  background-color: #e8e8e8;
   align-self: flex-start;
+}
+.chatbox-message-received p {
+  background-color: #e8e8e8;
+  font-size: 14px;
+  border-bottom-left-radius: 4px;
 }
 
 .dependancies {
@@ -5453,17 +5503,45 @@ F .log .message-area-textarea-container {
 .login-box {
   width: 400px;
   padding: 40px;
-  background: #63aec2;
+  background: #ffffff;
   box-sizing: border-box;
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
-  border-radius: 10px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), 0 10px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  text-align: center;
+}
+.login-box-button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 20px;
+  font-weight: 600;
+  margin: 0 10px;
+  width: 200px;
+  padding: 10px 0;
+  transition: 0.4s;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 8px 30px rgba(0, 0, 0, 0.2);
+  color: #3f3e3e;
+  background-color: rgb(255, 255, 255);
+  border: 2px solid #b4e7f5;
+  font-family: "Inter", sans-serif;
+  font-size: medium;
+}
+.login-box-button:hover {
+  box-shadow: 0 0 20px #b4e7f5;
+  background-color: #b4e7f5;
 }
 
 .login-box h2 {
-  margin: 0 0 30px;
+  margin: 0 0 10px;
   padding: 0;
-  color: #fff;
+  color: #000000;
   text-align: center;
+}
+
+.login-description {
+  margin: 0 0 25px;
+  color: #666666;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
 }
 
 .login-box .user-box {
@@ -5474,12 +5552,13 @@ F .log .message-area-textarea-container {
   width: 100%;
   padding: 10px 0;
   font-size: 16px;
-  color: #fff;
-  margin-bottom: 30px;
+  color: #000000;
+  margin-bottom: 40px;
   border: none;
-  border-bottom: 1px solid #fff;
+  border-bottom: 2px solid #b4e7f5;
   outline: none;
   background: transparent;
+  font-family: "Inter", sans-serif;
 }
 
 .login-box .user-box label {
@@ -5488,17 +5567,22 @@ F .log .message-area-textarea-container {
   left: 0;
   padding: 10px 0;
   font-size: 16px;
-  color: #fff;
+  color: #3f3e3e;
   pointer-events: none;
   transition: 0.5s;
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
 }
 
 .login-box .user-box input:focus ~ label,
-.login-box .user-box input:active ~ label {
-  top: -20px;
+.login-box .user-box input:active ~ label,
+.login-box .user-box input:not(:placeholder-shown) ~ label,
+.login-box .user-box input:-webkit-autofill ~ label {
+  top: -25px;
   left: 0;
-  color: #e8e8e8;
-  font-size: 12px;
+  color: #000000;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
 }
 
 .login-box form a {
@@ -5513,6 +5597,7 @@ F .log .message-area-textarea-container {
   transition: 0.5s;
   margin-top: 40px;
   letter-spacing: 4px;
+  font-family: "Inter", sans-serif;
 }
 
 .login-box a:hover {
@@ -5616,6 +5701,13 @@ F .log .message-area-textarea-container {
     top: 100%;
   }
 }
+.error-message {
+  color: red;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  margin-bottom: 1rem;
+}
+
 .status-item {
   cursor: move;
   position: relative;

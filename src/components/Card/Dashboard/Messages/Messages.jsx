@@ -8,13 +8,22 @@ import UsersList from "./UsersList";
 import ArrowBlue from "../../../buttons/ArrowBlue";
 import HomeIcon from "../../../utils/Icons/HomeIcon";
 import MessageItem from "./MessageItem";
+import { IoAdd } from "react-icons/io5";
+import { MdOutlineSearchOff } from "react-icons/md";
+// import { MdOutlineSearchOff } from "react-icons/md";
 
 export default function Messages() {
   const [showUsersList, setShowUsersList] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const currentUser = useSelector((state) => state.auth);
   const chats = useSelector((state) => state.chat.chats);
   const selectedMessage = useSelector((state) => state.chat.selectedMessage);
   const dispatch = useDispatch();
+
+  const filteredChats = chats.filter((chat) => {
+    const otherUser = chat.users.find((u) => u._id !== currentUser.user._id);
+    return otherUser?.name?.toLowerCase().includes(searchQuery.toLowerCase());
+  });
 
   const handleSelectMessage = (message) => {
     dispatch(setSelectedMessage(message));
@@ -72,7 +81,7 @@ export default function Messages() {
           <div className="messages__header">
             <h2 className="title">Messages</h2>
             <ArrowBlue onClick={() => setShowUsersList(true)}>
-              <HomeIcon path="plus" color="#ffffff" />
+              <IoAdd color="#ffffff" />
             </ArrowBlue>
           </div>
           <div className="messages__search">
@@ -80,18 +89,20 @@ export default function Messages() {
               type="text"
               placeholder="Search"
               className="messages__search-input"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <div className="messages-scroll">
             <div className="messages__list">
-              {chats.map((chat) => {
+              {filteredChats.map((chat) => {
                 const otherUser = chat.users.find(
                   (u) => u._id !== currentUser.user._id
                 );
                 const message = {
                   id: chat._id,
                   name: otherUser?.name,
-                  message: chat?.messages || [], // Ensure messages is always an array
+                  message: chat?.messages || [],
                   time: chat?.updatedAt,
                   avatar: otherUser?.image,
                   unread: chat?.unread || false,
@@ -104,6 +115,12 @@ export default function Messages() {
                   />
                 );
               })}
+              {filteredChats.length === 0 && searchQuery && (
+                <div className="no-users-message">
+                  <MdOutlineSearchOff fontSize="3rem" />
+                  <p>No users found</p>
+                </div>
+              )}
             </div>
           </div>
         </>
