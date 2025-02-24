@@ -46,6 +46,9 @@ export default function University() {
   );
 
 
+
+
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
 
@@ -73,14 +76,22 @@ export default function University() {
     />
   ));
 
+  const fees = [
+    { name: "10000-15000" },
+    { name: "15000-20000" },
+    { name: "20000-25000" },
+    { name: "25000-30000" },
+    { name: "30000+" }
+  ];
+
   //   const ISelector = <Selector />;
   const IPrimaryBttn = (
     <PrimaryBttn onClick={handleModal}>Add University</PrimaryBttn>
   );
   const IAll = <All />;
-  const ISelectorOne = <Selector />;
-  const ISelectorTwo = <Selector />;
-  const ISelectorThree = <Selector />;
+  const ISelectorOne = <Selector optionsObj={countries} />;
+  const ISelectorTwo = <Selector optionsObj={fees} placeholder="Select Fee Range" />;
+  const ISelectorThree = <Selector optionsObj={fees} placeholder="Select Fee Range" />;
   const IProfileCard = <UniversityProfile university={curUniversity} />;
 
   const TopLeft = [<div key="search-bar">{ISelectorOne}</div>];
@@ -90,7 +101,7 @@ export default function University() {
     <div key="all-leads">{IAll}</div>,
     <div key="selector-one">{ISelectorOne}</div>,
     <div key="selector-two">{ISelectorTwo}</div>,
-    <div key="selector-three">{ISelectorThree}</div>,
+    // <div key="selector-three">{ISelectorThree}</div>,
   ];
   const BottomRight = [
     <div key="search-bar">{ISearchBar}</div>,

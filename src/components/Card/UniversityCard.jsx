@@ -68,7 +68,7 @@ function UniversityCard({ university, set, onSet, istoggle, toggle }) {
               />
               <p>
                 <span style={{ color: "gray" }}>Stayback:</span>
-                <span style={{ color: "black" }}> {university.year} Years</span>
+                <span style={{ color: "black" }}> {university?.courses[0]?.duration} Years</span>
               </p>
             </div>
             <div className="cardUniversity-body-bottom-icons-item">
@@ -79,7 +79,7 @@ function UniversityCard({ university, set, onSet, istoggle, toggle }) {
               />
               <p>
                 {" "}
-                <span style={{ color: "gray" }}>Fee:</span> {university.fee}${" "}
+                <span style={{ color: "gray" }}>Fee:</span> {university?.courses[0]?.fee}${" "}
               </p>
             </div>
           </div>

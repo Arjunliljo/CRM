@@ -27,6 +27,9 @@ const universitySchema = mongoose.Schema(
         ref: "Qualification",
       },
     ],
+    about: {
+      type: String,
+    },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

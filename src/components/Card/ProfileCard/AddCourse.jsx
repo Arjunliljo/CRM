@@ -15,7 +15,7 @@ export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
 
   const { qualificationsConfigs: { qualifications } } = useApi();
   const { universityConfigs: { university } } = useApi();
-
+  console.log(qualifications, "qualifications");
   const [selectedQualification, setSelectedQualification] = useState([]);
 
 

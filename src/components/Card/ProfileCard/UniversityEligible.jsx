@@ -161,7 +161,7 @@ function UniversityEligible({ coursess }) {
             </div>
             <div className="university-eligiable-coursess-keys">
               <div className="university-eligiable-courses-keys">
-                <span className="card-number">{course.university}</span>
+                <span className="card-number">{curUniversity?.name}</span>
                 {course.fee && <span> Fee : ${course.fee}</span>}
               </div>
             </div>
