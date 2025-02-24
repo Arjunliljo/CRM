@@ -1,3 +1,5 @@
+import { useApi } from "../../../context/apiContext/ApiContext";
+import { getRoleName } from "../../../service/nameFinders";
 import Tracker from "../../smallComponents/Tracker";
 
 export default function ProfileCard({
@@ -8,6 +10,10 @@ export default function ProfileCard({
   IActivityLog,
   personalDetails,
 }) {
+  const {
+    roleConfigs: { roles },
+  } = useApi();
+
   return (
     <div className="profileCard">
       <div className="profileCard-head">
@@ -29,14 +35,17 @@ export default function ProfileCard({
           </div>
           <div className="profileCard-head-info-right-card">
             <div className="card-number profileCard-head-info-keys">
-              <span>Counsellor</span>
-              <span>SRM</span>
-              <span>Application Head</span>
+              {lead?.users?.map((val) => {
+                const role = getRoleName(val?.role, roles);
+                return (
+                  <>{role ? <span>{role}</span> : <span>Not Assigned</span>}</>
+                );
+              })}
             </div>
             <div className="profileCard-head-info-assigners">
-              <span>Aswathi S</span>
-              <span>Shruthi Hassan</span>
-              <span>Monica</span>
+              {lead?.users?.map((val) => {
+                return <span key={val._id}>{val.name}</span>;
+              })}
             </div>
           </div>
         </div>

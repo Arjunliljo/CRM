@@ -141,6 +141,14 @@ const leadSchema = mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
+leadSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "users",
+    select: "name role",
+  });
+  next();
+});
+
 const Lead = mongoose.model("Lead", leadSchema);
 
 export default Lead;
