@@ -4860,6 +4860,12 @@ F .log .message-area-textarea-container {
   color: #6b7280;
 }
 
+.no-users-message {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
 .btn-loader {
   height: 1rem;
   width: 1rem;
