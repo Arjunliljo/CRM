@@ -4718,7 +4718,6 @@ F .log .message-area-textarea-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 }
 .messages-scroll {
   flex: 1;
@@ -4742,8 +4741,8 @@ F .log .message-area-textarea-container {
 .messages__add-btn:hover {
   transform: scale(1.05);
 }
-.messages__search {
-  margin-bottom: 20px;
+.messages__search input {
+  font-family: "Inter", sans-serif;
 }
 .messages__search-input {
   width: 100%;
@@ -4763,7 +4762,6 @@ F .log .message-area-textarea-container {
 .messages__list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   height: fit-content;
 }
 
@@ -4771,8 +4769,9 @@ F .log .message-area-textarea-container {
   display: flex;
   align-items: center;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: 12px;
   height: 10rem;
+  gap: 1rem;
   transition: background-color 0.2s ease;
   position: relative;
   justify-content: space-between;
@@ -4780,7 +4779,7 @@ F .log .message-area-textarea-container {
   cursor: pointer;
 }
 .message-item:hover {
-  background-color: #e8e8e8;
+  background-color: white;
 }
 .message-item__avatar {
   width: 40px;
@@ -4801,19 +4800,20 @@ F .log .message-area-textarea-container {
   justify-content: start;
   align-items: center;
   margin-bottom: 4px;
-  gap: 15px;
+  gap: 1rem;
 }
 .message-item__name-text-container {
   display: flex;
   flex-direction: column;
-  width: 5rem;
+  width: 10rem;
   overflow: hidden;
   gap: 4px;
 }
 .message-item__name {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: #1a1f36;
+  text-transform: capitalize;
 }
 .message-item__time {
   font-size: 12px;
@@ -4843,6 +4843,21 @@ F .log .message-area-textarea-container {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.users-list {
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+}
+.users-list .message-item {
+  margin-bottom: 4px;
+}
+.users-list .message-item__status {
+  font-size: 12px;
+  color: #6b7280;
 }
 
 .btn-loader {
@@ -4965,12 +4980,20 @@ F .log .message-area-textarea-container {
 .chatbox-head-profilehead-online {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+}
+.chatbox-head-profilehead-online h6 {
+  font-size: 12px;
+  font-weight: 400;
+  color: grey;
 }
 .chatbox-head-title {
   display: flex;
   align-items: start;
   justify-content: start;
   font-size: large;
+  text-transform: capitalize;
+  font-weight: 600;
 }
 .chatbox-head-back {
   width: 40px;
@@ -4991,21 +5014,28 @@ F .log .message-area-textarea-container {
   position: static;
 }
 .chatbox-type-input {
-  background: none;
+  background: white;
   resize: none;
   font-size: 12px;
-  height: 25px;
+  height: 40px;
   margin: 0;
-  padding-top: 3px;
-  padding-left: 5px;
+  padding: 5px 10px;
   width: 100%;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid #dadada;
+  outline: none;
+  transition: border-color 0.2s ease;
+  padding-right: 70px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
 }
 .chatbox-type-input::placeholder {
-  font-size: 12px;
+  font-size: 14px;
+  color: rgb(105, 105, 105);
+}
+.chatbox-type-input:focus {
+  border-color: #0075fc;
+  background: rgb(237.1, 237.1, 237.1);
 }
 .chatbox-scroll {
   display: flex;
@@ -5019,11 +5049,15 @@ F .log .message-area-textarea-container {
   display: none;
 }
 .chatbox-scroll p {
-  padding: 2px 0.5rem;
-  border-radius: 1rem;
+  padding: 12px 12px;
+  border-radius: 18px;
   width: fit-content;
-  font-size: 0.7rem;
-  border: 0.1px solid #dadada;
+  max-width: 100%;
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 4px 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
 }
 .chatbox-message {
   margin: 2px 0;
@@ -5035,9 +5069,19 @@ F .log .message-area-textarea-container {
   align-self: flex-end;
   text-align: right;
 }
+.chatbox-message-sent p {
+  background-color: #0075fc;
+  color: white;
+  border-bottom-right-radius: 4px;
+  font-size: 14px;
+}
 .chatbox-message-received {
-  background-color: #e8e8e8;
   align-self: flex-start;
+}
+.chatbox-message-received p {
+  background-color: #e8e8e8;
+  font-size: 14px;
+  border-bottom-left-radius: 4px;
 }
 
 .dependancies {

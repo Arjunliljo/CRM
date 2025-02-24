@@ -1,12 +1,19 @@
 import { useEffect, useState, useRef } from "react";
+import { IconContext } from "react-icons";
+import { FaCircle } from "react-icons/fa";
 import CountryBtn from "../../../buttons/CountryBtn";
 import { BorderAllRounded } from "@mui/icons-material";
 import HomeIcon from "../../../utils/Icons/HomeIcon";
 import socket from "../../../../../config/socketConfig";
 import { useDispatch, useSelector } from "react-redux";
 import apiClient from "../../../../../config/axiosInstance";
-import EmojiPicker from 'emoji-picker-react';
-import { updateSelectedMessage, updateChats } from "../../../../../global/chatSlice";
+import EmojiPicker from "emoji-picker-react";
+import {
+  updateSelectedMessage,
+  updateChats,
+} from "../../../../../global/chatSlice";
+import { BsEmojiSmile } from "react-icons/bs";
+import { BiSend } from "react-icons/bi";
 
 function Chatbox({ message, onBack }) {
   const [inputMessage, setInputMessage] = useState("");
@@ -66,7 +73,7 @@ function Chatbox({ message, onBack }) {
   };
 
   const onEmojiClick = (emojiObject) => {
-    setInputMessage(prevInput => prevInput + emojiObject.emoji);
+    setInputMessage((prevInput) => prevInput + emojiObject.emoji);
   };
 
   const handleSendMessage = async () => {
@@ -99,13 +106,34 @@ function Chatbox({ message, onBack }) {
         <div className="chatbox-head">
           <div className="chatbox-head-profilehead">
             <img
-              src={message?.avatar || ''}
-              alt={message?.name || ''}
+              src={message?.avatar || ""}
+              alt={message?.name || ""}
               className="chatbox-head-profilehead-pic"
             />
             <div className="chatbox-head-profilehead-online">
               <h2 className="chatbox-head-title">{message && message.name}</h2>
-              <h6>{isTyping ? "typing..." : "online"}</h6>
+              <h6>
+                {isTyping ? (
+                  "typing..."
+                ) : (
+                  <>
+                    <span
+                      style={{
+                        color: "green",
+                        marginRight: "0px",
+                        fontSize: "7px",
+                      }}
+                    >
+                      <IconContext.Provider
+                        value={{ color: "green", size: "1em" }}
+                      >
+                        <FaCircle />
+                      </IconContext.Provider>
+                    </span>{" "}
+                    online
+                  </>
+                )}
+              </h6>
             </div>
           </div>
           <button className="chatbox-head-back" onClick={onBack}>
@@ -113,66 +141,108 @@ function Chatbox({ message, onBack }) {
           </button>
         </div>
         <div className="chatbox-scroll">
-          {selectedMessage && selectedMessage.message.map((msg, index) => (
-            <div
-              key={index}
-              className={`chatbox-message ${
-                msg.sender === user.user._id
-                  ? "chatbox-message-sent"
-                  : "chatbox-message-received"
-              }`}
-            >
-              <p>{msg.content}</p>
-            </div>
-          ))}
+          {selectedMessage &&
+            selectedMessage.message.map((msg, index) => (
+              <div
+                key={index}
+                className={`chatbox-message ${
+                  msg.sender === user.user._id
+                    ? "chatbox-message-sent"
+                    : "chatbox-message-received"
+                }`}
+              >
+                <p>{msg.content}</p>
+              </div>
+            ))}
           <div ref={messagesEndRef} />
         </div>
       </div>
 
-      <div className="chatbox-type">
-        <button
-          className="emoji-button"
-          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-          style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            fontSize: '1.5rem',
-            padding: '5px'
-          }}
+      <div
+        className="chatbox-type"
+        style={{ display: "flex", alignItems: "center" }}
+      >
+        <div
+          className="chatbox-input-container"
+          style={{ position: "relative", flex: 1 }}
         >
-          😊
-        </button>
-        <div className="chatbox-input-container" style={{ position: 'relative' }}>
           {showEmojiPicker && (
-            <div style={{ position: 'absolute', bottom: '100%', left: '0', zIndex: 1 }}>
+            <div
+              style={{
+                position: "absolute",
+                bottom: "100%",
+                left: "0",
+                zIndex: 1,
+              }}
+            >
               <EmojiPicker onEmojiClick={onEmojiClick} />
             </div>
           )}
-          <textarea
-            type="text"
-            className="chatbox-type-input"
-            placeholder="Type message..."
-            value={inputMessage}
-            onChange={(e) => {
-              setInputMessage(e.target.value);
-              handleTyping();
-            }}
-            style={{ width: 'calc(100% - 50px)' }}
-          />
+          <div style={{ position: "relative" }}>
+            <textarea
+              type="text"
+              className="chatbox-type-input"
+              placeholder="Type message..."
+              value={inputMessage}
+              onChange={(e) => {
+                setInputMessage(e.target.value);
+                handleTyping();
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSendMessage();
+                }
+              }}
+              style={{ width: "100%", paddingRight: "80px" }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                right: "8px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                display: "flex",
+                gap: "8px",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  height: "20px",
+                  width: "1px",
+                  backgroundColor: "#e0e0e0",
+                  marginRight: "4px",
+                }}
+              />
+              <button
+                className="emoji-button"
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  fontSize: "1rem",
+                  padding: "0",
+                }}
+              >
+                <BsEmojiSmile color="#0075fc" fontSize="1rem" />
+              </button>
+              <button
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: "0",
+                }}
+                onClick={handleSendMessage}
+              >
+                <BiSend color="#0075fc" fontSize="1.3rem" />
+              </button>
+            </div>
+          </div>
         </div>
-        <CountryBtn
-          style={{
-            paddingLeft: "6.5px",
-            paddingRight: "6.5px",
-            fontSize: "14px",
-            borderRadius: "15px",
-            backgroundColor: "#0075fc",
-          }}
-          onClick={handleSendMessage}
-        >
-          Send
-        </CountryBtn>
       </div>
     </div>
   );
