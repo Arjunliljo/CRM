@@ -17,7 +17,6 @@ export const getAll = (Model) => {
       .paginate(await Model.countDocuments())
       .filterByBranch()
       .filterByDateRange()
-      .gstType()
       .search();
 
     const docs = await features.query;
@@ -32,7 +31,7 @@ export const getAll = (Model) => {
 
 export const getOne = (Model, type = "id") => {
   return catchAsync(async (req, res, next) => {
-    const data = await Model.select("-password");
+    const data = await Model.findById(req.params.id).select("-password");
 
     if (!data) {
       return next(new AppError(`No document found with this ${type}`, 404));

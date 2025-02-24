@@ -14,9 +14,15 @@ import ModalBase from "../../Forms/ModalBase";
 import AddQualification from "../../Forms/Leads/addQualification";
 import HomeIcon from "../../utils/Icons/HomeIcon";
 import EditQualification from "../../Forms/Leads/EditQualification";
+import { useDispatch } from "react-redux";
 
-export default function PersonalDetails({ lead, onSubmit , modalSubmit , editQualification , deleteQualification }) {
-
+export default function PersonalDetails({
+  lead,
+  onSubmit,
+  modalSubmit,
+  editQualification,
+  deleteQualification,
+}) {
   const [isEditing, setIsEditing] = useState(false);
   const [details, setDetails] = useState({
     name: "",
@@ -24,6 +30,7 @@ export default function PersonalDetails({ lead, onSubmit , modalSubmit , editQua
     email: "",
     address: "",
   });
+  const dispatch = useDispatch();
 
   const [originalDetails, setOriginalDetails] = useState({
     name: "",
@@ -44,8 +51,6 @@ export default function PersonalDetails({ lead, onSubmit , modalSubmit , editQua
     setIsEditing(false);
   }, [lead]);
 
-
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
 
@@ -61,7 +66,7 @@ export default function PersonalDetails({ lead, onSubmit , modalSubmit , editQua
   const handleSaveEdit = () => {
     setIsEditing(false);
     setOriginalDetails(details);
-    const res = onSubmit({ ...details, leadId: lead?._id });
+    const res = onSubmit({ ...details, leadId: lead?._id }, lead, dispatch);
     if (res) {
       setIsEditing(false);
       message.success("Details updated successfully");
@@ -85,14 +90,13 @@ export default function PersonalDetails({ lead, onSubmit , modalSubmit , editQua
   };
 
   const handleEditCard = (cardId) => {
-    const cardToEdit = lead?.qualification?.find(card => card._id === cardId);
+    const cardToEdit = lead?.qualification?.find((card) => card._id === cardId);
     setSelectedCard(cardToEdit);
     setIsModalOpen(true);
   };
 
   const handleModalSubmit = (updatedCard) => {
-
-    modalSubmit({...updatedCard, leadId: lead?._id});
+    modalSubmit({ ...updatedCard, leadId: lead?._id });
     setSelectedCard(null);
     handleModalClose();
   };
@@ -107,8 +111,6 @@ export default function PersonalDetails({ lead, onSubmit , modalSubmit , editQua
     setSelectedCard(cardId);
     deleteQualification(cardId);
   };
-
-
 
   return (
     <div className="profileCard-box personal-details">
@@ -226,23 +228,27 @@ export default function PersonalDetails({ lead, onSubmit , modalSubmit , editQua
           <IoAdd className="personal-details-green-card-plus" />
         </div>
         {lead?.qualification?.map((card) => (
-          <div key={card._id} className="personal-details-green-card" style={{ position: 'relative' }}>
+          <div
+            key={card._id}
+            className="personal-details-green-card"
+            style={{ position: "relative" }}
+          >
             <div>
               <div
                 onClick={() => handleEditCard(card._id)}
                 style={{
-                  cursor: 'pointer',
-                  position: 'absolute',
-                  top: '5px',
-                  right: '30px',
-                  width: '20px',
-                  height: '20px',
-                  backgroundColor: 'white',
-                  borderRadius: '50%',
-                  padding: '2px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                  cursor: "pointer",
+                  position: "absolute",
+                  top: "5px",
+                  right: "30px",
+                  width: "20px",
+                  height: "20px",
+                  backgroundColor: "white",
+                  borderRadius: "50%",
+                  padding: "2px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 <HomeIcon path="edit" />
@@ -250,26 +256,28 @@ export default function PersonalDetails({ lead, onSubmit , modalSubmit , editQua
               <div
                 onClick={() => handleDeleteCard(card._id)}
                 style={{
-                  cursor: 'pointer',
-                  position: 'absolute',
-                  top: '5px',
-                  right: '5px',
-                  width: '20px',
-                  height: '20px',
-                  color: 'red',
-                  backgroundColor: 'white',
-                  borderRadius: '50%',
-                  padding: '2px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                  cursor: "pointer",
+                  position: "absolute",
+                  top: "5px",
+                  right: "5px",
+                  width: "20px",
+                  height: "20px",
+                  color: "red",
+                  backgroundColor: "white",
+                  borderRadius: "50%",
+                  padding: "2px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 <HomeIcon path="delete" />
               </div>
             </div>
             <span className="personal-details-green-card-text">
-              {card?.name?.length > 4 ? `${card?.name?.slice(0, 4)}..` : card?.name}
+              {card?.name?.length > 4
+                ? `${card?.name?.slice(0, 4)}..`
+                : card?.name}
             </span>
             <span className="personal-details-green-card-percentage">
               {`${card?.mark}%`}
@@ -277,17 +285,24 @@ export default function PersonalDetails({ lead, onSubmit , modalSubmit , editQua
           </div>
         ))}
       </div>
-        <ModalBase isOpen={isModalOpen} closeModal={handleModalClose} title={selectedCard ? "Edit Student Mark" : "Add Student Mark"}>
-          {selectedCard ? (
-            <EditQualification
-              card={selectedCard}
-              closeModal={handleModalClose}
-              onSubmit={handleEditQualification}
-            />
-          ) : (
-            <AddQualification onSubmit={handleModalSubmit} closeModal={handleModalClose} />
-          )}
-        </ModalBase>
+      <ModalBase
+        isOpen={isModalOpen}
+        closeModal={handleModalClose}
+        title={selectedCard ? "Edit Student Mark" : "Add Student Mark"}
+      >
+        {selectedCard ? (
+          <EditQualification
+            card={selectedCard}
+            closeModal={handleModalClose}
+            onSubmit={handleEditQualification}
+          />
+        ) : (
+          <AddQualification
+            onSubmit={handleModalSubmit}
+            closeModal={handleModalClose}
+          />
+        )}
+      </ModalBase>
     </div>
   );
 }

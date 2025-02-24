@@ -6,7 +6,7 @@ function Selector({
   onSet = () => {},
   redux = true,
   disabled = false,
-  placeholder = "Select Option",
+  placeholder,
 }) {
   const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ function Selector({
       >
         <option value={""}>{placeholder}</option>
         {optionsObj.map((option, index) => (
-          <option key={index} value={option.value}>
+          <option key={index} value={option.name}>
             {option.name}
           </option>
         ))}

@@ -5,15 +5,16 @@ import NextBtn from "../../../components/buttons/NextBtn";
 import { useEffect, useState } from "react";
 import { message } from "antd";
 import apiClient from "../../../../config/axiosInstance";
+import { refetchLeads } from "../../../apiHooks/useLeads";
 
-export default function AssingToUser({ assigningLeads }) {
+export default function AssingToUser({ assigningLeads, onClick }) {
   const {
     roleConfigs: { roles = [] },
     usersConfigs: { users = [] },
   } = useApi() || {};
 
   const [curRole, setCurRole] = useState(roles?.[0]);
-  const [curUser, setCurUser] = useState(users?.[0]);
+  const [curUser, setCurUser] = useState(users?.[0]?.name);
 
   const [setSelectedUsers, setSetSelectedUsers] = useState([]);
 
@@ -29,10 +30,18 @@ export default function AssingToUser({ assigningLeads }) {
       message.error("Please select a user");
       return;
     }
-    const res = await apiClient.patch(`/lead/${assigningLeads[0]}`, {
-      userId: curUser,
-    });
-    console.log(res);
+    try {
+      await apiClient.patch("/lead/leadToUserAssignment", {
+        leadIds: assigningLeads.map((lead) => lead._id),
+        user: setSelectedUsers.find((user) => user.name === curUser),
+      });
+
+      message.success("Leads assigned successfully");
+      refetchLeads();
+    } catch (error) {
+      console.error("Error assigning leads:", error);
+      message.error("Error assigning leads");
+    }
   };
 
   return (
@@ -62,7 +71,9 @@ export default function AssingToUser({ assigningLeads }) {
       <div
         style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}
       >
-        <NextBtn style={{ margin: "0 auto" }}>Assign</NextBtn>
+        <NextBtn style={{ margin: "0 auto" }} onClick={handleAssign}>
+          Assign
+        </NextBtn>
       </div>
     </div>
   );

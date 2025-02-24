@@ -4,18 +4,27 @@ import { MdDateRange } from "react-icons/md";
 import EligibleBttn from "../../buttons/EligibleBttn";
 import { getStatusName } from "../../../service/nameFinders";
 import { useEffect, useState } from "react";
-import { useKey } from "../../../hooks/useKey";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import NormalButton from "../../buttons/NormalButton";
+import { useDispatch } from "react-redux";
 
-export default function ProfileCardStatus({ statuses, lead, countries, onsubmit }) {
-  const initialStatus = statuses?.find(s => s.name === getStatusName(lead?.status, statuses)) || statuses?.[0];
+export default function ProfileCardStatus({
+  statuses,
+  lead,
+  countries,
+  onsubmit,
+}) {
+  const initialStatus =
+    statuses?.find((s) => s.name === getStatusName(lead?.status, statuses)) ||
+    statuses?.[0];
   const [status, setStatus] = useState(initialStatus);
   const [remark, setRemark] = useState("");
 
+  const dispatch = useDispatch();
+
   // Store the full country object
-  const initialCountry = countries?.find(c => c._id === lead?.country) || countries?.[0];
+  const initialCountry =
+    countries?.find((c) => c._id === lead?.country) || countries?.[0];
   const [selectedCountry, setSelectedCountry] = useState(initialCountry);
   const [showPastRemark, setShowPastRemark] = useState(false);
   const [followupDate, setFollowupDate] = useState(new Date());
@@ -38,12 +47,12 @@ export default function ProfileCardStatus({ statuses, lead, countries, onsubmit 
 
   const handleStatusChange = (e) => {
     // Find the status object that matches the selected name
-    const selectedStatus = statuses.find(s => s.name === e.target.value);
+    const selectedStatus = statuses.find((s) => s.name === e.target.value);
     setStatus(selectedStatus);
   };
 
   const handleCountryChange = (e) => {
-    const country = countries.find(c => c.name === e.target.value);
+    const country = countries.find((c) => c.name === e.target.value);
     setSelectedCountry(country);
   };
 
@@ -60,12 +69,12 @@ export default function ProfileCardStatus({ statuses, lead, countries, onsubmit 
       country: selectedCountry?._id, // Send country ID
       followupDate: followupDate,
       leadId: lead?._id,
-    }
-    onsubmit(statusData);
+    };
+    onsubmit(statusData, dispatch);
   };
 
   return (
-    <div className="profileCard-box personal-status" >
+    <div className="profileCard-box personal-status">
       <div className="personal-details-heading">
         <span className="name-small">Status</span>
         <div className="icons personal-details-group-icons">
@@ -125,7 +134,9 @@ export default function ProfileCardStatus({ statuses, lead, countries, onsubmit 
             <div className="past-remark">
               <p>Previous Remark:</p>
               <p>{lead?.pastRemark}</p>
-              <p className="past-remark-info">Managed by: {lead?.pastRemarkBy}</p>
+              <p className="past-remark-info">
+                Managed by: {lead?.pastRemarkBy}
+              </p>
             </div>
           ) : (
             <textarea
@@ -150,7 +161,6 @@ export default function ProfileCardStatus({ statuses, lead, countries, onsubmit 
             </div>
           </div> */}
           {/* <input type="text" className="selector-with-icon" /> */}
-
         </div>
         <div className="eligible-head">
           <EligibleBttn type="submit">Save</EligibleBttn>

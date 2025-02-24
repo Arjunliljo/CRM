@@ -4,13 +4,16 @@ import {
   updateUser,
   deleteUser,
   getAllUsers,
+  getUser,
 } from "../Controllers/userController.js";
+
 import {
   createUser,
   loginUser,
   logout,
   verify,
 } from "../Controllers/authController.js";
+
 const router = express.Router();
 
 router.post("/verify", verify);
@@ -18,6 +21,7 @@ router.post("/verify", verify);
 // User or staff cruds - admin only will do
 router.post("/create", createUser);
 router.get("/", getAllUsers);
+router.get("/:id", getUser);
 router.patch("/", updateUser);
 router.delete("/:id", deleteUser);
 router.post("/login", loginUser);

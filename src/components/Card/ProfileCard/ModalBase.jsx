@@ -5,16 +5,15 @@ export default function ModalBase({
   closeModal,
   title,
   children,
-  centered = false,
   width,
 }) {
   return (
     <Modal
-      // title={title}
+      title={title}
       open={isOpen}
       onCancel={closeModal}
       footer={null}
-      centered={centered}
+      centered
       className="modal"
       forceRender
       mask={true}

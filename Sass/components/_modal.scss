@@ -34,10 +34,12 @@
         height: 40px;
         border-radius: 8px;
         border: 1px solid variables.$color-black;
-
+        padding: 0 10px;
+        font-size: 14px;
+        color: variables.$color-black;
         &::placeholder {
-          color: variables.$color-black;
-          padding: 10px;
+          color: #8f9091;
+          padding: 8px;
         }
 
         &:focus {
@@ -67,6 +69,104 @@
       justify-content: flex-start;
       gap: 12px;
       margin-top: 8px;
+    }
+
+    &-course-selector {
+      height: fit-content;
+      max-height: 50%;
+      overflow-y: auto;
+      padding: 1rem;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+
+      &-heading {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+
+      &-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        overflow-y: auto;
+        height: 180px;
+
+        &-item {
+          padding: 8px 12px;
+          border-radius: 6px;
+          width: 100%;
+          min-height: 60px;
+          cursor: pointer;
+          border: 1px solid #0075fc;
+          background-color: #fff;
+          color: #0075fc;
+          transition: all 0.3s ease-in-out;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          &.active {
+            background-color: #0075fc;
+            color: #fff;
+          }
+        }
+      }
+
+      &-upload {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        border: 1px dashed #8f9091;
+        border-radius: 8px;
+        padding: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          border-color: variables.$color-blue;
+        }
+
+        &-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            // max-height: 200px;
+            &-image {
+              width: 30px;
+              height: 30px;
+              margin-right: 8px;
+              color: variables.$color-blue;
+            }
+            &-preview {
+              // width: 50%;
+              height: 200px;
+              object-fit: contain;
+            }
+            &-text1 {
+              font-size: 15px;
+            }
+            &-text2 {
+              font-size: 12px;
+              color: #8f9091;
+            }
+          }
+        }
+      }
+
+      &-no-course {
+        color: #888;
+        font-size: 1rem;
+        text-align: center;
+        margin-top: 1rem;
+      }
     }
   }
 }

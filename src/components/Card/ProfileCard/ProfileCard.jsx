@@ -10,12 +10,12 @@ export default function ProfileCard({
   IActivityLog,
   personalDetails,
 }) {
-  const [isApplication, setIsApplication] = useState(false);
+  const [isApplication, setIsApplication] = useState(true);
 
-  useEffect(() => {
-    setIsApplication(lead?.application?.length > 0);
-  }, [lead]);
-
+  // useEffect(() => {
+  //   setIsApplication(lead?.application?.length > 0);
+  // }, [lead]);
+  console.log(lead, "lead");
   return (
     <div className="profileCard">
       <div className="profileCard-head">

@@ -4,7 +4,7 @@ import { defaultTabs } from "../../../api/Data/getData";
 
 export default function Tabs() {
   const tabs = defaultTabs;
-  console.log(tabs, "tabs");
+
   return (
     <div className="content-section main-status-container">
       <div className="content-section-head" style={{ height: "fit-content" }}>

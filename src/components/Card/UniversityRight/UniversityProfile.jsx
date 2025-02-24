@@ -1,3 +1,4 @@
+import { useState } from "react";
 import PrimaryBttn from "../../buttons/PrimaryBttn";
 import HomeIcon from "../../utils/Icons/HomeIcon";
 import ActivityLog from "../ProfileCard/ActivityLog";
@@ -6,8 +7,30 @@ import PersonalDetails from "../ProfileCard/PersonalDetails";
 import ProfileCardStatus from "../ProfileCard/ProfileCardStatus";
 import UniversityEligible from "../ProfileCard/UniversityEligible";
 import Requirements from "./Requirements";
-
+import ModalBase from "../../Forms/ModalBase";
+import UpdateUniversity from "../../Forms/University/UpdateUniversity";
 function UniversityProfile() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newUniversity, setNewUniversity] = useState({
+    name: "University Of United Kingdom",
+    country: "United Kingdom",
+    courses: ["AI", "DS", "GD", "CS"],
+    image: "https://skymark.in/web/assets/images/skymarkBanner.jpg",
+  });
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleModal = () => {
+    setIsModalOpen((val) => !val);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewUniversity((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const lead = {
     img: "https://via.placeholder.com/100",
     name: "College De Paris",
@@ -54,6 +77,7 @@ function UniversityProfile() {
                 paddingRight: "2.5rem",
                 marginBottom: "4rem",
               }}
+              onClick={handleModal}
             >
               Edit
             </PrimaryBttn>
@@ -69,6 +93,20 @@ function UniversityProfile() {
       </div> */}
       <UniversityEligible />
       {/* <ActivityLog /> */}
+      <ModalBase
+        title="Update University"
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        width="50%"
+      >
+        <UpdateUniversity
+          isUpadte={true}
+          closeModal={closeModal}
+          newUniversity={newUniversity}
+          setNewUniversity={setNewUniversity}
+          handleChange={handleChange}
+        />
+      </ModalBase>
     </div>
   );
 }

@@ -31,21 +31,21 @@ export default function AddStatusForm({ newStatus, setNewStatus }) {
       setIsLoading(true);
       await apiClient.post("/status", newStatus);
 
-      // Reset form after successful submission
       setNewStatus({
         name: "",
         isTab: null,
         selectedClass: "",
         description: "",
         subStatuses: [],
+        countries: [],
+        isCountryBased: null,
+        isApplication: null,
       });
 
       refetchStatuses();
 
       message.success("Status created successfully!");
     } catch (e) {
-      console.log(e);
-
       message.error("Error creating status. Please try again.");
     } finally {
       setIsLoading(false);

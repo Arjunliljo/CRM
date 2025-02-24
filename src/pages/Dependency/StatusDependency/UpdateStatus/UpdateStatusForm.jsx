@@ -12,14 +12,16 @@ import { useEffect, useState } from "react";
 export default function UpdateStatusForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { editStatus } = useSelector((state) => state.creation);
-  console.log(editStatus, "editStatus");
 
   const [formData, setFormData] = useState({
-    name: "",
-    isTab: null,
-    class: "",
-    description: "",
-    subStatuses: [],
+    name: editStatus.name || "",
+    isTab: editStatus.isTab ?? null,
+    class: editStatus.class || "",
+    isCountryBased: editStatus.isCountryBased ?? null,
+    isApplication: editStatus.isApplication ?? null,
+    description: editStatus.description || "",
+    subStatuses: editStatus.subStatuses || [],
+    countries: editStatus.countries || [],
   });
 
   const dispatch = useDispatch();
@@ -31,8 +33,11 @@ export default function UpdateStatusForm() {
         name: editStatus.name || "",
         isTab: editStatus.isTab ?? null,
         class: editStatus.class || "",
+        isCountryBased: editStatus.isCountryBased ?? null,
+        isApplication: editStatus.isApplication ?? null,
         description: editStatus.description || "",
         subStatuses: editStatus.subStatuses || [],
+        countries: editStatus.countries || [],
       });
     }
   }, [editStatus]);
@@ -59,6 +64,7 @@ export default function UpdateStatusForm() {
       message.error("Error updating Status. Please try again.");
     } finally {
       setIsLoading(false);
+      dispatch(setStatusEdit({ isBranchEdit: false, editStatus: {} }));
     }
   };
 
