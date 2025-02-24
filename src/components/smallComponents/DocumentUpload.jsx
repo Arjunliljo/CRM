@@ -508,7 +508,7 @@ function DocumentUpload({ lead, onUpload, onDelete, onUpdate }) {
 
     if (!file || !details) return;
 
-    const success = await onUpload(file, { ...details, leadId: lead._id });
+    const success = await onUpload(file, { ...details, leadId: lead._id, mainFolder: "documents" , subFolder: lead._id });
 
     if (success) {
       // Clean up form state
