@@ -13,7 +13,6 @@ export default function UpdateStatusForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { editStatus } = useSelector((state) => state.creation);
 
-  console.log(editStatus, "agsdjkgaskdsakjg");
   const [formData, setFormData] = useState({
     name: editStatus.name || "",
     isTab: editStatus.isTab ?? null,
@@ -72,8 +71,6 @@ export default function UpdateStatusForm() {
   const handleCancel = () => {
     dispatch(setStatusEdit({ isBranchEdit: false, editStatus: {} }));
   };
-
-  console.log(formData, "asdgksgdkasgdkasg");
 
   return (
     <div className="content-section dependancies">

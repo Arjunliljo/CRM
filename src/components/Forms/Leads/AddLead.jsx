@@ -20,9 +20,13 @@ export default function AddLead({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(newLead, "newLead");
-
-    if (!newLead.name || !newLead.email || !newLead.phone || !newLead.status || !newLead.country) {
+    if (
+      !newLead.name ||
+      !newLead.email ||
+      !newLead.phone ||
+      !newLead.status ||
+      !newLead.country
+    ) {
       message.error("Please fill in the fields");
       return;
     }
@@ -82,10 +86,13 @@ export default function AddLead({
 
         <div className="modal__form-row">
           <div className="modal__form-input-text">
-            <CountrySelector countries={countries} handleChange={handleChange}/>
+            <CountrySelector
+              countries={countries}
+              handleChange={handleChange}
+            />
           </div>
           <div className="modal__form-input-text">
-            <StatusSelector statuses={statuses} handleChange={handleChange}/>
+            <StatusSelector statuses={statuses} handleChange={handleChange} />
           </div>
         </div>
 

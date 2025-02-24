@@ -20,13 +20,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 // app.use(addDbNameToRequest);
 
-
 // authorizeB2().then(() => {
 //   console.log("Successfully authorized with Backblaze B2");
 // }).catch((err) => {
 //   console.error("Error authorizing with Backblaze B2:", err);
 // });
-
 
 app.use(
   cors({

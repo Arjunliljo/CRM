@@ -6,7 +6,7 @@ function Selector({
   onSet = () => {},
   redux = true,
   disabled = false,
-  placeholder = "Select Option",
+  placeholder,
 }) {
   const dispatch = useDispatch();
 

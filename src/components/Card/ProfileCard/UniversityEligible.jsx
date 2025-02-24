@@ -9,6 +9,8 @@ function UniversityEligible() {
   const courses = ["UG", "Option 2", "Option 3"];
   const Offer = ["Fees", "Option 2", "Option 3"];
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [university, setNewUniversity] = useState("");
+
   const handleOptionChange = (newOption) => {
     console.log("Selected Option:", newOption);
   };

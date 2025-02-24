@@ -99,13 +99,12 @@ export default function Students() {
   };
 
   const handleRemarkSubmit = async (remark, leadId) => {
-    console.log(remark, leadId, "remark");
     try {
       const response = await apiClient.patch(`/lead/updateLeadRemark`, {
         leadId: leadId,
         remark,
       });
-      console.log(response);
+
       // dispatch(updateLeadRemark(remark ));
       refetchLeads();
 
@@ -173,7 +172,7 @@ export default function Students() {
   const handleStatusCardSubmit = async (status) => {
     try {
       const respones = await apiClient.patch("/lead/updateLeadStatus", status);
-      console.log(respones, "status");
+
       dispatch(updateLeadStatus(respones?.data?.data));
       refetchLeads();
       message.success("Status updated successfully");
@@ -199,7 +198,7 @@ export default function Students() {
 
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
-  console.log(leadsConfigs, "leadsConfigs?.leads");
+
   const IContents = leadsConfigs?.leads?.map((student, index) => (
     <StudentsCard
       key={index}

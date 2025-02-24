@@ -6,6 +6,7 @@ import { getStatusName } from "../../../service/nameFinders";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch } from "react-redux";
 
 export default function ProfileCardStatus({
   statuses,
@@ -18,6 +19,8 @@ export default function ProfileCardStatus({
     statuses?.[0];
   const [status, setStatus] = useState(initialStatus);
   const [remark, setRemark] = useState("");
+
+  const dispatch = useDispatch();
 
   // Store the full country object
   const initialCountry =
@@ -67,7 +70,7 @@ export default function ProfileCardStatus({
       followupDate: followupDate,
       leadId: lead?._id,
     };
-    onsubmit(statusData);
+    onsubmit(statusData, dispatch);
   };
 
   return (

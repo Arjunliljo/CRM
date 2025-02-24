@@ -89,7 +89,6 @@ export default function StatusNames() {
       }
     }
     updateStatuses();
-    console.log(localStatuses, "localStatuses");
   }, [localStatuses]);
   return (
     <div className="dependancies">

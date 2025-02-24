@@ -11,8 +11,6 @@ export default function PopoverContent({
 }) {
   const { countryConfigs } = useApi();
 
-  console.log(formData, "sdljhflkashklasdl");
-
   // Set default selected countries from formData when component mounts
   React.useEffect(() => {
     if (formData?.countries?.length > 0) {

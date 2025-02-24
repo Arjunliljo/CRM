@@ -5,7 +5,6 @@ import PopoverContent from "./PopoverContent";
 export default function StatusRow1({ newStatus, setNewStatus }) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState([]);
-  console.log(newStatus, "selectedCountry");
 
   const handleTabSelection = (value) => {
     setNewStatus((prev) => ({

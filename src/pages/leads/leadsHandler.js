@@ -10,7 +10,7 @@ const addQualification = async (newQualification, dispatch) => {
     );
 
     dispatch(updateCurLead(response?.data?.data));
-    refetchLeads()
+    refetchLeads();
   } catch (error) {
     console.error("Error adding mark:", error);
   }
@@ -25,7 +25,7 @@ const editQualification = async (updatedQualification, dispatch) => {
     });
 
     dispatch(updateCurLead(response?.data?.data));
-    refetchLeads()
+    refetchLeads();
   } catch (error) {
     console.error("Error editing mark:", error);
   }
@@ -39,7 +39,7 @@ const deleteQualification = async (cardId, leadId, dispatch) => {
     });
 
     dispatch(updateCurLead(response?.data?.data));
-    refetchLeads()
+    refetchLeads();
   } catch (error) {
     console.error("Error deleting mark:", error);
   }

@@ -12,10 +12,6 @@ export default function AutoBtn({ style, callBack = () => {}, isAuto }) {
     callBack(!set);
   };
 
-  // useEffect(() => {
-  //   callBack(set);
-  // }, [set, callBack]);
-
   return (
     <button
       style={style}

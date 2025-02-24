@@ -8,8 +8,6 @@ export const useVerify = () => {
   const navigate = useNavigate();
 
   const { isAuthenticated } = useSelector((state) => state.auth);
-  console.log(isAuthenticated, "sut");
-
   useEffect(() => {
     dispatch(verifyUser());
   }, [dispatch]);
