@@ -1,45 +1,125 @@
-import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
-import { MdOutlineInterests } from "react-icons/md";
-import { MdDateRange } from "react-icons/md";
-import EligibleBttn from "../../buttons/EligibleBttn";
-import PrimaryBttn from "../../buttons/PrimaryBttn";
+import {
+  getBranchName,
+  getRoleName,
+  getStatusName,
+} from "../../../service/nameFinders";
+import { useApi } from "../../../context/apiContext/ApiContext";
 
-function UserPosition() {
+
+function UserPosition({ user }) {
+  const { statusConfigs, roleConfigs, branchConfigs } = useApi();
+
+  const { statuses = [] } = statusConfigs;
+  const { roles = [] } = roleConfigs;
+  const { branches = [] } = branchConfigs;
+
+  const rolesArray =
+    user?.roles?.map((role) => ({
+      name: getRoleName(role, roles) || "",
+      _id: role || "",
+    })) || [];
+
+  const branchesArray =
+    user?.branches?.map((branch) => ({
+      name: getBranchName(branch, branches) || "",
+      _id: branch || "",
+    })) || [];
+
+  const statusArray =
+    user?.statuses?.map((status) => ({
+      name: getStatusName(status, statuses) || "",
+      _id: status || "",
+    })) || [];
+
+  const userRoleName = getRoleName(user?.role, roles);
+
   return (
     <div className="profileCardEdituser-box personalUserEdit-status">
       <div className="personalUserEdit-details-heading">
         <span className="name-small">Position</span>
       </div>
       <form className="personalUserEdit-status-elements">
-        <span className="personalUserEdit-status-html-for">Branch</span>
-        <div className="select-user-container">
-          <select className="selector-with-icon-user" name="Interested" id="">
-            <option value="Interested">Interested</option>
-            <option value="Verified">Verified</option>
-          </select>
+        {/* <span className="personalUserEdit-status-html-for">Role</span> */}
+        <div>{userRoleName}</div>
+        <span className="personalUserEdit-status-html-for">Managing Roles</span>
+        <div
+          className="select-user-container"
+          style={{
+            width: "100%",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "0.3rem",
+            marginBottom: "0.8rem",
+          }}
+        >
+          {rolesArray.map((role) => (
+            <div
+              key={role._id}
+              style={{
+                border: "1px solid #0087d4",
+                padding: "0.3rem",
+                borderRadius: "4px",
+                fontSize: "0.8rem",
+              }}
+            >
+              {role.name}
+            </div>
+          ))}
         </div>
-        <span className="personalUserEdit-status-html-for">Role</span>
-        <div className="select-user-container">
-          <select className="selector-with-icon-user" name="Interested" id="">
-            <option value="Interested">Interested</option>
-            <option value="Verified">Verified</option>
-          </select>
+        <span className="personalUserEdit-status-html-for">Managing Statuses</span>
+        {/* <div className="select-user-container" style={{ display: "flex", flexWrap: "wrap" }}> */}
+        <div
+          className="select-user-container"
+          style={{
+            width: "100%",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "0.3rem",
+            marginBottom: "0.8rem",
+          }}
+        >
+          {statusArray.map((status) => (
+            <div
+              key={status._id}
+              style={{
+                border: "1px solid #0087d4",
+                padding: "0.3rem",
+                borderRadius: "4px",
+                fontSize: "0.8rem",
+              }}
+            >
+              {status.name}
+            </div>
+          ))}
         </div>
-        <span className="personalUserEdit-status-html-for">Permissions</span>
-        <div className="select-user-container">
-          <select className="selector-with-icon-user" name="Interested" id="">
-            <option value="Interested">Interested</option>
-            <option value="Verified">Verified</option>
-          </select>
-        </div>
+        {/* </div> */}
 
-        <div className="select-user-container" style={{ marginTop: "0.5rem" }}>
-          <select className="selector-with-icon-user" name="Interested" id="">
-            <option value="Interested">Interested</option>
-            <option value="Verified">Verified</option>
-          </select>
+        <span className="personalUserEdit-status-html-for">Managing Branches</span>
+        <div
+          className="select-user-container"
+          style={{
+            width: "100%",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "0.3rem",
+            marginBottom: "0.8rem",
+          }}
+        >
+          {branchesArray.map((branch) => (
+            <div
+              key={branch._id}
+              style={{
+                border: "1px solid #0087d4",
+                padding: "0.3rem",
+                borderRadius: "4px",
+                fontSize: "0.8rem",
+              }}
+            >
+              {branch.name}
+            </div>
+          ))}
         </div>
-        <div className="personalUserEdit-details-buttons">
+        {/* <div className="personalUserEdit-details-buttons" style={{ display: "flex", flexWrap: "wrap" }}>
           <PrimaryBttn
             style={{
               backgroundColor: "#dadada",
@@ -47,6 +127,7 @@ function UserPosition() {
               paddingRight: "2rem",
               color: "black",
               fontWeight: "bold",
+              marginRight: "0.5rem"
             }}
           >
             Cancel
@@ -60,7 +141,7 @@ function UserPosition() {
           >
             Add
           </PrimaryBttn>
-        </div>
+        </div> */}
       </form>
     </div>
   );

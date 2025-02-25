@@ -16,3 +16,9 @@ export const getCountryName = (country, countries) => {
   const countryName = countries?.find((obj) => obj._id === country)?.name;
   return countryName;
 };
+export const getBranchName = (branch, branches) => {
+  if (!branch || !branches) return null;
+
+  const branchName = branches?.find((obj) => obj._id === branch)?.name;
+  return branchName;
+};

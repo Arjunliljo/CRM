@@ -10,27 +10,9 @@ import { FaRegUser, FaWhatsapp } from "react-icons/fa";
 import { GoHome } from "react-icons/go";
 import { IoAdd } from "react-icons/io5";
 import PrimaryBttn from "../../buttons/PrimaryBttn";
-import { color } from "framer-motion";
 
-function UserPersonalEdit() {
+function UserPersonalEdit({user}) {
   const [isEditing, setIsEditing] = useState(false);
-  const [details, setDetails] = useState({
-    name: "David Wilson",
-    contact: "9895699452",
-    email: "davidwilson123@gmail.com",
-    address: "Add address",
-  });
-
-  const [cards, setCards] = useState([
-    { id: 1, title: "SSLC", percentage: "79%" },
-    { id: 1, title: "PG", percentage: "69%" },
-    { id: 1, title: "IELTS", percentage: "5" },
-    { id: 1, title: "SSLC", percentage: "80.05%" },
-    { id: 1, title: "IELTS", percentage: "72%" },
-    { id: 1, title: "SSLC", percentage: "5" },
-    { id: 1, title: "UG", percentage: "69%" },
-    { id: 1, title: "HSE", percentage: "79%" },
-  ]);
 
   //to edit mode open
   const handleOpenEdit = () => {
@@ -46,24 +28,6 @@ function UserPersonalEdit() {
   const handleSaveEdit = () => {
     setIsEditing(false);
     //here : logic for save the data
-  };
-
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setDetails((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleAddCard = () => {
-    const newCard = {
-      id: cards.length + 1,
-      title: "New Card",
-      percentage: "50%",
-    };
-    setCards((prevCards) => [...prevCards, newCard]);
   };
 
   return (
@@ -96,12 +60,11 @@ function UserPersonalEdit() {
               <input
                 type="text"
                 name="name"
-                value={details.name}
-                onChange={handleChange}
+                value={user.name}
                 className="personalUserEdit-details-edit-input"
               />
             ) : (
-              <span>{details.name}</span>
+              <span>{user.name}</span>
             )}
           </div>
         </div>
@@ -118,12 +81,11 @@ function UserPersonalEdit() {
                 <input
                   type="text"
                   name="contact"
-                  value={details.contact}
-                  onChange={handleChange}
+                  value={user.phone}
                   className="personalUserEdit-details-edit-input"
                 />
               ) : (
-                <span>{details.contact}</span>
+                <span>{user.phone}</span>
               )}
             </div>
           </div>
@@ -143,12 +105,11 @@ function UserPersonalEdit() {
               <input
                 type="email"
                 name="email"
-                value={details.email}
-                onChange={handleChange}
+                value={user.email}
                 className="personalUserEdit-details-edit-input"
               />
             ) : (
-              <span>{details.email}</span>
+              <span>{user.email}</span>
             )}
           </div>
         </div>
@@ -164,12 +125,11 @@ function UserPersonalEdit() {
               <input
                 type="text"
                 name="address"
-                value={details.address}
-                onChange={handleChange}
+                value={user.addressOne}
                 className="personalUserEdit-details-edit-input"
               />
             ) : (
-              <span>{details.address}</span>
+              <span>{user.addressOne}</span>
             )}
           </div>
         </div>
