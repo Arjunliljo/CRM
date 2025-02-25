@@ -1,16 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { defaultTabs } from "../../../../api/Data/getData";
 import { setSelectedTabs } from "../../../../global/profileSlice";
+import { BsExclamation } from "react-icons/bs";
 
-export default function Tabs() {
+export default function Tabs({ isCreate }) {
   const dispatch = useDispatch();
 
   const { tabs } = useSelector((state) => state.status);
   const { selectedTabs } = useSelector((state) => state.profile);
 
   const allTabs = defaultTabs.concat(tabs);
-  console.log("tabes",tabs);
-  
+
 
   const handleTabClick = (tab) => {
     if (selectedTabs.includes(tab)) {
@@ -23,7 +23,15 @@ export default function Tabs() {
   return (
     <div className="content-section main-status-container">
       <div className="content-section-head" style={{ height: "fit-content" }}>
-        <h2>Tabs</h2>
+        <h2>
+          Tabs{" "}
+          {isCreate && !selectedTabs?.length && (
+            <BsExclamation
+              className="error-icon"
+              style={{ marginLeft: 0, fontSize: "20px" }}
+            />
+          )}
+        </h2>
       </div>
       <div className="content-section-item-box">
         {allTabs?.length > 0 ? (

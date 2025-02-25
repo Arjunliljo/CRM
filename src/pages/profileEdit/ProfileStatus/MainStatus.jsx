@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setProfileMainStatus } from "../../../../global/profileSlice";
+import { BsExclamation } from "react-icons/bs";
 
-export default function MainStatus({ statuses }) {
+export default function MainStatus({ statuses, isCreate }) {
   const dispatch = useDispatch();
   const selectedStatuses = useSelector((state) => state.profile.mainStatuses);
 
@@ -11,8 +12,7 @@ export default function MainStatus({ statuses }) {
       ? selectedStatuses.filter((status) => status.name !== item.name)
       : [...selectedStatuses, item];
 
-      console.log(updatedStatuses);
-      
+
 
     dispatch(setProfileMainStatus(updatedStatuses));
   };
@@ -20,7 +20,15 @@ export default function MainStatus({ statuses }) {
   return (
     <div className="content-section main-status-container">
       <div className="content-section-head" style={{ height: "fit-content" }}>
-        <h2>Main Status</h2>
+        <h2>
+          Main Status{" "}
+          {isCreate && !selectedStatuses?.length && (
+            <BsExclamation
+              className="error-icon"
+              style={{ marginLeft: 0, fontSize: "20px" }}
+            />
+          )}
+        </h2>
       </div>
       <div className="content-section-item-box">
         {statuses?.length > 0 ? (

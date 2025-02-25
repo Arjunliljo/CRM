@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedRoles } from "../../../../global/profileSlice";
 import { useApi } from "../../../context/apiContext/ApiContext";
+import { BsExclamation } from "react-icons/bs";
 
-export default function Roles() {
+export default function Roles({ isCreate }) {
   const dispatch = useDispatch();
 
   const {
@@ -21,7 +22,15 @@ export default function Roles() {
   return (
     <div className="content-section main-status-container">
       <div className="content-section-head" style={{ height: "fit-content" }}>
-        <h2>Roles</h2>
+        <h2>
+          Roles
+          {isCreate && !selectedRoles?.length && (
+            <BsExclamation
+              className="error-icon"
+              style={{ marginLeft: 0, fontSize: "20px" }}
+            />
+          )}
+        </h2>
       </div>
       <div className="content-section-item-box">
         {roles?.length > 0 ? (

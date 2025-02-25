@@ -110,6 +110,9 @@
       font-size: 18px;
       margin-bottom: 20px;
       color: #333;
+      display: flex;
+      align-items: center;
+      // gap: 8px;
     }
 
     &-head {
@@ -165,4 +168,41 @@
 .dynamic-selector-list-item.active {
   background-color: variables.$color-blue;
   color: variables.$color-white;
+}
+.error-icon {
+  color: red;
+  margin-left: 5px;
+  animation: blink 1.5s ease-in-out infinite;
+  font-weight: 100;
+}
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.form-group {
+  display: flex;
+  align-items: center;
+}
+
+.error-icon-position {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.password-input {
+  position: relative;
+  width: 100%;
+}
+
+.password-input input {
+  width: 100%;
 }

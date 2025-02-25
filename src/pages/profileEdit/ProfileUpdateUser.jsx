@@ -16,6 +16,7 @@ function ProfileUpdateUser() {
   const [activeTab, setActiveTab] = useState(0);
   const userData = useCreateUser();
   const dispatch = useDispatch();
+  const [isCreate, setIsCreate] = useState(false);
 
   const handleNext = () => {
     if (activeTab < TABS.length - 1) {
@@ -28,6 +29,7 @@ function ProfileUpdateUser() {
   };
 
   const handleCreate = async () => {
+    setIsCreate(true);
     await apiClient.post("/user/create", userData);
     message.success("User created successfully!");
     dispatch(resetProfile());
@@ -40,9 +42,10 @@ function ProfileUpdateUser() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         tabs={TABS}
+        isCreate={isCreate}
       />
-      {activeTab === 0 && <ProfileBasicHolder />}
-      {activeTab === 1 && <ProfileStatusHolder />}
+      {activeTab === 0 && <ProfileBasicHolder isCreate={isCreate} />}
+      {activeTab === 1 && <ProfileStatusHolder isCreate={isCreate} />}
       {activeTab === 2 && <ProfileDashboardHolder />}
       <ActionButtons
         onHandleNext={handleNext}

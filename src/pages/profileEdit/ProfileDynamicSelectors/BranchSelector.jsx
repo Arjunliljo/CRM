@@ -1,32 +1,40 @@
 import { useEffect, useState } from "react";
 import { useApi } from "../../../context/apiContext/ApiContext";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setProfileBranches } from "../../../../global/profileSlice";
+import { BsExclamation } from "react-icons/bs";
 
-export default function BranchSelector() {
+export default function BranchSelector({ isCreate }) {
   const {
     branchConfigs: { branches },
   } = useApi();
 
   const dispatch = useDispatch();
-
-  const [selectedBranch, setSelectedBranch] = useState([]);
+  const profileData = useSelector((state) => state.profile);
+  const [selectedBranch, setSelectedBranch] = useState(profileData.branches);
 
   const handleBranchClick = (branch) => {
-    setSelectedBranch((prev) =>
-      prev.includes(branch)
+    setSelectedBranch((prev) => {
+      const updatedBranches = prev.includes(branch)
         ? prev.filter((b) => b !== branch)
-        : [...prev, branch]
-    );
+        : [...prev, branch];
+      dispatch(setProfileBranches(updatedBranches));
+      return updatedBranches;
+    });
   };
-
-  useEffect(() => {
-    dispatch(setProfileBranches(selectedBranch));
-  }, [selectedBranch, dispatch]);
 
   return (
     <div className="dynamic-selector">
-      <h2 className="small-heading">Branch</h2>
+      <h2
+        className="small-heading"
+        style={{ display: "flex", alignItems: "center" }}
+      >
+        Branch{" "}
+        {isCreate && !selectedBranch?.length && (
+          <BsExclamation className="error-icon" style={{ fontSize: "20px" }} />
+        )}
+      </h2>
+
       <div className="dynamic-selector-list">
         {branches?.length > 0 ? (
           branches.map((branch, i) => (
