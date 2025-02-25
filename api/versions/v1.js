@@ -12,7 +12,7 @@ import metaAccountRoute from "../Routes/metaAccountRoute.js";
 import generalRoute from "../Routes/generalRoute/generalRoute.js";
 import applicationRoute from "../Routes/applicationRoute.js";
 import batchRoute from "../Routes/batchRoute/batchRoute.js";
-import courseRoute from "../Routes/University/courseRoute.js";
+import activityRoute from "../Routes/activityLogRoute/activityLogRoute.js";
 
 const router = express.Router();
 
@@ -29,5 +29,6 @@ router.use("/chat", chatRoute);
 router.use("/general", generalRoute);
 router.use("/application", applicationRoute);
 router.use("/batch", batchRoute);
+router.use("/log", activityRoute);
 
 export default router;
