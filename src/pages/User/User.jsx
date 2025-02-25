@@ -14,8 +14,6 @@ export default function User() {
 
   const { users } = useSelector((state) => state.users);
 
-  console.log(users);
-
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate("/profile-edit");
@@ -41,7 +39,8 @@ export default function User() {
   const ISelectorOne = <Selector />;
   const ISelectorTwo = <Selector />;
   const ISelectorThree = <Selector />;
-  const IProfileCard = <UserRight />;
+  const IProfileCard = <UserRight user={curUser} />;
+
 
   const TopLeft = [
     <div key="search-bar">{ISearchBar}</div>,

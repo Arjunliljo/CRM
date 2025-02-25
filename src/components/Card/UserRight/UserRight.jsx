@@ -9,8 +9,7 @@ import UniversityEligible from "../ProfileCard/UniversityEligible";
 import UserPersonalEdit from "./UserPersonalEdit";
 import UserPosition from "./UserPosition";
 
-function UserRight() {
-
+function UserRight({ user }) {
   const lead = {
     img: "https://via.placeholder.com/100",
     name: "College De Paris",
@@ -20,18 +19,22 @@ function UserRight() {
   };
   const currUser = useSelector((state)=> state.currUser)
   console.log(currUser);
-  
+
   return (
     <div className="UserRightCard">
       <div className="UserRightCard-head-info-details">
         <div>
-          <img src={lead.img} alt={lead.name} />
+          <img
+            src={user.image}
+            alt={user.name}
+            style={{ width: "50px", height: "50px" }}
+          />
         </div>
         <div className="name-bar-name name-small">
           <div>
-            {lead.name}
+            {user.name}
             <br></br>
-            <p style={{ fontSize: "1rem", color: "gray" }}>{lead.location}</p>
+            <p style={{ fontSize: "1rem", color: "gray" }}>{user.addressOne}</p>
           </div>
           <div className="UserRightCard-head-info-location-card">
             <span className="UserRightCard-head-info-location"></span>
@@ -54,8 +57,8 @@ function UserRight() {
         </div>
       </div>
       <div className="UserRightCard-boxes">
-        <UserPersonalEdit />
-        <UserPosition />
+        <UserPersonalEdit user={user} />
+        <UserPosition user={user} />
       </div>
     </div>
   );

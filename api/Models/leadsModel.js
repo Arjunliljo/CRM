@@ -165,29 +165,43 @@ leadSchema.pre("save", async function (next) {
 });
 
 leadSchema.pre("findOneAndUpdate", async function (next) {
-  const update = this.getUpdate();
-  if (!update) return next(new AppError("Failed to create Activity Log", 400));
+  try {
+    const update = this.getUpdate();
+    if (!update)
+      return next(new AppError("Failed to create Activity Log", 400));
 
-  let activityLog = await ActivityLog.findOne({ leadID: update._id });
+    const docId = this.getQuery()._id;
+    if (!docId) return next(new AppError("Lead ID not found", 400));
 
-  // Create new activity log if it doesn't exist
-  if (!activityLog) {
-    activityLog = await ActivityLog.create({
-      leadID: update._id,
-      statusChange: [],
-    });
+    let activityLog = await ActivityLog.findOne({ leadID: docId });
+
+    // Create new activity log if it doesn't exist
+    if (!activityLog) {
+      activityLog = await ActivityLog.create({
+        leadID: docId,
+        statusChange: [{ statusID: "67bb53bd944190352e29f75f" }],
+      });
+    }
+
+    // Check for status in $set operator if using update operators
+    const newStatus = update.status || (update.$set && update.$set.status);
+    if (newStatus) {
+      // Check if the last status is different from the new status
+      const lastStatus =
+        activityLog.statusChange[activityLog.statusChange.length - 1];
+      if (
+        !lastStatus ||
+        lastStatus.statusID.toString() !== newStatus.toString()
+      ) {
+        activityLog.statusChange.push({ statusID: newStatus });
+        await activityLog.save();
+      }
+    }
+
+    next();
+  } catch (error) {
+    next(error);
   }
-
-  // Only push status change if status is being updated
-  if (update.status) {
-    activityLog.statusChange.push({ statusID: update.status });
-
-    const log = await activityLog.save();
-
-    if (!log) return next(new AppError("Failed to create Activity Log", 400));
-  }
-
-  next();
 });
 
 const Lead = mongoose.model("Lead", leadSchema);

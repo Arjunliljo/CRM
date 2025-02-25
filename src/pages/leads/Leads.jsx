@@ -187,7 +187,7 @@ export default function Leads() {
     <EligiableCourses onClick={handleEligibleCourseClick} />
   );
 
-  const IActivityLog = <ActivityLog />;
+  const IActivityLog = <ActivityLog curLead={curLead} />;
 
   const IProfileCard = (
     <ProfileCard
