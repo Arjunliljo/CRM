@@ -70,7 +70,6 @@ export const router = (tabs) => {
   });
 
   const routes = tabses.concat(dynamicRoutes || []);
-  console.log(routes, "routes");
 
   return createBrowserRouter([
     {

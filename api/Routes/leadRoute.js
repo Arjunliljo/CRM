@@ -25,7 +25,7 @@ const router = express.Router();
 // router.delete("/", dropLead);
 router.post("/uploadLeadFile", upload, uploadLeadFile);
 router.patch("/deleteLeadDocument", deleteFile, deleteLeadDocument);
-router.patch("/updateLeadDocuments", deleteFile, updateLeadDocuments);
+router.patch("/updateLeadDocuments", updateLeadDocuments);
 router.patch("/updateLeadRemark", updateLeadRemark);
 router.patch("/updateLeadPersonalDetails", updateLeadPersonalDetails);
 router.patch("/updateLeadStatus", updateLeadStatus);

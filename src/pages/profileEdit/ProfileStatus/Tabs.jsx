@@ -11,7 +11,6 @@ export default function Tabs({ isCreate }) {
 
   const allTabs = defaultTabs.concat(tabs);
 
-
   const handleTabClick = (tab) => {
     if (selectedTabs.includes(tab)) {
       dispatch(setSelectedTabs(selectedTabs.filter((t) => t !== tab)));

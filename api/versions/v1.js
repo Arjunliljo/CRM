@@ -11,6 +11,8 @@ import metaLeadRoute from "../Routes/metaLeadRoute.js";
 import metaAccountRoute from "../Routes/metaAccountRoute.js";
 import generalRoute from "../Routes/generalRoute/generalRoute.js";
 import applicationRoute from "../Routes/applicationRoute.js";
+import batchRoute from "../Routes/batchRoute/batchRoute.js";
+import courseRoute from "../Routes/University/courseRoute.js";
 
 const router = express.Router();
 
@@ -26,5 +28,6 @@ router.use("/university", universityRoute);
 router.use("/chat", chatRoute);
 router.use("/general", generalRoute);
 router.use("/application", applicationRoute);
+router.use("/batch", batchRoute);
 
 export default router;

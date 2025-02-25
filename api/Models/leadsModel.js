@@ -48,7 +48,7 @@ const leadSchema = mongoose.Schema(
     status: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Status",
-      default: "67b5833fbe7074541348db91",
+      default: "67bb53bd944190352e29f75f",
     },
 
     isStudent: {
@@ -140,6 +140,14 @@ const leadSchema = mongoose.Schema(
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+leadSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "users",
+    select: "name role",
+  });
+  next();
+});
 
 const Lead = mongoose.model("Lead", leadSchema);
 

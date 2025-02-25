@@ -1,3 +1,4 @@
+import APIFeatures from "../APIFeatures/APIFeatures.js";
 import Lead from "../Models/leadsModel.js";
 import Status from "../Models/statusModel.js";
 import Qualification from "../Models/University/qualifications.js";
@@ -8,8 +9,6 @@ import { assignLeadsToUsers } from "./batch/batchAssigners.js";
 
 const createLead = catchAsync(async (req, res) => {
   let { name, email, phone, campaign, countries, status, country } = req.body;
-
-  console.log(req.body, "req.body");
 
   // Sanitize inputs
   name = sanitizeInput(name);
@@ -72,14 +71,25 @@ const createLead = catchAsync(async (req, res) => {
     data: newLead,
   });
 });
-
 const getAllLeads = catchAsync(async (req, res) => {
   // Fetch leads and populate all status IDs
-  const leads = await Lead.find({})
-    .populate("branch") // Populate other fields as needed
-    .populate("helpers")
-    .populate("countries")
-    .populate("qualification");
+  let filter = {};
+  const features = new APIFeatures(Lead, Lead.find(filter), req.query);
+
+  features
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate(await Lead.countDocuments())
+    .filterByBranch()
+    .filterByDateRange()
+    .search();
+
+  const leads = await features.query.populate({
+    path: 'qualification',
+    model: 'Qualification',
+    strictPopulate: false
+  });
 
   return res.status(200).json({
     success: true,

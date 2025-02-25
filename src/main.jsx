@@ -6,7 +6,7 @@ import store from "../global/store.js";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ApiProvider } from "./context/apiContext/ApiContext.jsx";
 import queryClient from "../config/reactQuery.js";
-import SocketProvider from "../config/SocketProvider.jsx";
+import SocketProvider from "../config/socketProvider.jsx";
 import { router } from "../router/router.jsx";
 import CustomRouterProvider from "../router/CustomRouterProvider.jsx";
 

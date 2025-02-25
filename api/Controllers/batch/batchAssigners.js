@@ -142,6 +142,7 @@ export const assignLeadsToUsers = async (leadIds, user) => {
     return result;
   } catch (error) {
     console.error("Error in assignLeadsToUsers:", error);
+
     throw error;
   }
 };

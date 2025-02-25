@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { message } from "antd";
 import { useNavigate } from "react-router-dom";
-import apiClient from "../../../config/axiosInstance";
+
 import {
-  removeCurLeadDocument,
   setCurLead,
   setIsAssigning,
   setIsUniversitySelected,
+  setLeadCurCountry,
   setLeadDetailToggle,
+  setLeadsCurBranch,
+  setLeadsCurStatus,
   setToAssignLeads,
-  updateCurLeadDocuments,
-  updateLeadStatus,
-  updateCurLead,
 } from "../../../global/leadsSlice";
 import {
   useIDGetStatusesArray,
@@ -21,13 +19,12 @@ import {
   useIDGetRolesArray,
 } from "../../../api/Utilities/helper";
 import { useApi } from "../../context/apiContext/ApiContext";
-import { refetchCommens } from "../../apiHooks/useCommens";
-import { refetchLeads } from "../../apiHooks/useLeads";
+
 import {
   addQualification,
   deleteQualification,
   editQualification,
-} from "./leadsHandler";
+} from "./leadHandlers/qualificationHandlers";
 
 // Component imports
 import AutoBtn from "../../components/buttons/AutoBtn";
@@ -48,14 +45,38 @@ import ActivityLog from "../../components/Card/ProfileCard/ActivityLog";
 import PersonalDetails from "../../components/Card/ProfileCard/PersonalDetails";
 import NormalButton from "../../components/buttons/NormalButton";
 import AssingToUser from "./components/AssignToUser";
+import {
+  canStartApplication,
+  handleAutoBtn,
+  handlePersonalDetailsSubmit,
+  handleStartApplication,
+  handleStatusCardSubmit,
+} from "./leadHandlers/backendHandlers";
+import {
+  handleAssignLeads,
+  handleAssignToUser,
+} from "./leadHandlers/assignLeadsHandler";
+import {
+  handleDeleteDocument,
+  handleDocumentSubmit,
+  handleUpdateDocument,
+} from "./leadHandlers/documentHandler";
+import { refetchLeads } from "../../apiHooks/useLeads";
 
 export default function Leads() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { curLead, leadDetailToggle, isAssigning, toAssignLeads } = useSelector(
-    (state) => state.leads
-  );
+  const {
+    curLead,
+    leadDetailToggle,
+    isAssigning,
+    toAssignLeads,
+    curStatus,
+    curSource,
+    curBranch,
+    curCountry,
+  } = useSelector((state) => state.leads);
 
   const {
     leadsConfigs,
@@ -96,171 +117,13 @@ export default function Leads() {
     }));
   };
 
-  const handleAutoBtn = async (val) => {
-    try {
-      await apiClient.patch("/general/auto-assign", {
-        autoAssignLeadsToBranch: val,
-      });
-      refetchCommens();
-    } catch (error) {
-      message.error("Failed to update Auto Assign Leads to Branch");
-    }
-  };
-
-  const handleRemarkSubmit = async (remark, leadId) => {
-    try {
-      await apiClient.patch(`/lead/updateLeadRemark`, {
-        leadId,
-        remark,
-      });
-      message.success("Remark updated successfully");
-      refetchLeads();
-    } catch (error) {
-      message.error("Error updating lead remark");
-    }
-  };
-
-  const handleAssignLeads = (num) => {
-    return () => {
-      let selectedLeads;
-      if (num === "all") {
-        selectedLeads = leadsConfigs?.leads;
-      } else {
-        selectedLeads = leadsConfigs?.leads?.slice(0, Number(num));
-      }
-      dispatch(setToAssignLeads(selectedLeads));
-    };
-  };
-
-  const handleAssignToUser = () => {
-    if (toAssignLeads.length === 0) {
-      message.error("No leads to assign");
-      return;
-    }
-    setAssignToUser(true);
-  };
-
   const handleAssignLeadsToggle = () => {
     dispatch(setIsAssigning(!isAssigning));
   };
 
-  const handleDocumentSubmit = async (file, details) => {
-    if (!file || !details || !curLead) return;
-
-    const formData = new FormData();
-    formData.append("docfile", file);
-    formData.append("leadId", details.leadId);
-    formData.append("content", details.content);
-    formData.append("isImportant", Boolean(details.isImportant));
-
-    try {
-      const response = await apiClient.post("/lead/uploadLeadFile", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      dispatch(updateCurLeadDocuments(response?.data?.data));
-      return true;
-    } catch (error) {
-      console.error("Error uploading document:", error);
-      return false;
-    }
-  };
-
-  const handleDeleteDocument = async (doc) => {
-    if (!curLead) return;
-    try {
-      await apiClient.patch("/lead/deleteLeadDocument", {
-        leadId: curLead._id,
-        documentObj: doc,
-      });
-      dispatch(removeCurLeadDocument(doc._id));
-      refetchLeads();
-    } catch (error) {
-      console.error("Error deleting document:", error);
-      return false;
-    }
-  };
-
-  const handleUpdateDocument = async (doc, updatedData) => {
-    if (!curLead) return;
-    try {
-      const response = await apiClient.patch("/lead/updateLeadDocuments", {
-        leadId: curLead._id,
-        documentObj: {
-          ...doc,
-          ...updatedData,
-        },
-      });
-      dispatch(updateCurLeadDocuments(response?.data?.data));
-      return true;
-    } catch (error) {
-      console.error("Error updating document:", error);
-      return false;
-    }
-  };
-
-  const canStartApplication = () => {
-    if (!curLead) return false;
-
-    const hasEnoughDocuments = curLead.documents?.length >= 4;
-    const hasMarks = curLead.qualification?.length > 0;
-    const hasStatus = Boolean(curLead.status);
-    const hasEligibleCourse = Boolean(curLead.isUniversitySelected);
-
-    return hasEnoughDocuments && hasMarks && hasStatus && hasEligibleCourse;
-  };
-
-  const handleStartApplication = async () => {
-    try {
-      await apiClient.post("/application", {
-        lead: curLead._id,
-        course: curLead.isUniversitySelected,
-        status: curLead.status,
-        applicationDate: new Date(),
-        remark: curLead.remark,
-        university: "23456789",
-        country: curLead.country,
-        studentId: "345678945678",
-        documents: curLead.documents,
-      });
-
-      message.success("Application started successfully");
-      navigate("/Student");
-    } catch (error) {
-      message.error("Error starting application");
-    }
-  };
-
-  const handleStatusCardSubmit = async (status) => {
-    try {
-      const response = await apiClient.patch("/lead/updateLeadStatus", status);
-      dispatch(updateLeadStatus(response?.data?.data));
-      message.success("Status updated successfully");
-      refetchLeads();
-    } catch (error) {
-      message.error("Error updating lead status");
-    }
-  };
-
-  const handlePersonalDetailsSubmit = async (details) => {
-    try {
-      const response = await apiClient.patch(
-        "/lead/updateLeadPersonalDetails",
-        {
-          leadId: curLead._id,
-          details,
-        }
-      );
-      dispatch(updateCurLead(response?.data?.data));
-      refetchLeads();
-      return true;
-    } catch (error) {
-      console.error("Error updating lead personal details:", error);
-      return false;
-    }
-  };
-
   const handleModalSubmit = (newQualification) => {
     addQualification({ ...newQualification, leadId: curLead._id }, dispatch);
+    refetchLeads();
   };
 
   const handleEditQualification = (updatedQualification) => {
@@ -288,13 +151,16 @@ export default function Leads() {
     }
   }, [isAssigning, dispatch]);
 
-  // UI Components
   const IDocumentUpload = curLead && (
     <DocumentUpload
       lead={curLead}
-      onUpload={handleDocumentSubmit}
-      onDelete={handleDeleteDocument}
-      onUpdate={handleUpdateDocument}
+      onUpload={(file, details) =>
+        handleDocumentSubmit(file, details, dispatch)
+      }
+      onDelete={(doc) => handleDeleteDocument(doc, curLead, dispatch)}
+      onUpdate={(doc, updatedData) =>
+        handleUpdateDocument(doc, updatedData, curLead, dispatch)
+      }
     />
   );
 
@@ -310,7 +176,7 @@ export default function Leads() {
 
   const IProfileCardStatus = (
     <ProfileCardStatus
-      statuses={statuses?.filter((val) => !val.isApplication)}
+      statuses={statuses}
       lead={curLead}
       countries={countries}
       onsubmit={handleStatusCardSubmit}
@@ -331,12 +197,14 @@ export default function Leads() {
       IEligiableCourses={IEligiableCourses}
       IActivityLog={IActivityLog}
       personalDetails={IPersonalDetails}
-      onsubmit={handleRemarkSubmit}
+      onsubmit={() => {}}
     />
   );
 
-  const IStartApplication = canStartApplication() ? (
-    <StartApplication handleStartApplication={handleStartApplication} />
+  const IStartApplication = canStartApplication(curLead) ? (
+    <StartApplication
+      handleStartApplication={() => handleStartApplication(curLead, navigate)}
+    />
   ) : null;
 
   const TopLeft = [
@@ -355,19 +223,34 @@ export default function Leads() {
     </NormalButton>,
     isAssigning && (
       <>
-        <NormalButton key="allocate" onClick={handleAssignToUser}>
+        <NormalButton
+          key="allocate"
+          onClick={handleAssignToUser(toAssignLeads, setAssignToUser)}
+        >
           {`Allocate ${toAssignLeads.length}`}
         </NormalButton>
-        <NormalButton key="all" onClick={handleAssignLeads("all")}>
+        <NormalButton
+          key="all"
+          onClick={handleAssignLeads("all", leadsConfigs?.leads, dispatch)}
+        >
           All
         </NormalButton>
-        <NormalButton key="fifty" onClick={handleAssignLeads(50)}>
+        <NormalButton
+          key="fifty"
+          onClick={handleAssignLeads(50, leadsConfigs?.leads, dispatch)}
+        >
           50
         </NormalButton>
-        <NormalButton key="twenty" onClick={handleAssignLeads(20)}>
+        <NormalButton
+          key="twenty"
+          onClick={handleAssignLeads(20, leadsConfigs?.leads, dispatch)}
+        >
           20
         </NormalButton>
-        <NormalButton key="ten" onClick={handleAssignLeads(10)}>
+        <NormalButton
+          key="ten"
+          onClick={handleAssignLeads(10, leadsConfigs?.leads, dispatch)}
+        >
           10
         </NormalButton>
       </>
@@ -382,9 +265,28 @@ export default function Leads() {
 
   const BottomLeft = [
     <AllLeads key="all-leads" />,
-    <Selector key="status" optionsObj={statusObj} />,
-    <Selector key="branches" optionsObj={branchesObj} />,
-    <Selector key="countries" optionsObj={countriesObj} />,
+    <Selector
+      key="status"
+      optionsObj={statusObj}
+      onSet={setLeadsCurStatus}
+      set={curStatus}
+      placeholder="All Status"
+    />,
+    <Selector
+      key="branches"
+      set={curBranch}
+      optionsObj={branchesObj}
+      onSet={setLeadsCurBranch}
+      placeholder="All Branches"
+    />,
+
+    <Selector
+      key="countries"
+      placeholder="All Countries"
+      set={curCountry}
+      optionsObj={countriesObj}
+      onSet={setLeadCurCountry}
+    />,
   ];
 
   const BottomRight = [<Selector key="roles" optionsObj={rolesObj} />];
@@ -399,7 +301,7 @@ export default function Leads() {
       lead={lead}
       istoggle={leadDetailToggle}
       toggle={setLeadDetailToggle}
-      onSubmit={handleRemarkSubmit}
+      onSubmit={() => {}}
       toAssignLeads={toAssignLeads}
     />
   ));

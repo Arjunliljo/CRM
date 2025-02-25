@@ -8,13 +8,13 @@ import {
   updateUniversity,
   deleteUniversity,
 } from "../../Controllers/University/universityController.js";
-
+import upload from "../../middlewares/uploadMiddlware.js";
 const router = express.Router();
 
 router.use("/qualification", qualificationRoute);
 router.use("/course", courseRoute);
 
-router.post("/", createUniversity);
+router.post("/", upload, createUniversity);
 router.get("/", getAllUniversity);
 router.get("/:id", getUniversity);
 router.patch("/:id", updateUniversity);

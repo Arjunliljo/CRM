@@ -9,7 +9,6 @@ import apiClient from "../../../../../config/axiosInstance";
 
 export default function AddStatusForm({ newStatus, setNewStatus }) {
   const [isLoading, setIsLoading] = useState(false);
-  console.log(newStatus, "newasdsdsdsadsStatus");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,8 +46,6 @@ export default function AddStatusForm({ newStatus, setNewStatus }) {
 
       message.success("Status created successfully!");
     } catch (e) {
-      console.log(e);
-
       message.error("Error creating status. Please try again.");
     } finally {
       setIsLoading(false);

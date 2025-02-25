@@ -1,34 +1,57 @@
 import { useState } from "react";
 import CancelBtn from "../../buttons/CancelBtn";
 import NextBtn from "../../buttons/NextBtn";
-import QualificationSelector from "./QualificationSelect";
 import UniversitySelector from "./UniversitySelect";
-export default function AddCourse({ closeModal, handleChange }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedCourses, setSelectedCourses] = useState([]);
+import apiClient from "../../../../config/axiosInstance";
+import { useSelector } from "react-redux";
+import { message } from "antd";
+import { useApi } from "../../../context/apiContext/ApiContext";
+import PopoverContent from "../../../pages/Dependency/StatusDependency/AddStatus/components/PopoverContent";
 
-  const handleSubmit = async (e) => {
-    closeModal();
-    // e.preventDefault();
-    // if (!newUniversity.name) {
-    //   message.error("Please fill in the branch name");
-    //   return;
-    // }
-    // try {
-    //   setIsLoading(true);
-    //   const res = await apiClient.post("/university", newUniversity);
-    //   setNewUniversity({ name: "" });
-    //   refetchUniversity();
-    //   message.success("Branch created successfully!");
-    // } catch (e) {
-    //   message.error("Error creating branch. Please try again.");
-    // } finally {
-    //   setIsLoading(false);
-    // }
+export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
+  const [qualification, setQualification] = useState([]);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+
+  const { qualificationsConfigs: { qualifications } } = useApi();
+  const { universityConfigs: { university } } = useApi();
+  console.log(qualifications, "qualifications");
+  const [selectedQualification, setSelectedQualification] = useState([]);
+
+
+  const [selectedUniversities, setSelectedUniversities] = useState([]);
+  const [isUniversityPopoverOpen, setIsUniversityPopoverOpen] = useState(false);
+
+  const handleQualificationSelect = () => {
+    setQualification([...selectedQualification]);
+    setIsPopoverOpen(false);
+  };
+
+  const removeSelectedQualification = (qualification) => {
+    setSelectedQualification((prev) => prev.filter((c) => c._id !== qualification._id));
+  };
+
+  const handleUniversitySelect = () => {
+    setSelectedUniversities([...selectedUniversities]);
+    setIsUniversityPopoverOpen(false);
+  };
+
+  const removeSelectedUniversity = (university) => {
+    setSelectedUniversities((prev) => prev.filter((u) => u._id !== university._id));
+  };
+
+  const handleCourseSubmit = async (e) => {
+    e.preventDefault();
+    const qualificationIds = selectedQualification.map(qual => qual._id);
+    const universityIds = selectedUniversities.map(uni => uni._id);
+    handleSubmit({
+      qualification: qualificationIds,
+      university: universityIds
+    });
   };
 
   return (
-    <form onSubmit={handleSubmit} className="modal__form">
+    <form onSubmit={handleCourseSubmit} className="modal__form">
       <div className="modal__form-row">
         <div className="modal__form-input-text">
           <input
@@ -73,11 +96,173 @@ export default function AddCourse({ closeModal, handleChange }) {
           />
         </div>
       </div>
-      <div className="modal__form-input-text">
-        <QualificationSelector />
+      <div className="modal__form-input-text" style={{ position: "relative" }}>
+        <div
+          className="input-formGroup"
+          style={{
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            border: "1px solid #ddd",
+            borderRadius: "4px",
+            padding: "10px",
+          }}
+          onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+        >
+          <span>Select Qualification</span>
+          <span style={{ transform: isPopoverOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+        </div>
+        {isPopoverOpen && (
+          <div
+            style={{
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              right: 0,
+              zIndex: 1000,
+              border: "1px solid #ddd",
+              borderRadius: "4px",
+              backgroundColor: "white",
+              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+              maxHeight: "200px",
+              overflowY: "auto",
+            }}
+          >
+            <PopoverContent
+              selectedCountry={selectedQualification}
+              setSelectedCountry={setSelectedQualification}
+              onSelect={handleQualificationSelect}
+              onCancel={() => {
+                setIsPopoverOpen(false);
+                setSelectedQualification([]);
+              }}
+              formData={""}
+              contents={qualifications} // Pass universities array
+            />
+          </div>
+        )}
+        {selectedQualification.length > 0 && (
+          <div
+            style={{
+              marginTop: "10px",
+              border: "1px solid #ddd",
+              borderRadius: "4px",
+              padding: "5px",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "flex-start",
+            }}
+          >
+            {selectedQualification.map((qualification) => (
+              <div
+                key={qualification._id}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "5px",
+                  margin: "2px",
+                  border: "1px solid #eee",
+                  borderRadius: "4px",
+                  backgroundColor: "#f9f9f9",
+                }}
+              >
+                <span>{qualification.name}</span>
+                <span
+                  style={{ cursor: "pointer", color: "red", marginLeft: "5px" }}
+                  onClick={() => removeSelectedQualification(qualification)}
+                >
+                  ✕
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-      <div className="modal__form-input-text">
-        <UniversitySelector />
+      <div className="modal__form-input-text" style={{ position: "relative" }}>
+        <div
+          className="input-formGroup"
+          style={{
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            border: "1px solid #ddd",
+            borderRadius: "4px",
+            padding: "10px",
+          }}
+          onClick={() => setIsUniversityPopoverOpen(!isUniversityPopoverOpen)}
+        >
+          <span>Select University</span>
+          <span style={{ transform: isUniversityPopoverOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+        </div>
+        {isUniversityPopoverOpen && (
+          <div
+            style={{
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              right: 0,
+              zIndex: 1000,
+              border: "1px solid #ddd",
+              borderRadius: "4px",
+              backgroundColor: "white",
+              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+              maxHeight: "200px",
+              overflowY: "auto",
+            }}
+          >
+            <PopoverContent
+              selectedCountry={selectedUniversities}
+              setSelectedCountry={setSelectedUniversities}
+              onSelect={handleUniversitySelect}
+              onCancel={() => {
+                setIsUniversityPopoverOpen(false);
+                setSelectedUniversities([]);
+              }}
+              formData={""}
+              contents={university} // Pass university array
+            />
+          </div>
+        )}
+        {selectedUniversities.length > 0 && (
+          <div
+            style={{
+              marginTop: "10px",
+              border: "1px solid #ddd",
+              borderRadius: "4px",
+              padding: "5px",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "flex-start",
+            }}
+          >
+            {selectedUniversities.map((university) => (
+              <div
+                key={university._id}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "5px",
+                  margin: "2px",
+                  border: "1px solid #eee",
+                  borderRadius: "4px",
+                  backgroundColor: "#f9f9f9",
+                }}
+              >
+                <span>{university.name}</span>
+                <span
+                  style={{ cursor: "pointer", color: "red", marginLeft: "5px" }}
+                  onClick={() => removeSelectedUniversity(university)}
+                >
+                  ✕
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="modal__form-buttons">

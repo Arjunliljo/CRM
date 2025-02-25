@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Popover from "react-popover";
 import PopoverContent from "./PopoverContent";
+import { useApi } from "../../../../../context/apiContext/ApiContext";
 
 export default function StatusRow1({ newStatus, setNewStatus }) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState([]);
-  console.log(newStatus, "selectedCountry");
 
   const handleTabSelection = (value) => {
     setNewStatus((prev) => ({
@@ -13,6 +13,7 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
       isTab: value,
     }));
   };
+
   const handleCountrySelection = (value) => {
     setNewStatus((prev) => ({
       ...prev,
@@ -25,6 +26,7 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
       setSelectedCountry([]);
     }
   };
+
   const handleApplicationSelection = (value) => {
     setNewStatus((prev) => ({
       ...prev,
@@ -50,10 +52,12 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
   const handleCountrySelect = () => {
     setNewStatus((prev) => ({
       ...prev,
-      countries: selectedCountry,
+      countries: selectedCountry.map((country) => country._id),
     }));
     setIsPopoverOpen(false);
   };
+  console.log(selectedCountry, "selectedCountry");
+  const { countryConfigs } = useApi();
 
   const popoverContent = (
     <PopoverContent
@@ -65,6 +69,7 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
         setSelectedCountry([]);
       }}
       formData={""}
+      contents={countryConfigs.countries}
     />
   );
 

@@ -5,6 +5,12 @@ const studentsSlice = createSlice({
   initialState: {
     autoStudentsAssign: false,
     curStudent: {},
+    isAssigning: false,
+    toAssignStudents: [],
+    curStatus: "All Status",
+    curSource: "All Source",
+    curBranch: "All Branch",
+    curCountry: "All Country",
   },
   reducers: {
     setAutoStudentsAssign: (state, action) => {

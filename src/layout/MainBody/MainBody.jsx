@@ -8,10 +8,6 @@ export default function MainBody({
   ProfileCard = <></>,
   StartApplication = <></>,
 }) {
-
-
-
-  
   return (
     <main className="main-body leads">
       <div className="main-body-head">

@@ -14,8 +14,7 @@ const createUniversity = createOne(University);
 const updateUniversity = updateOne(University);
 const deleteUniversity = deleteOne(University);
 const getUniversity = getOne(University);
-const getAllUniversity = getAll(University);
-
+const getAllUniversity = getAll(University, ["country", "courses"]);
 const createQualification = createOne(Qualification);
 const updateQualification = updateOne(Qualification);
 const deleteQualification = deleteOne(Qualification);

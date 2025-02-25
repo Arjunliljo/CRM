@@ -14,6 +14,7 @@ import ModalBase from "../../Forms/ModalBase";
 import AddQualification from "../../Forms/Leads/addQualification";
 import HomeIcon from "../../utils/Icons/HomeIcon";
 import EditQualification from "../../Forms/Leads/EditQualification";
+import { useDispatch } from "react-redux";
 
 export default function PersonalDetails({
   lead,
@@ -29,6 +30,7 @@ export default function PersonalDetails({
     email: "",
     address: "",
   });
+  const dispatch = useDispatch();
 
   const [originalDetails, setOriginalDetails] = useState({
     name: "",
@@ -64,7 +66,7 @@ export default function PersonalDetails({
   const handleSaveEdit = () => {
     setIsEditing(false);
     setOriginalDetails(details);
-    const res = onSubmit({ ...details, leadId: lead?._id });
+    const res = onSubmit({ ...details, leadId: lead?._id }, lead, dispatch);
     if (res) {
       setIsEditing(false);
       message.success("Details updated successfully");

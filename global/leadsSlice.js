@@ -9,9 +9,25 @@ const leadsSlice = createSlice({
     isAssigning: false,
     toAssignLeads: [],
     isUniversitySelected: false,
-
+    curStatus: "All Status",
+    curSource: "All Source",
+    curBranch: "All Branch",
+    curCountry: "All Country",
   },
   reducers: {
+    setLeadCurCountry: (state, action) => {
+      state.curCountry = action.payload;
+    },
+    setLeadsCurStatus: (state, action) => {
+      state.curStatus = action.payload;
+    },
+    setLeadsCurSource: (state, action) => {
+      state.curSource = action.payload;
+    },
+    setLeadsCurBranch: (state, action) => {
+      state.curBranch = action.payload;
+    },
+
     setAutoLeadsAssign: (state, action) => {
       state.autoLeadsAssign = action.payload;
     },
@@ -65,6 +81,7 @@ const leadsSlice = createSlice({
 export const {
   setAutoLeadsAssign,
   setCurLead,
+  setLeadCurCountry,
   updateCurLeadDocuments,
   removeCurLeadDocument,
   setLeadDetailToggle,
@@ -74,6 +91,9 @@ export const {
   setToAssignLeads,
   updateCurLead,
   setIsUniversitySelected,
+  setLeadsCurStatus,
+  setLeadsCurSource,
+  setLeadsCurBranch,
 } = leadsSlice.actions;
 
 export default leadsSlice.reducer;

@@ -3,10 +3,10 @@ import catchAsync from "../Utilities/catchAsync.js";
 import AppError from "../Utilities/appError.js";
 import APIFeatures from "../APIFeatures/APIFeatures.js";
 
-export const getAll = (Model) => {
+export const getAll = (Model, popOptions, nestedPopOptions) => {
   // console.log("herehre");
 
-  return catchAsync(async (req, res) => {
+  return catchAsync(async (req, res, next) => {
     let filter = {};
     const features = new APIFeatures(Model, Model.find(filter), req.query);
 
@@ -17,16 +17,41 @@ export const getAll = (Model) => {
       .paginate(await Model.countDocuments())
       .filterByBranch()
       .filterByDateRange()
-      .gstType()
       .search();
 
-    const docs = await features.query;
+    let query = features.query;
+    if (popOptions) {
+      if (Array.isArray(popOptions)) {
+        popOptions.forEach(option => {
+          query = query.populate(option);
+        });
+      } else {
+        query = query.populate(popOptions);
+      }
+    }
 
-    res.status(200).json({
-      status: "success",
-      results: docs.length,
-      data: docs,
-    });
+    // Conditionally apply nested population
+    if (nestedPopOptions) {
+      nestedPopOptions.forEach(nestedOption => {
+        query = query.populate(nestedOption);
+      });
+    }
+
+    // Log the query for debugging
+    console.log("Executing query:", query);
+
+    try {
+      const docs = await query;
+
+      res.status(200).json({
+        status: "success",
+        results: docs.length,
+        data: docs,
+      });
+    } catch (err) {
+      console.error("Error executing query:", err);
+      return next(new AppError("Failed to retrieve documents", 500));
+    }
   });
 };
 
@@ -46,9 +71,10 @@ export const getOne = (Model, type = "id") => {
 };
 
 export const createOne = (Model) => {
+  console.log("called");
   return catchAsync(async (req, res, next) => {
-    console.log(req.body);
     const doc = await Model.create(req.body);
+
 
     if (!doc) {
       return next(new AppError("Failed to create document", 400));

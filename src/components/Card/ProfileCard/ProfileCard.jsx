@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useApi } from "../../../context/apiContext/ApiContext";
+import { getRoleName } from "../../../service/nameFinders";
 import Tracker from "../../smallComponents/Tracker";
-
 
 export default function ProfileCard({
   IDocumentUpload,
@@ -10,11 +11,9 @@ export default function ProfileCard({
   IActivityLog,
   personalDetails,
 }) {
-  const [isApplication, setIsApplication] = useState(false);
-
-  useEffect(() => {
-    setIsApplication(lead?.application?.length > 0);
-  }, [lead]);
+  const {
+    roleConfigs: { roles },
+  } = useApi();
 
   return (
     <div className="profileCard">
@@ -22,13 +21,13 @@ export default function ProfileCard({
         <div className="profileCard-head-info">
           <div className="profileCard-head-info-details">
             <div className="profileCard-image-container">
-              <img src={lead && lead.img} alt={lead && lead.name} />
+              <img src={lead?.img} alt={lead?.name} />
             </div>
             <div className="name-bar-name name-small">
-              <div>{lead && lead.name}</div>
+              <div>{lead?.name}</div>
               <div className="profileCard-head-info-location-card">
                 <span className="profileCard-head-info-location">
-                  {lead && lead.country}
+                  {lead?.country}
                 </span>
                 <span className="profileCard-head-info-underline"></span>
               </div>
@@ -37,20 +36,33 @@ export default function ProfileCard({
           </div>
           <div className="profileCard-head-info-right-card">
             <div className="card-number profileCard-head-info-keys">
-              <span>Counsellor</span>
-              <span>SRM</span>
-              <span>Application Head</span>
+              {lead?.users?.length > 0 ? (
+                lead?.users?.map((val, index) => {
+                  const role = getRoleName(val?.role, roles);
+                  return (
+                    <span key={`${val._id}-role-${index}`}>
+                      {role || "Not Assigned"}
+                    </span>
+                  );
+                })
+              ) : (
+                <span>Not Assigned</span>
+              )}
             </div>
             <div className="profileCard-head-info-assigners">
-              <span>Aswathi S</span>
-              <span>Shruthi Hassan</span>
-              <span>Monica</span>
+              {lead?.users?.length > 0 ? (
+                lead?.users?.map((val, index) => (
+                  <span key={`${val._id}-${index}`}>{val.name}</span>
+                ))
+              ) : (
+                <span>Assign to a user</span>
+              )}
             </div>
           </div>
         </div>
       </div>
       <div className="profileCard-journy">
-        {isApplication ? <Tracker completedStep={3} /> : null}
+        {lead?.isStudent ? <Tracker completedStep={3} /> : null}
       </div>
       <div className="profileCard-boxes">
         {personalDetails}

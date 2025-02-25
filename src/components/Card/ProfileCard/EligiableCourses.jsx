@@ -81,6 +81,7 @@ export default function EligiableCourses({onClick}) {
   const handleCardClick = (courseId) => {
     const newSelectedId = selectedCourseId === courseId ? null : courseId;
     setSelectedCourseId(newSelectedId);
+    console.log("courseId", courseId);
     onClick(newSelectedId);
   };
 

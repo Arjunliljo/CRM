@@ -1,17 +1,11 @@
 import { useDispatch } from "react-redux";
-import Mover from "../../features/Mover";
 import CountryBtn from "../buttons/CountryBtn";
-import InfoBtn from "../buttons/InfoBtn";
 import HomeIcon from "../utils/Icons/HomeIcon";
-import NameBar from "./NameBar";
 import { useEffect, useRef, useState } from "react";
-import Students from "../../pages/Students/Students";
-import PrimaryBttn from "../buttons/PrimaryBttn";
-import EligibleBttn from "../buttons/EligibleBttn";
-import { color } from "framer-motion";
 import { setAutoUniversitysAssign } from "../../../global/universitySlice";
 
 function UniversityCard({ university, set, onSet, istoggle, toggle }) {
+
   const [isSelected, setIsSelected] = useState(university?._id === set?._id);
   const targetRef = useRef(null);
 
@@ -20,6 +14,7 @@ function UniversityCard({ university, set, onSet, istoggle, toggle }) {
   }, [set, university]);
 
   const dispatch = useDispatch();
+
   const handleStudentSelect = () => {
     if (university._id === set?._id) {
       dispatch(setAutoUniversitysAssign(!toggle));
@@ -45,7 +40,7 @@ function UniversityCard({ university, set, onSet, istoggle, toggle }) {
       ref={targetRef}
     >
       <div className="cardUniversity-head">
-        <p className="cardHead">{university.Uname}</p>
+        <p className="cardHead">{university.name}</p>
         {/* <Mover num={university.num} /> */}
       </div>
       <div className="cardUniversity-body">
@@ -73,7 +68,7 @@ function UniversityCard({ university, set, onSet, istoggle, toggle }) {
               />
               <p>
                 <span style={{ color: "gray" }}>Stayback:</span>
-                <span style={{ color: "black" }}> {university.year} Years</span>
+                <span style={{ color: "black" }}> {university?.courses[0]?.duration} Years</span>
               </p>
             </div>
             <div className="cardUniversity-body-bottom-icons-item">
@@ -84,16 +79,16 @@ function UniversityCard({ university, set, onSet, istoggle, toggle }) {
               />
               <p>
                 {" "}
-                <span style={{ color: "gray" }}>Fee:</span> {university.fee}${" "}
+                <span style={{ color: "gray" }}>Fee:</span> {university?.courses[0]?.fee}${" "}
               </p>
             </div>
           </div>
         </div>
 
         <div className="cardUniversity-body-bottom-countryEligible">
-          <CountryBtn>{university.eligibility}</CountryBtn>
+          <CountryBtn>{university?.eligibility || "No Eligibility"}</CountryBtn>
           <CountryBtn style={{ backgroundColor: "#0075fc" }}>
-            {university.country}
+            {university?.country?.name || "No Country"}
           </CountryBtn>
         </div>
       </div>
