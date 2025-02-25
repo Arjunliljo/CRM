@@ -7,7 +7,7 @@ const multerUpload = multer({ storage });
 
 
 const upload = (req, res, next) => {
-console.log(req.body, "req.body");
+
   multerUpload.any()(req, res, async (err) => {
     if (err) {
       console.log(err, "err from upload");
@@ -16,7 +16,8 @@ console.log(req.body, "req.body");
 
     try {
       if (!req.files || req.files.length === 0) {
-        return res.status(400).json({ error: "No file provided" });
+        // return res.status(400).json({ error: "No file provided" });
+        next();
       }
 
       // Process each file in the request
@@ -35,6 +36,7 @@ console.log(req.body, "req.body");
         // Store the result in req for further processing
         req.s3File = s3UploadResult;
         req.body.img = s3UploadResult.fileUrl;
+        req.body.image = s3UploadResult.fileUrl;
       }
 
       next();

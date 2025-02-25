@@ -40,7 +40,9 @@ function UserPosition({ user }) {
       </div>
       <form className="personalUserEdit-status-elements">
         {/* <span className="personalUserEdit-status-html-for">Role</span> */}
-        <div>{userRoleName}</div>
+        <div>
+          <span className="chat-text">{userRoleName}</span>
+          </div>
         <span className="personalUserEdit-status-html-for">Managing Roles</span>
         <div
           className="select-user-container"

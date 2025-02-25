@@ -12,6 +12,8 @@ import { IoAdd } from "react-icons/io5";
 import PrimaryBttn from "../../buttons/PrimaryBttn";
 
 function UserPersonalEdit({user}) {
+
+console.log(user , "user")
   const [isEditing, setIsEditing] = useState(false);
 
   //to edit mode open

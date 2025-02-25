@@ -22,7 +22,7 @@ router.post("/verify", verify);
 router.post("/create", createUser);
 router.get("/", getAllUsers);
 router.get("/:id", getUser);
-router.patch("/", updateUser);
+router.patch("/:id", updateUser);
 router.delete("/:id", deleteUser);
 router.post("/login", loginUser);
 router.post("/logout", logout);
