@@ -42,9 +42,15 @@ export default function ProfileBasic({ isCreate }) {
               placeholder="Contact Number"
               className="forms-input"
               value={contactNumber}
-              onChange={(e) =>
-                dispatch(setProfileContactNumber(e.target.value))
-              }
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d*$/.test(value)) {
+                  dispatch(setProfileContactNumber(value));
+                }
+              }}
+              pattern="[0-9]*"
+              inputMode="numeric"
+              maxLength="15"
             />
             {isCreate && !profileData.contactNumber && (
               <BsExclamation className="error-icon error-icon-position " />
