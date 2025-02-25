@@ -7,6 +7,10 @@ const activityLogSchema = mongoose.Schema(
       ref: "Lead",
       unique: true,
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Lead",
+    },
     statusChange: {
       type: [
         {
