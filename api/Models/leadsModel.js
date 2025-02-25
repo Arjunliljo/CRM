@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import ActivityLog from "./activityLog/activityLogModel.js";
+import AppError from "../Utilities/appError.js";
 
 const leadSchema = mongoose.Schema(
   {
@@ -146,6 +148,45 @@ leadSchema.pre(/^find/, function (next) {
     path: "users",
     select: "name role",
   });
+  next();
+});
+
+leadSchema.pre("save", async function (next) {
+  try {
+    await ActivityLog.create({
+      leadID: this._id,
+      statusChange: [{ statusID: "67bb53bd944190352e29f75f" }],
+    });
+  } catch (e) {
+    next();
+  }
+
+  next();
+});
+
+leadSchema.pre("findOneAndUpdate", async function (next) {
+  const update = this.getUpdate();
+  if (!update) return next(new AppError("Failed to create Activity Log", 400));
+
+  let activityLog = await ActivityLog.findOne({ leadID: update._id });
+
+  // Create new activity log if it doesn't exist
+  if (!activityLog) {
+    activityLog = await ActivityLog.create({
+      leadID: update._id,
+      statusChange: [],
+    });
+  }
+
+  // Only push status change if status is being updated
+  if (update.status) {
+    activityLog.statusChange.push({ statusID: update.status });
+
+    const log = await activityLog.save();
+
+    if (!log) return next(new AppError("Failed to create Activity Log", 400));
+  }
+
   next();
 });
 
