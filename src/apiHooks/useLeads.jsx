@@ -5,9 +5,8 @@ import { useSelector } from "react-redux";
 import { getBranchId, getCountryId, getStatusId } from "../service/IdFinders";
 
 export const useLeads = (statuses, branches, countries) => {
-  const { curStatus, curCountry, curBranch } = useSelector(
-    (state) => state.leads
-  );
+  const { curStatus, curCountry, curBranch, curCampaign, curRole } =
+    useSelector((state) => state.leads);
 
   const statusId = getStatusId(curStatus, statuses);
   const branchId = getBranchId(curBranch, branches);
@@ -26,7 +25,13 @@ export const useLeads = (statuses, branches, countries) => {
   if (!curBranch.startsWith("All") && branchId) {
     endpoint += `&branch=${branchId}`;
   }
-  console.log(endpoint);
+  if (!curCampaign.startsWith("All") && curCampaign) {
+    endpoint += `&campaignName=${curCampaign}`;
+  }
+
+  if (!curRole.startsWith("All") && curRole) {
+    endpoint += `&role=${curRole}`;
+  }
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["leads", endpoint],

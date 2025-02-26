@@ -3,7 +3,7 @@ import BlackSelector from "../../Selectors/BlackSelector";
 import EligibleBttn from "../../buttons/EligibleBttn";
 import React, { useState, useEffect, useRef } from "react";
 
-export default function EligiableCourses({onClick}) {
+export default function EligiableCourses({ onClick }) {
   const Countries = ["Country", "Option 2", "Option 3"];
   const courses = ["UG", "Option 2", "Option 3"];
   const Offer = ["Fees", "Option 2", "Option 3"];
@@ -81,7 +81,7 @@ export default function EligiableCourses({onClick}) {
   const handleCardClick = (courseId) => {
     const newSelectedId = selectedCourseId === courseId ? null : courseId;
     setSelectedCourseId(newSelectedId);
-    console.log("courseId", courseId);
+
     onClick(newSelectedId);
   };
 
@@ -153,8 +153,12 @@ export default function EligiableCourses({onClick}) {
             key={course._id}
             onClick={() => handleCardClick(course._id)}
             style={{
-              backgroundColor: selectedCourseId === course._id ? "rgb(216, 255, 216)" : "lightgrey",
-              border: selectedCourseId === course._id ? "1px solid #0075fc" : "none",
+              backgroundColor:
+                selectedCourseId === course._id
+                  ? "rgb(216, 255, 216)"
+                  : "lightgrey",
+              border:
+                selectedCourseId === course._id ? "1px solid #0075fc" : "none",
             }}
           >
             <div className="eligiable-courses-assigners">
@@ -167,7 +171,6 @@ export default function EligiableCourses({onClick}) {
           </div>
         ))}
       </div>
-
     </div>
   );
 }

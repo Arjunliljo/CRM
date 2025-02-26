@@ -100,7 +100,7 @@ export default function ProfileCardStatus({
       countries: lead?.isStudent ? filteredCountries : [selectedCountry?._id],
       followupDate: followupDate,
     };
-    console.log(selectedCountry, "selCountry");
+
     onsubmit(data, dispatch, lead?._id);
   };
 

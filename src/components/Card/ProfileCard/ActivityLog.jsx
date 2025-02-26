@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getStatusName } from "../../../service/nameFinders";
 import { useApi } from "../../../context/apiContext/ApiContext";
-export default function ActivityLog({curLead}) {
+export default function ActivityLog({ curLead }) {
   const [activityLog, setActivityLog] = useState([]);
   // const { curLead } = useSelector((state) => state.leads);
 
@@ -67,7 +67,6 @@ export default function ActivityLog({curLead}) {
     if (curLead && curLead._id) {
       fetchActivityLog();
     }
-    console.log("calling....");
   }, [curLead]);
 
   const fetchActivityLog = async () => {
@@ -87,7 +86,6 @@ export default function ActivityLog({curLead}) {
         <div className="message-tree">
           <ul>
             {activityLog.map((message, index) => {
-
               let status = getStatusName(message?.statusID, statuses);
 
               return (

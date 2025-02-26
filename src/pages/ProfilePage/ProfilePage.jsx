@@ -6,16 +6,15 @@ import apiClient from "../../../config/axiosInstance";
 
 function Profilepage() {
   const user = useSelector((state) => state.auth);
-  console.log(user, "user");
 
   // Initialize state with user data
   const [formData, setFormData] = useState({
-    name: user?.user?.name || '',
-    email: user?.user?.email || '',
-    phone: user?.user?.phone || '',
-    addressOne: user?.user?.addressOne || '',
-    addressTwo: user?.user?.addressTwo || '',
-    image: user?.user?.image || ''
+    name: user?.user?.name || "",
+    email: user?.user?.email || "",
+    phone: user?.user?.phone || "",
+    addressOne: user?.user?.addressOne || "",
+    addressTwo: user?.user?.addressTwo || "",
+    image: user?.user?.image || "",
   });
 
   // Handle input changes
@@ -23,7 +22,7 @@ function Profilepage() {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -35,7 +34,7 @@ function Profilepage() {
       reader.onloadend = () => {
         setFormData({
           ...formData,
-          image: reader.result
+          image: reader.result,
         });
       };
       reader.readAsDataURL(file);
@@ -43,16 +42,22 @@ function Profilepage() {
   };
 
   const handleSubmit = async () => {
-    console.log(formData, "formData");
-    const response = await apiClient.patch(`/user/${user?.user?._id}`, {...formData,mainFolder:'usersImages',subFolder:user?.user?._id});
-    console.log(response, "response");
+    const response = await apiClient.patch(`/user/${user?.user?._id}`, {
+      ...formData,
+      mainFolder: "usersImages",
+      subFolder: user?.user?._id,
+    });
   };
 
   return (
     <div className="profile-page">
       <LeftRound userImage={formData.image} onImageChange={handleImageChange} />
       <div className="profile-page__content">
-        <ProfileRight user={formData} onInputChange={handleInputChange} handleSubmit={handleSubmit} />
+        <ProfileRight
+          user={formData}
+          onInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+        />
         {/* <ProfileRight user={user?.user} /> */}
       </div>
     </div>

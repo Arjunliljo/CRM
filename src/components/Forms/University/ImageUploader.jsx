@@ -83,7 +83,7 @@ export default function ImageUploader({ onUpload }) {
   const handleFileChange = (event) => {
     console.log(event, "event");
     const file = event.target.files[0];
-    console.log(file, "file");
+
     if (file) {
       setPreview(URL.createObjectURL(file));
       onUpload(file);

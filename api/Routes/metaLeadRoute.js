@@ -4,6 +4,7 @@ import {
   getMetaLeads,
   updateCampaigns,
   getForms,
+  getCampaignsFromDb,
 } from "../Controllers/Meta/metaLeadController.js";
 const router = express.Router();
 // router.use(protect);
@@ -11,6 +12,7 @@ const router = express.Router();
 router.get("/create_ac", getMetaLeads);
 router.get("/", getMetaLeads);
 router.get("/campaigns", getCampaigns);
+router.get("/campaigns_db", getCampaignsFromDb);
 router.get("/forms", getForms);
 router.patch("/updateCampaigns", updateCampaigns);
 

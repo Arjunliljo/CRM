@@ -56,7 +56,7 @@ export default function StatusRow1({ newStatus, setNewStatus }) {
     }));
     setIsPopoverOpen(false);
   };
-  console.log(selectedCountry, "selectedCountry");
+
   const { countryConfigs } = useApi();
 
   const popoverContent = (

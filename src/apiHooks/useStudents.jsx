@@ -24,7 +24,7 @@ export const useStudents = (statuses) => {
   if (!curBranch.startsWith("All")) {
     endpoint += `&branch=${curBranch}`;
   }
-  console.log(endpoint);
+
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["students", endpoint],
     queryFn: () => apiClient.get(endpoint),

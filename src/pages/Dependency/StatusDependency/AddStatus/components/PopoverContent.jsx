@@ -21,7 +21,7 @@ export default function PopoverContent({
 
   const handleCountryClick = (country) => {
     setSelectedCountry((prev) => {
-      console.log(prev, "prev");
+
       const isSelected = prev.some((c) => c._id === country._id);
       if (isSelected) {
         return prev.filter((c) => c._id !== country._id);

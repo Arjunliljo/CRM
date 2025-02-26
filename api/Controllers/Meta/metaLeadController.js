@@ -10,6 +10,7 @@ import Campaign from "../../Models/campaignModel.js";
 import MetaAccount from "../../Models/metaAccountModel.js";
 import { convertLeads, saveCampaigns, saveLeads } from "./saveLeads.js";
 import { leadsToBranchAutoAssigner } from "../batch/leadsToBranchAutoAssigner.js";
+import { getAll } from "../handlerFactory.js";
 
 const adAccountId = "277770749000629";
 
@@ -67,6 +68,8 @@ const getCampaigns = catchAsync(async (req, res) => {
   });
 });
 
+const getCampaignsFromDb = getAll(Campaign);
+
 const getForms = catchAsync(async (req, res) => {
   const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
   const campaignId = "6654861567950";
@@ -119,4 +122,10 @@ const updateCampaigns = catchAsync(async (req, res) => {
     message: "New campaigns fetched and added successfully",
   });
 });
-export { getMetaLeads, updateCampaigns, getCampaigns, getForms };
+export {
+  getMetaLeads,
+  updateCampaigns,
+  getCampaigns,
+  getForms,
+  getCampaignsFromDb,
+};

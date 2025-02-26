@@ -17,8 +17,7 @@ function UserRight({ user }) {
     location: "France",
     year: "2",
   };
-  const currUser = useSelector((state)=> state.currUser)
-  console.log(currUser);
+  const currUser = useSelector((state) => state.currUser);
 
   return (
     <div className="UserRightCard">

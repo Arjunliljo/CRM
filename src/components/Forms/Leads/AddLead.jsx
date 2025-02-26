@@ -38,7 +38,6 @@ export default function AddLead({
       refetchLeads();
       closeModal();
     } catch (e) {
-      console.log(e, "e");
       message.error(e.response.data.message);
     } finally {
       setIsLoading(false);

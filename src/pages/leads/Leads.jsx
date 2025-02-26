@@ -6,7 +6,10 @@ import {
   setCurLead,
   setIsAssigning,
   setIsUniversitySelected,
+  setLeadCurCampaigns,
   setLeadCurCountry,
+  setLeadCurRole,
+  setLeadCurUser,
   setLeadDetailToggle,
   setLeadsCurBranch,
   setLeadsCurStatus,
@@ -62,6 +65,7 @@ import {
   handleUpdateDocument,
 } from "./leadHandlers/documentHandler";
 import { refetchLeads } from "../../apiHooks/useLeads";
+import { getRoleName } from "../../service/nameFinders";
 
 export default function Leads() {
   const dispatch = useDispatch();
@@ -74,7 +78,10 @@ export default function Leads() {
     toAssignLeads,
     curStatus,
     curBranch,
+    curCampaign,
     curCountry,
+    curRole,
+    curUser,
   } = useSelector((state) => state.leads);
 
   const {
@@ -84,6 +91,8 @@ export default function Leads() {
     branchConfigs,
     countryConfigs,
     commonsConfigs,
+    campaignsConfigs,
+    usersConfigs,
   } = useApi();
 
   const { statuses = [] } = statusConfigs;
@@ -92,6 +101,8 @@ export default function Leads() {
   const { countries = [] } = countryConfigs;
   const { commons = {} } = commonsConfigs;
   const { autoAssignLeadsToBranch } = commons;
+  const { campaigns = [] } = campaignsConfigs;
+  const { users = [] } = usersConfigs;
 
   const statusObj = useIDGetStatusesArray(statuses);
   const rolesObj = useIDGetRolesArray(roles);
@@ -208,11 +219,13 @@ export default function Leads() {
 
   const TopLeft = [
     <SearchBar key="search-bar" />,
-    <AutoBtn
-      key="auto-btn"
-      callBack={handleAutoBtn}
-      isAuto={autoAssignLeadsToBranch}
-    />,
+    !isAssigning && (
+      <AutoBtn
+        key="auto-btn"
+        callBack={handleAutoBtn}
+        isAuto={autoAssignLeadsToBranch}
+      />
+    ),
     <NormalButton
       key="assign"
       style={isAssigning ? { backgroundColor: "lightgray" } : {}}
@@ -280,9 +293,9 @@ export default function Leads() {
     />,
     <Selector
       key="campains"
-      set={curBranch}
-      optionsObj={branchesObj}
-      onSet={setLeadsCurBranch}
+      set={curCampaign}
+      optionsObj={campaigns}
+      onSet={setLeadCurCampaigns}
       placeholder="All Campains"
     />,
 
@@ -295,7 +308,26 @@ export default function Leads() {
     />,
   ];
 
-  const BottomRight = [<Selector key="roles" optionsObj={rolesObj} />];
+  const BottomRight = [
+    <Selector
+      key="roles"
+      placeholder="All Roles"
+      optionsObj={rolesObj}
+      onSet={setLeadCurRole}
+      set={curRole}
+    />,
+    <Selector
+      key="users"
+      placeholder="All Users"
+      optionsObj={
+        curRole?.startsWith("All")
+          ? users
+          : users?.filter((user) => getRoleName(user.role, roles) === curRole)
+      }
+      onSet={setLeadCurUser}
+      set={curUser}
+    />,
+  ];
 
   const IContents = leadsConfigs?.leads?.map((lead, index) => (
     <LeadCard

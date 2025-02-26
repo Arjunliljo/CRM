@@ -12,12 +12,14 @@ export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
   const [qualification, setQualification] = useState([]);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
+  const {
+    qualificationsConfigs: { qualifications },
+  } = useApi();
+  const {
+    universityConfigs: { university },
+  } = useApi();
 
-  const { qualificationsConfigs: { qualifications } } = useApi();
-  const { universityConfigs: { university } } = useApi();
-  console.log(qualifications, "qualifications");
   const [selectedQualification, setSelectedQualification] = useState([]);
-
 
   const [selectedUniversities, setSelectedUniversities] = useState([]);
   const [isUniversityPopoverOpen, setIsUniversityPopoverOpen] = useState(false);
@@ -28,7 +30,9 @@ export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
   };
 
   const removeSelectedQualification = (qualification) => {
-    setSelectedQualification((prev) => prev.filter((c) => c._id !== qualification._id));
+    setSelectedQualification((prev) =>
+      prev.filter((c) => c._id !== qualification._id)
+    );
   };
 
   const handleUniversitySelect = () => {
@@ -37,16 +41,18 @@ export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
   };
 
   const removeSelectedUniversity = (university) => {
-    setSelectedUniversities((prev) => prev.filter((u) => u._id !== university._id));
+    setSelectedUniversities((prev) =>
+      prev.filter((u) => u._id !== university._id)
+    );
   };
 
   const handleCourseSubmit = async (e) => {
     e.preventDefault();
-    const qualificationIds = selectedQualification.map(qual => qual._id);
-    const universityIds = selectedUniversities.map(uni => uni._id);
+    const qualificationIds = selectedQualification.map((qual) => qual._id);
+    const universityIds = selectedUniversities.map((uni) => uni._id);
     handleSubmit({
       qualification: qualificationIds,
-      university: universityIds
+      university: universityIds,
     });
   };
 
@@ -111,7 +117,13 @@ export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
           onClick={() => setIsPopoverOpen(!isPopoverOpen)}
         >
           <span>Select Qualification</span>
-          <span style={{ transform: isPopoverOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+          <span
+            style={{
+              transform: isPopoverOpen ? "rotate(180deg)" : "rotate(0deg)",
+            }}
+          >
+            ▼
+          </span>
         </div>
         {isPopoverOpen && (
           <div
@@ -195,7 +207,15 @@ export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
           onClick={() => setIsUniversityPopoverOpen(!isUniversityPopoverOpen)}
         >
           <span>Select University</span>
-          <span style={{ transform: isUniversityPopoverOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+          <span
+            style={{
+              transform: isUniversityPopoverOpen
+                ? "rotate(180deg)"
+                : "rotate(0deg)",
+            }}
+          >
+            ▼
+          </span>
         </div>
         {isUniversityPopoverOpen && (
           <div

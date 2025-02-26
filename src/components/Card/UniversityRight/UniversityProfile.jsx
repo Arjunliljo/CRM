@@ -32,9 +32,6 @@ function UniversityProfile({ university }) {
     }));
   };
 
-
-console.log(university.courses, "university");
-
   return (
     <div className="UniversityRightCard">
       <div className="UniversityRightCard-head">
@@ -88,7 +85,7 @@ console.log(university.courses, "university");
         <PersonalDetails />
         <ProfileCardStatus />
       </div> */}
-      <UniversityEligible  courses={university.courses} />
+      <UniversityEligible courses={university.courses} />
       {/* <ActivityLog /> */}
       <ModalBase
         title="Update University"

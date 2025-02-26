@@ -48,8 +48,6 @@ export default function CourseSelector({
     },
   ];
 
-  console.log(newUniversity, "newUniversity");
-
   useEffect(() => {
     if (newUniversity?.courses?.length > 0) {
       const defaultSelectedCourses = newUniversity.courses

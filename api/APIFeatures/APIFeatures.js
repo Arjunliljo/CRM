@@ -17,7 +17,7 @@ class APIFeatures {
       "startDate",
       "endDate",
       "search",
-      "gstType",
+      "users",
     ];
 
     excludedFields.forEach((el) => delete queryObj[el]);
@@ -219,14 +219,17 @@ class APIFeatures {
       case "minute":
       case "second":
         if (timeUnit === "hour") newDate.setHours(newDate.getHours() + value);
-        if (timeUnit === "minute") newDate.setMinutes(newDate.getMinutes() + value);
-        if (timeUnit === "second") newDate.setSeconds(newDate.getSeconds() + value);
-        return newDate.toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata" });
+        if (timeUnit === "minute")
+          newDate.setMinutes(newDate.getMinutes() + value);
+        if (timeUnit === "second")
+          newDate.setSeconds(newDate.getSeconds() + value);
+        return newDate.toLocaleTimeString("en-IN", {
+          timeZone: "Asia/Kolkata",
+        });
       default:
         throw new Error("Invalid time unit");
     }
-  };
-  
+  }
 }
 
 export default APIFeatures;

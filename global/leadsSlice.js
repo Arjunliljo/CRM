@@ -13,8 +13,20 @@ const leadsSlice = createSlice({
     curSource: "All Source",
     curBranch: "All Branch",
     curCountry: "All Country",
+    curCampaign: "All Campaigns",
+    curRole: "All Role",
+    curUser: "All User",
   },
   reducers: {
+    setLeadCurRole: (state, action) => {
+      state.curRole = action.payload;
+    },
+    setLeadCurUser: (state, action) => {
+      state.curUser = action.payload;
+    },
+    setLeadCurCampaigns: (state, action) => {
+      state.curCampaign = action.payload;
+    },
     setLeadCurCountry: (state, action) => {
       state.curCountry = action.payload;
     },
@@ -94,6 +106,9 @@ export const {
   setLeadsCurStatus,
   setLeadsCurSource,
   setLeadsCurBranch,
+  setLeadCurCampaigns,
+  setLeadCurRole,
+  setLeadCurUser,
 } = leadsSlice.actions;
 
 export default leadsSlice.reducer;

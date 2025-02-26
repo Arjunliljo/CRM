@@ -10,8 +10,6 @@ export const useUniversity = () => {
 
   const university = data?.data?.data;
 
-    console.log(university, "ooooo");
-
   return { university, isLoading, error, refetch };
 };
 

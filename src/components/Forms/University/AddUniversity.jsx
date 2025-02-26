@@ -8,10 +8,7 @@ import { message } from "antd";
 import apiClient from "../../../../config/axiosInstance";
 import { refetchUniversity } from "../../../apiHooks/useUniversity";
 
-export default function AddUniversity({
-  closeModal,
-  countries,
-}) {
+export default function AddUniversity({ closeModal, countries }) {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [newUniversity, setNewUniversity] = useState({ name: "" });
@@ -35,7 +32,7 @@ export default function AddUniversity({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(newUniversity, "newUniversity before FormData creation");
+
     if (!newUniversity.name) {
       message.error("Please fill in the branch name");
       return;
@@ -47,7 +44,6 @@ export default function AddUniversity({
       const formData = new FormData();
       formData.append("name", newUniversity.name);
       formData.append("country", newUniversity.country);
-
 
       if (newUniversity.img) {
         formData.append("img", newUniversity.img);
@@ -66,7 +62,6 @@ export default function AddUniversity({
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(res, "res");
 
       setNewUniversity({ name: "" });
       refetchUniversity();

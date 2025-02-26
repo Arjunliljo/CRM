@@ -9,6 +9,7 @@ import { useLeads } from "../../apiHooks/useLeads";
 import { useCommens } from "../../apiHooks/useCommens";
 import { useUniversity } from "../../apiHooks/useUniversity";
 import { useQualifications } from "../../apiHooks/useQualifications";
+import { useCampaigns } from "../../apiHooks/useCampaigns";
 
 const ApiContext = createContext();
 
@@ -20,6 +21,7 @@ function ApiProvider({ children }) {
   const usersConfigs = useUsers();
   const chatsConfigs = useChats();
   const commonsConfigs = useCommens();
+  const campaignsConfigs = useCampaigns();
 
   const leadsConfigs = useLeads(
     statusConfigs?.statuses,
@@ -29,8 +31,6 @@ function ApiProvider({ children }) {
 
   const universityConfigs = useUniversity();
   const qualificationsConfigs = useQualifications();
-
-  console.log(universityConfigs, "universityConfigs");
 
   return (
     <ApiContext.Provider
@@ -45,6 +45,7 @@ function ApiProvider({ children }) {
         commonsConfigs,
         universityConfigs,
         qualificationsConfigs,
+        campaignsConfigs,
       }}
     >
       {children}
