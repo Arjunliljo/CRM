@@ -8,7 +8,7 @@ import {
 import catchAsync from "../../Utilities/catchAsync.js";
 import Campaign from "../../Models/campaignModel.js";
 import MetaAccount from "../../Models/metaAccountModel.js";
-import { convertLeads, saveLeads } from "./saveLeads.js";
+import { convertLeads, saveCampaigns, saveLeads } from "./saveLeads.js";
 import { leadsToBranchAutoAssigner } from "../batch/leadsToBranchAutoAssigner.js";
 
 const adAccountId = "277770749000629";
@@ -26,6 +26,8 @@ const getMetaLeads = catchAsync(async (req, res) => {
   // Fetch campaigns for each ad account
   const campaigns = await fetchCampaigns(adAccountId, accessToken);
 
+  await saveCampaigns(campaigns);
+
   // const activeCampaigns = campaigns.filter(
   //   (campaign) => campaign.status === "ACTIVE"
   // );
@@ -42,14 +44,15 @@ const getMetaLeads = catchAsync(async (req, res) => {
 });
 
 const getCampaigns = catchAsync(async (req, res) => {
-  const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
+  const [metaAccount] = await MetaAccount.find();
+
+  const accessToken = metaAccount.longLivedAccessToken;
 
   if (!accessToken) {
     return res.status(400).json({ error: "Access token is required" });
   }
 
   const campaigns = await fetchCampaigns(adAccountId, accessToken);
-
   const forms = campaigns.map((campaign) => campaign.ads.data?.[0]?.id);
 
   // Use Promise.all to wait for all fetchLeads promises to resolve
@@ -59,8 +62,6 @@ const getCampaigns = catchAsync(async (req, res) => {
 
   res.status(200).json({
     campaigns,
-    forms,
-    leads,
     result: campaigns.length,
     message: "Campaigns fetched successfully",
   });

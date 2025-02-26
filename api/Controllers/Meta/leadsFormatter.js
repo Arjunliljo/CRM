@@ -27,8 +27,6 @@ export const formatLeads = (leads, campaign) => {
       state:
         lead.field_data.find((field) => field.name === "state")?.values?.[0] ||
         "N/A",
-      // currentCity:
-      //   lead.field_data.find((field) => field.name === "city") || "N/A",
     };
   });
 

@@ -73,7 +73,6 @@ export default function Leads() {
     isAssigning,
     toAssignLeads,
     curStatus,
-    curSource,
     curBranch,
     curCountry,
   } = useSelector((state) => state.leads);
@@ -278,6 +277,13 @@ export default function Leads() {
       optionsObj={branchesObj}
       onSet={setLeadsCurBranch}
       placeholder="All Branches"
+    />,
+    <Selector
+      key="campains"
+      set={curBranch}
+      optionsObj={branchesObj}
+      onSet={setLeadsCurBranch}
+      placeholder="All Campains"
     />,
 
     <Selector

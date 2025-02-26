@@ -1,3 +1,4 @@
+import Campaign from "../../Models/campaignModel.js";
 import Lead from "../../Models/leadsModel.js";
 import { fetchLeads } from "../../Utilities/facebookLeads.js";
 import { formatLeads } from "./leadsFormatter.js";
@@ -15,6 +16,33 @@ export const convertLeads = async (campaigns, accessToken) => {
 
     return [...acc, formatLeads(campaignLeads, campaign)];
   }, Promise.resolve([]));
+};
+
+export const saveCampaigns = async (campaigns) => {
+  try {
+    const savedCampaigns = await Promise.all(
+      campaigns.map(async (campaign) => {
+        const existingCampaign = await Campaign.findOne({
+          campaignId: campaign.id,
+        });
+        if (existingCampaign) {
+          console.log(
+            `Campaign with ID ${campaign.id} already exists, skipping...`
+          );
+          return existingCampaign;
+        }
+        return Campaign.create({
+          campaignId: campaign.id,
+          name: campaign.name,
+          status: campaign.status,
+        });
+      })
+    );
+    return savedCampaigns;
+  } catch (error) {
+    console.error("Error saving campaigns:", error);
+    throw error;
+  }
 };
 
 export const saveLeads = async (leads) => {

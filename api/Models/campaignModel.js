@@ -5,6 +5,7 @@ const campaignSchema = mongoose.Schema(
     campaignId: {
       type: String,
       required: true,
+      unique: true,
     },
     name: {
       type: String,

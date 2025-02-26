@@ -36,7 +36,10 @@ const leadSchema = mongoose.Schema(
       required: [true, "Lead must have a phone number"],
       unique: true,
     },
-    campaign: {
+    campaignName: {
+      type: String,
+    },
+    campaignId: {
       type: String,
     },
     attemps: {
