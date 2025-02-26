@@ -13,5 +13,6 @@ router.get("/", getAllActivityLogs);
 router.get("/:id", getActivityLog);
 router.patch("/:id", updateActivityLog);
 router.delete("/:id", deleteActivityLog);
+// router.patch("/updateRemark", updateRemark);
 
 export default router;

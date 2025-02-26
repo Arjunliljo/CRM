@@ -4,62 +4,65 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getStatusName } from "../../../service/nameFinders";
 import { useApi } from "../../../context/apiContext/ApiContext";
+import { message } from "antd";
+
 export default function ActivityLog({ curLead }) {
   const [activityLog, setActivityLog] = useState([]);
+  const [remarks, setRemarks] = useState({});
   // const { curLead } = useSelector((state) => state.leads);
 
-  const messages = [
-    {
-      status: "Status updated to Interested",
-      remark: "",
-      date: "01-Oct-2024",
-      time: "11:15 pm",
-      updatedBy: "Aswathi",
-      role: "Counsellor",
-    },
-    {
-      status: "Status updated to Interested",
-      remark: "",
-      date: "01-Oct-2024",
-      time: "11:20 pm",
-      updatedBy: "John",
-      role: "Admin",
-    },
-    {
-      status: "Status updated to Interested",
-      remark: "",
-      date: "01-Oct-2024",
-      time: "11:20 pm",
-      updatedBy: "John",
-      role: "Admin",
-    },
-    {
-      status: "Status updated to Interested",
-      remark: "",
-      date: "01-Oct-2024",
-      time: "11:20 pm",
-      updatedBy: "John",
-      role: "Admin",
-    },
-    {
-      status: "Status updated to Interested",
-      remark: "",
-      date: "01-Oct-2024",
-      time: "11:15 pm",
-      updatedBy: "Aswathi",
-      role: "Counsellor",
-    },
-    {
-      status: "Status updated to Interested",
-      remark: "",
-      date: "01-Oct-2024",
-      time: "11:15 pm",
-      updatedBy: "Aswathi",
-      role: "Counsellor",
-    },
+  // const messages = [
+  //   {
+  //     status: "Status updated to Interested",
+  //     remark: "",
+  //     date: "01-Oct-2024",
+  //     time: "11:15 pm",
+  //     updatedBy: "Aswathi",
+  //     role: "Counsellor",
+  //   },
+  //   {
+  //     status: "Status updated to Interested",
+  //     remark: "",
+  //     date: "01-Oct-2024",
+  //     time: "11:20 pm",
+  //     updatedBy: "John",
+  //     role: "Admin",
+  //   },
+  //   {
+  //     status: "Status updated to Interested",
+  //     remark: "",
+  //     date: "01-Oct-2024",
+  //     time: "11:20 pm",
+  //     updatedBy: "John",
+  //     role: "Admin",
+  //   },
+  //   {
+  //     status: "Status updated to Interested",
+  //     remark: "",
+  //     date: "01-Oct-2024",
+  //     time: "11:20 pm",
+  //     updatedBy: "John",
+  //     role: "Admin",
+  //   },
+  //   {
+  //     status: "Status updated to Interested",
+  //     remark: "",
+  //     date: "01-Oct-2024",
+  //     time: "11:15 pm",
+  //     updatedBy: "Aswathi",
+  //     role: "Counsellor",
+  //   },
+  //   {
+  //     status: "Status updated to Interested",
+  //     remark: "",
+  //     date: "01-Oct-2024",
+  //     time: "11:15 pm",
+  //     updatedBy: "Aswathi",
+  //     role: "Counsellor",
+  //   },
 
-    // Add more messages here
-  ];
+  //   // Add more messages here
+  // ];
 
   const { statuses } = useSelector((state) => state.status);
 
@@ -72,6 +75,39 @@ export default function ActivityLog({ curLead }) {
   const fetchActivityLog = async () => {
     const response = await apiClient.get(`/log/?leadID=${curLead._id}`);
     setActivityLog(response?.data?.data[0]?.statusChange);
+  };
+
+  const handleRemarkUpdate = async (index, newRemark) => {
+    try {
+      const updatedLog = [...activityLog];
+      updatedLog[index].remark = newRemark;
+      setActivityLog(updatedLog);
+
+      // // Make API call to update the remark
+      await apiClient.patch(`/log/updateRemark`, {
+        logId: updatedLog[index]._id,
+        remark: newRemark,
+      });
+
+      message.success("Remark updated successfully");
+    } catch (error) {
+      message.error("Failed to update remark");
+      console.error(error);
+    }
+  };
+
+  const handleRemarkChange = (index, newRemark) => {
+    setRemarks((prevRemarks) => ({
+      ...prevRemarks,
+      [index]: newRemark,
+    }));
+  };
+
+  const handleKeyPress = (event, index) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleRemarkUpdate(index, remarks[index]);
+    }
   };
 
   return (
@@ -107,8 +143,11 @@ export default function ActivityLog({ curLead }) {
                             <textarea
                               type="text"
                               placeholder="Remark"
-                              value={message.remark}
-                              onClick={(e) => e.preventDefault()}
+                              value={remarks[index] || message.remark}
+                              onChange={(e) =>
+                                handleRemarkChange(index, e.target.value)
+                              }
+                              onKeyPress={(e) => handleKeyPress(e, index)}
                             />
                           </div>
                         </div>

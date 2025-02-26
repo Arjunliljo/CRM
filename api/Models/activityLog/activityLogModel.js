@@ -22,6 +22,10 @@ const activityLogSchema = mongoose.Schema(
             type: Date,
             default: Date.now,
           },
+          remark: {
+            type: String,
+            default: "",
+          },
         },
       ],
       default: [],
