@@ -7,7 +7,7 @@ import { message } from "antd";
 import apiClient from "../../../../config/axiosInstance";
 import { refetchLeads } from "../../../apiHooks/useLeads";
 
-export default function AssingToUser({ assigningLeads, onClick }) {
+export default function AssingToUser({ assigningLeads }) {
   const {
     roleConfigs: { roles = [] },
     usersConfigs: { users = [] },

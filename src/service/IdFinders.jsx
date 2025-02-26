@@ -17,3 +17,8 @@ export const getBranchId = (branch, branches) => {
   const branchId = branches.find((obj) => obj.name === branch)?._id;
   return branchId;
 };
+export const getUserId = (user, users) => {
+  if (!user || !users) return null;
+  const userId = users.find((obj) => obj.name === user)?._id;
+  return userId;
+};

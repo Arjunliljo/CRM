@@ -17,12 +17,14 @@ export const getAll = (Model, popOptions, nestedPopOptions) => {
       .paginate(await Model.countDocuments())
       .filterByBranch()
       .filterByDateRange()
-      .search();
+      .search()
+      .userFilter()
+      .countryFilter();
 
     let query = features.query;
     if (popOptions) {
       if (Array.isArray(popOptions)) {
-        popOptions.forEach(option => {
+        popOptions.forEach((option) => {
           query = query.populate(option);
         });
       } else {
@@ -32,13 +34,10 @@ export const getAll = (Model, popOptions, nestedPopOptions) => {
 
     // Conditionally apply nested population
     if (nestedPopOptions) {
-      nestedPopOptions.forEach(nestedOption => {
+      nestedPopOptions.forEach((nestedOption) => {
         query = query.populate(nestedOption);
       });
     }
-
-    // Log the query for debugging
-    console.log("Executing query:", query);
 
     try {
       const docs = await query;
@@ -74,7 +73,6 @@ export const createOne = (Model) => {
   console.log("called");
   return catchAsync(async (req, res, next) => {
     const doc = await Model.create(req.body);
-
 
     if (!doc) {
       return next(new AppError("Failed to create document", 400));

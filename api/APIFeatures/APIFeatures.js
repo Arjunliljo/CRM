@@ -17,13 +17,21 @@ class APIFeatures {
       "startDate",
       "endDate",
       "search",
-      "users",
+      "user",
+      "role",
+      "country",
     ];
 
     excludedFields.forEach((el) => delete queryObj[el]);
 
-    // Convert category ID to ObjectId if present
-    // idChecker(queryObj);
+    // Process each query parameter for comma-separated values
+    Object.keys(queryObj).forEach((key) => {
+      if (typeof queryObj[key] === "string" && queryObj[key].includes(",")) {
+        queryObj[key] = {
+          $in: queryObj[key].split(",").map((item) => item.trim()),
+        };
+      }
+    });
 
     this.query = this.query.find(queryObj);
 
@@ -124,6 +132,36 @@ class APIFeatures {
       this.query = this.query.sort(sortingItems);
     } else {
       this.query = this.query.sort("-createdAt");
+    }
+    return this;
+  }
+  userFilter() {
+    if (this.queryStr.user) {
+      // Handle both single user ID and comma-separated user IDs
+      const userIds = this.queryStr.user.split(",").map((id) => id.trim());
+
+      // Filter documents where the users array contains any of the specified user IDs
+      this.query = this.query.find({
+        users: {
+          $in: userIds,
+        },
+      });
+    }
+    return this;
+  }
+  countryFilter() {
+    if (this.queryStr.country) {
+      // Handle both single user ID and comma-separated user IDs
+      const countryIds = this.queryStr.country
+        .split(",")
+        .map((id) => id.trim());
+
+      // Filter documents where the users array contains any of the specified user IDs
+      this.query = this.query.find({
+        countries: {
+          $in: countryIds,
+        },
+      });
     }
     return this;
   }

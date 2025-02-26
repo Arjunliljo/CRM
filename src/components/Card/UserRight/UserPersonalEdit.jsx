@@ -8,7 +8,6 @@ import {
 } from "react-icons/md";
 import { FaRegUser, FaWhatsapp } from "react-icons/fa";
 import { GoHome } from "react-icons/go";
-import { IoAdd } from "react-icons/io5";
 import PrimaryBttn from "../../buttons/PrimaryBttn";
 import apiClient from "../../../../config/axiosInstance";
 import { message } from "antd";

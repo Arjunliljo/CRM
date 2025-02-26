@@ -5,28 +5,55 @@ import InfoBtn from "../buttons/InfoBtn";
 import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
 import { useEffect, useRef, useState } from "react";
-import { setAutoStudentsAssign } from "../../../global/studentsSlice";
-import { message } from "antd";
-import { useKey } from "../../hooks/useKey";
+import { setStudentDetailToggle } from "../../../global/studentsSlice";
 
-function StudentsCard({ student, set, onSet, istoggle, toggle, onsubmit }) {
+import { useKey } from "../../hooks/useKey";
+import { useApi } from "../../context/apiContext/ApiContext";
+import { getCountryName, getStatusName } from "../../service/nameFinders";
+
+function StudentsCard({
+  student,
+  set,
+  onSet,
+  toggle,
+  onsubmit,
+  isAssigning,
+  assigninSetter,
+  toAssignStudents,
+}) {
   const [isSelected, setIsSelected] = useState(student?._id === set?._id);
   const [remark, setRemark] = useState(student?.remark || "");
   const [isTextareaFocused, setIsTextareaFocused] = useState(false);
+
+  const {
+    statusConfigs: { statuses },
+    countryConfigs: { countries },
+  } = useApi();
+
   const targetRef = useRef(null);
+
+  const [countryName, setCountryName] = useState(
+    getCountryName(student?.countries?.[0], countries)
+  );
+  const [statusName, setStatusName] = useState(
+    getStatusName(student?.status, statuses)
+  );
 
   useEffect(() => {
     setIsSelected(student?._id === set?._id);
-  }, [set, student]);
+    setStatusName(getStatusName(student?.status, statuses));
+    setCountryName(getCountryName(student?.countries?.[0], countries));
+  }, [set, student, countries, statuses]);
 
   const dispatch = useDispatch();
-  const handleStudentSelect = () => {
+
+  const handleStudentNormalSelector = () => {
     if (student._id === set?._id) {
-      dispatch(setAutoStudentsAssign(!toggle));
+      dispatch(setStudentDetailToggle(!toggle));
     } else {
       dispatch(onSet(student));
       if (!toggle) {
-        dispatch(setAutoStudentsAssign(false));
+        dispatch(setStudentDetailToggle(false));
       }
     }
     setTimeout(() => {
@@ -37,16 +64,38 @@ function StudentsCard({ student, set, onSet, istoggle, toggle, onsubmit }) {
     }, 500);
   };
 
+  const handleStudentSelect = () => {
+    if (isAssigning) {
+      if (toAssignStudents.includes(student)) {
+        dispatch(
+          assigninSetter(toAssignStudents.filter((s) => s._id !== student._id))
+        );
+      } else {
+        dispatch(assigninSetter([...toAssignStudents, student]));
+      }
+      return;
+    }
+    handleStudentNormalSelector();
+  };
+
   useKey("Enter", async () => {
     if (isTextareaFocused && remark.trim()) {
-        onsubmit(remark, student._id);
-
+      onsubmit(remark, student._id);
     }
   });
 
+  const reAssignChecker = () => {
+    if (toAssignStudents.find((val) => val._id === student._id)) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <div
-      className={`card ${isSelected ? "selectedCard" : ""}`}
+      className={`card ${isSelected ? "selectedCard" : ""} ${
+        reAssignChecker() ? "selected-assign" : ""
+      }`}
       onClick={handleStudentSelect}
       id={`${student?._id}`}
       ref={targetRef}
@@ -58,7 +107,7 @@ function StudentsCard({ student, set, onSet, istoggle, toggle, onsubmit }) {
         <div className="card-body-top">
           <NameBar lead={student} />
           <InfoBtn color="white" bgcl="green">
-            Interested
+            {statusName}
           </InfoBtn>
         </div>
         <div className="card-body-mid">
@@ -81,7 +130,7 @@ function StudentsCard({ student, set, onSet, istoggle, toggle, onsubmit }) {
                 color="#00b100"
                 style={{ transform: "rotate(270deg)" }}
               />
-              <p>{student.applications} Applications</p>
+              <p>{student?.application?.length} Applications</p>
             </div>
             <div className="card-body-bottom-icons-item">
               <HomeIcon
@@ -89,14 +138,16 @@ function StudentsCard({ student, set, onSet, istoggle, toggle, onsubmit }) {
                 color="#0075fc"
                 style={{ transform: "rotate(270deg)" }}
               />
-              <p>{student.attempts} Attempts</p>
+              <p>{student.attemps} Attempts</p>
             </div>
           </div>
         </div>
 
         <div className="card-body-bottom-country">
-          <CountryBtn>{student.country}</CountryBtn>
-          <div className="card-body-bottom-country-count">3</div>
+          <CountryBtn>{countryName}</CountryBtn>
+          <div className="card-body-bottom-country-count">
+            {student?.assigned}
+          </div>
         </div>
       </div>
     </div>

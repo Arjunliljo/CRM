@@ -57,9 +57,7 @@ const getCampaigns = catchAsync(async (req, res) => {
   const forms = campaigns.map((campaign) => campaign.ads.data?.[0]?.id);
 
   // Use Promise.all to wait for all fetchLeads promises to resolve
-  const leads = await Promise.all(
-    forms.map((form) => fetchLeads(form, accessToken))
-  );
+  await Promise.all(forms.map((form) => fetchLeads(form, accessToken)));
 
   res.status(200).json({
     campaigns,

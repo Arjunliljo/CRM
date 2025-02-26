@@ -10,6 +10,7 @@ import { useCommens } from "../../apiHooks/useCommens";
 import { useUniversity } from "../../apiHooks/useUniversity";
 import { useQualifications } from "../../apiHooks/useQualifications";
 import { useCampaigns } from "../../apiHooks/useCampaigns";
+import { useStudents } from "../../apiHooks/useStudents";
 
 const ApiContext = createContext();
 
@@ -20,17 +21,25 @@ function ApiProvider({ children }) {
   const statusConfigs = useStatuses();
   const usersConfigs = useUsers();
   const chatsConfigs = useChats();
+
   const commonsConfigs = useCommens();
   const campaignsConfigs = useCampaigns();
+
+  const universityConfigs = useUniversity();
+  const qualificationsConfigs = useQualifications();
 
   const leadsConfigs = useLeads(
     statusConfigs?.statuses,
     branchConfigs?.branches,
-    countryConfigs?.countries
+    countryConfigs?.countries,
+    usersConfigs?.users
   );
-
-  const universityConfigs = useUniversity();
-  const qualificationsConfigs = useQualifications();
+  const studentsConfigs = useStudents(
+    statusConfigs?.statuses,
+    branchConfigs?.branches,
+    countryConfigs?.countries,
+    usersConfigs?.users
+  );
 
   return (
     <ApiContext.Provider
@@ -42,6 +51,7 @@ function ApiProvider({ children }) {
         usersConfigs,
         chatsConfigs,
         leadsConfigs,
+        studentsConfigs,
         commonsConfigs,
         universityConfigs,
         qualificationsConfigs,

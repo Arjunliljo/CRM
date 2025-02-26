@@ -83,12 +83,14 @@ const getAllLeads = catchAsync(async (req, res) => {
     .paginate(await Lead.countDocuments())
     .filterByBranch()
     .filterByDateRange()
-    .search();
+    .search()
+    .userFilter()
+    .countryFilter();
 
   const leads = await features.query.populate({
-    path: 'qualification',
-    model: 'Qualification',
-    strictPopulate: false
+    path: "qualification",
+    model: "Qualification",
+    strictPopulate: false,
   });
 
   return res.status(200).json({

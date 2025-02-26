@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import { getStatusId } from "../service/IdFinders";
 
 export const useStudents = (statuses) => {
-  const { curStatus, curSource, curBranch } = useSelector(
-    (state) => state.leads
+  const { curStatus, curSource, curBranch, curCampaign } = useSelector(
+    (state) => state.students
   );
 
   const statusId = getStatusId(curStatus, statuses);
@@ -25,13 +25,17 @@ export const useStudents = (statuses) => {
     endpoint += `&branch=${curBranch}`;
   }
 
+  if (!curCampaign.startsWith("All")) {
+    endpoint += `&campaignName=${curCampaign}`;
+  }
+
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["students", endpoint],
     queryFn: () => apiClient.get(endpoint),
   });
 
-  const leads = data?.data?.data;
-  return { leads, isLoading, error, refetch };
+  const students = data?.data?.data;
+  return { students, isLoading, error, refetch };
 };
 
 export function refetchStudents() {
