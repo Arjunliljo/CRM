@@ -4,7 +4,7 @@ import Tabs from "./Tabs";
 import { useSelector } from "react-redux";
 import Roles from "./Roles";
 
-export default function ProfileStatusHolder() {
+export default function ProfileStatusHolder({ isCreate }) {
   const { statuses } = useSelector((state) => state.status);
 
   const [selectedStatus, setSelectedStatus] = useState(statuses[0].name || "");
@@ -16,9 +16,10 @@ export default function ProfileStatusHolder() {
           setSelected={setSelectedStatus}
           selectedStatus={selectedStatus}
           statuses={statuses}
+          isCreate={isCreate}
         />
-        <Tabs />
-        <Roles />
+        <Tabs isCreate={isCreate} />
+        <Roles isCreate={isCreate} />
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useApi } from "../../../context/apiContext/ApiContext";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setProfileCountries } from "../../../../global/profileSlice";
+import { BsExclamation } from "react-icons/bs";
 
-export default function CountrySelector() {
+export default function CountrySelector({ isCreate }) {
   const {
     countryConfigs: { countries },
   } = useApi();
@@ -11,24 +12,30 @@ export default function CountrySelector() {
   // const countries = [];
 
   const dispatch = useDispatch();
-
-  const [selectedCountry, setSelectedCountry] = useState([]);
+  const profileData = useSelector((state) => state.profile);
+  const [selectedCountry, setSelectedCountry] = useState(profileData.countries);
 
   const handleCountryClick = (country) => {
-    setSelectedCountry((prev) =>
-      prev.includes(country)
+    setSelectedCountry((prev) => {
+      const updatedCountries = prev.includes(country)
         ? prev.filter((c) => c !== country)
-        : [...prev, country]
-    );
+        : [...prev, country];
+      dispatch(setProfileCountries(updatedCountries));
+      return updatedCountries;
+    });
   };
-
-  useEffect(() => {
-    dispatch(setProfileCountries(selectedCountry));
-  }, [selectedCountry, dispatch]);
 
   return (
     <div className="dynamic-selector">
-      <h2 className="small-heading">Country</h2>
+      <h2
+        className="small-heading"
+        style={{ display: "flex", alignItems: "center" }}
+      >
+        Country{" "}
+        {isCreate && !selectedCountry?.length && (
+          <BsExclamation className="error-icon" style={{ fontSize: "20px" }} />
+        )}
+      </h2>
       <div className="dynamic-selector-list">
         {countries?.length > 0 ? (
           countries.map((country, i) => (
