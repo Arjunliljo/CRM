@@ -6,6 +6,12 @@ const getActivityLog = getOne(ActivityLog);
 const updateActivityLog = updateOne(ActivityLog);
 const deleteActivityLog = deleteOne(ActivityLog);
 
+// const updateRemark = async (req, res) => {
+//   const { logId, remark } = req.body;
+//   const updatedLog = await ActivityLog.findByIdAndUpdate(logId, { remark }, { new: true });
+//   res.status(200).json(updatedLog);
+// };
+
 export {
   getAllActivityLogs,
   getActivityLog,

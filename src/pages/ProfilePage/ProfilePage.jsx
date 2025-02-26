@@ -10,12 +10,11 @@ function Profilepage() {
 
   // Initialize state with user data
   const [formData, setFormData] = useState({
-    name: user?.user?.name || '',
-    email: user?.user?.email || '',
-    phone: user?.user?.phone || '',
-    addressOne: user?.user?.addressOne || '',
-    addressTwo: user?.user?.addressTwo || '',
-    image: user?.user?.image || ''
+    name: user?.user?.name ,
+    phone: user?.user?.phone ,
+    addressOne: user?.user?.addressOne ,
+    addressTwo: user?.user?.addressTwo ,
+    image: user?.user?.image
   });
 
   // Handle input changes
@@ -44,7 +43,33 @@ function Profilepage() {
 
   const handleSubmit = async () => {
     console.log(formData, "formData");
-    const response = await apiClient.patch(`/user/${user?.user?._id}`, {...formData,mainFolder:'usersImages',subFolder:user?.user?._id});
+
+    // Create a FormData object
+    const data = new FormData();
+    data.append('name', formData.name);
+    data.append('phone', formData.phone);
+    data.append('addressOne', formData.addressOne);
+    data.append('addressTwo', formData.addressTwo);
+
+    // Check if the image is a new file or an existing URL
+    if (formData.image.startsWith('data:image')) {
+      // If it's a new image, append it as a file
+      const blob = await fetch(formData.image).then(res => res.blob());
+      data.append('image', blob, 'profile-image.png');
+    } else {
+      // If it's an existing URL, append it as a string
+      data.append('image', formData.image);
+    }
+
+    data.append('mainFolder', 'usersImages');
+    data.append('subFolder', user?.user?._id);
+
+    const response = await apiClient.patch(`/user/${user?.user?._id}`, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+
     console.log(response, "response");
   };
 

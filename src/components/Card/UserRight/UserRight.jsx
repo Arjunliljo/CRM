@@ -25,20 +25,21 @@ function UserRight({ user }) {
       <div className="UserRightCard-head-info-details">
         <div>
           <img
-            src={user.image}
-            alt={user.name}
+            src={user && user?.image}
+            alt={user && user?.name}
             style={{ width: "50px", height: "50px" }}
           />
         </div>
         <div className="name-bar-name name-small">
           <div>
-            {user.name}
+            {user && user?.name}
             <br></br>
-            <p style={{ fontSize: "1rem", color: "gray" }}>{user.addressOne}</p>
+            <p style={{ fontSize: "1rem", color: "gray" }}>{user && user?.addressOne}</p>
           </div>
           <div className="UserRightCard-head-info-location-card">
             <span className="UserRightCard-head-info-location"></span>
           </div>
+
           {/* <div className="UserRightCard-body-bottom-icons-item">
             <HomeIcon
               path="u-turn"

@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 function Mainhead() {
   const location = useLocation(); // Access the current route
   const user = useSelector((state) => state.auth.user)
-  
+
 
   // Map routes to their corresponding titles
   const getPageTitle = () => {
@@ -46,7 +46,7 @@ function Mainhead() {
     }
   };
 
-  
+
   return (
     <div className="logocontainer">
       <img src={icon} alt="" className="logocontainer-rightlogo" />
@@ -56,7 +56,7 @@ function Mainhead() {
         <div className="logocontainer-leftlead-bell">
           <CiBellOn className="logocontainer-leftlead-bell-icon" />
         </div>
-        <img src={profile} alt="" className="logocontainer-leftlead-photo" />
+        <img src={user && user?.image} alt="" className="logocontainer-leftlead-photo" />
       </div>
     </div>
   );

@@ -10,12 +10,16 @@ import { FaRegUser, FaWhatsapp } from "react-icons/fa";
 import { GoHome } from "react-icons/go";
 import { IoAdd } from "react-icons/io5";
 import PrimaryBttn from "../../buttons/PrimaryBttn";
+import apiClient from "../../../../config/axiosInstance";
+import { message } from "antd";
+import { refetchUsers } from "../../../apiHooks/useUsers";
+import { setCurUser } from "../../../../global/userSlice";
+import { useDispatch } from "react-redux";
 
-function UserPersonalEdit({user}) {
-
-console.log(user , "user")
+function UserPersonalEdit({ user }) {
+  console.log(user, "user");
   const [isEditing, setIsEditing] = useState(false);
-
+  const dispatch = useDispatch();
   //to edit mode open
   const handleOpenEdit = () => {
     setIsEditing(true);
@@ -30,6 +34,19 @@ console.log(user , "user")
   const handleSaveEdit = () => {
     setIsEditing(false);
     //here : logic for save the data
+  };
+
+  const handleDeleteUser = async () => {
+    try {
+      const response = await apiClient.delete(`/user/${user?._id}`);
+      message.success("User deleted successfully");
+      refetchUsers();
+      dispatch(setCurUser({}));
+      console.log(response, "response");
+    } catch (error) {
+      message.error("User not deleted");
+      console.log(error, "error");
+    }
   };
 
   return (
@@ -62,11 +79,11 @@ console.log(user , "user")
               <input
                 type="text"
                 name="name"
-                value={user.name}
+                value={user && user?.name}
                 className="personalUserEdit-details-edit-input"
               />
             ) : (
-              <span>{user.name}</span>
+              <span>{user && user?.name}</span>
             )}
           </div>
         </div>
@@ -83,11 +100,11 @@ console.log(user , "user")
                 <input
                   type="text"
                   name="contact"
-                  value={user.phone}
+                  value={user && user?.phone}
                   className="personalUserEdit-details-edit-input"
                 />
               ) : (
-                <span>{user.phone}</span>
+                <span>{user && user?.phone}</span>
               )}
             </div>
           </div>
@@ -107,11 +124,11 @@ console.log(user , "user")
               <input
                 type="email"
                 name="email"
-                value={user.email}
+                value={user && user?.email}
                 className="personalUserEdit-details-edit-input"
               />
             ) : (
-              <span>{user.email}</span>
+              <span>{user && user?.email}</span>
             )}
           </div>
         </div>
@@ -127,11 +144,11 @@ console.log(user , "user")
               <input
                 type="text"
                 name="address"
-                value={user.addressOne}
+                value={user && user?.addressOne}
                 className="personalUserEdit-details-edit-input"
               />
             ) : (
-              <span>{user.addressOne}</span>
+              <span>{user && user?.addressOne}</span>
             )}
           </div>
         </div>
@@ -140,7 +157,7 @@ console.log(user , "user")
         className="personalUserEdit-details-buttons"
         style={{ marginTop: "0.7rem" }}
       >
-        <PrimaryBttn
+        {/* <PrimaryBttn
           style={{
             backgroundColor: "#dadada",
             paddingLeft: "2rem",
@@ -150,15 +167,18 @@ console.log(user , "user")
           }}
         >
           Cancel
-        </PrimaryBttn>
+        </PrimaryBttn> */}
         <PrimaryBttn
           style={{
             paddingLeft: "2rem",
             paddingRight: "2rem",
             fontWeight: "bold",
+            backgroundColor: "#bd1212",
+            color: "white",
           }}
+          onClick={handleDeleteUser}
         >
-          Add
+          Delete User
         </PrimaryBttn>
       </div>
     </div>

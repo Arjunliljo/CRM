@@ -12,14 +12,7 @@ function ProfileRight({ user, onInputChange, handleSubmit }) {
           value={user.name}
           onChange={onInputChange}
         />
-        <input
-          type="email"
-          name="email"
-          className="profile-page__input"
-          placeholder="Email"
-          value={user.email}
-          onChange={onInputChange}
-        />
+
         <input
           type="tel"
           name="phone"
