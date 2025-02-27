@@ -25,7 +25,7 @@ const createCourse = createOne(Course);
 const updateCourse = updateOne(Course);
 const deleteCourse = deleteOne(Course);
 const getCourse = getOne(Course);
-const getAllCourse = getAll(Course);
+const getAllCourse = getAll(Course , ["university"]);
 
 export {
   createUniversity,
