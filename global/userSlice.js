@@ -19,6 +19,8 @@ const userSlice = createSlice({
 
       if (action.payload) {
         state.autoUserAssign = true;
+      } else {
+        state.autoUserAssign = false;
       }
     },
   },

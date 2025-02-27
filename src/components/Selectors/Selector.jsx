@@ -24,7 +24,7 @@ function Selector({
         className="custom-select"
         onChange={handleChange}
         value={set}
-        disabled={disabled || optionsObj.length === 0}
+        disabled={disabled}
       >
         <option value={""}>{placeholder}</option>
         {optionsObj.map((option, index) => (

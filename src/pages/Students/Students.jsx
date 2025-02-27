@@ -64,6 +64,7 @@ export default function Students() {
 
   const {
     leadsConfigs,
+    studentsConfigs,
     statusConfigs,
     roleConfigs,
     branchConfigs,
@@ -77,6 +78,7 @@ export default function Students() {
   const { branches = [] } = branchConfigs;
   const { countries = [] } = countryConfigs;
   const { campaigns = [] } = campaignsConfigs;
+  const { students = [] } = studentsConfigs;
   const { users = [] } = usersConfigs;
 
   const dispatch = useDispatch();
@@ -251,25 +253,25 @@ export default function Students() {
         </NormalButton>
         <NormalButton
           key="all"
-          onClick={handleAssignStudents("all", leadsConfigs?.leads, dispatch)}
+          onClick={handleAssignStudents("all", usersConfigs?.leads, dispatch)}
         >
           All
         </NormalButton>
         <NormalButton
           key="fifty"
-          onClick={handleAssignStudents(50, leadsConfigs?.leads, dispatch)}
+          onClick={handleAssignStudents(50, students, dispatch)}
         >
           50
         </NormalButton>
         <NormalButton
           key="twenty"
-          onClick={handleAssignStudents(20, leadsConfigs?.leads, dispatch)}
+          onClick={handleAssignStudents(20, students, dispatch)}
         >
           20
         </NormalButton>
         <NormalButton
           key="ten"
-          onClick={handleAssignStudents(10, leadsConfigs?.leads, dispatch)}
+          onClick={handleAssignStudents(10, students, dispatch)}
         >
           10
         </NormalButton>
@@ -313,7 +315,7 @@ export default function Students() {
     <div key="selector-two">
       <Selector
         key="campaign"
-        optionsObj={campaignsConfigs?.campaigns}
+        optionsObj={campaigns}
         placeholder="All Campaigns"
         set={curCampaign}
         onSet={setStudentCurCampaigns}
@@ -336,7 +338,7 @@ export default function Students() {
       onSet={setStudentCurUser}
     />,
   ];
-  const IContents = leadsConfigs?.leads?.map((student, index) => (
+  const IContents = students?.map((student, index) => (
     <StudentsCard
       key={index}
       isAssigning={isAssigning}
