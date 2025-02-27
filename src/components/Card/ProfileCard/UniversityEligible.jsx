@@ -20,7 +20,6 @@ function UniversityEligible({ coursess }) {
     (state) => state.universitys
   );
 
-  console.log(curUniversity, "234567890345678456789");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,7 +39,6 @@ function UniversityEligible({ coursess }) {
 
     try {
       setIsLoading(true);
-
       const newCourse = await apiClient.post("/university/course", {
         name: course.name,
         university: curUniversity?._id,
@@ -66,39 +64,6 @@ function UniversityEligible({ coursess }) {
       setIsLoading(false);
     }
   };
-
-  const eligibleCourses = [
-    {
-      title: "Masters in Advanced Artificial Intelligence",
-      university: "University of UK, UK",
-      fee: "2000",
-    },
-    {
-      title: "Masters in Advanced Artificial Intelligence",
-      university: "University of UK, UK",
-      fee: null,
-    },
-    {
-      title: "Masters in Advanced Artificial Intelligence",
-      university: "University of UK, UK",
-      fee: null,
-    },
-    {
-      title: "Masters in Advanced Artificial Intelligence",
-      university: "University of UK, UK",
-      fee: null,
-    },
-    {
-      title: "Masters in Advanced Artificial Intelligence",
-      university: "University of UK, UK",
-      fee: null,
-    },
-    {
-      title: "Masters in Advanced Artificial Intelligence",
-      university: "University of UK, UK",
-      fee: null,
-    },
-  ];
 
   const closeModal = () => setIsModalOpen(false);
 
@@ -137,13 +102,6 @@ function UniversityEligible({ coursess }) {
       </div> */}
 
       <div className="university-eligiable-courses-selector-container">
-        <BlackSelector
-          options={courses}
-          set={courses[0]}
-          onSet={(value) => {
-            handleOptionChange(value);
-          }}
-        />
         <BlackSelector
           options={Offer}
           set={Offer[0]}

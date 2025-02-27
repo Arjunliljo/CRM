@@ -10,7 +10,6 @@ import { setAutoUserAssign } from "../../../global/userSlice";
 function UserCard({ user, set, onSet, istoggle, toggle }) {
   const [isSelected, setIsSelected] = useState(user?._id === set?._id);
   const targetRef = useRef(null);
-  // const { autoLeadsAssign, curLead } = useSelector((state) => state.user);
 
   useEffect(() => {
     setIsSelected(user?._id === set?._id);
@@ -18,11 +17,8 @@ function UserCard({ user, set, onSet, istoggle, toggle }) {
 
   const dispatch = useDispatch();
   const handleUserSelect = () => {
-    
-    
     if (user._id === set?._id) {
       dispatch(setAutoUserAssign(!toggle));
-      
     } else {
       dispatch(onSet(user));
       if (!toggle) {
@@ -37,6 +33,11 @@ function UserCard({ user, set, onSet, istoggle, toggle }) {
     }, 500);
   };
 
+  // Debugging: Log the user object and its properties
+  console.log("User:", user);
+  console.log("User State:", user.state);
+  console.log("User Applications:", user.applications);
+
   return (
     <div
       className={`cardUser ${isSelected ? "selectedCard" : ""}`}
@@ -47,27 +48,24 @@ function UserCard({ user, set, onSet, istoggle, toggle }) {
       <div className="cardUser-body">
         <div className="cardUser-body-top">
           <UserNamebar user={user} />
-          {/* <InfoBtn color="white" bgcl="green">
-            Interested
-          </InfoBtn> */}
         </div>
 
         <div className="cardUser-body-center">
           <div className="cardUser-body-bottom-icons">
             <div className="cardUser-body-bottom-icons-item">
               <HomeIcon path="payments" color="#00b100" />
-              <p>{user.applications}</p>
+              <p>{typeof user.applications === "number" ? user.applications : "N/A"}</p>
             </div>
             <div className="cardUser-body-bottom-icons-item">
               <HomeIcon path="ongoing" color="#0075fc" />
-              <p>{user.ongoing}</p>
+              <p>{typeof user.ongoing === "number" ? user.ongoing : "N/A"}</p>
             </div>
           </div>
         </div>
 
         <div className="cardUser-body-bottom-country">
           <CountryBtn style={{ paddingLeft: "2rem", paddingRight: "2rem" }}>
-            {user.state}
+            {typeof user.state === "string" ? user.state : "N/A"}
           </CountryBtn>
         </div>
       </div>

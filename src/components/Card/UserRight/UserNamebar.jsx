@@ -1,4 +1,5 @@
 function UserNamebar({ user }) {
+  console.log("User in UserNamebar:", user); // Debugging
   return (
     <div className="name-bar">
       <div className="name-bar-img">
@@ -7,7 +8,7 @@ function UserNamebar({ user }) {
       <div className="name-bar-name name-small">
         <div>{user.name}</div>
         <div className="name-bar-name-whatsapp">
-          <span className="card-number">{user.role}</span>
+          <span className="card-number">{user.role.name}</span>
         </div>
       </div>
     </div>

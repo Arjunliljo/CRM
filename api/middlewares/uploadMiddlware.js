@@ -16,8 +16,8 @@ const upload = (req, res, next) => {
 
     try {
       if (!req.files || req.files.length === 0) {
-        // return res.status(400).json({ error: "No file provided" });
-        next();
+        // If no files are provided, simply call next() to pass control to the next middleware
+        return next();
       }
 
       // Process each file in the request

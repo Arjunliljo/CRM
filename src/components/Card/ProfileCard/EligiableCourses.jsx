@@ -41,6 +41,7 @@ export default function EligiableCourses({
     console.log("Selected Option:", newOption);
   };
 
+//fetch courses acc to qualification
   const { data: courses, isLoading, error } = useQuery({
     queryKey: ["courses"],
     queryFn: () => apiClient.get("/university/course"),

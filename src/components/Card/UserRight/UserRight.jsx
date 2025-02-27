@@ -18,7 +18,7 @@ function UserRight({ user }) {
     year: "2",
   };
   const currUser = useSelector((state) => state.currUser);
-
+  console.log(user);
   return (
     <div className="UserRightCard">
       <div className="UserRightCard-head-info-details">

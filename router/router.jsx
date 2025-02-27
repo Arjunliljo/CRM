@@ -12,6 +12,7 @@ import Dependencies from "../src/pages/Dependency/Dependencies";
 import Login from "../src/layout/Login/Login";
 import General from "../src/pages/general/General";
 import { useSelector } from "react-redux";
+import UserProfileEdit from "../src/pages/profileEdit/ProfileStatus/userProfileEdit";
 
 const tabses = [
   {
@@ -58,6 +59,10 @@ const tabses = [
   {
     path: "offerLetter",
     element: <General />,
+  },
+  {
+    path: "User/user-profile-edit",
+    element: <UserProfileEdit />,
   },
 ];
 
