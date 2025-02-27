@@ -19,11 +19,16 @@ export const canStartApplication = (curLead) => {
   if (!curLead) return false;
 
   const hasEnoughDocuments = curLead.documents?.length >= 4;
-  const hasMarks = curLead.qualification?.length > 0;
   const hasStatus = Boolean(curLead.status);
   const hasEligibleCourse = Boolean(curLead.isUniversitySelected);
+  const hasPersonalDetails = Boolean(
+    curLead.name &&
+    curLead.email &&
+    curLead.phone &&
+    curLead.address
+  );
 
-  return hasEnoughDocuments && hasMarks && hasStatus && hasEligibleCourse;
+  return hasEnoughDocuments && hasStatus && hasEligibleCourse && hasPersonalDetails;
 };
 
 export const handleStartApplication = async (curLead, navigate) => {

@@ -6,12 +6,12 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: [true, "Course must have a name"],
     },
-    university: [
+    university:
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "University",
       },
-    ],
+
     fee: {
       type: Number,
       required: [true, "Course must have a fees"],

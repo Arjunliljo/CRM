@@ -3798,7 +3798,7 @@ F .log .message-area-textarea-container {
   flex-direction: column;
   gap: 4px;
 }
-.document-upload-input {
+.document-upload-form-input {
   width: 100%;
   padding: 4px;
   border: 1px solid #ced4da;

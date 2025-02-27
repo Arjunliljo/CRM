@@ -20,7 +20,7 @@ function UniversityEligible({ coursess }) {
     (state) => state.universitys
   );
 
-
+  console.log(curUniversity, "234567890345678456789");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,7 +43,7 @@ function UniversityEligible({ coursess }) {
 
       const newCourse = await apiClient.post("/university/course", {
         name: course.name,
-        university: courseData.university,
+        university: curUniversity?._id,
         fee: course.fee || 0,
         duration:course.duration || 0,
         qualification: courseData.qualification,
@@ -55,7 +55,6 @@ function UniversityEligible({ coursess }) {
           courses: [...curUniversity.courses, newCourse?.data?.data?._id],
         }
       );
-
 
       setCourse({ name: "" });
       refetchUniversity();
@@ -165,6 +164,9 @@ function UniversityEligible({ coursess }) {
                 {course.fee && <span> Fee : ${course.fee}</span>}
               </div>
             </div>
+            <div className="eligiable-courses-assigners" style={{textAlign: "right"}}>
+                <span>{course.duration ? ` ${course.duration} Months` : "null"}</span>
+              </div>
           </div>
         ))}
       </div>

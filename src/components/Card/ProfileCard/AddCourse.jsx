@@ -15,44 +15,46 @@ export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
   const {
     qualificationsConfigs: { qualifications },
   } = useApi();
-  const {
-    universityConfigs: { university },
-  } = useApi();
+  // const {
+  //   universityConfigs: { university },
+  // } = useApi();
+
+console.log(qualifications, "qualifications array");
 
   const [selectedQualification, setSelectedQualification] = useState([]);
+  console.log(selectedQualification, "qualifications");
 
-  const [selectedUniversities, setSelectedUniversities] = useState([]);
-  const [isUniversityPopoverOpen, setIsUniversityPopoverOpen] = useState(false);
+  // const [selectedUniversities, setSelectedUniversities] = useState([]);
+  // const [isUniversityPopoverOpen, setIsUniversityPopoverOpen] = useState(false);
 
-  const handleQualificationSelect = () => {
-    setQualification([...selectedQualification]);
-    setIsPopoverOpen(false);
+  const toggleQualificationSelection = (qualification) => {
+    setSelectedQualification((prev) => {
+      if (prev.some((q) => q._id === qualification._id)) {
+        return prev.filter((q) => q._id !== qualification._id);
+      } else {
+        return [...prev, qualification];
+      }
+    });
   };
 
-  const removeSelectedQualification = (qualification) => {
-    setSelectedQualification((prev) =>
-      prev.filter((c) => c._id !== qualification._id)
-    );
-  };
+  // const handleUniversitySelect = () => {
+  //   setSelectedUniversities([...selectedUniversities]);
+  //   setIsUniversityPopoverOpen(false);
+  // };
 
-  const handleUniversitySelect = () => {
-    setSelectedUniversities([...selectedUniversities]);
-    setIsUniversityPopoverOpen(false);
-  };
-
-  const removeSelectedUniversity = (university) => {
-    setSelectedUniversities((prev) =>
-      prev.filter((u) => u._id !== university._id)
-    );
-  };
+  // const removeSelectedUniversity = (university) => {
+  //   setSelectedUniversities((prev) =>
+  //     prev.filter((u) => u._id !== university._id)
+  //   );
+  // };
 
   const handleCourseSubmit = async (e) => {
     e.preventDefault();
     const qualificationIds = selectedQualification.map((qual) => qual._id);
-    const universityIds = selectedUniversities.map((uni) => uni._id);
+    // const universityIds = selectedUniversities.map((uni) => uni._id);
     handleSubmit({
       qualification: qualificationIds,
-      university: universityIds,
+      // university: universityIds,
     });
   };
 
@@ -141,17 +143,23 @@ export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
               overflowY: "auto",
             }}
           >
-            <PopoverContent
-              selectedCountry={selectedQualification}
-              setSelectedCountry={setSelectedQualification}
-              onSelect={handleQualificationSelect}
-              onCancel={() => {
-                setIsPopoverOpen(false);
-                setSelectedQualification([]);
-              }}
-              formData={""}
-              contents={qualifications} // Pass universities array
-            />
+            {qualifications.map((qualification) => (
+              <div
+                key={qualification._id}
+                style={{
+                  padding: "10px",
+                  cursor: "pointer",
+                  backgroundColor: selectedQualification.some(
+                    (q) => q._id === qualification._id
+                  )
+                    ? "#e6f7ff"
+                    : "white",
+                }}
+                onClick={() => toggleQualificationSelection(qualification)}
+              >
+                {qualification.name}
+              </div>
+            ))}
           </div>
         )}
         {selectedQualification.length > 0 && (
@@ -183,7 +191,7 @@ export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
                 <span>{qualification.name}</span>
                 <span
                   style={{ cursor: "pointer", color: "red", marginLeft: "5px" }}
-                  onClick={() => removeSelectedQualification(qualification)}
+                  onClick={() => toggleQualificationSelection(qualification)}
                 >
                   ✕
                 </span>
@@ -192,7 +200,7 @@ export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
           </div>
         )}
       </div>
-      <div className="modal__form-input-text" style={{ position: "relative" }}>
+      {/* <div className="modal__form-input-text" style={{ position: "relative" }}>
         <div
           className="input-formGroup"
           style={{
@@ -283,11 +291,11 @@ export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
             ))}
           </div>
         )}
-      </div>
+      </div> */}
 
       <div className="modal__form-buttons">
         <CancelBtn onClick={closeModal}>Cancel</CancelBtn>
-        <NextBtn type="submit" onClick={handleSubmit}>
+        <NextBtn type="submit">
           Add
         </NextBtn>
       </div>
