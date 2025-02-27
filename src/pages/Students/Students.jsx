@@ -9,7 +9,8 @@ import { useApi } from "../../context/apiContext/ApiContext";
 import StudentsCard from "../../components/Card/StudentsCard";
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
 import ModalBase from "../../components/Forms/ModalBase";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { handlePersonalDetailsSubmit } from "./studentHandlers/backendHandlers";
 import {
   useIDGetStatusesArray,
   useIDGetRolesArray,
@@ -23,13 +24,13 @@ import apiClient from "../../../config/axiosInstance";
 import {
   removeCurLeadDocument,
   updateCurLeadDocuments,
-  updateLeadStatus,
 } from "../../../global/leadsSlice";
 import { message } from "antd";
 import AddLead from "../../components/Forms/Leads/AddLead";
-import { refetchLeads } from "../../apiHooks/useLeads";
+
 import NormalButton from "../../components/buttons/NormalButton";
 import {
+  setCurApplications,
   setCurStudent,
   setStudentCurBranch,
   setStudentCurCampaigns,
@@ -47,6 +48,15 @@ import {
   handleAssignToUser,
 } from "./studentHandlers/assignStudentHandler";
 import AssingToUser from "../leads/components/AssignToUser";
+import ActivityLog from "../../components/Card/ProfileCard/ActivityLog";
+import { refetchStudents } from "../../apiHooks/useStudents";
+import {
+  addQualification,
+  deleteQualification,
+  editQualification,
+} from "./studentHandlers/studentQualificationHandlers";
+import { useQuery } from "@tanstack/react-query";
+import ProfileCardApplicationStatus from "../../components/Card/ProfileCard/ProfileCardApplicationStatus";
 
 export default function Students() {
   const {
@@ -63,7 +73,6 @@ export default function Students() {
   } = useSelector((state) => state.students);
 
   const {
-    leadsConfigs,
     studentsConfigs,
     statusConfigs,
     roleConfigs,
@@ -168,10 +177,9 @@ export default function Students() {
 
   const handleStatusCardSubmit = async (status) => {
     try {
-      const respones = await apiClient.patch("/lead/updateLeadStatus", status);
-
-      dispatch(updateLeadStatus(respones?.data?.data));
-      refetchLeads();
+      const respones = await apiClient.patch(`/lead/${curStudent._id}`, status);
+      dispatch(setCurStudent(respones?.data?.data));
+      refetchStudents();
       message.success("Status updated successfully");
     } catch (error) {
       console.error("Error updating lead status:", error);
@@ -179,19 +187,16 @@ export default function Students() {
     }
   };
 
-  const handlePersonalDetailsSubmit = async (details) => {
-    try {
-      await apiClient.patch("/lead/updateLeadPersonalDetails", {
-        leadId: curStudent._id,
-        details,
-      });
-      refetchLeads();
-      return true;
-    } catch (error) {
-      console.error("Error updating lead personal details:", error);
-      return false;
+  const { data: applications, isLoading } = useQuery({
+    queryKey: ["application", curStudent._id],
+    queryFn: () => apiClient.get(`/application?lead=${curStudent._id}`),
+  });
+
+  useEffect(() => {
+    if (applications?.data?.data?.length > 0) {
+      dispatch(setCurApplications(applications?.data?.data));
     }
-  };
+  }, [applications, dispatch]);
 
   const IPrimaryBttn = (
     <PrimaryBttn onClick={handleModal}>Add Students</PrimaryBttn>
@@ -207,19 +212,44 @@ export default function Students() {
   );
 
   const IProfileCardStatus = (
-    <ProfileCardStatus
-      statuses={statuses?.filter((val) => !val.isApplication)}
-      lead={curStudent && curStudent}
+    <ProfileCardApplicationStatus
+      statuses={statuses?.filter((val) => val.isApplication)}
+      application={applications && applications?.[0]}
       countries={countries}
       onsubmit={handleStatusCardSubmit}
     />
   );
 
+  const handleModalSubmit = (newQualification) => {
+    addQualification({ ...newQualification, leadId: curStudent._id }, dispatch);
+    refetchStudents();
+  };
+
+  const handleEditQualification = (updatedQualification) => {
+    editQualification(
+      { ...updatedQualification, leadId: curStudent._id },
+      dispatch
+    );
+  };
+
+  const handleDeleteQualification = (cardId) => {
+    deleteQualification(cardId, curStudent._id, dispatch);
+  };
+
   const IPersonalDetails = curStudent && (
-    <PersonalDetails lead={curStudent} onSubmit={handlePersonalDetailsSubmit} />
+    <PersonalDetails
+      lead={curStudent}
+      onSubmit={handlePersonalDetailsSubmit}
+      modalSubmit={handleModalSubmit}
+      editQualification={handleEditQualification}
+      deleteQualification={handleDeleteQualification}
+    />
   );
 
   const IEligiableCourses = <EligiableCourses />;
+
+  const IActivityLog = <ActivityLog curLead={curStudent} />;
+
   const IProfileCard = (
     <ProfileCard
       IDocumentUpload={IDocumentUpload}
@@ -227,6 +257,7 @@ export default function Students() {
       IProfileCardStatus={IProfileCardStatus}
       IEligiableCourses={IEligiableCourses}
       personalDetails={IPersonalDetails}
+      IActivityLog={IActivityLog}
     />
   );
 

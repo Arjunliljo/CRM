@@ -186,7 +186,7 @@ export default function Leads() {
 
   const IProfileCardStatus = (
     <ProfileCardStatus
-      statuses={statuses}
+      statuses={statuses?.filter((val) => !val.isApplication)}
       lead={curLead}
       countries={countries}
       onsubmit={handleStatusCardSubmit}

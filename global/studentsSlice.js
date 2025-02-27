@@ -5,6 +5,7 @@ const studentsSlice = createSlice({
   initialState: {
     studentDetailToggle: false,
     curStudent: {},
+    curApplications: [],
     isAssigning: false,
     toAssignStudents: [],
     curStatus: "All Status",
@@ -16,6 +17,9 @@ const studentsSlice = createSlice({
     curUser: "All User",
   },
   reducers: {
+    setCurApplications: (state, action) => {
+      state.curApplications = action.payload;
+    },
     setStudentCurBranch: (state, action) => {
       state.curBranch = action.payload;
     },
@@ -67,6 +71,7 @@ const studentsSlice = createSlice({
 });
 
 export const {
+  setCurApplications,
   setCurStudent,
   setStudentCurBranch,
   setStudentCurStatus,
