@@ -174,6 +174,10 @@ export default function Leads() {
     />
   );
 
+  // console.log(curLead,"curLead.....");
+
+  // console.log(curLead?.qualification,"qualifications");
+
   const IPersonalDetails = curLead && (
     <PersonalDetails
       lead={curLead}
@@ -194,7 +198,7 @@ export default function Leads() {
   );
 
   const IEligiableCourses = (
-    <EligiableCourses onClick={handleEligibleCourseClick} />
+    <EligiableCourses onClick={handleEligibleCourseClick} qualifications={curLead.qualification}/>
   );
 
   const IActivityLog = <ActivityLog curLead={curLead} />;

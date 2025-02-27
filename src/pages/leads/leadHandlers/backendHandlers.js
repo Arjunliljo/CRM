@@ -50,10 +50,7 @@ export const handleStartApplication = async (curLead, navigate) => {
 
 export const handleStatusCardSubmit = async (data, dispatch, leadId) => {
   try {
-    console.log(data, "data");
     const response = await apiClient.patch(`lead/${leadId}`, data);
-    console.log(response, "response");
-
     dispatch(updateLeadStatus(response?.data?.data));
     message.success("Status updated successfully");
     refetchLeads();
