@@ -66,6 +66,7 @@ import {
 } from "./leadHandlers/documentHandler";
 import { refetchLeads } from "../../apiHooks/useLeads";
 import { getRoleName } from "../../service/nameFinders";
+import { message } from "antd";
 
 export default function Leads() {
   const dispatch = useDispatch();
@@ -147,12 +148,20 @@ export default function Leads() {
     deleteQualification(cardId, curLead._id, dispatch);
   };
 
-  const handleEligibleCourseClick = (universityId) => {
+  const handleEligibleCourseClick = (courseDetails) => {
+    if (!curLead?.countries?.[0]) {
+      message.error("Please select a country first");
+      return;
+    }
     if (curLead) {
-      const updatedLead = { ...curLead, isUniversitySelected: universityId };
+      const updatedLead = {
+        ...curLead,
+        course: courseDetails?._id,
+        country: curLead?.countries?.[0],
+      };
       dispatch(setCurLead(updatedLead));
     }
-    dispatch(setIsUniversitySelected(universityId));
+    dispatch(setIsUniversitySelected(courseDetails));
   };
 
   useEffect(() => {
@@ -174,10 +183,6 @@ export default function Leads() {
     />
   );
 
-  // console.log(curLead,"curLead.....");
-
-  // console.log(curLead?.qualification,"qualifications");
-
   const IPersonalDetails = curLead && (
     <PersonalDetails
       lead={curLead}
@@ -198,7 +203,10 @@ export default function Leads() {
   );
 
   const IEligiableCourses = (
-    <EligiableCourses onClick={handleEligibleCourseClick} qualifications={curLead.qualification}/>
+    <EligiableCourses
+      onClick={handleEligibleCourseClick}
+      qualifications={curLead.qualification}
+    />
   );
 
   const IActivityLog = <ActivityLog curLead={curLead} />;
@@ -217,7 +225,11 @@ export default function Leads() {
 
   const IStartApplication = canStartApplication(curLead) ? (
     <StartApplication
-      handleStartApplication={() => handleStartApplication(curLead, navigate)}
+      handleStartApplication={() => {
+        const status = statuses?.find((val) => val.isApplication)?._id;
+
+        handleStartApplication(curLead, navigate, status);
+      }}
     />
   ) : null;
 

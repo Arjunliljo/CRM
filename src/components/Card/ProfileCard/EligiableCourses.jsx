@@ -189,9 +189,6 @@
 //   );
 // }
 
-
-
-
 import NormalButton from "../../buttons/NormalButton";
 import BlackSelector from "../../Selectors/BlackSelector";
 import EligibleBttn from "../../buttons/EligibleBttn";
@@ -235,17 +232,20 @@ export default function EligiableCourses({
     console.log("Selected Option:", newOption);
   };
 
-  const { data: courses, isLoading, error } = useQuery({
+  const {
+    data: courses,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["courses"],
     queryFn: () => apiClient.get("/university/course"),
   });
 
-  console.log(courses, "API Response");
-
-  const handleCardClick = (courseId) => {
+  const handleCardClick = (course) => {
+    const courseId = course._id;
     const newSelectedId = selectedCourseId === courseId ? null : courseId;
     setSelectedCourseId(newSelectedId);
-    onClick(newSelectedId);
+    onClick(course);
   };
 
   if (isLoading) {
@@ -309,14 +309,16 @@ export default function EligiableCourses({
                 selectedCourseId === course._id ? "selected" : ""
               }`}
               key={course._id}
-              onClick={() => handleCardClick(course._id)}
+              onClick={() => handleCardClick(course)}
               style={{
                 backgroundColor:
                   selectedCourseId === course._id
                     ? "rgb(216, 255, 216)"
                     : "lightgrey",
                 border:
-                  selectedCourseId === course._id ? "1px solid #0075fc" : "none",
+                  selectedCourseId === course._id
+                    ? "1px solid #0075fc"
+                    : "none",
               }}
             >
               <div className="eligiable-courses-assigners">
@@ -324,9 +326,12 @@ export default function EligiableCourses({
               </div>
               <div className="eligiable-courses-keys">
                 <span className="card-number">
-                  {course.university?.map((item) => item.name).join(", ") || "No University Available"}
+                  {course.university?.map((item) => item.name).join(", ") ||
+                    "No University Available"}
                 </span>
-                {course.fee && <span style={{ color: "black" }}> Fee : ${course.fee}</span>}
+                {course.fee && (
+                  <span style={{ color: "black" }}> Fee : ${course.fee}</span>
+                )}
               </div>
             </div>
           ))

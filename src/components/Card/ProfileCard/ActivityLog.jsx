@@ -1,10 +1,8 @@
-import { MdOutlineModeEdit } from "react-icons/md";
 import apiClient from "../../../../config/axiosInstance";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getStatusName } from "../../../service/nameFinders";
-import { useApi } from "../../../context/apiContext/ApiContext";
-import { message } from "antd";
+
 import { useQuery } from "@tanstack/react-query";
 
 export default function ActivityLog({ curLead }) {
@@ -19,7 +17,10 @@ export default function ActivityLog({ curLead }) {
     queryKey: ["activityLog"],
     queryFn: () => apiClient.get(`/log/?leadID=${curLead._id}`),
   });
-  refetch();
+
+  useEffect(() => {
+    refetch();
+  }, [curLead, refetch]);
 
   return (
     <div className="log">

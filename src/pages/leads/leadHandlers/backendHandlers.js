@@ -20,30 +20,33 @@ export const canStartApplication = (curLead) => {
 
   const hasEnoughDocuments = curLead.documents?.length >= 4;
   const hasMarks = curLead.qualification?.length > 0;
-  const hasStatus = Boolean(curLead.status);
-  const hasEligibleCourse = Boolean(curLead.isUniversitySelected);
+  const hasStatus = Boolean(curLead?.status);
+  const hasEligibleCourse = Boolean(curLead?.course);
 
   return hasEnoughDocuments && hasMarks && hasStatus && hasEligibleCourse;
 };
 
-export const handleStartApplication = async (curLead, navigate) => {
+export const handleStartApplication = async (curLead, navigate, status) => {
   try {
-    await apiClient.post("/application", {
+    const res = await apiClient.post("/application", {
       lead: curLead._id,
-      course: curLead.isUniversitySelected,
-      status: curLead.status,
+      status,
+      course: curLead.course,
       applicationDate: new Date(),
-      remark: curLead.remark,
-      university: "23456789",
+      remark: curLead.remark || "New Application",
+      university: curLead?.university,
       country: curLead.country,
       studentId: "345678945678",
       documents: curLead.documents,
     });
 
-    await message.success("Application started successfully");
+    console.log(res, "res");
+
+    message.success("Application started successfully");
     navigate("/Student");
     refetchLeads();
   } catch (error) {
+    console.log(error, "error");
     message.error("Error starting application");
   }
 };

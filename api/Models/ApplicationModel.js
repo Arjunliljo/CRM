@@ -1,35 +1,29 @@
 import mongoose from "mongoose";
-import Lead from "./leadsModel.js";
 
 const applicationModel = mongoose.Schema(
   {
-    studentId: {
-      type: String,
-      required: [true, "Application must have a studentId"],
-    },
     lead: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Lead",
+      required: [true, "Application must have a lead"],
     },
-    // courseId: {
-    //   type: String,
-    //   required: [true, "Application must have a courseId"],
-    // },
     status: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Status",
       required: [true, "Application must have a status"],
     },
     applicationDate: {
       type: Date,
+      default: Date.now,
       required: [true, "Application must have a applicationDate"],
     },
     remark: {
       type: String,
-      required: [true, "Application must have a remark"],
     },
     university: {
-      type: String,
-      required: [true, "Application must have a university"],
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "University",
+      // required: [true, "Application must have a university"],
     },
     country: {
       type: mongoose.Schema.Types.ObjectId,

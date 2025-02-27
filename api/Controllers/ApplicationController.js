@@ -1,6 +1,4 @@
-import APIFeatures from "../APIFeatures/APIFeatures.js";
 import {
-  createOne,
   deleteOne,
   getAll,
   getOne,
@@ -18,7 +16,8 @@ const createApplication = catchAsync(async (req, res, next) => {
     return next(new AppError("Lead not found", 404));
   }
 
-  const newApplication = await Application.create(req.body);
+  const newApplication = new Application(req.body);
+  await newApplication.save();
 
   if (!newApplication) {
     return next(new AppError("Application not created", 400));

@@ -78,7 +78,7 @@ const leadSchema = mongoose.Schema(
 
     remark: {
       type: String,
-      minlength: [3, "Remark should be greater than 3 characters"],
+      maxlength: [150, "Remark should be less than 150 characters"],
     },
 
     helpers: {
