@@ -90,6 +90,11 @@ export default function Students() {
   const { students = [] } = studentsConfigs;
   const { users = [] } = usersConfigs;
 
+  const { data: applications, isLoading } = useQuery({
+    queryKey: ["application", curStudent._id],
+    queryFn: () => apiClient.get(`/application?lead=${curStudent._id}`),
+  });
+
   const dispatch = useDispatch();
 
   const statusObj = useIDGetStatusesArray(statuses);
@@ -97,6 +102,10 @@ export default function Students() {
   const branchesObj = useIDGetBranchesArray(branches);
   const countriesObj = useIDGetCountriesArray(countries);
   const [assignToUser, setAssignToUser] = useState(false);
+
+  const [curApplication, setCurApplication] = useState(
+    applications?.data?.data?.[0] || {}
+  );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
@@ -177,24 +186,24 @@ export default function Students() {
 
   const handleStatusCardSubmit = async (status) => {
     try {
-      const respones = await apiClient.patch(`/lead/${curStudent._id}`, status);
-      dispatch(setCurStudent(respones?.data?.data));
+      const respones = await apiClient.patch(
+        `/application/${curApplication._id}`,
+        status
+      );
+
+      setCurApplication(respones?.data?.data);
       refetchStudents();
       message.success("Status updated successfully");
     } catch (error) {
-      console.error("Error updating lead status:", error);
+      console.log("Error updating lead status:", error);
       message.error("Error updating lead status");
     }
   };
 
-  const { data: applications, isLoading } = useQuery({
-    queryKey: ["application", curStudent._id],
-    queryFn: () => apiClient.get(`/application?lead=${curStudent._id}`),
-  });
-
   useEffect(() => {
     if (applications?.data?.data?.length > 0) {
       dispatch(setCurApplications(applications?.data?.data));
+      setCurApplication(applications?.data?.data?.[0] || {});
     }
   }, [applications, dispatch]);
 
@@ -202,9 +211,9 @@ export default function Students() {
     <PrimaryBttn onClick={handleModal}>Add Students</PrimaryBttn>
   );
 
-  const IDocumentUpload = curStudent && (
+  const IDocumentUpload = curApplication && (
     <DocumentUpload
-      lead={curStudent}
+      lead={curApplication}
       onUpload={handleDocumentSubmit}
       onDelete={handleDeleteDocument}
       onUpdate={handleUpdateDocument}
@@ -214,9 +223,10 @@ export default function Students() {
   const IProfileCardStatus = (
     <ProfileCardApplicationStatus
       statuses={statuses?.filter((val) => val.isApplication)}
-      application={applications && applications?.[0]}
+      application={curApplication && curApplication}
+      curStudent={curStudent}
       countries={countries}
-      onsubmit={handleStatusCardSubmit}
+      onSubmit={handleStatusCardSubmit}
     />
   );
 
@@ -247,7 +257,6 @@ export default function Students() {
   );
 
   const IEligiableCourses = <EligiableCourses />;
-
   const IActivityLog = <ActivityLog curLead={curStudent} />;
 
   const IProfileCard = (

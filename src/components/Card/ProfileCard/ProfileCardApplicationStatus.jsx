@@ -2,111 +2,43 @@ import { IoMdArrowForward, IoMdArrowBack } from "react-icons/io";
 import { MdOutlineInterests } from "react-icons/md";
 import { MdDateRange } from "react-icons/md";
 import EligibleBttn from "../../buttons/EligibleBttn";
-import { getStatusName } from "../../../service/nameFinders";
+import { getCountryName, getStatusName } from "../../../service/nameFinders";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useDispatch } from "react-redux";
 
 export default function ProfileCardApplicationStatus({
   statuses,
   application,
   countries,
-  onsubmit,
+  onSubmit,
+  curStudent,
 }) {
-  const initialStatus =
-    statuses?.find(
-      (s) => s.name === getStatusName(application?.status, statuses)
-    ) || statuses?.[0];
-
-  const initialCountry =
-    countries?.find((country) => country?._id === application?.country) ||
-    application?.country?.[0];
-
-  const [status, setStatus] = useState(initialStatus);
-  const [remark, setRemark] = useState(application?.remark || "");
-  const [selectedCountry, setSelectedCountry] = useState(initialCountry);
-  const [showPastRemark, setShowPastRemark] = useState(false);
-  const [followupDate, setFollowupDate] = useState(new Date());
-
-  const dispatch = useDispatch();
+  const [status, setStatus] = useState(
+    getStatusName(application?.status, statuses)
+  );
+  const [followupDate, setFollowupDate] = useState(
+    application?.followupDate || new Date()
+  );
+  const [country, setCountry] = useState(getCountryName(application?.country));
+  const [remark, setRemark] = useState(application?.remark);
 
   useEffect(() => {
-    const status =
-      statuses?.find(
-        (s) => s.name === getStatusName(application?.status, statuses)
-      ) || statuses?.[0];
-    setStatus(status);
-  }, [application?.status, statuses]);
-
-  useEffect(() => {
-    const country = countries?.find(
-      (country) => country?._id === application?.country
-    );
-    setSelectedCountry(country);
-  }, [countries, application?.country]);
-
-  useEffect(() => {
-    const status =
-      statuses?.find(
-        (s) => s.name === getStatusName(application?.status, statuses)
-      ) || statuses?.[0];
-
-    const country = countries?.find(
-      (country) => country?._id === application?.country
-    );
-    setSelectedCountry(country);
-    setStatus(status);
+    setStatus(getStatusName(application?.status, statuses));
+    setFollowupDate(application?.followupDate || new Date());
+    setCountry(getCountryName(application?.country));
     setRemark(application?.remark);
-    setFollowupDate(application?.followupDate);
-  }, [application]);
-
-  useEffect(() => {
-    if (application?.remark) {
-      setRemark(application.remark);
-      setShowPastRemark(false);
-    } else if (application?.pastRemark && application?.remark === "") {
-      setShowPastRemark(true);
-    } else {
-      setRemark("");
-      setShowPastRemark(false);
-    }
-  }, [application?.remark, application?.pastRemark]);
-
-  const handleStatusChange = (e) => {
-    // Find the status object that matches the selected name
-    const selectedStatus = statuses.find((s) => s.name === e.target.value);
-    setStatus(selectedStatus);
-  };
-
-  const handleCountryChange = (e) => {
-    const country = countries.find((c) => c.name === e.target.value);
-
-    setSelectedCountry(country);
-  };
-
-  const handleRemarkChange = (e) => {
-    setRemark(e.target.value);
-    setShowPastRemark(false);
-  };
+  }, [application, curStudent, statuses, countries]);
 
   const handleSave = (e) => {
     e.preventDefault();
 
-    const filteredCountries = [
-      ...new Set([...application.countries, selectedCountry?._id]),
-    ];
+    const statusId = statuses?.find((status) => status.name === status)?._id;
+    const countryId = countries?.find(
+      (country) => country.name === country
+    )?._id;
 
-    const data = {
-      status: status?._id,
-      remark: remark,
-      countries: application?.isStudent
-        ? filteredCountries
-        : [selectedCountry?._id],
-      followupDate: followupDate,
-    };
-
-    onsubmit(data, dispatch, application?._id);
+    onSubmit({ status: statusId, followupDate, country: countryId, remark });
   };
 
   return (
@@ -122,15 +54,20 @@ export default function ProfileCardApplicationStatus({
           </span>
         </div>
       </div>
-      <form className="personal-status-elements" onSubmit={handleSave}>
+      <form
+        className="personal-status-elements"
+        onSubmit={(e) => {
+          e.preventDefault();
+          onsubmit({ status, followupDate, country, remark });
+        }}
+      >
         <span className="personal-status-html-for">Current status</span>
         <div className="select-container">
           <MdOutlineInterests className="select-icon" />
           <select
             className="selector-with-icon"
-            value={status?.name}
-            id=""
-            onChange={handleStatusChange}
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
           >
             {statuses?.map((status) => (
               <option value={status.name} key={status._id}>
@@ -155,8 +92,8 @@ export default function ProfileCardApplicationStatus({
           <MdOutlineInterests className="select-icon" />
           <select
             className="selector-with-icon"
-            value={selectedCountry?.name || "Select Country"}
-            onChange={handleCountryChange}
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
           >
             {countries?.map((country) => (
               <option value={country?.name} key={country?._id}>
@@ -166,7 +103,7 @@ export default function ProfileCardApplicationStatus({
           </select>
         </div>
         <div className="card-body-mid">
-          {showPastRemark && application?.pastRemark ? (
+          {application?.pastRemark ? (
             <div className="past-remark">
               <p>Previous Remark:</p>
               <p>{application?.pastRemark}</p>
@@ -180,26 +117,13 @@ export default function ProfileCardApplicationStatus({
               placeholder="Remark"
               style={{ height: "16rem" }}
               value={remark}
-              onChange={handleRemarkChange}
+              onChange={(e) => setRemark(e.target.value)}
             />
           )}
         </div>
-        <div className="personal-status-bottom-set">
-          {/* <div className="personal-details-heading ">
-            <span className="personal-status-html-for">Updated by</span>
-            <div className="icons personal-details-group-icons">
-              <span className="arrow-btn">
-                <IoMdArrowBack className="arrow-btn-element" />
-              </span>
-              <span className="arrow-btn">
-                <IoMdArrowForward className="arrow-btn-element" />
-              </span>
-            </div>
-          </div> */}
-          {/* <input type="text" className="selector-with-icon" /> */}
-        </div>
+        <div className="personal-status-bottom-set"></div>
         <div className="eligible-head">
-          <EligibleBttn type="submit">Save</EligibleBttn>
+          <EligibleBttn onClick={handleSave}>Save</EligibleBttn>
         </div>
       </form>
     </div>

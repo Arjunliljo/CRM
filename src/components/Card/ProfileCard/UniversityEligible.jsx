@@ -16,11 +16,7 @@ function UniversityEligible({ coursess }) {
   const [course, setCourse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const {  curUniversity } = useSelector(
-    (state) => state.universitys
-  );
-
-
+  const { curUniversity } = useSelector((state) => state.universitys);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +33,6 @@ function UniversityEligible({ coursess }) {
       return;
     }
 
-
     try {
       setIsLoading(true);
 
@@ -45,7 +40,7 @@ function UniversityEligible({ coursess }) {
         name: course.name,
         university: courseData.university,
         fee: course.fee || 0,
-        duration:course.duration || 0,
+        duration: course.duration || 0,
         qualification: courseData.qualification,
       });
 
@@ -55,7 +50,6 @@ function UniversityEligible({ coursess }) {
           courses: [...curUniversity.courses, newCourse?.data?.data?._id],
         }
       );
-
 
       setCourse({ name: "" });
       refetchUniversity();
