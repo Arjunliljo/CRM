@@ -48,7 +48,8 @@ export const useCreateUser = () => {
   );
 
   // console.log(statusIds, "statusIds");
-  // console.log(tabs, "tabs");
+console.log(tabs, "tabs");
+console.log(defaultTabesItems, 'defoult tab')
 
 
   // const filteredTabIds = tabs

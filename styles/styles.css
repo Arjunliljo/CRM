@@ -2909,6 +2909,26 @@ F .log .message-area-textarea-container {
   overflow: hidden;
   padding: 1rem;
 }
+.logocontainer-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+.logocontainer-left-greeting {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem;
+}
+.logocontainer-left-greeting-user {
+  font-size: 1.5rem;
+}
+.logocontainer-left-greeting-text {
+  font-size: 1.5rem;
+  color: gray;
+}
 .logocontainer-rightlogo {
   width: 2.5rem;
   height: 2.5rem;
@@ -3080,6 +3100,13 @@ F .log .message-area-textarea-container {
   margin-left: 5rem;
   margin-top: 7rem;
   background-color: #f9f9f9;
+}
+
+.profileUpdate-main-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font: 1em sans-serif;
 }
 
 .profile-edit-container {

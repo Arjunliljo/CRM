@@ -67,7 +67,7 @@ const profileSlice = createSlice({
     resetProfile: (state) => {
       return {
         countries: [],
-        role: {},
+        role: "",
         branches: [],
         password: "",
         autoAssign: false,

@@ -6,7 +6,10 @@ import AddCourse from "./AddCourse";
 import apiClient from "../../../../config/axiosInstance";
 import { message } from "antd";
 import { refetchUniversity } from "../../../apiHooks/useUniversity";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { EditOutlined } from "@mui/icons-material";
+import UpdateCourse from "./UpdateCourse";
+import { updateCurUniversityCourses } from "../../../../global/universitySlice";
 
 function UniversityEligible({ coursess }) {
   const Countries = ["Country", "Option 2", "Option 3"];
@@ -14,9 +17,12 @@ function UniversityEligible({ coursess }) {
   const Offer = ["Fees", "Option 2", "Option 3"];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [course, setCourse] = useState("");
+  const [editCourse, setEditCourse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const { curUniversity } = useSelector((state) => state.universitys);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,14 +49,13 @@ function UniversityEligible({ coursess }) {
         qualification: courseData.qualification,
       });
 
-      const response = await apiClient.patch(
-        `/university/${curUniversity._id}`,
-        {
-          courses: [...curUniversity.courses, newCourse?.data?.data?._id],
-        }
+      // setCourse({ name: "" });
+      dispatch(
+        updateCurUniversityCourses([
+          ...curUniversity.courses,
+          newCourse?.data?.data,
+        ])
       );
-
-      setCourse({ name: "" });
       refetchUniversity();
       message.success("Course created successfully!");
       closeModal();
@@ -61,10 +66,42 @@ function UniversityEligible({ coursess }) {
     }
   };
 
+  const handleUpdate = async (courseData) => {
+    try {
+      setIsLoading(true);
+      const response = await apiClient.patch(
+        `/university/course/${editCourse._id}`,
+        courseData
+      );
+      console.log(response, "response");
+      message.success("Course updated successfully!");
+      closeEditModal();
+      refetchUniversity();
+      dispatch(
+        updateCurUniversityCourses([
+          ...curUniversity.courses.filter(
+            (course) => course._id !== editCourse._id
+          ),
+          response.data.data,
+        ])
+      );
+    } catch (e) {
+      message.error("Error updating course. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const closeModal = () => setIsModalOpen(false);
+  const closeEditModal = () => setIsEditModalOpen(false);
 
   const handleModal = () => {
     setIsModalOpen((val) => !val);
+  };
+
+  const handleEdit = (course) => {
+    setEditCourse(course);
+    setIsEditModalOpen((val) => !val);
   };
 
   return (
@@ -126,6 +163,24 @@ function UniversityEligible({ coursess }) {
                 {course.duration ? ` ${course.duration} Months` : "null"}
               </span>
             </div>
+            <div
+              className="eligiable-courses-assigners"
+              style={{ textAlign: "right" }}
+            >
+              <div>
+                <span>
+                  <EditOutlined
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleEdit(course)}
+                  />
+                </span>
+              </div>
+              <div>
+                <span>
+                  {course.duration ? ` ${course.duration} Months` : "null"}
+                </span>
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -140,6 +195,19 @@ function UniversityEligible({ coursess }) {
           handleSubmit={handleSubmit}
           course={course}
           setCourse={setCourse}
+        />
+      </ModalBase>
+      <ModalBase
+        title="Edit Course"
+        isOpen={isEditModalOpen}
+        closeModal={closeEditModal}
+      >
+        <UpdateCourse
+          closeModal={closeEditModal}
+          handleChange={handleChange}
+          handleSubmit={handleUpdate}
+          courseData={editCourse}
+          setCourse={setEditCourse}
         />
       </ModalBase>
     </div>

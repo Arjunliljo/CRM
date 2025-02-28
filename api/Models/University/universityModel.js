@@ -34,9 +34,6 @@ const universitySchema = mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-
-
 const University = mongoose.model("University", universitySchema);
-
 
 export default University;

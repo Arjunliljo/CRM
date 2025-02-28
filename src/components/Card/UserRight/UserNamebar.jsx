@@ -3,12 +3,12 @@ function UserNamebar({ user }) {
   return (
     <div className="name-bar">
       <div className="name-bar-img">
-        <img src={user.image} alt={user.name} />
+        <img src={user?.image} alt={user?.name} />
       </div>
       <div className="name-bar-name name-small">
-        <div>{user.name}</div>
+        <div>{user?.name}</div>
         <div className="name-bar-name-whatsapp">
-          <span className="card-number">{user.role.name}</span>
+          <span className="card-number">{user?.role?.name}</span>
         </div>
       </div>
     </div>

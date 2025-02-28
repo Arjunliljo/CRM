@@ -14,6 +14,8 @@ export default function User() {
 
   const { users } = useSelector((state) => state.users);
 
+  console.log(users, "users");
+
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate("/profile-edit");

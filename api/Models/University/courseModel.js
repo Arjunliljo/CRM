@@ -38,6 +38,8 @@ courseSchema.pre("save", function(next) {
         throw new Error("University not found");
       }
 
+      university.courses.push(this._id);
+
       const uniqueQualifications = new Set([
         ...university.qualifications.map(q => q.toString()),
         ...this.qualification.map(q => q.toString())
