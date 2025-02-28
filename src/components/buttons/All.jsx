@@ -1,5 +1,5 @@
-function All() {
-  return <button className="allbttn">All</button>;
+function All({ onClick }) {
+  return <button className="allbttn" onClick={onClick}>All</button>;
 }
 
 export default All;

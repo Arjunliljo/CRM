@@ -19,7 +19,7 @@ const store = configureStore({
     leads: leadsSlice,
     user: userSlice,
     students: studentsSlice,
-    universitys: universitySlice,
+    university: universitySlice,
     branchmanage: branchSlice,
     core: coreSlice,
     creation: creationSlice,

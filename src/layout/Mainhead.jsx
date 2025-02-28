@@ -36,14 +36,43 @@ function Mainhead() {
   const getGreeting = () => {
     const hour = new Date().getHours();
 
+    const morningGreetings = [
+      "Good morning! Have a great day!",
+      "Rise and shine!",
+      "Feeling fresh today?",
+      "Hope you slept well!",
+      "Let’s make today amazing!",
+      "Morning! What's the plan?"
+    ];
+
+    const afternoonGreetings = [
+      "Good afternoon! Keep going strong!",
+      "Hope your day’s smooth!",
+      "Feeling productive today?",
+      "Enjoy your afternoon!",
+      "You're doing great!",
+      "Need a quick break?"
+    ];
+
+    const eveningGreetings = [
+      "Good evening! Relax and unwind.",
+      "Time to slow down!",
+      "Had a good day?",
+      "Evening! Enjoy the moment.",
+      "Rest up for tomorrow!",
+      "How’s your night going?"
+    ];
+
+
     if (hour < 12) {
-      return ["Rise and shine!", "Good morning!", "Hope you have a bright morning!"][Math.floor(Math.random() * 3)];
+      return morningGreetings[Math.floor(Math.random() * morningGreetings.length)];
     } else if (hour < 18) {
-      return ["Good afternoon!", "Hope your day is going well!", "Enjoy your afternoon!"][Math.floor(Math.random() * 3)];
+      return afternoonGreetings[Math.floor(Math.random() * afternoonGreetings.length)];
     } else {
-      return ["Good evening!", "Hope you had a great day!", "Relax and unwind this evening!"][Math.floor(Math.random() * 3)];
+      return eveningGreetings[Math.floor(Math.random() * eveningGreetings.length)];
     }
   };
+
 
   return (
     <div className="logocontainer">

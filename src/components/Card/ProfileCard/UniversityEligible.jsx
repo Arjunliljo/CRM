@@ -11,9 +11,7 @@ import { EditOutlined } from "@mui/icons-material";
 import UpdateCourse from "./UpdateCourse";
 import { updateCurUniversityCourses } from "../../../../global/universitySlice";
 
-function UniversityEligible({ coursess }) {
-  const Countries = ["Country", "Option 2", "Option 3"];
-  const courses = ["UG", "Option 2", "Option 3"];
+function UniversityEligible() {
   const Offer = ["Fees", "Option 2", "Option 3"];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [course, setCourse] = useState("");
@@ -21,8 +19,7 @@ function UniversityEligible({ coursess }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const { curUniversity } = useSelector((state) => state.universitys);
-
+  const { curUniversity } = useSelector((state) => state.university);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,7 +47,12 @@ function UniversityEligible({ coursess }) {
       });
 
       // setCourse({ name: "" });
-      dispatch(updateCurUniversityCourses([...curUniversity.courses, newCourse?.data?.data]));
+      dispatch(
+        updateCurUniversityCourses([
+          ...curUniversity.courses,
+          newCourse?.data?.data,
+        ])
+      );
       refetchUniversity();
       message.success("Course created successfully!");
       closeModal();
@@ -64,12 +66,21 @@ function UniversityEligible({ coursess }) {
   const handleUpdate = async (courseData) => {
     try {
       setIsLoading(true);
-      const response = await apiClient.patch(`/university/course/${editCourse._id}`, courseData);
-      console.log(response, "response");
+      const response = await apiClient.patch(
+        `/university/course/${editCourse._id}`,
+        courseData
+      );
       message.success("Course updated successfully!");
       closeEditModal();
       refetchUniversity();
-      dispatch(updateCurUniversityCourses([...curUniversity.courses.filter(course => course._id !== editCourse._id), response.data.data]));
+      dispatch(
+        updateCurUniversityCourses([
+          ...curUniversity.courses.filter(
+            (course) => course._id !== editCourse._id
+          ),
+          response.data.data,
+        ])
+      );
     } catch (e) {
       message.error("Error updating course. Please try again later.");
     } finally {
@@ -123,9 +134,9 @@ function UniversityEligible({ coursess }) {
         <BlackSelector
           options={Offer}
           set={Offer[0]}
-          onSet={(value) => {
-            handleOptionChange(value);
-          }}
+          // onSet={(value) => {
+          //   handleOptionChange(value);
+          // }}
         />
       </div>
       <div className="university-eligiable-courses-cards">
@@ -146,7 +157,10 @@ function UniversityEligible({ coursess }) {
             >
               <div>
                 <span>
-                  <EditOutlined style={{ cursor: "pointer" }} onClick={() => handleEdit(course)} />
+                  <EditOutlined
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleEdit(course)}
+                  />
                 </span>
               </div>
               <div>

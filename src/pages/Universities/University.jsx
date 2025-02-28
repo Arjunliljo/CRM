@@ -1,5 +1,5 @@
 import SearchBar from "../../components/smallComponents/SearchBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MainBody from "../../layout/MainBody/MainBody";
 import Selector from "../../components/Selectors/Selector";
 import PrimaryBttn from "../../components/buttons/PrimaryBttn";
@@ -12,6 +12,7 @@ import All from "../../components/buttons/All";
 import {
   setAutoUniversitysAssign,
   setCurUniversity,
+  setUniversityCurCountry,
 } from "../../../global/universitySlice";
 import UniversityCard from "../../components/Card/UniversityCard";
 import UniversityProfile from "../../components/Card/UniversityRight/UniversityProfile";
@@ -20,52 +21,34 @@ import { useState } from "react";
 import AddUniversity from "../../components/Forms/University/AddUniversity";
 import { useApi } from "../../context/apiContext/ApiContext";
 
-const university = {
-  num: 3,
-  Uname: "University Of United Kingdom",
-  img: "https://via.placeholder.com/150",
-  number: 1234567890,
-  status: "Interested",
-  statusColor: "red",
-  remark:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-  year: 2,
-  fee: 1000,
-  eligibility: "Eligibility",
-  country: "Germany",
-  count: 3,
-};
-const arr = [...Array(500)].map((_, i) => {
-  const obj = { ...university, _id: i };
-  return obj;
-});
+const fees = [
+  { name: "10000-15000" },
+  { name: "15000-20000" },
+  { name: "20000-25000" },
+  { name: "25000-30000" },
+  { name: "30000+" },
+];
 
 export default function University() {
-  const { autoUniversitysAssign, curUniversity } = useSelector(
-    (state) => state.universitys
+  const dispatch = useDispatch();
+
+  const { autoUniversitysAssign, curUniversity, curCountry } = useSelector(
+    (state) => state.university
   );
-
-
-
-
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
-
   const handleModal = () => {
     setIsModalOpen((val) => !val);
   };
 
-  const { countryConfigs , universityConfigs } = useApi();
+  const { countryConfigs, universityConfigs } = useApi();
   const { countries = [] } = countryConfigs;
   const { university = [] } = universityConfigs;
 
-
-
-
   const ISearchBar = <SearchBar />;
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
-  const IContents = university?.map((university, index) => (
+  const IContents = university.map((university, index) => (
     <UniversityCard
       key={index}
       onSet={setCurUniversity}
@@ -76,25 +59,25 @@ export default function University() {
     />
   ));
 
-  const fees = [
-    { name: "10000-15000" },
-    { name: "15000-20000" },
-    { name: "20000-25000" },
-    { name: "25000-30000" },
-    { name: "30000+" }
-  ];
-
   //   const ISelector = <Selector />;
   const IPrimaryBttn = (
     <PrimaryBttn onClick={handleModal}>Add University</PrimaryBttn>
   );
-  const IAll = <All />;
-  const ISelectorOne = <Selector optionsObj={countries} />;
-  const ISelectorTwo = <Selector optionsObj={fees} placeholder="Select Fee Range" />;
-  const ISelectorThree = <Selector optionsObj={fees} placeholder="Select Fee Range" />;
+  const IAll = <All onClick={() => dispatch(setUniversityCurCountry("All"))} />;
+  const ISelectorOne = (
+    <Selector
+      optionsObj={countries}
+      placeholder="Select Country"
+      onSet={setUniversityCurCountry}
+      set={curCountry}
+    />
+  );
+  const ISelectorTwo = (
+    <Selector optionsObj={fees} placeholder="Select Fee Range" />
+  );
   const IProfileCard = <UniversityProfile university={curUniversity} />;
 
-  const TopLeft = [<div key="search-bar">{ISelectorOne}</div>];
+  // const TopLeft = [<div key="search-bar">{ISelectorOne}</div>];
   const TopRight = [<div key="primary-btn">{IPrimaryBttn}</div>];
 
   const BottomLeft = [
@@ -111,7 +94,7 @@ export default function University() {
   return (
     <>
       <MainBody
-        TopLeft={TopLeft}
+        // TopLeft={TopLeft}
         TopRight={TopRight}
         IContents={IContents}
         switching={autoUniversitysAssign}
@@ -128,11 +111,7 @@ export default function University() {
         <AddUniversity
           isUpadte={false}
           closeModal={closeModal}
-          // newUniversity={newUniversity}
-          // setNewUniversity={setNewUniversity}
-          // handleChange={handleChange}
           countries={countries}
-
         />
       </ModalBase>
     </>

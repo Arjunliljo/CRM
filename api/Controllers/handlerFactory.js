@@ -18,8 +18,8 @@ export const getAll = (Model, popOptions, nestedPopOptions) => {
       .filterByBranch()
       .filterByDateRange()
       .search()
-      .userFilter()
-      .countryFilter();
+      // .userFilter()
+      // .countryFilter();
 
     let query = features.query;
     if (popOptions) {

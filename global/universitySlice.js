@@ -5,8 +5,12 @@ const universitySlice = createSlice({
   initialState: {
     autoUniversitysAssign: false,
     curUniversity: {},
+    curCountry: "All",
   },
   reducers: {
+    setUniversityCurCountry: (state, action) => {
+      state.curCountry = action.payload;
+    },
     setAutoUniversitysAssign: (state, action) => {
       state.autoUniversitysAssign = action.payload;
 
@@ -30,7 +34,12 @@ const universitySlice = createSlice({
   },
 });
 
-export const { setAutoUniversitysAssign, setCurUniversity, updateCurUniversity, updateCurUniversityCourses } =
-  universitySlice.actions;
+export const {
+  setAutoUniversitysAssign,
+  setCurUniversity,
+  updateCurUniversity,
+  updateCurUniversityCourses,
+  setUniversityCurCountry,
+} = universitySlice.actions;
 
 export default universitySlice.reducer;
