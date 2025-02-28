@@ -15,23 +15,25 @@ function UserPosition({ user }) {
 
   const rolesArray =
     user?.roles?.map((role) => ({
-      name: getRoleName(role, roles) || "",
+      name: getRoleName(role._id, roles) || "",
       _id: role || "",
     })) || [];
 
   const branchesArray =
     user?.branches?.map((branch) => ({
-      name: getBranchName(branch, branches) || "",
+      name: getBranchName( branch._id, branches) || "",
       _id: branch || "",
     })) || [];
 
   const statusArray =
     user?.statuses?.map((status) => ({
-      name: getStatusName(status, statuses) || "",
+      name: getStatusName(status._id, statuses) || "",
       _id: status || "",
     })) || [];
 
   // const userRoleName = getRoleName(user?.role, roles);
+
+  console.log(user, "user");
 
   return (
     <div className="profileCardEdituser-box personalUserEdit-status">
@@ -41,7 +43,7 @@ function UserPosition({ user }) {
       <form className="personalUserEdit-status-elements">
         {/* <span className="personalUserEdit-status-html-for">Role</span> */}
         <div>
-          {/* <span className="chat-text">{user?.role?.name || "No role name"}</span> */}
+          <span className="chat-text">{user?.role?.name || "No role name"}</span>
         </div>
         <span className="personalUserEdit-status-html-for">Managing Roles</span>
         <div

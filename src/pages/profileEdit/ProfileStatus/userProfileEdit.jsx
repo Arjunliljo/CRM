@@ -27,6 +27,7 @@ import {
 } from "../../../../global/profileSlice";
 import CancelBtn from "../../../components/buttons/CancelBtn";
 import { refetchUsers } from "../../../apiHooks/useUsers";
+import { useCreateUser } from "../../../hooks/useCreateUser";
 
 const TABS = ["Profile", "Status", "Dashboard"];
 
@@ -37,9 +38,6 @@ function UserProfileEdit() {
   const [activeTab, setActiveTab] = useState(0);
   const [isCreate, setIsCreate] = useState(false);
   const navigate = useNavigate();
-
-
-  console.log(user, "user");
 
   useEffect(() => {
     if (user) {
@@ -52,10 +50,10 @@ function UserProfileEdit() {
       dispatch(setProfileAutoAssign(user.autoAssign));
       dispatch(setProfileBranches(user.branches));
       dispatch(setProfileCountries(user.countries));
-      // dispatch(setProfilePassword(user.password));
+      dispatch(setProfilePassword(user.password));
       dispatch(setProfileRole(user.role));
       dispatch(setProfileMainStatus(user.statuses));
-      dispatch(setSelectedTabs(user.defaultTabs));
+      dispatch(setSelectedTabs([...user.defaultTabs.map((tab,i) => ({name: tab, id: i +1})), ...user.tabs]));
       dispatch(setSelectedRoles(user.roles));
     }
 
@@ -64,8 +62,7 @@ function UserProfileEdit() {
       dispatch(resetProfile());
     };
   }, [user, dispatch]);
-  const profileData = useSelector((state) => state.profile);
-  console.log(profileData, "profileData");
+  const userData =useCreateUser();
 
   const handleNext = () => {
     if (activeTab < TABS.length - 1) {
@@ -75,11 +72,13 @@ function UserProfileEdit() {
 
   const handleCancel = () => {
     setActiveTab(0);
+    dispatch(resetProfile());
+    navigate(-1);
   };
 
   const handleCreate = async () => {
     setIsCreate(true);
-    await apiClient.patch(`/user/${user._id}`, profileData);
+    await apiClient.patch(`/user/${user._id}`, userData);
     message.success("User updated successfully!");
     refetchUsers();
     navigate("/user");
@@ -89,14 +88,17 @@ function UserProfileEdit() {
 
   return (
     <div className="profileUpdate-main">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginBottom: "1rem",
-        }}
+      <div className="profileUpdate-main-header">
+        <h2 style={{margin:0 }}>Update Profile</h2>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            // marginBottom: "1rem",
+          }}
       >
         <CancelBtn onClick={() => navigate(-1)}>back</CancelBtn>
+        </div>
       </div>
 
       <ProfileSwitchNav

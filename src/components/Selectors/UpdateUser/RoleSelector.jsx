@@ -15,10 +15,11 @@ export default function RoleSelector({ setter, isCreate, profileData }) {
   const handleChange = (event) => {
     const selectedRole = roles.find((role) => role.name === event.target.value);
     if (selectedRole) {
-      dispatch(setter({ id: selectedRole._id, name: selectedRole.name }));
+      dispatch(setter(selectedRole._id));
     }
   };
 
+  console.log(profileData, "profile data");
   return (
     <div className="form-group">
       <div
@@ -28,6 +29,7 @@ export default function RoleSelector({ setter, isCreate, profileData }) {
         <select
           className="forms-select"
           onChange={handleChange}
+          value={profileData?.role?.name}
           style={{ width: "100%" }}
         >
           <option value="">Select Role</option>
@@ -37,7 +39,7 @@ export default function RoleSelector({ setter, isCreate, profileData }) {
             </option>
           ))}
         </select>
-        {isCreate && !profileData.role.id && (
+        {isCreate && !profileData?.role?.id && (
           <BsExclamation
             className="error-icon"
             style={{

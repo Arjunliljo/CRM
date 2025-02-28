@@ -11,13 +11,17 @@ export default function Tabs({ isCreate }) {
 
   const allTabs = defaultTabs.concat(tabs);
 
+console.log(selectedTabs,"selected tabs")
+
   const handleTabClick = (tab) => {
-    if (selectedTabs.includes(tab)) {
-      dispatch(setSelectedTabs(selectedTabs.filter((t) => t !== tab)));
+    console.log(tab);
+    if (selectedTabs.some((t) => t.name === tab.name)) {
+      dispatch(setSelectedTabs(selectedTabs.filter((t) => t.name !== tab.name)));
     } else {
       dispatch(setSelectedTabs([...selectedTabs, tab]));
     }
   };
+
 
   return (
     <div className="content-section main-status-container">

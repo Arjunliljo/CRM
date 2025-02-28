@@ -14,16 +14,23 @@ export default function CountrySelector({ isCreate }) {
   const dispatch = useDispatch();
   const profileData = useSelector((state) => state.profile);
   const [selectedCountry, setSelectedCountry] = useState(profileData.countries);
+  useEffect(() => {
+    setSelectedCountry(profileData.countries);
+  }, [profileData.countries]);
+
 
   const handleCountryClick = (country) => {
     setSelectedCountry((prev) => {
-      const updatedCountries = prev.includes(country)
-        ? prev.filter((c) => c !== country)
+      const updatedCountries = prev.some((c) => c.id === country.id)
+        ? prev.filter((c) => c.id !== country.id)
         : [...prev, country];
       dispatch(setProfileCountries(updatedCountries));
       return updatedCountries;
     });
   };
+
+  console.log(profileData.role, "selected country");
+  // console.log(countries, "all countries");
 
   return (
     <div className="dynamic-selector">
@@ -41,7 +48,7 @@ export default function CountrySelector({ isCreate }) {
           countries.map((country, i) => (
             <span
               className={`dynamic-selector-list-item ${
-                selectedCountry.includes(country) ? "active" : ""
+                selectedCountry.some((c) => c.id === country.id) ? "active" : ""
               }`}
               key={country.name}
               onClick={() => handleCountryClick(country)}

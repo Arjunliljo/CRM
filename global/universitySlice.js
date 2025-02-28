@@ -21,10 +21,16 @@ const universitySlice = createSlice({
         state.autoUniversitysAssign = true;
       }
     },
+    updateCurUniversity(state, action) {
+      state.curUniversity = action.payload;
+    },
+    updateCurUniversityCourses(state, action) {
+      state.curUniversity.courses = action.payload;
+    },
   },
 });
 
-export const { setAutoUniversitysAssign, setCurUniversity } =
+export const { setAutoUniversitysAssign, setCurUniversity, updateCurUniversity, updateCurUniversityCourses } =
   universitySlice.actions;
 
 export default universitySlice.reducer;

@@ -15,8 +15,8 @@ export default function DashBoardSelect() {
   const { selectedRoles } = useSelector((state) => state.profile);
 
   const handleRoleClick = (role) => {
-    if (selectedRoles.includes(role)) {
-      dispatch(setSelectedRoles(selectedRoles.filter((t) => t !== role)));
+    if (selectedRoles.some((t) => t._id === role._id)) {
+      dispatch(setSelectedRoles(selectedRoles.filter((t) => t._id !== role._id)));
     } else {
       dispatch(setSelectedRoles([...selectedRoles, role]));
     }

@@ -12,16 +12,22 @@ export default function BranchSelector({ isCreate }) {
   const dispatch = useDispatch();
   const profileData = useSelector((state) => state.profile);
   const [selectedBranch, setSelectedBranch] = useState(profileData.branches);
+  useEffect(() => {
+    setSelectedBranch(profileData.branches);
+  }, [profileData.branches]);
 
   const handleBranchClick = (branch) => {
     setSelectedBranch((prev) => {
-      const updatedBranches = prev.includes(branch)
-        ? prev.filter((b) => b !== branch)
+      const updatedBranches = prev.some((b) => b.id === branch.id)
+        ? prev.filter((b) => b.id !== branch.id)
         : [...prev, branch];
       dispatch(setProfileBranches(updatedBranches));
       return updatedBranches;
     });
   };
+
+  console.log(selectedBranch, "selected branch");
+  // console.log(branches, "all branches");
 
   return (
     <div className="dynamic-selector">
@@ -40,7 +46,7 @@ export default function BranchSelector({ isCreate }) {
           branches.map((branch, i) => (
             <span
               className={`dynamic-selector-list-item ${
-                selectedBranch.includes(branch) ? "active" : ""
+                selectedBranch.some((b) => b.id === branch.id) ? "active" : ""
               }`}
               key={i}
               onClick={() => handleBranchClick(branch)}

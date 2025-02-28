@@ -13,6 +13,13 @@
   margin-top: variables.$header-height;
   background-color: variables.$color-white;
 }
+.profileUpdate-main-header{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font: 1em sans-serif;
+}
+
 
 .profile-edit-container {
   background-color: variables.$color-gray;

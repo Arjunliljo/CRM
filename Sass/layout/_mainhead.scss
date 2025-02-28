@@ -9,6 +9,33 @@
   overflow: hidden;
   padding: variables.$padding-md;
 
+
+  &-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  &-left-greeting {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem;
+
+  }
+  &-left-greeting-user {
+    font-size: 1.5rem;
+    // font-weight: 600;
+  }
+  &-left-greeting-text {
+    font-size: 1.5rem;
+    color: gray;
+    // text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+    // font-weight: 500;
+  }
+
   &-rightlogo {
     width: 2.5rem;
     height: 2.5rem;

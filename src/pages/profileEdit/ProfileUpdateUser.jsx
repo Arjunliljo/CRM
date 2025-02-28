@@ -7,7 +7,7 @@ import ProfileDashboardHolder from "./ProfileStatus/ProfileDashboardHolder";
 import { useCreateUser } from "../../hooks/useCreateUser";
 import apiClient from "../../../config/axiosInstance";
 import { message } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { resetProfile } from "../../../global/profileSlice";
 
 const TABS = ["Profile", "Status", "Dashboard"];
@@ -23,10 +23,6 @@ function ProfileUpdateUser() {
       setActiveTab(activeTab + 1);
     }
   };
-
-  const profileData = useSelector((state) => state.profile);
-  console.log(profileData, "profaaaaaaaaaaaaaileData");
-
 
   const handleCancel = () => {
     setActiveTab(0);
