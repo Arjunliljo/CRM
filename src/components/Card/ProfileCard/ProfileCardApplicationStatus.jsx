@@ -6,6 +6,7 @@ import { getCountryName, getStatusName } from "../../../service/nameFinders";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { getStatusId } from "../../../service/IdFinders";
 
 export default function ProfileCardApplicationStatus({
   statuses,
@@ -14,6 +15,8 @@ export default function ProfileCardApplicationStatus({
   onSubmit,
   curStudent,
 }) {
+  console.log(application, "application");
+
   const [status, setStatus] = useState(
     getStatusName(application?.status, statuses)
   );
@@ -33,12 +36,16 @@ export default function ProfileCardApplicationStatus({
   const handleSave = (e) => {
     e.preventDefault();
 
-    const statusId = statuses?.find((status) => status.name === status)?._id;
     const countryId = countries?.find(
       (country) => country.name === country
     )?._id;
 
-    onSubmit({ status: statusId, followupDate, country: countryId, remark });
+    onSubmit({
+      status: getStatusId(status, statuses),
+      followupDate,
+      country: countryId,
+      remark,
+    });
   };
 
   return (

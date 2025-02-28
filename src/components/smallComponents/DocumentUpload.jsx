@@ -196,14 +196,6 @@ function DocumentUpload({ lead, onUpload, onDelete, onUpdate }) {
 
             <div
               className="document-upload-form"
-              // style={{
-              //   margin: "5px 0",
-              //   padding: "5px",
-              //   borderRadius: "8px",
-              //   display: "flex",
-              //   flexDirection: "column",
-              //   gap: "4px",
-              // }}
             >
               <input
                 type="text"
@@ -285,7 +277,7 @@ function DocumentUpload({ lead, onUpload, onDelete, onUpdate }) {
                     margin: "0 auto",
                   }}
                 >
-                  Upload
+                  {loading ? "Uploading..." : "Upload"}
                 </button>
               )}
             </div>

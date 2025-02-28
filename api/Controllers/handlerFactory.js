@@ -87,6 +87,7 @@ export const createOne = (Model) => {
 
 export const updateOne = (Model) => {
   return catchAsync(async (req, res, next) => {
+    console.log("updateOne called", req.body);
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,

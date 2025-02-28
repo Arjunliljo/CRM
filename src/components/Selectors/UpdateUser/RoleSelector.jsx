@@ -19,8 +19,6 @@ export default function RoleSelector({ setter, isCreate, profileData }) {
     }
   };
 
-  console.log("w7erdvasbdkvuydasbdasb", profileData.role);
-
   return (
     <div className="form-group">
       <div

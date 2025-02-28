@@ -35,10 +35,9 @@ function UniversityEligible({ coursess }) {
 
     try {
       setIsLoading(true);
-
       const newCourse = await apiClient.post("/university/course", {
         name: course.name,
-        university: courseData.university,
+        university: curUniversity?._id,
         fee: course.fee || 0,
         duration: course.duration || 0,
         qualification: courseData.qualification,
@@ -61,39 +60,6 @@ function UniversityEligible({ coursess }) {
       setIsLoading(false);
     }
   };
-
-  const eligibleCourses = [
-    {
-      title: "Masters in Advanced Artificial Intelligence",
-      university: "University of UK, UK",
-      fee: "2000",
-    },
-    {
-      title: "Masters in Advanced Artificial Intelligence",
-      university: "University of UK, UK",
-      fee: null,
-    },
-    {
-      title: "Masters in Advanced Artificial Intelligence",
-      university: "University of UK, UK",
-      fee: null,
-    },
-    {
-      title: "Masters in Advanced Artificial Intelligence",
-      university: "University of UK, UK",
-      fee: null,
-    },
-    {
-      title: "Masters in Advanced Artificial Intelligence",
-      university: "University of UK, UK",
-      fee: null,
-    },
-    {
-      title: "Masters in Advanced Artificial Intelligence",
-      university: "University of UK, UK",
-      fee: null,
-    },
-  ];
 
   const closeModal = () => setIsModalOpen(false);
 
@@ -133,13 +99,6 @@ function UniversityEligible({ coursess }) {
 
       <div className="university-eligiable-courses-selector-container">
         <BlackSelector
-          options={courses}
-          set={courses[0]}
-          onSet={(value) => {
-            handleOptionChange(value);
-          }}
-        />
-        <BlackSelector
           options={Offer}
           set={Offer[0]}
           onSet={(value) => {
@@ -158,6 +117,14 @@ function UniversityEligible({ coursess }) {
                 <span className="card-number">{curUniversity?.name}</span>
                 {course.fee && <span> Fee : ${course.fee}</span>}
               </div>
+            </div>
+            <div
+              className="eligiable-courses-assigners"
+              style={{ textAlign: "right" }}
+            >
+              <span>
+                {course.duration ? ` ${course.duration} Months` : "null"}
+              </span>
             </div>
           </div>
         ))}

@@ -17,7 +17,7 @@ import {
   useIDGetBranchesArray,
   useIDGetCountriesArray,
 } from "../../../api/Utilities/helper";
-import ProfileCardStatus from "../../components/Card/ProfileCard/ProfileCardStatus";
+
 import EligiableCourses from "../../components/Card/ProfileCard/EligiableCourses";
 import PersonalDetails from "../../components/Card/ProfileCard/PersonalDetails";
 import apiClient from "../../../config/axiosInstance";
@@ -57,6 +57,8 @@ import {
 } from "./studentHandlers/studentQualificationHandlers";
 import { useQuery } from "@tanstack/react-query";
 import ProfileCardApplicationStatus from "../../components/Card/ProfileCard/ProfileCardApplicationStatus";
+import { getStatusName } from "../../service/nameFinders";
+import { useApplications } from "./hooks/useApplications";
 
 export default function Students() {
   const {
@@ -70,6 +72,7 @@ export default function Students() {
     curStatus,
     curCountry,
     curCampaign,
+    curApplications,
   } = useSelector((state) => state.students);
 
   const {
@@ -89,12 +92,6 @@ export default function Students() {
   const { campaigns = [] } = campaignsConfigs;
   const { students = [] } = studentsConfigs;
   const { users = [] } = usersConfigs;
-
-  const { data: applications, isLoading } = useQuery({
-    queryKey: ["application", curStudent._id],
-    queryFn: () => apiClient.get(`/application?lead=${curStudent._id}`),
-  });
-
   const dispatch = useDispatch();
 
   const statusObj = useIDGetStatusesArray(statuses);
@@ -103,9 +100,20 @@ export default function Students() {
   const countriesObj = useIDGetCountriesArray(countries);
   const [assignToUser, setAssignToUser] = useState(false);
 
-  const [curApplication, setCurApplication] = useState(
-    applications?.data?.data?.[0] || {}
-  );
+  const { applications, refetch } = useApplications(curStudent?._id);
+
+  useEffect(() => {
+    refetch();
+  }, [curStudent, refetch]);
+
+  const [curApplication, setCurApplication] = useState(applications?.[0] || {});
+
+  useEffect(() => {
+    if (applications?.length > 0) {
+      dispatch(setCurApplications(applications));
+      setCurApplication(applications?.[0]);
+    }
+  }, [applications, dispatch]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
@@ -192,6 +200,7 @@ export default function Students() {
       );
 
       setCurApplication(respones?.data?.data);
+      refetch();
       refetchStudents();
       message.success("Status updated successfully");
     } catch (error) {
@@ -199,13 +208,6 @@ export default function Students() {
       message.error("Error updating lead status");
     }
   };
-
-  useEffect(() => {
-    if (applications?.data?.data?.length > 0) {
-      dispatch(setCurApplications(applications?.data?.data));
-      setCurApplication(applications?.data?.data?.[0] || {});
-    }
-  }, [applications, dispatch]);
 
   const IPrimaryBttn = (
     <PrimaryBttn onClick={handleModal}>Add Students</PrimaryBttn>

@@ -13,8 +13,6 @@ export default function ProfileInfo({ isCreate }) {
 
   const profileData = useSelector((state) => state.profile);
 
-
-
   const toggleAssign = () => {
     dispatch(setProfileAutoAssign(!autoAssign));
   };

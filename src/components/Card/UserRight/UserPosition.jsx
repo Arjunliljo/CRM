@@ -31,7 +31,7 @@ function UserPosition({ user }) {
       _id: status || "",
     })) || [];
 
-  const userRoleName = getRoleName(user?.role, roles);
+  // const userRoleName = getRoleName(user?.role, roles);
 
   return (
     <div className="profileCardEdituser-box personalUserEdit-status">
@@ -41,8 +41,8 @@ function UserPosition({ user }) {
       <form className="personalUserEdit-status-elements">
         {/* <span className="personalUserEdit-status-html-for">Role</span> */}
         <div>
-          <span className="chat-text">{userRoleName}</span>
-          </div>
+          {/* <span className="chat-text">{user?.role?.name || "No role name"}</span> */}
+        </div>
         <span className="personalUserEdit-status-html-for">Managing Roles</span>
         <div
           className="select-user-container"

@@ -9,7 +9,7 @@ import {
 } from "../../../../global/profileSlice";
 import { BsExclamation } from "react-icons/bs";
 
-export default function ProfileBasic({ isCreate }) {
+export default function ProfileBasic({ isCreate, isEdit }) {
   const { email, contactNumber, employeeId, addressOne, addressTwo, name } =
     useSelector((state) => state.profile);
   const profileData = useSelector((state) => state.profile);

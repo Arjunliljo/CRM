@@ -34,10 +34,6 @@ export const useLeads = (statuses, branches, countries, users) => {
     endpoint += `&campaignName=${curCampaign}`;
   }
 
-  // if (!curRole.startsWith("All") && curRole) {
-  //   endpoint += `&role=${curRole}`;
-  // }
-
   if (!curUser.startsWith("All") && userId) {
     endpoint += `&user=${userId}`;
   }

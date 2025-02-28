@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useApi } from "../../../context/apiContext/ApiContext";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfileBranches } from "../../../../global/profileSlice";

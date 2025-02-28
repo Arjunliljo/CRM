@@ -112,8 +112,6 @@ export default function PersonalDetails({
     deleteQualification(cardId);
   };
 
-  console.log(lead,"lead card");
-
   return (
     <div className="profileCard-box personal-details">
       <div className="personal-details-heading">

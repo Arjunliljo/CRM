@@ -17,7 +17,7 @@ router.use("/course", courseRoute);
 router.post("/", upload, createUniversity);
 router.get("/", getAllUniversity);
 router.get("/:id", getUniversity);
-router.patch("/:id", updateUniversity);
+router.patch("/:id", upload, updateUniversity);
 router.delete("/:id", deleteUniversity);
 
 export default router;

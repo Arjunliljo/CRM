@@ -74,18 +74,24 @@
 //   );
 // }
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Upload from "../../../assets/Icons/upload.png";
 
-export default function ImageUploader({ onUpload }) {
-  const [preview, setPreview] = useState(null);
+export default function ImageUploader({ onUpload, image }) {
+  const [preview, setPreview] = useState(image || null);
+
+  useEffect(() => {
+    if (image) {
+      setPreview(image);
+    }
+  }, [image]);
 
   const handleFileChange = (event) => {
-    console.log(event, "event");
     const file = event.target.files[0];
 
     if (file) {
-      setPreview(URL.createObjectURL(file));
+      const fileURL = URL.createObjectURL(file);
+      setPreview(fileURL);
       onUpload(file);
     } else {
       console.error("No file selected");
@@ -96,7 +102,8 @@ export default function ImageUploader({ onUpload }) {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
     if (file) {
-      setPreview(URL.createObjectURL(file));
+      const fileURL = URL.createObjectURL(file);
+      setPreview(fileURL);
       onUpload(file);
     }
   };

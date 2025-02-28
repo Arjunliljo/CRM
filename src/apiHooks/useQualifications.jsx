@@ -5,7 +5,7 @@ import queryClient from "../../config/reactQuery";
 export const useQualifications = () => {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["qualifications"],
-    queryFn: () => apiClient.get("/university/course"),
+    queryFn: () => apiClient.get("/university/qualification"),
   });
 
   const qualifications = data?.data?.data;

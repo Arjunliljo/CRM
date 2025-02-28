@@ -9,28 +9,34 @@ import UniversityEligible from "../ProfileCard/UniversityEligible";
 import Requirements from "./Requirements";
 import ModalBase from "../../Forms/ModalBase";
 import UpdateUniversity from "../../Forms/University/UpdateUniversity";
+import { useApi } from "../../../context/apiContext/ApiContext";
 
 function UniversityProfile({ university }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newUniversity, setNewUniversity] = useState({
-    name: "University Of United Kingdom",
-    country: "United Kingdom",
-    courses: ["AI", "DS", "GD", "CS"],
-    image: "https://skymark.in/web/assets/images/skymarkBanner.jpg",
-  });
+
+  const { countryConfigs , universityConfigs } = useApi();
+  const { countries = [] } = countryConfigs;
   const closeModal = () => setIsModalOpen(false);
 
   const handleModal = () => {
     setIsModalOpen((val) => !val);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewUniversity((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+
+
+const minDurationInMonths = university?.courses?.length > 0
+  ? Math.min(...university.courses.map(course => course.duration))
+  : 0; // Default to 0 if no courses are available
+
+const minDurationInYears = (minDurationInMonths / 12).toFixed(1);
+
+
+const minFee = university?.courses?.length > 0
+  ? Math.min(...university.courses.map(course => {
+      console.log("Course fee:", course?.fee); // Debug individual course fees
+      return course?.fee || Infinity; // Use Infinity instead of 0 as fallback
+    }))
+  : 0;
 
   return (
     <div className="UniversityRightCard">
@@ -38,14 +44,14 @@ function UniversityProfile({ university }) {
         <div className="UniversityRightCard-head-info">
           <div className="UniversityRightCard-head-info-details">
             <div>
-              <img src={university.img} alt={university.name} />
+              <img style={{width: "100px", height: "100px"}} src={university.img} alt={university.name} />
             </div>
             <div className="name-bar-name name-small">
               <div>
-                {university.name}
+                 {university && university?.name}
                 <br></br>
                 <p style={{ fontSize: "1rem", color: "gray" }}>
-                  {university.location}
+                  {university?.country?.name}
                 </p>
               </div>
               <div className="UniversityRightCard-head-info-location-card">
@@ -58,7 +64,7 @@ function UniversityProfile({ university }) {
                     Stayback:{" "}
                   </span>
                   <span style={({ color: "black" }, { fontSize: "0.8rem" })}>
-                    {university.year} Years
+                    { university && minDurationInYears} Years
                   </span>
                 </p>
               </div>
@@ -79,7 +85,7 @@ function UniversityProfile({ university }) {
         </div>
       </div>
       <div>
-        <Requirements />
+        <Requirements requirements={university.qualifications} />
       </div>
       {/* <div className="profileCard-boxes">
         <PersonalDetails />
@@ -96,9 +102,11 @@ function UniversityProfile({ university }) {
         <UpdateUniversity
           isUpadte={true}
           closeModal={closeModal}
-          newUniversity={newUniversity}
-          setNewUniversity={setNewUniversity}
-          handleChange={handleChange}
+          // newUniversity={newUniversity}
+          // setNewUniversity={setNewUniversity}
+          // handleChange={handleChange}
+          university={university}
+          countries={countries}
         />
       </ModalBase>
     </div>

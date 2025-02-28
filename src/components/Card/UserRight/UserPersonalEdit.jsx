@@ -14,18 +14,21 @@ import { message } from "antd";
 import { refetchUsers } from "../../../apiHooks/useUsers";
 import { setCurUser } from "../../../../global/userSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function UserPersonalEdit({ user }) {
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   //to edit mode open
   const handleOpenEdit = () => {
-    setIsEditing(true);
+    navigate("/User/user-profile-edit", { state: { user } });
   };
 
   //to close edit mode
   const handleCloseEdit = () => {
-    setIsEditing(false);
+
   };
 
   //to save form data
