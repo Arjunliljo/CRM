@@ -15,8 +15,6 @@ export default function ProfileCardApplicationStatus({
   onSubmit,
   curStudent,
 }) {
-  console.log(application, "application");
-
   const [status, setStatus] = useState(
     getStatusName(application?.status, statuses)
   );
