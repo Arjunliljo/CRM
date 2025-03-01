@@ -41,6 +41,7 @@ export const updateChat = catchAsync(async (req, res, next) => {
     chatId: chatId,
   };
 
+
   const chat = await Chat.findByIdAndUpdate(
     chatId,
     {

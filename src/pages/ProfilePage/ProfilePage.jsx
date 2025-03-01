@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import apiClient from "../../../config/axiosInstance";
 import { message } from "antd";
 import { setupdateduser } from "../../../global/authSlice";
+import UserPosition from "../../components/Card/UserRight/UserPosition";
 
 function Profilepage() {
   const user = useSelector((state) => state.auth);
@@ -49,40 +50,47 @@ function Profilepage() {
       const formDataToSend = new FormData();
 
       // Append text fields
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('phone', formData.phone);
-      formDataToSend.append('addressOne', formData.addressOne);
-      formDataToSend.append('addressTwo', formData.addressTwo);
-      formDataToSend.append('mainFolder', 'usersImages');
-      formDataToSend.append('subFolder', user?.user?._id);
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("phone", formData.phone);
+      formDataToSend.append("addressOne", formData.addressOne);
+      formDataToSend.append("addressTwo", formData.addressTwo);
+      formDataToSend.append("mainFolder", "usersImages");
+      formDataToSend.append("subFolder", user?.user?._id);
 
       // Handle image separately
       if (formData.image) {
-        if (formData.image.startsWith('data:image')) {
+        if (formData.image.startsWith("data:image")) {
           // Convert base64 to blob
           const base64Response = await fetch(formData.image);
           const blob = await base64Response.blob();
           // Important: Use 'image' as the field name to match what the middleware expects
-          formDataToSend.append('image', blob, 'profile.jpg');
-        } else if (typeof formData.image === 'string' && !formData.image.startsWith('data:image')) {
+          formDataToSend.append("image", blob, "profile.jpg");
+        } else if (
+          typeof formData.image === "string" &&
+          !formData.image.startsWith("data:image")
+        ) {
           // For existing image URLs, pass the URL as a string
-          formDataToSend.append('imageUrl', formData.image);
+          formDataToSend.append("imageUrl", formData.image);
         }
       }
 
-      const response = await apiClient.patch(`/user/${user?.user?._id}`, formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await apiClient.patch(
+        `/user/${user?.user?._id}`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       console.log(response.data.data);
       dispatch(setupdateduser(response.data.data));
 
       message.success("Profile updated successfully!");
     } catch (error) {
-      console.error("Error updating profile:", error);
-      message.error("Error updating profile");
+      console.error(error);
+      message.error(error.response.data.message || "Error updating profile");
     }
   };
 
@@ -96,6 +104,7 @@ function Profilepage() {
           handleSubmit={handleSubmit}
         />
         {/* <ProfileRight user={user?.user} /> */}
+        <UserPosition user={user?.user} />
       </div>
     </div>
   );

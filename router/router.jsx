@@ -49,7 +49,7 @@ const tabses = [
   //   element: <Branchmanage />,
   // },
   {
-    path: "Branch-managing",
+    path: "Sync",
     element: <Config />,
   },
   {

@@ -33,6 +33,7 @@ export const useCreateUser = () => {
     "User",
     "Branch-managing",
     "Profile-card",
+    "Sync",
   ]);
 
   const { defaultTabs, tabs } = selectedTabs.reduce(
