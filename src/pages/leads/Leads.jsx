@@ -66,7 +66,6 @@ import {
 } from "./leadHandlers/documentHandler";
 import { refetchLeads } from "../../apiHooks/useLeads";
 import { getRoleName } from "../../service/nameFinders";
-import { message } from "antd";
 
 export default function Leads() {
   const dispatch = useDispatch();

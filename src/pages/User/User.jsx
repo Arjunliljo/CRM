@@ -26,7 +26,6 @@ export default function User() {
     useSelector((state) => state.user);
   const authUser = useSelector((state) => state.auth.user);
 
-
   const { usersConfigs, roleConfigs, branchConfigs, countryConfigs } = useApi();
   const { users = [] } = usersConfigs;
   const { roles = [] } = roleConfigs;
@@ -40,7 +39,6 @@ export default function User() {
   const navigate = useNavigate();
   const ISearchBar = <SearchBar />;
 
-  //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
   const IContents = users
     .filter((user) => user._id !== authUser._id)
     .map((user, index) => (
@@ -56,7 +54,9 @@ export default function User() {
 
   //   const ISelector = <Selector />;
   const IPrimaryBttn = (
-    <PrimaryBttn onClick={() => navigate("/profile-edit")}>Add User</PrimaryBttn>
+    <PrimaryBttn onClick={() => navigate("/profile-edit")}>
+      Add User
+    </PrimaryBttn>
   );
   const IAll = <All />;
   const ISelectorOne = (

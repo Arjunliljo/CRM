@@ -3,7 +3,10 @@ export const formatLeads = (leads, campaign) => {
     return {
       name:
         lead.field_data.find(
-          (field) => field.name === "full_name" || field.name === "name"
+          (field) =>
+            field.name === "full_name" ||
+            field.name === "name" ||
+            field.name === "first name"
         )?.values[0] || "N/A",
       email:
         lead.field_data.find((field) => field.name === "email")?.values?.[0] ||
