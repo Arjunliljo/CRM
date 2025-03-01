@@ -12,7 +12,7 @@ function App() {
       <Mainhead />
       <BodyBg isRotate={false} />
       <Navbar />
-      <Outlet />
+      <Outlet  />
     </div>
   );
 }

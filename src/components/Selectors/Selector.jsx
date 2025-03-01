@@ -15,6 +15,7 @@ function Selector({
       dispatch(onSet(e.target.value));
     } else {
       onSet(e.target.value);
+
     }
   };
 

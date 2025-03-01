@@ -8,7 +8,7 @@ const leadsSlice = createSlice({
     curLead: {},
     isAssigning: false,
     toAssignLeads: [],
-    isUniversitySelected: false,
+    curUniversity: {},
     curStatus: "All Status",
     curSource: "All Source",
     curBranch: "All Branch",
@@ -18,6 +18,9 @@ const leadsSlice = createSlice({
     curUser: "All User",
   },
   reducers: {
+    setCurUniversity: (state, action) => {
+      state.curUniversity = action.payload;
+    },
     setLeadCurRole: (state, action) => {
       state.curRole = action.payload;
     },
@@ -109,6 +112,7 @@ export const {
   setLeadCurCampaigns,
   setLeadCurRole,
   setLeadCurUser,
+  setCurUniversity,
 } = leadsSlice.actions;
 
 export default leadsSlice.reducer;

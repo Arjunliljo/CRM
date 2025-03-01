@@ -227,7 +227,6 @@ export default function Leads() {
     <StartApplication
       handleStartApplication={() => {
         const status = statuses?.find((val) => val.isApplication)?._id;
-
         handleStartApplication(curLead, navigate, status);
       }}
     />
@@ -359,6 +358,8 @@ export default function Leads() {
       toAssignLeads={toAssignLeads}
     />
   ));
+
+  console.log(curLead, "curLead");
 
   return (
     <>

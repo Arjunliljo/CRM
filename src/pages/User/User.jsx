@@ -4,17 +4,26 @@ import MainBody from "../../layout/MainBody/MainBody";
 import Selector from "../../components/Selectors/Selector";
 import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import UserCard from "../../components/Card/UserCard";
-import { setAutoUserAssign, setCurUser } from "../../../global/userSlice";
+import { setAutoUserAssign, setCurUser, setUserCurRole, setUserCurBranch, setUserCurCountry } from "../../../global/userSlice";
 import All from "../../components/buttons/All";
 import UserRight from "../../components/Card/UserRight/UserRight";
 import { useNavigate } from "react-router-dom";
+import { useApi } from "../../context/apiContext/ApiContext";
+import { useIDGetBranchesArray, useIDGetCountriesArray, useIDGetRolesArray } from "../../../api/Utilities/helper";
+
 
 export default function User() {
-  const { autoUserAssign, curUser } = useSelector((state) => state.user);
+  const { autoUserAssign, curUser, curCountry, curRole, curBranch } = useSelector((state) => state.user);
 
-  const { users } = useSelector((state) => state.users);
+  const { usersConfigs, roleConfigs, branchConfigs, countryConfigs } = useApi();
+  const { users = [] } = usersConfigs;
+  const { roles = [] } = roleConfigs;
+  const { branches = [] } = branchConfigs;
+  const { countries = [] } = countryConfigs;
 
-  console.log(users, "users");
+  const rolesObj = useIDGetRolesArray(roles);
+  const branchesObj = useIDGetBranchesArray(branches);
+  const countriesObj = useIDGetCountriesArray(countries);
 
   const navigate = useNavigate();
   const handleNavigate = () => {
@@ -38,11 +47,10 @@ export default function User() {
     <PrimaryBttn onClick={handleNavigate}>Add User</PrimaryBttn>
   );
   const IAll = <All />;
-  const ISelectorOne = <Selector />;
-  const ISelectorTwo = <Selector />;
-  const ISelectorThree = <Selector />;
+  const ISelectorOne = <Selector optionsObj={rolesObj} placeholder="Select Role" onSet={setUserCurRole} set={curRole} />;
+  const ISelectorTwo = <Selector optionsObj={branchesObj} placeholder="Select Branch" onSet={setUserCurBranch} set={curBranch} />;
+  const ISelectorThree = <Selector optionsObj={countriesObj} placeholder="Select Country" onSet={setUserCurCountry} set={curCountry} />;
   const IProfileCard = <UserRight user={curUser} />;
-
 
   const TopLeft = [
     <div key="search-bar">{ISearchBar}</div>,

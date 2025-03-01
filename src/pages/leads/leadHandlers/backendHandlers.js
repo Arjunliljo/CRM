@@ -40,8 +40,6 @@ export const handleStartApplication = async (curLead, navigate, status) => {
       documents: curLead.documents,
     });
 
-    console.log(res, "res");
-
     message.success("Application started successfully");
     navigate("/Student");
     refetchLeads();

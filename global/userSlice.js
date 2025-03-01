@@ -5,6 +5,9 @@ const userSlice = createSlice({
   initialState: {
     autoUserAssign: false,
     curUser: {},
+    curCountry: "All",
+    curRole: "All",
+    curBranch: "All",
   },
   reducers: {
     setAutoUserAssign: (state, action) => {
@@ -23,9 +26,18 @@ const userSlice = createSlice({
         state.autoUserAssign = false;
       }
     },
+    setUserCurCountry: (state, action) => {
+      state.curCountry = action.payload;
+    },
+    setUserCurRole: (state, action) => {
+      state.curRole = action.payload;
+    },
+    setUserCurBranch: (state, action) => {
+      state.curBranch = action.payload;
+    },
   },
 });
 
-export const { setAutoUserAssign, setCurUser } = userSlice.actions;
+export const { setAutoUserAssign, setCurUser, setUserCurCountry, setUserCurRole, setUserCurBranch } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -11,18 +11,16 @@ import { EditOutlined } from "@mui/icons-material";
 import UpdateCourse from "./UpdateCourse";
 import { updateCurUniversityCourses } from "../../../../global/universitySlice";
 
-function UniversityEligible({ coursess }) {
-  const Countries = ["Country", "Option 2", "Option 3"];
-  const courses = ["UG", "Option 2", "Option 3"];
+function UniversityEligible() {
   const Offer = ["Fees", "Option 2", "Option 3"];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [course, setCourse] = useState("");
   const [editCourse, setEditCourse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { curUniversity } = useSelector((state) => state.universitys);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const { curUniversity } = useSelector((state) => state.university);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -73,7 +71,7 @@ function UniversityEligible({ coursess }) {
         `/university/course/${editCourse._id}`,
         courseData
       );
-      console.log(response, "response");
+
       message.success("Course updated successfully!");
       closeEditModal();
       refetchUniversity();
@@ -138,9 +136,9 @@ function UniversityEligible({ coursess }) {
         <BlackSelector
           options={Offer}
           set={Offer[0]}
-          onSet={(value) => {
-            handleOptionChange(value);
-          }}
+          // onSet={(value) => {
+          //   handleOptionChange(value);
+          // }}
         />
       </div>
       <div className="university-eligiable-courses-cards">

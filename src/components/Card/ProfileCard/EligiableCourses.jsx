@@ -3,6 +3,7 @@ import BlackSelector from "../../Selectors/BlackSelector";
 import { useState, useRef } from "react";
 import apiClient from "../../../../config/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
+import { useUniversity } from "../../../apiHooks/useUniversity";
 
 export default function EligiableCourses({
   onClick,
@@ -29,6 +30,8 @@ export default function EligiableCourses({
     },
   ],
 }) {
+  const { university } = useUniversity();
+
   const Countries = ["Country", "Option 2", "Option 3"];
   const coursesOptions = ["UG", "Option 2", "Option 3"];
   const Offer = ["Fees", "Option 2", "Option 3"];

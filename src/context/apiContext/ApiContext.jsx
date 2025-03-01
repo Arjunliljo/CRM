@@ -25,7 +25,7 @@ function ApiProvider({ children }) {
   const commonsConfigs = useCommens();
   const campaignsConfigs = useCampaigns();
 
-  const universityConfigs = useUniversity();
+  const universityConfigs = useUniversity(countryConfigs?.countries);
   const qualificationsConfigs = useQualifications();
 
   const leadsConfigs = useLeads(
@@ -40,6 +40,7 @@ function ApiProvider({ children }) {
     countryConfigs?.countries,
     usersConfigs?.users
   );
+
 
   return (
     <ApiContext.Provider
