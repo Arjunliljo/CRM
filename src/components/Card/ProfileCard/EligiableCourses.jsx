@@ -32,11 +32,9 @@ export default function EligiableCourses({
   ],
 }) {
   const { universityConfigs } = useApi();
-  console.log(universityConfigs, "universityConfigs");
-
   const { university = [] } = universityConfigs;
 
-  console.log(university, "universities");
+
 
   const Countries = ["Country", "Option 2", "Option 3"];
   const coursesOptions = ["UG", "Option 2", "Option 3"];

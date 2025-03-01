@@ -33,10 +33,6 @@ function UserCard({ user, set, onSet, istoggle, toggle }) {
     }, 500);
   };
 
-  // Debugging: Log the user object and its properties
-  console.log("User:", user);
-  console.log("User State:", user.state);
-  console.log("User Applications:", user.applications);
 
   return (
     <div

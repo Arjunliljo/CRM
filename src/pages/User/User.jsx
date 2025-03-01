@@ -4,16 +4,28 @@ import MainBody from "../../layout/MainBody/MainBody";
 import Selector from "../../components/Selectors/Selector";
 import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import UserCard from "../../components/Card/UserCard";
-import { setAutoUserAssign, setCurUser, setUserCurRole, setUserCurBranch, setUserCurCountry } from "../../../global/userSlice";
+import {
+  setAutoUserAssign,
+  setCurUser,
+  setUserCurRole,
+  setUserCurBranch,
+  setUserCurCountry,
+} from "../../../global/userSlice";
 import All from "../../components/buttons/All";
 import UserRight from "../../components/Card/UserRight/UserRight";
 import { useNavigate } from "react-router-dom";
 import { useApi } from "../../context/apiContext/ApiContext";
-import { useIDGetBranchesArray, useIDGetCountriesArray, useIDGetRolesArray } from "../../../api/Utilities/helper";
-
+import {
+  useIDGetBranchesArray,
+  useIDGetCountriesArray,
+  useIDGetRolesArray,
+} from "../../../api/Utilities/helper";
 
 export default function User() {
-  const { autoUserAssign, curUser, curCountry, curRole, curBranch } = useSelector((state) => state.user);
+  const { autoUserAssign, curUser, curCountry, curRole, curBranch } =
+    useSelector((state) => state.user);
+  const authUser = useSelector((state) => state.auth.user);
+
 
   const { usersConfigs, roleConfigs, branchConfigs, countryConfigs } = useApi();
   const { users = [] } = usersConfigs;
@@ -26,30 +38,51 @@ export default function User() {
   const countriesObj = useIDGetCountriesArray(countries);
 
   const navigate = useNavigate();
-  const handleNavigate = () => {
-    navigate("/profile-edit");
-  };
   const ISearchBar = <SearchBar />;
+
   //   const IAutoBtn = <AutoBtn onSet={setAutoLeadsAssign} set={autoLeadsAssign} />;
-  const IContents = users?.map((user, index) => (
-    <UserCard
-      key={index}
-      onSet={setCurUser}
-      set={curUser}
-      user={user}
-      istoggle={autoUserAssign}
-      toggle={setAutoUserAssign}
-    />
-  ));
+  const IContents = users
+    .filter((user) => user._id !== authUser._id)
+    .map((user, index) => (
+      <UserCard
+        key={index}
+        onSet={setCurUser}
+        set={curUser}
+        user={user}
+        istoggle={autoUserAssign}
+        toggle={setAutoUserAssign}
+      />
+    ));
 
   //   const ISelector = <Selector />;
   const IPrimaryBttn = (
-    <PrimaryBttn onClick={handleNavigate}>Add User</PrimaryBttn>
+    <PrimaryBttn onClick={() => navigate("/profile-edit")}>Add User</PrimaryBttn>
   );
   const IAll = <All />;
-  const ISelectorOne = <Selector optionsObj={rolesObj} placeholder="Select Role" onSet={setUserCurRole} set={curRole} />;
-  const ISelectorTwo = <Selector optionsObj={branchesObj} placeholder="Select Branch" onSet={setUserCurBranch} set={curBranch} />;
-  const ISelectorThree = <Selector optionsObj={countriesObj} placeholder="Select Country" onSet={setUserCurCountry} set={curCountry} />;
+  const ISelectorOne = (
+    <Selector
+      optionsObj={rolesObj}
+      placeholder="Select Role"
+      onSet={setUserCurRole}
+      set={curRole}
+    />
+  );
+  const ISelectorTwo = (
+    <Selector
+      optionsObj={branchesObj}
+      placeholder="Select Branch"
+      onSet={setUserCurBranch}
+      set={curBranch}
+    />
+  );
+  const ISelectorThree = (
+    <Selector
+      optionsObj={countriesObj}
+      placeholder="Select Country"
+      onSet={setUserCurCountry}
+      set={curCountry}
+    />
+  );
   const IProfileCard = <UserRight user={curUser} />;
 
   const TopLeft = [

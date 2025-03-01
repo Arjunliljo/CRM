@@ -12,12 +12,15 @@ import PrimaryBttn from "../../buttons/PrimaryBttn";
 import apiClient from "../../../../config/axiosInstance";
 import { message } from "antd";
 import { refetchUsers } from "../../../apiHooks/useUsers";
-import { setCurUser } from "../../../../global/userSlice";
+import { setAutoUserAssign, setCurUser } from "../../../../global/userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ModalBase from "../../Forms/ModalBase";
+import DeleteUser from "./DeleteUser";
 
 function UserPersonalEdit({ user }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,9 +30,7 @@ function UserPersonalEdit({ user }) {
   };
 
   //to close edit mode
-  const handleCloseEdit = () => {
-
-  };
+  const handleCloseEdit = () => {};
 
   //to save form data
   const handleSaveEdit = () => {
@@ -39,23 +40,27 @@ function UserPersonalEdit({ user }) {
 
   const handleDeleteUser = async () => {
     try {
-      const response = await apiClient.delete(`/user/${user?._id}`);
-      message.success("User deleted successfully");
+      await apiClient.delete(`/user/${user?._id}`);
       refetchUsers();
-      dispatch(setCurUser({}));
-      console.log(response, "response");
+      dispatch(setAutoUserAssign(false));
+      setIsModalOpen(false);
+      message.success("User deleted successfully");
     } catch (error) {
-      message.error("User not deleted");
-      console.log(error, "error");
+      message.error("Something went wrong, please try again later");
     }
   };
+
 
   return (
     <div className="profileCardEdituser-box personalUserEdit-details">
       <div className="personalUserEdit-details-heading">
         <span className="name-small">Personal Details</span>
         {!isEditing ? (
-          <span className="icons" onClick={handleOpenEdit}>
+          <span
+            className="icons"
+            onClick={handleOpenEdit}
+            style={{ cursor: "pointer" }}
+          >
             <MdOutlineModeEdit />
           </span>
         ) : (
@@ -177,11 +182,19 @@ function UserPersonalEdit({ user }) {
             backgroundColor: "#bd1212",
             color: "white",
           }}
-          onClick={handleDeleteUser}
+          onClick={() => setIsModalOpen(true)}
         >
           Delete User
         </PrimaryBttn>
       </div>
+
+      <ModalBase
+        title="Delete User"
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+      >
+        <DeleteUser closeModal={() => setIsModalOpen(false)} onClick={handleDeleteUser} />
+      </ModalBase>
     </div>
   );
 }

@@ -3,6 +3,7 @@ export default function NextBtn({
   onClick,
   type = "button",
   isLoading = false,
+  style,
 }) {
   return (
     <button
@@ -10,6 +11,7 @@ export default function NextBtn({
       type={type}
       onClick={onClick}
       disabled={isLoading}
+      style={style}
     >
       {isLoading ? <div className="btn-loader"></div> : children}
     </button>

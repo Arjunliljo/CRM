@@ -9,6 +9,7 @@ import apiClient from "../../../config/axiosInstance";
 import { message } from "antd";
 import { useDispatch } from "react-redux";
 import { resetProfile } from "../../../global/profileSlice";
+import { refetchUsers } from "../../apiHooks/useUsers";
 
 const TABS = ["Profile", "Status", "Dashboard"];
 
@@ -33,6 +34,7 @@ function ProfileUpdateUser() {
     await apiClient.post("/user/create", userData);
     message.success("User created successfully!");
     dispatch(resetProfile());
+    refetchUsers();
     setActiveTab(0);
   };
 

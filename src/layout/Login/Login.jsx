@@ -43,7 +43,11 @@ export default function Login() {
           Please enter your credentials to access your account
         </p>
         <form onSubmit={handleSubmit}>
-          {error && <div className="error-message">{error}</div>}
+          {error && (
+            <div className="error-message">
+              {typeof error === 'string' ? error : JSON.stringify(error)}
+            </div>
+          )}
           <div className="user-box">
             <input
               type="text"

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useApi } from "../../../context/apiContext/ApiContext";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfileBranches } from "../../../../global/profileSlice";
@@ -26,7 +26,7 @@ export default function BranchSelector({ isCreate }) {
     });
   };
 
-  console.log(selectedBranch, "selected branch");
+
   // console.log(branches, "all branches");
 
   return (
