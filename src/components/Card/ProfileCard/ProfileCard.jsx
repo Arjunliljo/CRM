@@ -10,6 +10,7 @@ export default function ProfileCard({
   IEligiableCourses,
   IActivityLog,
   personalDetails,
+  StartOtherApplication,
 }) {
   const {
     roleConfigs: { roles },
@@ -64,8 +65,12 @@ export default function ProfileCard({
       <div className="profileCard-journy">
         {lead?.isStudent ? <Tracker completedStep={3} /> : null}
       </div>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {StartOtherApplication}
+      </div>
       <div className="profileCard-boxes">
         {personalDetails}
+
         {IProfileCardStatus}
       </div>
       {IDocumentUpload}

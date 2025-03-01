@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getStatusId } from "../../../service/IdFinders";
+import { message } from "antd";
 
 export default function ProfileCardApplicationStatus({
   statuses,
@@ -21,22 +22,29 @@ export default function ProfileCardApplicationStatus({
   const [followupDate, setFollowupDate] = useState(
     application?.followupDate || new Date()
   );
-  const [country, setCountry] = useState(getCountryName(application?.country));
+  const [country, setCountry] = useState(
+    getCountryName(application?.country, countries)
+  );
   const [remark, setRemark] = useState(application?.remark);
 
   useEffect(() => {
     setStatus(getStatusName(application?.status, statuses));
     setFollowupDate(application?.followupDate || new Date());
-    setCountry(getCountryName(application?.country));
+    setCountry(getCountryName(application?.country, countries));
     setRemark(application?.remark);
   }, [application, curStudent, statuses, countries]);
 
   const handleSave = (e) => {
     e.preventDefault();
 
-    const countryId = countries?.find(
-      (country) => country.name === country
-    )?._id;
+    const countryId = countries?.find((con) => {
+      return con.name === country;
+    })?._id;
+
+    if (!countryId) {
+      message.error("Please select a country");
+      return;
+    }
 
     onSubmit({
       status: getStatusId(status, statuses),

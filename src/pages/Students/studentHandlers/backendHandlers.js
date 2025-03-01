@@ -17,3 +17,14 @@ export const handlePersonalDetailsSubmit = async (
     return false;
   }
 };
+
+export const handleStartOtherApplication = async (curStudent, dispatch) => {
+  try {
+    const res = await apiClient.post(`/lead`, curStudent);
+    dispatch(setCurStudent(res?.data?.data));
+    refetchStudents();
+  } catch (error) {
+    console.error("Error updating lead personal details:", error);
+    return false;
+  }
+};

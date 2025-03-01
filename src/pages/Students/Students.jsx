@@ -269,6 +269,7 @@ export default function Students() {
       IEligiableCourses={IEligiableCourses}
       personalDetails={IPersonalDetails}
       IActivityLog={IActivityLog}
+      StartOtherApplication={<PrimaryBttn>Start New Application</PrimaryBttn>}
     />
   );
 
