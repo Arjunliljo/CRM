@@ -59,16 +59,27 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage",(data)=>{
     console.log("received", data);
-    
+
     // Emit to specific chat room for real-time chat updates
     socket.to(data.chatId).emit("receiveMessage", data);
-    
+
     // Emit globally for updating chat lists/notifications
     socket.broadcast.emit("newMessage", {
       chatId: data.chatId,
       message: data
     });
   })
+
+// In your socket.js file or where you handle socket events
+socket.on("markMessagesAsRead", (data) => {
+  const { chatId, userId } = data;
+
+  // Broadcast to all users in the chat that messages have been read
+  socket.to(chatId).emit("messagesRead", {
+    chatId,
+    readByUserId: userId
+  });
+});
 
   socket.on("typing", ({ chatId }) => {
     socket.to(chatId).emit("typing", { chatId });

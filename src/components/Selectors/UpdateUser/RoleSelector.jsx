@@ -15,7 +15,7 @@ export default function RoleSelector({ setter, isCreate, profileData }) {
   const handleChange = (event) => {
     const selectedRole = roles.find((role) => role.name === event.target.value);
     if (selectedRole) {
-      dispatch(setter(selectedRole._id));
+      dispatch(setter(selectedRole));
     }
   };
 

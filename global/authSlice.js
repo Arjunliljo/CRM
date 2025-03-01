@@ -7,7 +7,7 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await apiClient.post("/user/login", credentials);
       console.log(response, "res");
-
+      localStorage.setItem("user", JSON.stringify(response.data.data.user));
       return response.data.data.user;
     } catch (error) {
       console.log(error, "error");
@@ -54,6 +54,14 @@ const authSlice = createSlice({
     },
     clearError: (state) => {
       state.error = null;
+    },
+    setupdateduser: (state, action) => {
+      state.user.name = action.payload.name;
+      state.user.email = action.payload.email;
+      state.user.phone = action.payload.phone;
+      state.user.addressOne = action.payload.addressOne;
+      state.user.addressTwo = action.payload.addressTwo;
+      state.user.image = action.payload.image;
     },
   },
   extraReducers: (builder) => {
@@ -104,5 +112,5 @@ const authSlice = createSlice({
 
 export const selectAuth = (state) => state.auth;
 
-export const { logout, clearError } = authSlice.actions;
+export const { logout, clearError, setupdateduser } = authSlice.actions;
 export default authSlice.reducer;

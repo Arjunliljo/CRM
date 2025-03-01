@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import socket from "./socketConfig";
-import { updateChats, updateSelectedMessage } from "../global/chatSlice";
+import { markMessagesAsRead, updateChats, updateSelectedMessage } from "../global/chatSlice";
 import { refetchChats } from "../src/apiHooks/useChats";
 
 function SocketProvider({ children }) {
@@ -29,14 +29,30 @@ function SocketProvider({ children }) {
         })
       );
 
+        // If this chat is currently selected, mark message as read
+        if (selectedMessage && selectedMessage.id === data.chatId) {
+          socket.emit("markMessagesAsRead", {
+            chatId: data.chatId,
+            userId: user._id
+          });
+        }
+
       refetchChats();
     });
 
+  // Listen for messages marked as read
+  socket.on("messagesRead", (data) => {
+    console.log("Messages marked as read :", data);
+    dispatch(markMessagesAsRead(data.chatId));
+  });
+
+
     return () => {
       socket.off("newMessage");
+      socket.off("messagesRead");
       socket.disconnect();
     };
-  }, [dispatch, user]);
+  }, [dispatch, user,selectedMessage]);
 
   return children;
 }

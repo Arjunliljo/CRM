@@ -1,18 +1,16 @@
 import BlackSelector from "../../Selectors/BlackSelector";
-
 import { useState, useRef } from "react";
-
+import { getCountryId, getUniversityId } from "../../../service/IdFinders";
+import { getUniversityName } from "../../../service/nameFinders";
 import { useApi } from "../../../context/apiContext/ApiContext";
 import { useCourses } from "./hooks/useCourses";
-import { getUniversityName } from "../../../service/nameFinders";
-import { getCountryId, getUniversityId } from "../../../service/IdFinders";
+
 
 export default function EligiableCourses({ onClick }) {
   const { countryConfigs, universityConfigs } = useApi();
   const { countries = [] } = countryConfigs;
   const { university = [] } = universityConfigs;
-  const countryNames = countries?.map((obj) => obj?.name);
-  const universityNames = university?.map((obj) => obj?.name);
+
 
   const [curCountry, setCurCountry] = useState("All Countries");
   const [curUniversity, setCurUniversity] = useState("All Universities");
@@ -24,6 +22,9 @@ export default function EligiableCourses({ onClick }) {
     getCountryId(curCountry, countries) || "All Countries",
     getUniversityId(curUniversity, university) || "All Universities"
   );
+
+  const countryNames = countries?.map((obj) => obj?.name);
+  const universityNames = university?.map((obj) => obj?.name);
 
   const handleCardClick = (course) => {
     const courseId = course._id;

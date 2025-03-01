@@ -12,6 +12,7 @@ import Dependencies from "../src/pages/Dependency/Dependencies";
 import Login from "../src/layout/Login/Login";
 import General from "../src/pages/general/General";
 import UserProfileEdit from "../src/pages/profileEdit/ProfileStatus/userProfileEdit";
+import Config from "../src/pages/Config/Config";
 
 const tabses = [
   {
@@ -47,6 +48,10 @@ const tabses = [
 //   path: "Branch-managing",
   //   element: <Branchmanage />,
   // },
+  {
+    path: "Branch-managing",
+    element: <Config />,
+  },
   {
     path: "Profile-card",
     element: <Profilepage />,
