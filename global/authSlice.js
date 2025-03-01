@@ -11,7 +11,6 @@ export const loginUser = createAsyncThunk(
       return response.data.data.user;
     } catch (error) {
       console.log(error, "error");
-
       return rejectWithValue("Invalid credentials");
     }
   }

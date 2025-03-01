@@ -44,12 +44,9 @@ const tabses = [
     path: "Profile-edit",
     element: <ProfileUpdateUser />,
   },
-  // {
-//   path: "Branch-managing",
-  //   element: <Branchmanage />,
-  // },
+
   {
-    path: "Branch-managing",
+    path: "Sync",
     element: <Config />,
   },
   {
