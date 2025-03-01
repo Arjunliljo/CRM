@@ -36,16 +36,7 @@ const universitySchema = mongoose.Schema(
 
 universitySchema.pre(/^find/, async function (next) {
   this.populate({
-    path: "country",
-    select: "name",
-  });
-  this.populate({
     path: "courses",
-    select: "name",
-  });
-  this.populate({
-    path: "qualifications",
-    select: "name",
   });
   next();
 });

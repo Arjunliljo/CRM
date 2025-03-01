@@ -22,3 +22,11 @@ export const getBranchName = (branch, branches) => {
   const branchName = branches?.find((obj) => obj._id === branch)?.name;
   return branchName;
 };
+export const getUniversityName = (university, universities) => {
+  if (!university || !universities) return null;
+
+  const universityName = universities?.find(
+    (obj) => obj._id === university
+  )?.name;
+  return universityName;
+};

@@ -7,11 +7,10 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: [true, "Course must have a name"],
     },
-    university:
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "University",
-      },
+    university: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "University",
+    },
 
     fee: {
       type: Number,
@@ -30,10 +29,9 @@ const courseSchema = mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-courseSchema.pre("save", function(next) {
-  console.log(this.university);
+courseSchema.pre("save", function (next) {
   University.findById(this.university)
-    .then(university => {
+    .then((university) => {
       if (!university) {
         throw new Error("University not found");
       }
@@ -41,18 +39,17 @@ courseSchema.pre("save", function(next) {
       university.courses.push(this._id);
 
       const uniqueQualifications = new Set([
-        ...university.qualifications.map(q => q.toString()),
-        ...this.qualification.map(q => q.toString())
+        ...university.qualifications.map((q) => q.toString()),
+        ...this.qualification.map((q) => q.toString()),
       ]);
       university.qualifications = Array.from(uniqueQualifications);
 
       return university.save();
     })
     .then(() => next())
-    .catch(err => next(err));
+    .catch((err) => next(err));
 });
 
 const Course = mongoose.model("Course", courseSchema);
-
 
 export default Course;
