@@ -1,67 +1,35 @@
 import BlackSelector from "../../Selectors/BlackSelector";
 
 import { useState, useRef } from "react";
-import apiClient from "../../../../config/axiosInstance";
-import { useQuery } from "@tanstack/react-query";
-import { useUniversity } from "../../../apiHooks/useUniversity";
+
 import { useApi } from "../../../context/apiContext/ApiContext";
+import { useCourses } from "./hooks/useCourses";
+import { getUniversityName } from "../../../service/nameFinders";
+import { getCountryId, getUniversityId } from "../../../service/IdFinders";
 
-export default function EligiableCourses({
-  onClick,
-  qualifications = [
-    {
-      name: "Degree",
-      mark: "80%",
-      institution: "MGU",
-    },
-    {
-      name: "Plus Two",
-      mark: "75%",
-      institution: "Kerala State",
-    },
-    {
-      name: "Tenth",
-      mark: "80%",
-      institution: "CBSE",
-    },
-    {
-      name: "IELTS",
-      mark: "8.5",
-      institution: null,
-    },
-  ],
-}) {
-  const { universityConfigs } = useApi();
-  console.log(universityConfigs, "universityConfigs");
-
+export default function EligiableCourses({ onClick }) {
+  const { countryConfigs, universityConfigs } = useApi();
+  const { countries = [] } = countryConfigs;
   const { university = [] } = universityConfigs;
+  const countryNames = countries?.map((obj) => obj?.name);
+  const universityNames = university?.map((obj) => obj?.name);
 
-  console.log(university, "universities");
-
-  const Countries = ["Country", "Option 2", "Option 3"];
-  const coursesOptions = ["UG", "Option 2", "Option 3"];
-  const Offer = ["Fees", "Option 2", "Option 3"];
+  const [curCountry, setCurCountry] = useState("All Countries");
+  const [curUniversity, setCurUniversity] = useState("All Universities");
 
   const [selectedCourseId, setSelectedCourseId] = useState(null);
   const cardRef = useRef(null);
 
-  const handleOptionChange = (newOption) => {
-    console.log("Selected Option:", newOption);
-  };
-
-  const {
-    data: courses,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["courses"],
-    queryFn: () => apiClient.get("/university/course"),
-  });
+  const { courses, isLoading, error, refetch } = useCourses(
+    getCountryId(curCountry, countries) || "All Countries",
+    getUniversityId(curUniversity, university) || "All Universities"
+  );
 
   const handleCardClick = (course) => {
     const courseId = course._id;
     const newSelectedId = selectedCourseId === courseId ? null : courseId;
     setSelectedCourseId(newSelectedId);
+
     onClick(course);
   };
 
@@ -76,51 +44,36 @@ export default function EligiableCourses({
   return (
     <div className="eligiable-courses" ref={cardRef}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <span className="name-small">Eligible Courses</span>
-      </div>
-
-      <div className="eligiable-courses-qualifications">
-        <div className="card-number profileCard-head-info-keys">
-          {qualifications.map((item, index) => (
-            <span key={index}>{item.name}</span>
-          ))}
-        </div>
-        <div className="profileCard-head-info-assigners">
-          {qualifications.map((item, index) => (
-            <span key={index}>
-              {item.mark} {item.institution && item.institution}
-            </span>
-          ))}
-        </div>
+        <span className="name-small" style={{ marginBottom: "1rem" }}>
+          Eligible Courses
+        </span>
       </div>
 
       <div className="eligiable-courses-selector-container">
         <BlackSelector
-          options={Countries}
-          set={Countries[0]}
-          onSet={(value) => {
-            handleOptionChange(value);
-          }}
+          options={countryNames}
+          set={curCountry}
+          onSet={setCurCountry}
+          placeholder="All Countries"
         />
         <BlackSelector
-          options={coursesOptions}
-          set={coursesOptions[0]}
-          onSet={(value) => {
-            handleOptionChange(value);
-          }}
+          options={universityNames}
+          set={curUniversity}
+          onSet={setCurUniversity}
+          placeholder="All Universities"
         />
-        <BlackSelector
+        {/* <BlackSelector
           options={Offer}
           set={Offer[0]}
           onSet={(value) => {
             handleOptionChange(value);
           }}
-        />
+        /> */}
       </div>
 
       <div className="eligiable-courses-cards">
-        {courses?.data?.data?.length > 0 ? (
-          courses?.data?.data?.map((course, index) => (
+        {courses?.length > 0 ? (
+          courses.map((course, index) => (
             <div
               className={`eligiable-courses-card ${
                 selectedCourseId === course._id ? "selected" : ""
@@ -143,7 +96,7 @@ export default function EligiableCourses({
               </div>
               <div className="eligiable-courses-keys">
                 <span className="card-number">
-                  {course?.university?.name || "null"}
+                  {getUniversityName(course?.university, university) || "null"}
                 </span>
                 {course.fee && (
                   <span style={{ color: "black" }}> Fee : ${course.fee}</span>

@@ -149,15 +149,12 @@ export default function Leads() {
   };
 
   const handleEligibleCourseClick = (courseDetails) => {
-    if (!curLead?.countries?.[0]) {
-      message.error("Please select a country first");
-      return;
-    }
     if (curLead) {
       const updatedLead = {
         ...curLead,
         course: courseDetails?._id,
-        country: curLead?.countries?.[0],
+        country: courseDetails?.country,
+        university: courseDetails?.university,
       };
       dispatch(setCurLead(updatedLead));
     }
@@ -358,8 +355,6 @@ export default function Leads() {
       toAssignLeads={toAssignLeads}
     />
   ));
-
-  console.log(curLead, "curLead");
 
   return (
     <>

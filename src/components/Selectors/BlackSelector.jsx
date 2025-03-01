@@ -1,15 +1,19 @@
 import { useDispatch } from "react-redux";
 
-function BlackSelector({ options = [], set = "", onSet = () => {} }) {
-  const dispatch = useDispatch();
-
+function BlackSelector({
+  options = [],
+  set = "",
+  onSet = () => {},
+  placeholder = "All",
+}) {
   const handleChange = (e) => {
-    dispatch(onSet(e.target.value));
+    onSet(e.target.value);
   };
 
   return (
     <div className="selector-btn">
       <select className="selector-style" onChange={handleChange} value={set}>
+        <option value="">{placeholder}</option>
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}
