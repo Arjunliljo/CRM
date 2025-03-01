@@ -13,7 +13,7 @@ import {
   logout,
   verify,
 } from "../Controllers/authController.js";
-
+import  upload  from "../middlewares/uploadMiddlware.js";
 const router = express.Router();
 
 router.post("/verify", verify);
@@ -22,7 +22,7 @@ router.post("/verify", verify);
 router.post("/create", createUser);
 router.get("/", getAllUsers);
 router.get("/:id", getUser);
-router.patch("/:id", updateUser);
+router.patch("/:id", upload, updateUser);
 router.delete("/:id", deleteUser);
 router.post("/login", loginUser);
 router.post("/logout", logout);

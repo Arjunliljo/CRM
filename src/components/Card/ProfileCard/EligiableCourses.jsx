@@ -6,31 +6,7 @@ import { useApi } from "../../../context/apiContext/ApiContext";
 import { useCourses } from "./hooks/useCourses";
 
 
-export default function EligiableCourses({
-  onClick,
-  qualifications = [
-    {
-      name: "Degree",
-      mark: "80%",
-      institution: "MGU",
-    },
-    {
-      name: "Plus Two",
-      mark: "75%",
-      institution: "Kerala State",
-    },
-    {
-      name: "Tenth",
-      mark: "80%",
-      institution: "CBSE",
-    },
-    {
-      name: "IELTS",
-      mark: "8.5",
-      institution: null,
-    },
-  ],
-}) {
+export default function EligiableCourses({ onClick }) {
   const { countryConfigs, universityConfigs } = useApi();
   const { countries = [] } = countryConfigs;
   const { university = [] } = universityConfigs;
