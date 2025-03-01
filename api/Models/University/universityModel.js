@@ -34,6 +34,22 @@ const universitySchema = mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
+universitySchema.pre(/^find/, async function (next) {
+  this.populate({
+    path: "country",
+    select: "name",
+  });
+  this.populate({
+    path: "courses",
+    select: "name",
+  });
+  this.populate({
+    path: "qualifications",
+    select: "name",
+  });
+  next();
+});
+
 const University = mongoose.model("University", universitySchema);
 
 export default University;

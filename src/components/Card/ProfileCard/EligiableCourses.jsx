@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import apiClient from "../../../../config/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import { useUniversity } from "../../../apiHooks/useUniversity";
+import { useApi } from "../../../context/apiContext/ApiContext";
 
 export default function EligiableCourses({
   onClick,
@@ -30,7 +31,12 @@ export default function EligiableCourses({
     },
   ],
 }) {
-  const { university } = useUniversity();
+  const { universityConfigs } = useApi();
+  console.log(universityConfigs, "universityConfigs");
+
+  const { university = [] } = universityConfigs;
+
+  console.log(university, "universities");
 
   const Countries = ["Country", "Option 2", "Option 3"];
   const coursesOptions = ["UG", "Option 2", "Option 3"];
