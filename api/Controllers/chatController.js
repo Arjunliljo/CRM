@@ -64,6 +64,18 @@ export const updateChat = catchAsync(async (req, res, next) => {
     });
   }
 
+  // Get access to io from req.app
+  const io = req.app.get('io');
+
+  // Emit the message to all users in the chat
+  if (io) {
+    io.to(chatId).emit('newMessage', {
+      chatId,
+      message: newMessage
+    });
+  }
+
+
   res.status(200).json({
     status: "success",
     data: newMessage,
@@ -107,5 +119,50 @@ export const getChats = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: chats,
+  });
+});
+
+export const markMessagesAsRead = catchAsync(async (req, res) => {
+  const { chatId, userId } = req.body;
+
+  if (!chatId || !userId) {
+    return res.status(400).json({
+      status: "fail",
+      message: "Chat ID and User ID are required",
+    });
+  }
+
+  // Update all messages in the chat where the sender is not the current user
+  const chat = await Chat.findByIdAndUpdate(
+    chatId,
+    {
+      $set: {
+        "messages.$[elem].isRead": true,
+      },
+    },
+    {
+      arrayFilters: [{ "elem.sender": { $ne: userId } }],
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!chat) {
+    return res.status(404).json({
+      status: "fail",
+      message: "Chat not found",
+    });
+  }
+
+  // Emit socket event that messages have been read
+  req.io.to(chatId).emit("messagesRead", {
+    chatId,
+    readByUserId: userId
+  });
+
+
+  res.status(200).json({
+    status: "success",
+    message: "Messages marked as read",
   });
 });

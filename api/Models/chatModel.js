@@ -21,7 +21,15 @@ const chatSchema = mongoose.Schema(
             time: {
                 type: Date,
                 default: Date.now
-            }
+            },
+            isRead: {
+                type: Boolean,
+                default: false,
+              },
+              chatId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Chat",
+              },
         }]
     },
     {

@@ -22,3 +22,8 @@ export const getUserId = (user, users) => {
   const userId = users.find((obj) => obj.name === user)?._id;
   return userId;
 };
+export const getUniversityId = (university, universities) => {
+  if (!university || !universities) return null;
+  const universityId = universities.find((obj) => obj.name === university)?._id;
+  return universityId;
+};

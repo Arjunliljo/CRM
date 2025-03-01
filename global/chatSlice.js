@@ -25,12 +25,12 @@ const chatSlice = createSlice({
       }
     },
     updateChats: (state, action) => {
-      
+
       const { chatId, message } = action.payload;
-         
+
       const chatIndex = state.chats.findIndex(chat => chat._id === chatId);
       if (chatIndex !== -1) {
-       
+
         state.chats[chatIndex].messages.push({
           chatId: message.chatId,
           content: message.content,
@@ -44,8 +44,33 @@ const chatSlice = createSlice({
           time: message.time
         };
       }
+    },
+    markMessagesAsRead: (state, action) => {
+      const chatId = action.payload;
+      const userId = JSON.parse(localStorage.getItem('user'))?._id;
+
+      // Update in chats array
+      const chatIndex = state.chats.findIndex(chat => chat._id === chatId);
+      if (chatIndex !== -1) {
+        state.chats[chatIndex].messages = state.chats[chatIndex].messages.map(message => {
+          if (message.sender !== userId) {
+            return { ...message, isRead: true };
+          }
+          return message;
+        });
+      }
+
+      // Update in selectedMessage if applicable
+      if (state.selectedMessage && state.selectedMessage.id === chatId) {
+        state.selectedMessage.message = state.selectedMessage.message.map(message => {
+          if (message.sender !== userId) {
+            return { ...message, isRead: true };
+          }
+          return message;
+        });
+      }
     }
-  },
+  }
 });
 
 // Export all actions
@@ -53,7 +78,8 @@ export const {
   setChats,
   setSelectedMessage,
   updateSelectedMessage,
-  updateChats
+  updateChats,
+  markMessagesAsRead
 } = chatSlice.actions;
 
 export default chatSlice.reducer;
