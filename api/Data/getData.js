@@ -31,12 +31,13 @@ export const defaultTabs = [
     name: "Profile-card",
     id: 8,
   },
-  // {
-  //   name: "Branch-managing",
-  //   id: 9,
-  // },
+
   {
     name: "Sync",
     id: 10,
+  },
+  {
+    name: "login",
+    id: 11,
   },
 ];

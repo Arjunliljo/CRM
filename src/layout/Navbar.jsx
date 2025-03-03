@@ -3,13 +3,21 @@ import HomeIcon from "../components/utils/Icons/HomeIcon";
 import { useDispatch, useSelector } from "react-redux";
 import apiClient from "../../config/axiosInstance";
 import { logout } from "../../global/authSlice";
+import { defaultTabs } from "../../api/Data/getData";
 
 export default function Navbar() {
   const dispatch = useDispatch();
 
-  const { defaultTabs, tabs } = useSelector((state) => state.auth);
+  const { defaultTabs: defTabs, tabs } = useSelector((state) => state.auth);
+  const sortedDefaultTabs = defaultTabs
+    .filter((obj) => defTabs?.includes(obj.name))
+    .map((obj) => obj.name);
+
   const userTabs = tabs.map((tab) => tab.name);
-  const visibleTabs = [...new Set([...defaultTabs, ...userTabs])];
+
+  const visibleTabs = sortedDefaultTabs.filter(
+    (tab) => sortedDefaultTabs.includes(tab) || userTabs.includes(tab)
+  );
 
   const availableIcons = [
     "hat",
