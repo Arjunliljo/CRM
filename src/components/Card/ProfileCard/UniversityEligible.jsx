@@ -142,45 +142,58 @@ function UniversityEligible() {
         />
       </div>
       <div className="university-eligiable-courses-cards">
-        { curUniversity.courses.length > 0 ?  curUniversity?.courses?.map((course, index) => (
-          <div className="university-eligiable-courses-card" key={index}>
-            <div className="university-eligiable-courses-assigners">
-              <span>{course.name}</span>
-            </div>
-            <div className="university-eligiable-coursess-keys">
-              <div className="university-eligiable-courses-keys">
-                <span className="card-number">{curUniversity?.name}</span>
-                {course.fee && <span> Fee : ${course.fee}</span>}
+        { curUniversity?.courses && curUniversity?.courses?.length > 0 ? (
+          curUniversity.courses.map((course, index) => (
+            <div className="university-eligiable-courses-card" key={course?._id || index}>
+              <div className="university-eligiable-courses-assigners">
+                <span>{course?.name || 'Untitled Course'}</span>
               </div>
-            </div>
-            <div
-              className="eligiable-courses-assigners"
-              style={{ textAlign: "right" }}
-            >
-              <span>
-                {course.duration ? ` ${course.duration} Months` : "null"}
-              </span>
-            </div>
-            <div
-              className="eligiable-courses-assigners"
-              style={{ textAlign: "right" }}
-            >
-              <div>
+              <div className="university-eligiable-coursess-keys">
+                <div className="university-eligiable-courses-keys">
+                  <span className="card-number">{curUniversity?.name || 'University Name'}</span>
+                  {course?.fee && <span> Fee : ${course.fee}</span>}
+                </div>
+              </div>
+              <div
+                className="eligiable-courses-assigners"
+                style={{ textAlign: "right" }}
+              >
                 <span>
-                  <EditOutlined
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleEdit(course)}
-                  />
+                  {course?.duration ? ` ${course.duration} Months` : "Duration not specified"}
                 </span>
               </div>
-              <div>
-                {/* <span>
-                  {course.duration ? ` ${course.duration} Months` : "null"}
-                </span> */}
+              <div
+                className="eligiable-courses-assigners"
+                style={{ textAlign: "right" }}
+              >
+                <div>
+                  <span>
+                    <EditOutlined
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleEdit(course)}
+                    />
+                  </span>
+                </div>
+                <div>
+                  {/* <span>
+                    {course?.duration ? ` ${course.duration} Months` : "null"}
+                  </span> */}
+                </div>
               </div>
             </div>
+          ))
+        ) : (
+          <div className="no-courses-message" style={{
+            padding: '20px',
+            textAlign: 'center',
+            color: '#666',
+            backgroundColor: '#f5f5f5',
+            borderRadius: '8px',
+            margin: '10px 0'
+          }}>
+            No courses available
           </div>
-        )) : <span> No courses Available</span>}
+        )}
       </div>
       <ModalBase
         title="Add Course"

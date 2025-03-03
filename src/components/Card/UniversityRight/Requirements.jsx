@@ -23,12 +23,23 @@ function Requirements({ requirements = [] }) {
     <div className="entry-requirements">
       <h2>Entry Requirements</h2>
       <div className="requirements-grid">
-        { qualifications.length < 0 ? qualificationsArray.map((requirement, index) => (
+        { qualificationsArray.length > 0 ? qualificationsArray.map((requirement, index) => (
           <div key={requirement._id || index} className="requirement-item">
             <span className="requirement-bullet">●</span>
             {requirement.name} {requirement.mark && `: ${requirement.mark}`}
           </div>
-        )) : <span>No Entry Requirements</span> }
+        )) : (
+          <div className="no-courses-message" style={{
+            padding: '20px',
+            textAlign: 'center',
+            color: '#666',
+            backgroundColor: '#f5f5f5',
+            borderRadius: '8px',
+            margin: '10px 0'
+          }}>
+            No Requirements available
+          </div>
+        ) }
       </div>
     </div>
   );
