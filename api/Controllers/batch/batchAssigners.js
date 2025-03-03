@@ -4,6 +4,9 @@ import mongoose from "mongoose";
 import User from "../../Models/userModel.js";
 
 export const assignLeadsToUsers = async (leadIds, user) => {
+  console.log(leadIds, "leadIds");
+  console.log(user, "user");
+
   try {
     const leadObjectIds = leadIds.map((id) =>
       mongoose.Types.ObjectId.createFromHexString(id)

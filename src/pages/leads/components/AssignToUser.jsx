@@ -16,14 +16,15 @@ export default function AssingToUser({ assigningLeads }) {
   const [curRole, setCurRole] = useState(roles?.[0]);
   const [curUser, setCurUser] = useState(users?.[0]?.name);
 
-  const [setSelectedUsers, setSetSelectedUsers] = useState([]);
+  const [setSelectedUsers, setSetSelectedUsers] = useState(users);
 
   useEffect(() => {
     if (curRole) {
       const roleId = roles.find((val) => val.name === curRole)?._id;
+
       setSetSelectedUsers(users.filter((user) => user.role === roleId));
     }
-  }, [curRole]);
+  }, [curRole, roles, users]);
 
   const handleAssign = async () => {
     if (setSelectedUsers.length === 0) {

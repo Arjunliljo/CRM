@@ -21,10 +21,6 @@ export default function ProfileInfo({ isCreate }) {
     dispatch(setProfilePassword(e.target.value));
   };
 
-  const handleRoleChange = (e) => {
-    dispatch(setProfileRole(e));
-  };
-
   return (
     <div className="content-section">
       <div className="content-section-head">
@@ -32,7 +28,7 @@ export default function ProfileInfo({ isCreate }) {
       </div>
       <div className="content-section-item-box">
         <RoleSelector
-          setter={handleRoleChange}
+          setter={setProfileRole}
           isCreate={isCreate}
           profileData={profileData}
         />
