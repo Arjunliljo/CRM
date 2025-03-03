@@ -142,7 +142,7 @@ function UniversityEligible() {
         />
       </div>
       <div className="university-eligiable-courses-cards">
-        {curUniversity?.courses?.map((course, index) => (
+        { curUniversity.courses.length > 0 ?  curUniversity?.courses?.map((course, index) => (
           <div className="university-eligiable-courses-card" key={index}>
             <div className="university-eligiable-courses-assigners">
               <span>{course.name}</span>
@@ -174,13 +174,13 @@ function UniversityEligible() {
                 </span>
               </div>
               <div>
-                <span>
+                {/* <span>
                   {course.duration ? ` ${course.duration} Months` : "null"}
-                </span>
+                </span> */}
               </div>
             </div>
           </div>
-        ))}
+        )) : <span> No courses Available</span>}
       </div>
       <ModalBase
         title="Add Course"

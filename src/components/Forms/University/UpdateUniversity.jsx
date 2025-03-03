@@ -7,12 +7,13 @@ import CountrySelector from "../Leads/CountrySelector";
 import { message } from "antd";
 import apiClient from "../../../../config/axiosInstance";
 import { refetchUniversity } from "../../../apiHooks/useUniversity";
+import { getCountryName } from "../../../service/nameFinders";
 
 export default function UpdateUniversity({
   isUpadte,
   closeModal,
   university,
-  countries
+  countries,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCourses, setSelectedCourses] = useState([]);
@@ -23,7 +24,9 @@ export default function UpdateUniversity({
   useEffect(() => {
     if (university) {
       setName(university.name || "");
-      setCountry(university.country?._id || "");
+      setCountry(
+        university.country?._id || university.country || ""
+      );
       setImage(university.img || "");
     }
   }, [university]);
@@ -46,7 +49,7 @@ export default function UpdateUniversity({
       if (name !== university.name) {
         formData.append("name", name);
       }
-      if (country !== university.country?._id) {
+      if (country !== university.country?._id || university.country) {
         formData.append("country", country);
       } else {
         formData.append("country", "67b99b08f4581627a3bd3341");
@@ -58,11 +61,15 @@ export default function UpdateUniversity({
       formData.append("mainFolder", "universitiesImages");
       formData.append("subFolder", name);
 
-      const res = await apiClient.patch(`/university/${university._id}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const res = await apiClient.patch(
+        `/university/${university._id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       refetchUniversity();
       message.success("Branch updated successfully!");
@@ -74,13 +81,6 @@ export default function UpdateUniversity({
       setIsLoading(false);
     }
   };
-
-  const staticCourses = [
-    { name: "DS", fullName: "Data Science" },
-    { name: "GD", fullName: "Graphic Design" },
-    { name: "CS", fullName: "Cybersecurity" },
-    { name: "AI", fullName: "AI & Machine Learning" },
-  ];
 
   const handleCourseClick = (course) => {
     setSelectedCourses((prev) =>

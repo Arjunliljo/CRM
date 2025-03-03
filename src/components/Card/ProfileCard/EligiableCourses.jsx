@@ -6,11 +6,10 @@ import { useApi } from "../../../context/apiContext/ApiContext";
 import { useCourses } from "./hooks/useCourses";
 
 
-export default function EligiableCourses({ onClick }) {
+export default function EligiableCourses({ onClick ,qualifications }) {
   const { countryConfigs, universityConfigs } = useApi();
   const { countries = [] } = countryConfigs;
   const { university = [] } = universityConfigs;
-
 
   const [curCountry, setCurCountry] = useState("All Countries");
   const [curUniversity, setCurUniversity] = useState("All Universities");

@@ -18,10 +18,10 @@ export const useCreateUser = () => {
     selectedRoles,
   } = useSelector((state) => state.profile);
 
-  const countryIds = countries.map((country) => country._id);
-  const branchIds = branches.map((branch) => branch._id);
-  const roleIds = selectedRoles.map((role) => role._id);
-  const statusIds = mainStatuses.map((status) => status._id);
+  const countryIds = countries.map((country) => country._id || country);
+  const branchIds = branches.map((branch) => branch._id || branch);
+  const roleIds = selectedRoles.map((role) => role._id || role);
+  const statusIds = mainStatuses.map((status) => status._id || status);
 
   const defaultTabesItems = new Set([
     "Dashboard",

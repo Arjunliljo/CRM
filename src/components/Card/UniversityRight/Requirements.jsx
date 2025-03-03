@@ -1,24 +1,34 @@
-function Requirements({requirements = [
-  { name: "Plus Two", mark: "45%" },
-  { name: "Plus Two", mark: "45%" },
-  { name: "Plus Two", mark: "45%" },
-  { name: "Plus Two", mark: "45%" },
-  { name: "Plus Two", mark: "45%" },
-  { name: "Plus Two", mark: "45%" },
-  { name: "Plus Two", mark: "45%" },
-  { name: "Plus Two", mark: "45%" },
-  { name: "Plus Two", mark: "45%" },
-]}) {
+import { useApi } from "../../../context/apiContext/ApiContext";
+import { getQualificationName } from "../../../service/nameFinders";
+
+function Requirements({ requirements = [] }) {
+  const { qualificationsConfigs } = useApi();
+  const { qualifications = [] } = qualificationsConfigs;
+
+  const qualificationsArray = requirements.map((qualificationId) => {
+    // Check if qualificationId is valid
+    if (!qualificationId) return null;
+
+    const qualificationData = getQualificationName(qualificationId, qualifications);
+    if (!qualificationData) return null;
+
+    return {
+      name: qualificationData.name,
+      mark: qualificationData.mark,
+      _id: qualificationData._id
+    };
+  }).filter(Boolean) || [];
 
   return (
     <div className="entry-requirements">
       <h2>Entry Requirements</h2>
       <div className="requirements-grid">
-        {requirements.map((requirement, index) => (
-          <div key={index} className="requirement-item">
-            <span className="requirement-bullet">●</span> {requirement.name} : {requirement.mark}
+        { qualifications.length < 0 ? qualificationsArray.map((requirement, index) => (
+          <div key={requirement._id || index} className="requirement-item">
+            <span className="requirement-bullet">●</span>
+            {requirement.name} {requirement.mark && `: ${requirement.mark}`}
           </div>
-        ))}
+        )) : <span>No Entry Requirements</span> }
       </div>
     </div>
   );

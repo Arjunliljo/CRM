@@ -5,35 +5,53 @@ import {
 } from "../../../service/nameFinders";
 import { useApi } from "../../../context/apiContext/ApiContext";
 
-
 function UserPosition({ user }) {
   const { statusConfigs, roleConfigs, branchConfigs } = useApi();
 
+  console.log(user);
   const { statuses = [] } = statusConfigs;
   const { roles = [] } = roleConfigs;
   const { branches = [] } = branchConfigs;
 
-  const rolesArray =
-    user?.roles?.map((role) => ({
-      name: getRoleName(role._id, roles) || "",
-      _id: role || "",
-    })) || [];
+console.log(branches, "branches");
+console.log(statuses,"statuses")
+console.log(roles,"role")
 
-  const branchesArray =
-    user?.branches?.map((branch) => ({
-      name: getBranchName( branch._id, branches) || "",
-      _id: branch || "",
-    })) || [];
 
-  const statusArray =
-    user?.statuses?.map((status) => ({
-      name: getStatusName(status._id, statuses) || "",
-      _id: status || "",
-    })) || [];
+  const rolesArray = user?.roles?.map((role) => {
 
-  // const userRoleName = getRoleName(user?.role, roles);
+    const roleId = typeof role === 'object' ? role?._id : role;
+    if (!roleId) return null;
 
-  console.log(user, "user");
+    return {
+      name: getRoleName(roleId, roles),
+      _id: roleId,
+    };
+  }).filter(Boolean) || [];
+
+  const branchesArray = user?.branches?.map((branch) => {
+    const branchId = typeof branch === 'object' ? branch?._id : branch;
+    if (!branchId) return null;
+
+    return {
+      name: getBranchName(branchId, branches),
+      _id: branchId,
+    };
+  }).filter(Boolean) || [];
+
+  const statusArray = user?.statuses?.map((status) => {
+         console.log(status, "1")
+    const statusId = typeof status === 'object' ? status?._id : status;
+    if (!statusId) return null;
+
+    return {
+      name: getStatusName(statusId, statuses),
+      _id: statusId,
+    };
+  }).filter(Boolean) || [];
+
+  // Add null check for user.role
+  const userRoleName = user?.role ? getRoleName(user.role, roles) : '';
 
   return (
     <div className="profileCardEdituser-box personalUserEdit-status">
@@ -43,7 +61,9 @@ function UserPosition({ user }) {
       <form className="personalUserEdit-status-elements">
         {/* <span className="personalUserEdit-status-html-for">Role</span> */}
         <div>
-          <span className="chat-text">{user?.role?.name || "No role name"}</span>
+          <span className="chat-text">
+            {(user && userRoleName) || user?.role?.name || "No role name"}
+          </span>
         </div>
         <span className="personalUserEdit-status-html-for">Managing Roles</span>
         <div
@@ -66,11 +86,13 @@ function UserPosition({ user }) {
                 fontSize: "0.8rem",
               }}
             >
-              {role.name}
+              {role && role?.name}
             </div>
           ))}
         </div>
-        <span className="personalUserEdit-status-html-for">Managing Statuses</span>
+        <span className="personalUserEdit-status-html-for">
+          Managing Statuses
+        </span>
         {/* <div className="select-user-container" style={{ display: "flex", flexWrap: "wrap" }}> */}
         <div
           className="select-user-container"
@@ -92,13 +114,15 @@ function UserPosition({ user }) {
                 fontSize: "0.8rem",
               }}
             >
-              {status.name}
+              {status && status?.name}
             </div>
           ))}
         </div>
         {/* </div> */}
 
-        <span className="personalUserEdit-status-html-for">Managing Branches</span>
+        <span className="personalUserEdit-status-html-for">
+          Managing Branches
+        </span>
         <div
           className="select-user-container"
           style={{
@@ -119,7 +143,7 @@ function UserPosition({ user }) {
                 fontSize: "0.8rem",
               }}
             >
-              {branch.name}
+              {branch && branch?.name}
             </div>
           ))}
         </div>

@@ -10,6 +10,7 @@ import Requirements from "./Requirements";
 import ModalBase from "../../Forms/ModalBase";
 import UpdateUniversity from "../../Forms/University/UpdateUniversity";
 import { useApi } from "../../../context/apiContext/ApiContext";
+import { getCountryName } from "../../../service/nameFinders";
 
 function UniversityProfile({ university }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,11 +34,13 @@ function UniversityProfile({ university }) {
     university?.courses?.length > 0
       ? Math.min(
           ...university.courses.map((course) => {
-            console.log("Course fee:", course?.fee); // Debug individual course fees
+            console.log("Course fee:", course?.fee);
             return course?.fee || Infinity; // Use Infinity instead of 0 as fallback
           })
         )
       : 0;
+
+ const universityCountryName = getCountryName(university.country , countries)
 
   return (
     <div className="UniversityRightCard">
@@ -56,7 +59,7 @@ function UniversityProfile({ university }) {
                 {university && university?.name}
                 <br></br>
                 <p style={{ fontSize: "1rem", color: "gray" }}>
-                  {university?.country?.name}
+                  { university && universityCountryName ?universityCountryName : ''}
                 </p>
               </div>
               <div className="UniversityRightCard-head-info-location-card">

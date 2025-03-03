@@ -30,3 +30,17 @@ export const getUniversityName = (university, universities) => {
   )?.name;
   return universityName;
 };
+
+export const getQualificationName = (qualification, qualifications) => {
+  if (!qualification || !qualifications) return null;
+
+  const qualificationData = qualifications?.find(
+    (obj) => obj._id === qualification
+  );
+
+  return {
+    name: qualificationData?.name || '',
+    mark: qualificationData?.mark || '',
+    _id: qualificationData?._id
+  };
+};
