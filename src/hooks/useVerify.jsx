@@ -7,14 +7,17 @@ export const useVerify = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, allowedTabsStr } = useSelector(
+    (state) => state.auth
+  );
+
   useEffect(() => {
     dispatch(verifyUser());
   }, [dispatch]);
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/dashboard");
+      navigate(`/${allowedTabsStr[0]}`);
     } else {
       navigate("/login");
     }

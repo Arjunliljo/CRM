@@ -20,9 +20,9 @@ export const verifyUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await apiClient.post("/user/verify");
-
       return response.data.user;
     } catch (error) {
+      console.log(error, "error");
       return rejectWithValue("Invalid credentials");
     }
   }
@@ -40,6 +40,7 @@ const authSlice = createSlice({
     roles: [],
     statuses: [],
     autoAssign: false,
+    allowedTabsStr: [],
   },
   reducers: {
     logout: (state) => {
@@ -79,6 +80,10 @@ const authSlice = createSlice({
         state.statuses = action.payload.statuses || [];
         state.autoAssign = action.payload.autoAssign || false;
         state.error = null;
+        state.allowedTabsStr = [
+          ...action.payload.defaultTabs,
+          ...action.payload.tabs.map((tab) => tab.name),
+        ];
       })
 
       .addCase(loginUser.rejected, (state, action) => {
@@ -100,6 +105,10 @@ const authSlice = createSlice({
         state.statuses = action.payload.statuses || [];
         state.autoAssign = action.payload.autoAssign || false;
         state.error = null;
+        state.allowedTabsStr = [
+          ...action.payload.defaultTabs,
+          ...action.payload.tabs.map((tab) => tab.name),
+        ];
       })
       .addCase(verifyUser.rejected, (state, action) => {
         state.loading = false;

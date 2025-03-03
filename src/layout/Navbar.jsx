@@ -20,22 +20,27 @@ export default function Navbar() {
   );
 
   const availableIcons = [
+    "home",
     "hat",
-    "student",
-    "tick",
-    "contact",
+    "group",
+    "doc",
     "wifi",
+    "camera",
+    "contact",
+    "trophy",
+    "payments",
+    "ongoing",
+    "stayback",
     "branch",
+    "edit",
+    "logout",
     "settings",
   ];
 
-  const navItems = visibleTabs.map((tab) => ({
+  const navItems = visibleTabs.map((tab, i) => ({
     name: tab,
     path: `/${tab}`,
-    icon:
-      tab === "Dashboard"
-        ? "home"
-        : availableIcons[Math.floor(Math.random() * availableIcons.length)],
+    icon: tab === "Dashboard" ? "home" : availableIcons[i + 1],
   }));
 
   const logoutUser = async () => {

@@ -14,8 +14,6 @@ export default function Login() {
   const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.auth);
 
-  console.log(error, "error");
-
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
@@ -29,10 +27,11 @@ export default function Login() {
     try {
       const result = await dispatch(loginUser(credentials)).unwrap();
       if (result) {
-        navigate("/dashboard");
+        navigate("/");
       }
     } catch (err) {
-      console.log("Login failed");
+      navigate("/login");
+      console.log(err, "err");
     }
   };
 
