@@ -28,7 +28,7 @@ const clientDistPath = path.resolve(__dirname, "..", "dist");
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:3000"],
+    origin: "*",
     methods: "GET,POST,PATCH,PUT,DELETE",
     credentials: true,
   })
