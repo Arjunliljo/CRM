@@ -14,6 +14,8 @@ export default function Login() {
   const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.auth);
 
+  console.log(error, "error");
+
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
@@ -43,11 +45,11 @@ export default function Login() {
           Please enter your credentials to access your account
         </p>
         <form onSubmit={handleSubmit}>
-          {error && (
+          {/* {error && (
             <div className="error-message">
-              {typeof error === 'string' ? error : JSON.stringify(error)}
+              {typeof error === "string" ? error : JSON.stringify(error)}
             </div>
-          )}
+          )} */}
           <div className="user-box">
             <input
               type="text"

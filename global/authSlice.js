@@ -33,7 +33,7 @@ const authSlice = createSlice({
   initialState: {
     user: null,
     loading: false,
-    error: {},
+    error: null,
     isAuthenticated: false,
     tabs: [],
     defaultTabs: [],
