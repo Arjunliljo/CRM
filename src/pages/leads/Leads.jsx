@@ -48,6 +48,7 @@ import ActivityLog from "../../components/Card/ProfileCard/ActivityLog";
 import PersonalDetails from "../../components/Card/ProfileCard/PersonalDetails";
 import NormalButton from "../../components/buttons/NormalButton";
 import AssingToUser from "./components/AssignToUser";
+
 import {
   canStartApplication,
   handleAutoBtn,
@@ -66,7 +67,6 @@ import {
 } from "./leadHandlers/documentHandler";
 import { refetchLeads } from "../../apiHooks/useLeads";
 import { getRoleName } from "../../service/nameFinders";
-import { message } from "antd";
 
 export default function Leads() {
   const dispatch = useDispatch();

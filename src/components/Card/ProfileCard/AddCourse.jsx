@@ -1,12 +1,7 @@
 import { useState } from "react";
 import CancelBtn from "../../buttons/CancelBtn";
 import NextBtn from "../../buttons/NextBtn";
-import UniversitySelector from "./UniversitySelect";
-import apiClient from "../../../../config/axiosInstance";
-import { useSelector } from "react-redux";
-import { message } from "antd";
 import { useApi } from "../../../context/apiContext/ApiContext";
-import PopoverContent from "../../../pages/Dependency/StatusDependency/AddStatus/components/PopoverContent";
 
 export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
   const [qualification, setQualification] = useState([]);
@@ -19,7 +14,7 @@ export default function AddCourse({ closeModal, handleChange, handleSubmit }) {
   //   universityConfigs: { university },
   // } = useApi();
 
-console.log(qualifications, "qualifications array");
+  console.log(qualifications, "qualifications array");
 
   const [selectedQualification, setSelectedQualification] = useState([]);
   console.log(selectedQualification, "qualifications");
@@ -295,9 +290,7 @@ console.log(qualifications, "qualifications array");
 
       <div className="modal__form-buttons">
         <CancelBtn onClick={closeModal}>Cancel</CancelBtn>
-        <NextBtn type="submit">
-          Add
-        </NextBtn>
+        <NextBtn type="submit">Add</NextBtn>
       </div>
     </form>
   );

@@ -15,7 +15,6 @@ function Selector({
       dispatch(onSet(e.target.value));
     } else {
       onSet(e.target.value);
-
     }
   };
 
@@ -28,7 +27,7 @@ function Selector({
         disabled={disabled}
       >
         <option value={""}>{placeholder}</option>
-        {optionsObj.map((option, index) => (
+        {optionsObj?.map((option, index) => (
           <option key={index} value={option.name}>
             {option.name}
           </option>

@@ -107,11 +107,6 @@ export default function AddUniversity({ closeModal, countries }) {
           <CountrySelector countries={countries} handleChange={handleChange} />
         </div>
       </div>
-      {/* <CourseSelector
-        staticCourses={staticCourses}
-        selectedCourses={selectedCourses}
-        handleCourseClick={handleCourseClick}
-      /> */}
 
       <ImageUploader onUpload={handleImageUpload} />
 

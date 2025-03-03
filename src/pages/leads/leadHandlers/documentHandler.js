@@ -1,6 +1,9 @@
 import { message } from "antd";
 import apiClient from "../../../../config/axiosInstance";
-import { removeCurLeadDocument, updateCurLeadDocuments } from "../../../../global/leadsSlice";
+import {
+  removeCurLeadDocument,
+  updateCurLeadDocuments,
+} from "../../../../global/leadsSlice";
 import { refetchLeads } from "../../../apiHooks/useLeads";
 
 export const handleDocumentSubmit = async (file, details, dispatch) => {
@@ -25,7 +28,6 @@ export const handleDocumentSubmit = async (file, details, dispatch) => {
 };
 
 export const handleDeleteDocument = async (doc, curLead, dispatch) => {
-  console.log(doc, "doc");
   if (!curLead) return;
   try {
     await apiClient.patch("/lead/deleteLeadDocument", {
@@ -41,20 +43,25 @@ export const handleDeleteDocument = async (doc, curLead, dispatch) => {
   }
 };
 
-export const handleUpdateDocument = async (doc, updatedData, curLead, dispatch) => {
+export const handleUpdateDocument = async (
+  doc,
+  updatedData,
+  curLead,
+  dispatch
+) => {
   if (!curLead) return;
   try {
-      const response = await apiClient.patch("/lead/updateLeadDocuments", {
-        leadId: curLead._id,
-        documentObj: {
-          ...doc,
-          ...updatedData,
-        },
-      });
-      dispatch(updateCurLeadDocuments(response?.data?.data));
-      return true;
-    } catch (error) {
-      console.error("Error updating document:", error);
-      return false;
-    }
-  };
+    const response = await apiClient.patch("/lead/updateLeadDocuments", {
+      leadId: curLead._id,
+      documentObj: {
+        ...doc,
+        ...updatedData,
+      },
+    });
+    dispatch(updateCurLeadDocuments(response?.data?.data));
+    return true;
+  } catch (error) {
+    console.error("Error updating document:", error);
+    return false;
+  }
+};

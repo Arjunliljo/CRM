@@ -18,7 +18,6 @@ import {
   useIDGetCountriesArray,
 } from "../../../api/Utilities/helper";
 
-import EligiableCourses from "../../components/Card/ProfileCard/EligiableCourses";
 import PersonalDetails from "../../components/Card/ProfileCard/PersonalDetails";
 import apiClient from "../../../config/axiosInstance";
 import {
@@ -55,11 +54,10 @@ import {
   deleteQualification,
   editQualification,
 } from "./studentHandlers/studentQualificationHandlers";
-import { useQuery } from "@tanstack/react-query";
 import ProfileCardApplicationStatus from "../../components/Card/ProfileCard/ProfileCardApplicationStatus";
-import { getStatusName } from "../../service/nameFinders";
 import { useApplications } from "./hooks/useApplications";
-
+import ApplicationEligiableCourse from "../../components/Card/ProfileCard/EligialbleCourses/ApplicationEligiableCourse";
+import StartOtherApplicationModal from "./components/StartOtherApplicationModal";
 export default function Students() {
   const {
     curStudent,
@@ -72,7 +70,6 @@ export default function Students() {
     curStatus,
     curCountry,
     curCampaign,
-    curApplications,
   } = useSelector((state) => state.students);
 
   const {
@@ -101,6 +98,8 @@ export default function Students() {
   const [assignToUser, setAssignToUser] = useState(false);
 
   const { applications, refetch } = useApplications(curStudent?._id);
+
+  const [startApplicationModal, setStartApplicationModal] = useState(false);
 
   useEffect(() => {
     refetch();
@@ -258,7 +257,9 @@ export default function Students() {
     />
   );
 
-  const IEligiableCourses = <EligiableCourses />;
+  const IEligiableCourses = (
+    <ApplicationEligiableCourse application={curApplication} />
+  );
   const IActivityLog = <ActivityLog curLead={curStudent} />;
 
   const IProfileCard = (
@@ -269,7 +270,11 @@ export default function Students() {
       IEligiableCourses={IEligiableCourses}
       personalDetails={IPersonalDetails}
       IActivityLog={IActivityLog}
-      StartOtherApplication={<PrimaryBttn>Start New Application</PrimaryBttn>}
+      StartOtherApplication={
+        <PrimaryBttn onClick={() => setStartApplicationModal(true)}>
+          Start New Application
+        </PrimaryBttn>
+      }
     />
   );
 
@@ -427,6 +432,14 @@ export default function Students() {
         closeModal={() => setAssignToUser(false)}
       >
         <AssingToUser assigningLeads={toAssignStudents} />
+      </ModalBase>
+      <ModalBase
+        centered={false}
+        title="Start New Application"
+        isOpen={startApplicationModal}
+        closeModal={() => setStartApplicationModal(false)}
+      >
+        <StartOtherApplicationModal curStudent={curStudent} />
       </ModalBase>
     </>
   );
