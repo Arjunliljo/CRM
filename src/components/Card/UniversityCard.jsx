@@ -40,7 +40,7 @@ function UniversityCard({ university, set, onSet, istoggle, toggle }) {
       ref={targetRef}
     >
       <div className="cardUniversity-head">
-        <p className="cardHead">{university.name}</p>
+        <p className="cardHead">{university?.name}</p>
         {/* <Mover num={university.num} /> */}
       </div>
       <div className="cardUniversity-body">
@@ -54,6 +54,7 @@ function UniversityCard({ university, set, onSet, istoggle, toggle }) {
           <textarea
             type="text"
             placeholder="About:"
+value={university?.about}
             onClick={(e) => e.preventDefault()}
           />
         </div>

@@ -9,6 +9,7 @@ const universitySlice = createSlice({
   },
   reducers: {
     setUniversityCurCountry: (state, action) => {
+console.log(action.payload,"ertyui")
       state.curCountry = action.payload;
     },
     setAutoUniversitysAssign: (state, action) => {

@@ -16,28 +16,29 @@ export default function UpdateUniversity({
   countries,
 }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedCourses, setSelectedCourses] = useState([]);
+  // const [selectedCourses, setSelectedCourses] = useState([]);
   const [name, setName] = useState("");
   const [country, setCountry] = useState("");
   const [image, setImage] = useState("");
+  const [about, setAbout] = useState("");
 
   useEffect(() => {
     if (university) {
       setName(university.name || "");
-      setCountry(
-        university.country?._id || university.country || ""
-      );
+      setCountry(university.country?._id || university.country || "");
       setImage(university.img || "");
+      setAbout(university.about || "");
     }
   }, [university]);
 
   const handleNameChange = (e) => setName(e.target.value);
   const handleCountryChange = (e) => setCountry(e.target.value);
   const handleImageUpload = (file) => setImage(file);
+  const handleAboutChange = (e) => setAbout(e.target.value);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ name, country, image }, "newUniversity");
+    console.log({ name, country, image, about }, "newUniversity");
     if (!name) {
       message.error("Please fill in the branch name");
       return;
@@ -57,6 +58,9 @@ export default function UpdateUniversity({
       if (image instanceof File) {
         formData.append("img", image);
       }
+      if (about !== university.about) {
+        formData.append("about", about);
+      }
 
       formData.append("mainFolder", "universitiesImages");
       formData.append("subFolder", name);
@@ -72,7 +76,7 @@ export default function UpdateUniversity({
       );
 
       refetchUniversity();
-      message.success("Branch updated successfully!");
+      message.success("University updated successfully!");
       closeModal();
     } catch (e) {
       console.log(e, "e");
@@ -82,13 +86,13 @@ export default function UpdateUniversity({
     }
   };
 
-  const handleCourseClick = (course) => {
-    setSelectedCourses((prev) =>
-      prev.some((c) => c.name === course.name)
-        ? prev.filter((c) => c.name !== course.name)
-        : [...prev, course]
-    );
-  };
+  // const handleCourseClick = (course) => {
+  //   setSelectedCourses((prev) =>
+  //     prev.some((c) => c.name === course.name)
+  //       ? prev.filter((c) => c.name !== course.name)
+  //       : [...prev, course]
+  //   );
+  // };
 
   return (
     <form onSubmit={handleSubmit} className="modal__form">
@@ -113,6 +117,18 @@ export default function UpdateUniversity({
           />
         </div>
       </div>
+
+      <div className="modal__form-textarea">
+        <textarea
+          type="text"
+          name="about"
+          onChange={handleAboutChange}
+          placeholder="About the University"
+          className="input-formGroup"
+          value={about}
+        />
+      </div>
+
       {/* <CourseSelector
         staticCourses={staticCourses}
         selectedCourses={selectedCourses}

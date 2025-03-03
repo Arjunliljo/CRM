@@ -24,7 +24,33 @@
       display: flex;
       gap: 16px;
     }
+    &-textarea {
+      width: 100%;
+      margin-bottom: 1rem;
 
+      & textarea {
+        width: 100%;
+        min-height: 120px;
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid variables.$color-gray;
+        font-size: 14px;
+        color: variables.$color-black;
+        resize: vertical;
+        background-color: #fff;
+        transition: border-color 0.3s ease;
+
+        &::placeholder {
+          color: #8f9091;
+        }
+
+        &:focus {
+          border-color: variables.$color-black;
+          outline: none;
+          // box-shadow: 0 0 0 2px rgba(variables.$color-gray, 0.1);
+        }
+      }
+    }
     &-input-text {
       flex: 1;
       width: 100%;
@@ -33,7 +59,7 @@
         width: 100%;
         height: 40px;
         border-radius: 8px;
-        border: 1px solid variables.$color-black;
+        border: 1px solid variables.$color-gray;
         padding: 0 10px;
         font-size: 14px;
         color: variables.$color-black;
@@ -43,7 +69,7 @@
         }
 
         &:focus {
-          border-color: variables.$color-blue;
+          border-color: variables.$color-black;
           outline: none;
         }
       }
@@ -52,13 +78,13 @@
         width: 100%;
         height: 40px;
         border-radius: 8px;
-        border: 1px solid variables.$color-black;
+        border: 1px solid variables.$color-gray;
         padding: 8px 12px;
         font-size: 14px;
         color: #333;
 
         &:focus {
-          border-color: variables.$color-blue;
+          border-color: variables.$color-black;
           outline: none;
         }
       }
@@ -120,13 +146,13 @@
         align-items: center;
         justify-content: center;
         height: 100%;
-        border: 1px dashed #8f9091;
+        border: 1px dashed #dbdbdb;
         border-radius: 8px;
         padding: 1rem;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
         &:hover {
-          border-color: variables.$color-blue;
+          border-color: variables.$color-black;
         }
 
         &-icon {
