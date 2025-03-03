@@ -28,7 +28,11 @@ const clientDistPath = path.resolve(__dirname, "..", "dist");
 
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "https://skymark.marketlube.in",
+    ],
     methods: "GET,POST,PATCH,PUT,DELETE",
     credentials: true,
   })
