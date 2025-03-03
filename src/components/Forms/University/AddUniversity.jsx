@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CancelBtn from "../../buttons/CancelBtn";
 import NextBtn from "../../buttons/NextBtn";
+import CourseSelector from "./CourserSelector";
 import ImageUploader from "./ImageUploader";
 import CountrySelector from "../Leads/CountrySelector";
 import { message } from "antd";
@@ -9,70 +10,83 @@ import { refetchUniversity } from "../../../apiHooks/useUniversity";
 
 export default function AddUniversity({ closeModal, countries }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [name, setName] = useState("");
-  const [country, setCountry] = useState("");
-  const [about, setAbout] = useState("");
-  const [image, setImage] = useState(null);
+  const [selectedCourses, setSelectedCourses] = useState([]);
+  const [newUniversity, setNewUniversity] = useState({ name: "" });
 
-  const handleNameChange = (e) => setName(e.target.value);
-  const handleCountryChange = (e) => setCountry(e.target.value);
-  const handleAboutChange = (e) => setAbout(e.target.value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewUniversity((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleImageUpload = (file) => {
-    console.log("Image file received:", file); // Debug log
-    setImage(file);
+    if (file) {
+      setNewUniversity((prev) => ({
+        ...prev,
+        img: file,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name) {
-      message.error("Please fill in the university name");
+    if (!newUniversity.name) {
+      message.error("Please fill in the branch name");
       return;
     }
-
     try {
       setIsLoading(true);
-      const formDataToSend = new FormData();
 
-      formDataToSend.append("name", name);
-      formDataToSend.append("country", country || "67b99b08f4581627a3bd3341");
-      formDataToSend.append("about", about);
-      formDataToSend.append("mainFolder", "universitiesImages");
-      formDataToSend.append("subFolder", name);
+      // Create a FormData object to handle file uploads
+      const formData = new FormData();
+      formData.append("name", newUniversity.name);
+      formData.append("country", newUniversity.country);
+      formData.append("about", newUniversity.about);
+      formData.append("mainFolder", "universitiesImages");
+      formData.append("subFolder", newUniversity.name);
 
-      if (image) {
-        console.log("Appending image:", image); // Debug log
-        formDataToSend.append("img", image);
+      if (newUniversity.img) {
+        formData.append("img", newUniversity.img);
       }
 
-      // Debug log for FormData
-      for (let [key, value] of formDataToSend.entries()) {
-        console.log(`${key}:`, value);
+      // Debugging: Log FormData contents
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
       }
 
-      const response = await apiClient.post("/university", formDataToSend, {
+      const res = await apiClient.post("/university", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      console.log("Response:", response.data); // Debug log
-
-      setName("");
-      setCountry("");
-      setAbout("");
-      setImage(null);
-
+      setNewUniversity({ name: "" });
       refetchUniversity();
-      message.success("University created successfully!");
+      message.success("Branch created successfully!");
       closeModal();
     } catch (e) {
-      console.error("Error creating university:", e);
-      message.error("Error creating University. Please try again.");
+      message.error("Error creating branch. Please try again.");
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const staticCourses = [
+    { name: "DS", fullName: "Data Science" },
+    { name: "GD", fullName: "Graphic Design" },
+    { name: "CS", fullName: "Cybersecurity" },
+    { name: "AI", fullName: "AI & Machine Learning" },
+  ];
+
+  const handleCourseClick = (course) => {
+    setSelectedCourses((prev) =>
+      prev.some((c) => c.name === course.name)
+        ? prev.filter((c) => c.name !== course.name)
+        : [...prev, course]
+    );
   };
 
   return (
@@ -82,47 +96,36 @@ export default function AddUniversity({ closeModal, countries }) {
           <input
             type="text"
             name="name"
-            value={name}
-            onChange={handleNameChange}
+            value={newUniversity.name}
+            onChange={handleChange}
             placeholder="University Name"
             className="input-formGroup"
             required
           />
         </div>
         <div className="modal__form-input-text">
-          <CountrySelector
-            countries={countries}
-            handleChange={handleCountryChange}
-            defaultValue={country}
-          />
-        </div>
-      </div>
-      <div className="modal__form-row">
-        <div className="modal__form-textarea">
-          <textarea
-            name="about"
-            value={about}
-            onChange={handleAboutChange}
-            placeholder="About the University..."
-            rows="4"
-            maxLength="500"
-          />
+          <CountrySelector countries={countries} handleChange={handleChange} />
         </div>
       </div>
       <div>
-        <ImageUploader
-          onUpload={handleImageUpload}
-          image={image}
-        />
+        <div className="modal__form-input-text">
+          <input
+            type="text"
+            name="about"
+            value={newUniversity.about}
+            onChange={handleChange}
+            placeholder="about the University"
+            className="input-formGroup"
+            required
+          />
+        </div>
+        <ImageUploader onUpload={handleImageUpload} />
       </div>
 
       <div className="modal__form-buttons">
         <CancelBtn onClick={closeModal}>Cancel</CancelBtn>
-        <NextBtn
-          type="submit"
-          disabled={isLoading}
-        >
-          {isLoading ? 'Adding...' : 'Add'}
+        <NextBtn type="submit" onClick={handleSubmit}>
+          Add
         </NextBtn>
       </div>
     </form>

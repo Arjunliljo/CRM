@@ -28,7 +28,7 @@ import {
 import CancelBtn from "../../../components/buttons/CancelBtn";
 import { refetchUsers } from "../../../apiHooks/useUsers";
 import { useCreateUser } from "../../../hooks/useCreateUser";
-
+import { setCurUser } from "../../../../global/userSlice";
 const TABS = ["Profile", "Status", "Dashboard"];
 
 function UserProfileEdit() {
@@ -76,13 +76,15 @@ function UserProfileEdit() {
     navigate(-1);
   };
 
-  const handleCreate = async () => {
+  const handleUpdate = async () => {
     setIsCreate(true);
-    await apiClient.patch(`/user/${user._id}`, userData);
+   const response = await apiClient.patch(`/user/${user._id}`, userData);
     message.success("User updated successfully!");
     refetchUsers();
     navigate("/user");
     dispatch(resetProfile());
+    console.log(response.data.data.data);
+    dispatch(setCurUser(response.data.data.data));
     setActiveTab(0);
   };
 
@@ -114,7 +116,7 @@ function UserProfileEdit() {
         onHandleNext={handleNext}
         onHandleCancel={handleCancel}
         activeTab={activeTab}
-        onHandleCreate={handleCreate}
+        onHandleCreate={handleUpdate}
         isEdit={true}
       />
     </div>
