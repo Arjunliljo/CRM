@@ -21,7 +21,6 @@ console.log(endpoint)
     queryFn: () => apiClient.get(endpoint),
   });
 
-console.log(data)
 
   const university = data?.data?.data;
 

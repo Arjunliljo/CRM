@@ -9,15 +9,18 @@ import queryClient from "../config/reactQuery.js";
 import SocketProvider from "../config/socketProvider.jsx";
 import { router } from "../router/router.jsx";
 import CustomRouterProvider from "../router/CustomRouterProvider.jsx";
+import ErrorBoundary from "./components/ErrorBoundary.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <QueryClientProvider client={queryClient}>
-      <ApiProvider>
-        <SocketProvider>
-          <CustomRouterProvider />
-        </SocketProvider>
-      </ApiProvider>
-    </QueryClientProvider>
-  </Provider>
+  <ErrorBoundary>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <ApiProvider>
+          <SocketProvider>
+            <CustomRouterProvider />
+          </SocketProvider>
+        </ApiProvider>
+      </QueryClientProvider>
+    </Provider>
+  </ErrorBoundary>
 );

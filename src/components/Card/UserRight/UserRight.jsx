@@ -17,6 +17,11 @@ function UserRight({ user }) {
     location: "France",
     year: "2",
   };
+
+  if (user) {
+    throw new Error("User data is missing!"); // This will trigger the ErrorBoundaryre
+  }
+
   const currUser = useSelector((state) => state.currUser);
   console.log(user);
   return (
