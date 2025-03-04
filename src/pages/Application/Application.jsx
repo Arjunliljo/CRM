@@ -68,7 +68,7 @@ import {
 import { refetchLeads } from "../../apiHooks/LeadAndApplicationHooks/useLeads";
 import { getRoleName } from "../../service/nameFinders";
 
-export default function Leads() {
+export default function Application() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

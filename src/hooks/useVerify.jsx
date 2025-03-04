@@ -21,5 +21,5 @@ export const useVerify = () => {
     } else {
       navigate("/login");
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, allowedTabsStr]);
 };

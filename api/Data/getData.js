@@ -37,6 +37,10 @@ export const defaultTabs = [
     id: 10,
   },
   {
+    name: "Application",
+    id: 10,
+  },
+  {
     name: "login",
     id: 11,
   },

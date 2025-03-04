@@ -31,11 +31,16 @@ function ProfileUpdateUser() {
 
   const handleCreate = async () => {
     setIsCreate(true);
-    await apiClient.post("/user/create", userData);
-    message.success("User created successfully!");
-    dispatch(resetProfile());
-    refetchUsers();
-    setActiveTab(0);
+    try {
+      await apiClient.post("/user/create", userData);
+      message.success("User created successfully!");
+      dispatch(resetProfile());
+      refetchUsers();
+      setActiveTab(0);
+    } catch (error) {
+      console.log(error);
+      message.error("User creation failed!");
+    }
   };
 
   return (

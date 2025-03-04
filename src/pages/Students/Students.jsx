@@ -48,7 +48,7 @@ import {
 } from "./studentHandlers/assignStudentHandler";
 import AssingToUser from "../leads/components/AssignToUser";
 import ActivityLog from "../../components/Card/ProfileCard/ActivityLog";
-import { refetchStudents } from "../../apiHooks/useStudents";
+import { refetchStudents } from "../../apiHooks/LeadAndApplicationHooks/useStudents";
 import {
   addQualification,
   deleteQualification,

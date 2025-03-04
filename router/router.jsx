@@ -13,6 +13,7 @@ import Login from "../src/layout/Login/Login";
 import General from "../src/pages/general/General";
 import UserProfileEdit from "../src/pages/profileEdit/ProfileStatus/userProfileEdit";
 import Config from "../src/pages/Config/Config";
+import Application from "../src/pages/Application/Application";
 
 const tabses = [
   {
@@ -60,6 +61,10 @@ const tabses = [
   {
     path: "offerLetter",
     element: <General />,
+  },
+  {
+    path: "Application",
+    element: <Application />,
   },
   {
     path: "User/user-profile-edit",

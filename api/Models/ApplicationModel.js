@@ -23,7 +23,6 @@ const applicationModel = mongoose.Schema(
     university: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "University",
-      // required: [true, "Application must have a university"],
     },
     country: {
       type: mongoose.Schema.Types.ObjectId,
@@ -35,7 +34,15 @@ const applicationModel = mongoose.Schema(
       ref: "Course",
       required: [true, "Application must have a course"],
     },
-
+    users: {
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      default: [],
+    },
     followupDate: {
       type: Date,
       default: () => new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),

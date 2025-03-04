@@ -5,7 +5,7 @@ import { Input, message } from "antd";
 import NextBtn from "../../buttons/NextBtn";
 import CountrySelector from "./CountrySelector";
 import StatusSelector from "./StatusSelector";
-import { refetchLeads } from "../../../apiHooks/useLeads";
+import { refetchLeads } from "../../../apiHooks/LeadAndApplicationHooks/useLeads";
 import apiClient from "../../../../config/axiosInstance";
 
 export default function AddLead({

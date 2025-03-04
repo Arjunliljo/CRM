@@ -12,7 +12,7 @@ export default function StartOtherApplicationModal({ curStudent }) {
   const { countries } = countryConfigs;
 
   const [curCountry, setCurCountry] = useState("All Countries");
-  const universityList = useRef(university);
+  const universityList = useRef(university || []);
   const courseList = useRef(university?.map((obj) => obj?.courses)?.flat());
   const [curUniversity, setCurUniversity] = useState("All Universities");
 
@@ -30,6 +30,9 @@ export default function StartOtherApplicationModal({ curStudent }) {
     courseList.current =
       university?.find((uni) => uni.name === curUniversity)?.courses || [];
   }, [curUniversity, university]);
+
+  if (!universityList.current) return null;
+  if (!courseList.current) return null;
 
   return (
     <div className="assign-form">
@@ -49,12 +52,12 @@ export default function StartOtherApplicationModal({ curStudent }) {
           onSet={setCurUniversity}
           redux={false}
           placeholder={
-            universityList.current.length > 0
+            universityList.current?.length > 0
               ? "Select University"
               : "No University Found"
           }
           optionsObj={universityList.current}
-          disabled={universityList.current.length === 0}
+          disabled={universityList.current?.length === 0}
         />
       </div>
       <Selector
@@ -63,7 +66,7 @@ export default function StartOtherApplicationModal({ curStudent }) {
           courseList.current.length > 0 ? "Select Course" : "No Course Found"
         }
         optionsObj={courseList.current}
-        disabled={courseList.current.length === 0}
+        disabled={courseList.current?.length === 0}
         set={curCourse}
         onSet={setCurCourse}
       />

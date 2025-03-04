@@ -33,6 +33,7 @@ export const useCreateUser = () => {
     "User",
     "Branch-managing",
     "Profile-card",
+    "Application",
     "Sync",
   ]);
 
@@ -47,15 +48,6 @@ export const useCreateUser = () => {
     },
     { defaultTabs: [], tabs: [] }
   );
-
-  // console.log(statusIds, "statusIds");
-console.log(tabs, "tabs");
-console.log(defaultTabesItems, 'defoult tab')
-
-
-  // const filteredTabIds = tabs
-  //   .filter((tab) => statusIds.includes(tab._id))
-  //   .map((tab) => tab._id);
 
   const userData = {
     name,

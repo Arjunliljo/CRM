@@ -1,6 +1,6 @@
 import apiClient from "../../../../config/axiosInstance";
 import { setCurStudent } from "../../../../global/studentsSlice";
-import { refetchStudents } from "../../../apiHooks/useStudents";
+import { refetchStudents } from "../../../apiHooks/LeadAndApplicationHooks/useStudents";
 
 const addQualification = async (newQualification, dispatch) => {
   try {

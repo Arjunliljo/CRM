@@ -5,12 +5,12 @@ import { useRoles } from "../../apiHooks/useRoles";
 import { useStatuses } from "../../apiHooks/useStatuses";
 import { useUsers } from "../../apiHooks/useUsers";
 import { useChats } from "../../apiHooks/useChats";
-import { useLeads } from "../../apiHooks/useLeads";
+import { useLeads } from "../../apiHooks/LeadAndApplicationHooks/useLeads";
 import { useCommens } from "../../apiHooks/useCommens";
 import { useUniversity } from "../../apiHooks/useUniversity";
 import { useQualifications } from "../../apiHooks/useQualifications";
 import { useCampaigns } from "../../apiHooks/useCampaigns";
-import { useStudents } from "../../apiHooks/useStudents";
+import { useStudents } from "../../apiHooks/LeadAndApplicationHooks/useStudents";
 
 const ApiContext = createContext();
 
@@ -40,7 +40,6 @@ function ApiProvider({ children }) {
     countryConfigs?.countries,
     usersConfigs?.users
   );
-
 
   return (
     <ApiContext.Provider

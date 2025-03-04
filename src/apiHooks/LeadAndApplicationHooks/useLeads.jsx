@@ -1,24 +1,23 @@
-import apiClient from "../../config/axiosInstance";
+import apiClient from "../../../config/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
-import queryClient from "../../config/reactQuery";
+import queryClient from "../../../config/reactQuery";
 import { useSelector } from "react-redux";
 import {
   getBranchId,
   getCountryId,
   getStatusId,
   getUserId,
-} from "../service/IdFinders";
+} from "../../service/IdFinders";
 
-export const useStudents = (statuses, branches, countries, users) => {
+export const useLeads = (statuses, branches, countries, users) => {
   const { curStatus, curCountry, curBranch, curCampaign, curRole, curUser } =
-    useSelector((state) => state.students);
+    useSelector((state) => state.leads);
 
   const statusId = getStatusId(curStatus, statuses);
   const branchId = getBranchId(curBranch, branches);
   const countryId = getCountryId(curCountry, countries);
   const userId = getUserId(curUser, users);
-
-  let endpoint = `/lead?isStudent=true&limit=1000`;
+  let endpoint = `/lead?sort=createdAt&isStudent=false&limit=100`;
 
   if (!curStatus.startsWith("All") && statusId) {
     endpoint += `&status=${statusId}`;
@@ -35,23 +34,19 @@ export const useStudents = (statuses, branches, countries, users) => {
     endpoint += `&campaignName=${curCampaign}`;
   }
 
-  // if (!curRole.startsWith("All") && curRole) {
-  //   endpoint += `&role=${curRole}`;
-  // }
-
   if (!curUser.startsWith("All") && userId) {
     endpoint += `&user=${userId}`;
   }
 
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["students", endpoint],
+    queryKey: ["leads", endpoint],
     queryFn: () => apiClient.get(endpoint),
   });
 
-  const students = data?.data?.data;
-  return { students, isLoading, error, refetch };
+  const leads = data?.data?.data;
+  return { leads, isLoading, error, refetch };
 };
 
-export function refetchStudents() {
-  queryClient.invalidateQueries({ queryKey: ["students"] });
+export function refetchLeads() {
+  queryClient.invalidateQueries({ queryKey: ["leads"] });
 }
