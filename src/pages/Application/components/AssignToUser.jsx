@@ -49,7 +49,7 @@ export default function AssingToUser({ assigningLeads }) {
     <div className="assign-form">
       <NormalButton
         style={{ margin: "0 auto" }}
-      >{`Assign ${assigningLeads.length} Leads To`}</NormalButton>
+      >{`Assign ${assigningLeads?.length} Leads To`}</NormalButton>
       <div className="assign-form-head">
         <Selector
           optionsObj={roles}

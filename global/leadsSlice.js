@@ -47,10 +47,7 @@ const leadsSlice = createSlice({
       state.autoLeadsAssign = action.payload;
     },
     setCurLead(state, action) {
-      state.curLead = {
-        ...action.payload,
-        isUniversitySelected: action.payload.isUniversitySelected || false,
-      };
+      state.curLead = action.payload;
 
       if (action.payload) {
         state.leadDetailToggle = true;

@@ -17,8 +17,18 @@ const applicationSlice = createSlice({
     curUser: "All User",
   },
   reducers: {
+    setApplicationDetailToggle: (state, action) => {
+      state.applicationDetailToggle = action.payload;
+      if (!action.payload) {
+        state.curApplication = {};
+      }
+    },
     setCurApplication: (state, action) => {
       state.curApplication = action.payload;
+
+      if (action.payload) {
+        state.applicationDetailToggle = true;
+      }
     },
     setCurApplicationStatus: (state, action) => {
       state.curStatus = action.payload;

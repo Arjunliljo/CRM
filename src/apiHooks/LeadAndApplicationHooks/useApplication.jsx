@@ -11,6 +11,7 @@ export const useApplications = () => {
   });
 
   const applications = data?.data?.data;
+
   return { applications, isLoading, error, refetch };
 };
 

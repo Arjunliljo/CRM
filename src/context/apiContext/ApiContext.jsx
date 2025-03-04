@@ -11,6 +11,7 @@ import { useUniversity } from "../../apiHooks/useUniversity";
 import { useQualifications } from "../../apiHooks/useQualifications";
 import { useCampaigns } from "../../apiHooks/useCampaigns";
 import { useStudents } from "../../apiHooks/LeadAndApplicationHooks/useStudents";
+import { useApplications } from "../../apiHooks/LeadAndApplicationHooks/useApplication";
 
 const ApiContext = createContext();
 
@@ -24,6 +25,7 @@ function ApiProvider({ children }) {
 
   const commonsConfigs = useCommens();
   const campaignsConfigs = useCampaigns();
+  const applicationsConfigs = useApplications();
 
   const universityConfigs = useUniversity(countryConfigs?.countries);
   const qualificationsConfigs = useQualifications();
@@ -45,6 +47,7 @@ function ApiProvider({ children }) {
     <ApiContext.Provider
       value={{
         branchConfigs,
+        applicationsConfigs,
         countryConfigs,
         roleConfigs,
         statusConfigs,

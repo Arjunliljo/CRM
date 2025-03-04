@@ -1,0 +1,155 @@
+import Mover from "../../features/Mover";
+import InfoBtn from "../buttons/InfoBtn";
+import CountryBtn from "../buttons/CountryBtn";
+import HomeIcon from "../utils/Icons/HomeIcon";
+import NameBar from "./NameBar";
+import { useKey } from "../../hooks/useKey";
+
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setLeadDetailToggle } from "../../../global/leadsSlice";
+import { useApi } from "../../context/apiContext/ApiContext";
+import { getCountryName, getStatusName } from "../../service/nameFinders";
+
+export default function ApplicationCard({
+  lead,
+  set,
+  application,
+  onSet,
+  toggle,
+  onSubmit,
+  isAssigning,
+  assigninSetter,
+  toAssignApplications,
+}) {
+  const [isSelected, setIsSelected] = useState(lead?._id === set?._id);
+  const [remark, setRemark] = useState(lead?.remark || "");
+  const [isTextareaFocused, setIsTextareaFocused] = useState(false);
+  const dispatch = useDispatch();
+
+  const {
+    statusConfigs: { statuses },
+    countryConfigs: { countries },
+  } = useApi();
+
+  const targetRef = useRef(null);
+
+  const [countryName, setCountryName] = useState(
+    getCountryName(lead?.countries?.[0], countries)
+  );
+  const [statusName, setStatusName] = useState(
+    getStatusName(lead?.status, statuses)
+  );
+
+  useEffect(() => {
+    setIsSelected(lead?._id === set?._id);
+    setStatusName(getStatusName(lead?.status, statuses));
+    setCountryName(getCountryName(lead?.countries?.[0], countries));
+  }, [set, lead, countries, statuses]);
+
+  const handleLeadNormalSelector = () => {
+    if (lead._id === set?._id) {
+      dispatch(setLeadDetailToggle(!toggle));
+    } else {
+      dispatch(onSet(lead));
+      if (!toggle) {
+        dispatch(setLeadDetailToggle(false));
+      }
+    }
+    setTimeout(() => {
+      targetRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }, 500);
+  };
+
+  const handleLeadSelect = () => {
+    if (isAssigning) {
+      if (toAssignApplications.includes(lead)) {
+        dispatch(
+          assigninSetter(toAssignApplications.filter((l) => l._id !== lead._id))
+        );
+      } else {
+        dispatch(assigninSetter([...toAssignApplications, lead]));
+      }
+      return;
+    }
+    handleLeadNormalSelector();
+  };
+
+  // Modify the useKey hook to only trigger when the textarea is focused
+  useKey("Enter", () => {
+    if (isTextareaFocused && remark.trim()) {
+      onSubmit(remark, lead._id);
+    }
+  });
+
+  //   const reAssignChecker = () => {
+  //     if (toAssignApplications.find((val) => val._id === lead._id)) {
+  //       return true;
+  //     }
+  //     return false;
+  //   };
+
+  return (
+    <div
+      className={`card ${isSelected ? "selectedCard" : ""}`}
+      onClick={handleLeadSelect}
+      id={`${lead?._id}`}
+      ref={targetRef}
+    >
+      <div className="card-head">
+        <Mover num={lead.num} />
+      </div>
+      <div className="card-body">
+        <div className="card-body-top" style={{ textWrap: "nowrap" }}>
+          <NameBar lead={lead} />
+          <InfoBtn
+            color="white"
+            bgcl={lead?.status === "Interested" ? "green" : "black"}
+          >
+            {statusName}
+          </InfoBtn>
+        </div>
+        <div className="card-body-mid">
+          <textarea
+            type="text"
+            placeholder="Add a remark"
+            value={remark}
+            onClick={(e) => e.stopPropagation()}
+            onChange={(e) => setRemark(e.target.value)}
+            onFocus={() => setIsTextareaFocused(true)}
+            onBlur={() => setIsTextareaFocused(false)}
+          />
+        </div>
+
+        <div className="card-body-bottom">
+          <div className="card-body-bottom-icons">
+            <div className="card-body-bottom-icons-item">
+              <HomeIcon
+                path="u-turn"
+                color="#00b100"
+                style={{ transform: "rotate(270deg)" }}
+              />
+              <p>{lead?.application?.length} Applications</p>
+            </div>
+            <div className="card-body-bottom-icons-item">
+              <HomeIcon
+                path="retry"
+                color="#0075fc"
+                style={{ transform: "rotate(270deg)" }}
+              />
+              <p>{lead.attemps} Attempts</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="card-body-bottom-country">
+          <CountryBtn>{countryName || "N/A"}</CountryBtn>
+          <div className="card-body-bottom-country-count">{lead?.assigned}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
