@@ -6,29 +6,13 @@ import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import AllLeads from "../../components/buttons/AllLeads";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
 import StartApplication from "../../components/Card/ProfileCard/StartApplication";
-import { setCurGeneral } from "../../../global/generalSlice";
-import GeneralCard from "../../components/Card/GeneralCard";
+import ApplicationCard from "../../components/Card/ApplicationCard";
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
-import { setCurApplication } from "../../../global/applicationSlice";
-
-const general = {
-  num: 3,
-  name: "John Doe",
-  img: "https://via.placeholder.com/150",
-  number: 1234567890,
-  status: "Interested",
-  statusColor: "red",
-  remark:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-  applications: 2,
-  attempts: 1,
-  country: "Germany",
-  count: 3,
-};
-const arr = [...Array(500)].map((_, i) => {
-  const obj = { ...general, _id: i };
-  return obj;
-});
+import {
+  setApplicationDetailToggle,
+  setCurApplication,
+} from "../../../global/applicationSlice";
+import { useApi } from "../../context/apiContext/ApiContext";
 
 export default function Application() {
   const { autoGeneralsAssign, curGeneral } = useSelector(
@@ -39,14 +23,20 @@ export default function Application() {
     (state) => state.applications
   );
 
+  const { applicationsConfigs } = useApi();
+  const { applications = [] } = applicationsConfigs;
+
   const ISearchBar = <SearchBar />;
 
-  const IContents = arr?.map((general, index) => (
-    <GeneralCard
+  const IContents = applications?.map((application, index) => (
+    <ApplicationCard
       key={index}
       onSet={setCurApplication}
       set={curApplication}
-      general={general}
+      application={application}
+      istoggle={applicationDetailToggle}
+      toggle={setApplicationDetailToggle}
+      lead={application?.lead}
     />
   ));
 

@@ -7,7 +7,6 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ApiProvider } from "./context/apiContext/ApiContext.jsx";
 import queryClient from "../config/reactQuery.js";
 import SocketProvider from "../config/socketProvider.jsx";
-import { router } from "../router/router.jsx";
 import CustomRouterProvider from "../router/CustomRouterProvider.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 

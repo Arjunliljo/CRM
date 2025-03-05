@@ -62,7 +62,10 @@ const applicationModel = mongoose.Schema(
   },
   { timestamps: true }
 );
-
+applicationModel.pre(/^find/, function (next) {
+  this.populate("lead");
+  next();
+});
 const Application = mongoose.model("Application", applicationModel);
 
 export default Application;

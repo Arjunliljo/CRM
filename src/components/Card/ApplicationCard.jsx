@@ -1,59 +1,39 @@
+import { useEffect, useRef, useState } from "react";
 import Mover from "../../features/Mover";
-import InfoBtn from "../buttons/InfoBtn";
 import CountryBtn from "../buttons/CountryBtn";
+import InfoBtn from "../buttons/InfoBtn";
 import HomeIcon from "../utils/Icons/HomeIcon";
 import NameBar from "./NameBar";
-import { useKey } from "../../hooks/useKey";
-
-import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setLeadDetailToggle } from "../../../global/leadsSlice";
-import { useApi } from "../../context/apiContext/ApiContext";
-import { getCountryName, getStatusName } from "../../service/nameFinders";
+import { setApplicationDetailToggle } from "../../../global/applicationSlice";
 
-export default function ApplicationCard({
-  lead,
-  set,
-  application,
-  onSet,
-  toggle,
-  onSubmit,
-  isAssigning,
-  assigninSetter,
-  toAssignApplications,
-}) {
+function ApplicationCard({ lead, set, onSet, application, toggle }) {
   const [isSelected, setIsSelected] = useState(lead?._id === set?._id);
-  const [remark, setRemark] = useState(lead?.remark || "");
-  const [isTextareaFocused, setIsTextareaFocused] = useState(false);
-  const dispatch = useDispatch();
-
-  const {
-    statusConfigs: { statuses },
-    countryConfigs: { countries },
-  } = useApi();
-
   const targetRef = useRef(null);
 
-  const [countryName, setCountryName] = useState(
-    getCountryName(lead?.countries?.[0], countries)
-  );
-  const [statusName, setStatusName] = useState(
-    getStatusName(lead?.status, statuses)
-  );
-
   useEffect(() => {
-    setIsSelected(lead?._id === set?._id);
-    setStatusName(getStatusName(lead?.status, statuses));
-    setCountryName(getCountryName(lead?.countries?.[0], countries));
-  }, [set, lead, countries, statuses]);
+    setIsSelected(application?._id === set?._id);
+  }, [set, application]);
 
-  const handleLeadNormalSelector = () => {
-    if (lead._id === set?._id) {
-      dispatch(setLeadDetailToggle(!toggle));
+  const dispatch = useDispatch();
+
+  const handleLeadSelect = () => {
+    dispatch(onSet(lead));
+    setTimeout(() => {
+      targetRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }, 500);
+  };
+
+  const handleApplicationNormalToggle = () => {
+    if (application._id === set?._id) {
+      dispatch(setApplicationDetailToggle(!toggle));
     } else {
-      dispatch(onSet(lead));
+      dispatch(onSet(application));
       if (!toggle) {
-        dispatch(setLeadDetailToggle(false));
+        dispatch(setApplicationDetailToggle(false));
       }
     }
     setTimeout(() => {
@@ -64,92 +44,59 @@ export default function ApplicationCard({
     }, 500);
   };
 
-  const handleLeadSelect = () => {
-    if (isAssigning) {
-      if (toAssignApplications.includes(lead)) {
-        dispatch(
-          assigninSetter(toAssignApplications.filter((l) => l._id !== lead._id))
-        );
-      } else {
-        dispatch(assigninSetter([...toAssignApplications, lead]));
-      }
-      return;
-    }
-    handleLeadNormalSelector();
-  };
-
-  // Modify the useKey hook to only trigger when the textarea is focused
-  useKey("Enter", () => {
-    if (isTextareaFocused && remark.trim()) {
-      onSubmit(remark, lead._id);
-    }
-  });
-
-  //   const reAssignChecker = () => {
-  //     if (toAssignApplications.find((val) => val._id === lead._id)) {
-  //       return true;
-  //     }
-  //     return false;
-  //   };
-
   return (
     <div
-      className={`card ${isSelected ? "selectedCard" : ""}`}
-      onClick={handleLeadSelect}
-      id={`${lead?._id}`}
+      className={`cardGeneral ${isSelected ? "selectedCard" : ""}`}
+      onClick={handleApplicationNormalToggle}
+      id={`${application?._id}`}
       ref={targetRef}
     >
-      <div className="card-head">
+      <div className="cardGeneral-head">
         <Mover num={lead.num} />
       </div>
-      <div className="card-body">
-        <div className="card-body-top" style={{ textWrap: "nowrap" }}>
+      <div className="cardGeneral-body">
+        <div className="cardGeneral-body-top">
           <NameBar lead={lead} />
-          <InfoBtn
-            color="white"
-            bgcl={lead?.status === "Interested" ? "green" : "black"}
-          >
-            {statusName}
+          <InfoBtn color="white" bgcl="green">
+            Interested
           </InfoBtn>
         </div>
-        <div className="card-body-mid">
+        <div className="cardGeneral-body-mid">
           <textarea
             type="text"
             placeholder="Add a remark"
-            value={remark}
-            onClick={(e) => e.stopPropagation()}
-            onChange={(e) => setRemark(e.target.value)}
-            onFocus={() => setIsTextareaFocused(true)}
-            onBlur={() => setIsTextareaFocused(false)}
+            onClick={(e) => e.preventDefault()}
           />
         </div>
 
-        <div className="card-body-bottom">
-          <div className="card-body-bottom-icons">
-            <div className="card-body-bottom-icons-item">
+        <div className="cardGeneral-body-bottom">
+          <div className="cardGeneral-body-bottom-icons">
+            <div className="cardGeneral-body-bottom-icons-item">
               <HomeIcon
                 path="u-turn"
                 color="#00b100"
                 style={{ transform: "rotate(270deg)" }}
               />
-              <p>{lead?.application?.length} Applications</p>
+              <p>{lead?.applications} Applications</p>
             </div>
-            <div className="card-body-bottom-icons-item">
+            <div className="cardGeneral-body-bottom-icons-item">
               <HomeIcon
                 path="retry"
                 color="#0075fc"
                 style={{ transform: "rotate(270deg)" }}
               />
-              <p>{lead.attemps} Attempts</p>
+              <p>{lead?.attempts} Attempts</p>
             </div>
           </div>
         </div>
 
-        <div className="card-body-bottom-country">
-          <CountryBtn>{countryName || "N/A"}</CountryBtn>
-          <div className="card-body-bottom-country-count">{lead?.assigned}</div>
+        <div className="cardGeneral-body-bottom-country">
+          <CountryBtn>{lead?.country}</CountryBtn>
+          <div className="cardGeneral-body-bottom-country-count">3</div>
         </div>
       </div>
     </div>
   );
 }
+
+export default ApplicationCard;

@@ -63,6 +63,7 @@ export const {
   setCurApplicationCampaign,
   setCurApplicationRole,
   setCurApplicationUser,
+  setApplicationDetailToggle,
 } = applicationSlice.actions;
 
 export default applicationSlice.reducer;

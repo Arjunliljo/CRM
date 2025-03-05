@@ -40,7 +40,6 @@ export default function AssingToUser({ assigningLeads }) {
       message.success("Leads assigned successfully");
       refetchLeads();
     } catch (error) {
-      console.error("Error assigning leads:", error);
       message.error("Error assigning leads");
     }
   };
