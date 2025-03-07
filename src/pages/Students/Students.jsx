@@ -54,9 +54,9 @@ import {
   deleteQualification,
   editQualification,
 } from "./studentHandlers/studentQualificationHandlers";
-import ProfileCardApplicationStatus from "../../components/Card/ProfileCard/ProfileCardApplicationStatus";
+import ProfileCardApplicationStatus from "../../pages/Application/components/ProfileCardApplicationStatus";
 import { useApplications } from "./hooks/useApplications";
-import ApplicationEligiableCourse from "../../components/Card/ProfileCard/EligialbleCourses/ApplicationEligiableCourse";
+import ApplicationEligiableCourse from "../../components/EligialbleCourses/ApplicationEligiableCourse/ApplicationEligiableCourse";
 import StartOtherApplicationModal from "./components/StartOtherApplicationModal";
 export default function Students() {
   const {

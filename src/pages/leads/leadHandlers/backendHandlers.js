@@ -3,6 +3,8 @@ import apiClient from "../../../../config/axiosInstance";
 import { refetchCommens } from "../../../apiHooks/useCommens";
 import { updateCurLead, updateLeadStatus } from "../../../../global/leadsSlice";
 import { refetchLeads } from "../../../apiHooks/LeadAndApplicationHooks/useLeads";
+import { refetchStudents } from "../../../apiHooks/LeadAndApplicationHooks/useStudents";
+import { refetchApplications } from "../../Students/hooks/useApplications";
 
 export const handleAutoBtn = async (val) => {
   try {
@@ -72,6 +74,8 @@ export const handlePersonalDetailsSubmit = async (
     });
     dispatch(updateCurLead(response?.data?.data));
     refetchLeads();
+    refetchStudents();
+    refetchApplications();
     return true;
   } catch (error) {
     console.error("Error updating lead personal details:", error);

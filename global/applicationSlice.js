@@ -30,9 +30,7 @@ const applicationSlice = createSlice({
         state.applicationDetailToggle = true;
       }
     },
-    setCurApplicationStatus: (state, action) => {
-      state.curStatus = action.payload;
-    },
+
     setCurApplicationSource: (state, action) => {
       state.curSource = action.payload;
     },

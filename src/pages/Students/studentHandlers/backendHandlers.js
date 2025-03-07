@@ -1,6 +1,7 @@
 import apiClient from "../../../../config/axiosInstance";
 import { setCurStudent } from "../../../../global/studentsSlice";
 import { refetchStudents } from "../../../apiHooks/LeadAndApplicationHooks/useStudents";
+import { addQualification } from "./studentQualificationHandlers";
 
 export const handlePersonalDetailsSubmit = async (
   details,

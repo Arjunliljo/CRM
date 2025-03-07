@@ -1,4 +1,4 @@
-import { getUniversityName } from "../../../../service/nameFinders";
+import { getUniversityName } from "../../../service/nameFinders";
 
 export default function ApplicationCoursesComponent({
   course,

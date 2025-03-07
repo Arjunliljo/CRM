@@ -179,20 +179,7 @@ export default function ProfileCardStatus({
             />
           )}
         </div>
-        <div className="personal-status-bottom-set">
-          {/* <div className="personal-details-heading ">
-            <span className="personal-status-html-for">Updated by</span>
-            <div className="icons personal-details-group-icons">
-              <span className="arrow-btn">
-                <IoMdArrowBack className="arrow-btn-element" />
-              </span>
-              <span className="arrow-btn">
-                <IoMdArrowForward className="arrow-btn-element" />
-              </span>
-            </div>
-          </div> */}
-          {/* <input type="text" className="selector-with-icon" /> */}
-        </div>
+        <div className="personal-status-bottom-set"></div>
         <div className="eligible-head">
           <EligibleBttn type="submit">Save</EligibleBttn>
         </div>

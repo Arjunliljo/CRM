@@ -1,13 +1,14 @@
 import { IoMdArrowForward, IoMdArrowBack } from "react-icons/io";
 import { MdOutlineInterests } from "react-icons/md";
 import { MdDateRange } from "react-icons/md";
-import EligibleBttn from "../../buttons/EligibleBttn";
+import EligibleBttn from "../../../components/buttons/EligibleBttn";
 import { getCountryName, getStatusName } from "../../../service/nameFinders";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getStatusId } from "../../../service/IdFinders";
 import { message } from "antd";
+import { useDispatch } from "react-redux";
 
 export default function ProfileCardApplicationStatus({
   statuses,
@@ -16,6 +17,7 @@ export default function ProfileCardApplicationStatus({
   onSubmit,
   curStudent,
 }) {
+  const dispatch = useDispatch();
   const [status, setStatus] = useState(
     getStatusName(application?.status, statuses)
   );
@@ -46,12 +48,16 @@ export default function ProfileCardApplicationStatus({
       return;
     }
 
-    onSubmit({
-      status: getStatusId(status, statuses),
-      followupDate,
-      country: countryId,
-      remark,
-    });
+    onSubmit(
+      {
+        status: getStatusId(status, statuses),
+        followupDate,
+        country: countryId,
+        remark,
+      },
+      dispatch,
+      application?._id
+    );
   };
 
   return (

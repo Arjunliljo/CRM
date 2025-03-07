@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { useCourses } from "../hooks/useCourses";
-import { getCountryId, getUniversityId } from "../../../../service/IdFinders";
-import BlackSelector from "../../../Selectors/BlackSelector";
+import { useCourses } from "../../Card/ProfileCard/hooks/useCourses";
+import { getCountryId, getUniversityId } from "../../../service/IdFinders";
+import BlackSelector from "../../Selectors/BlackSelector";
 import {
   getCountryName,
   getUniversityName,
-} from "../../../../service/nameFinders";
-import { useApi } from "../../../../context/apiContext/ApiContext";
+} from "../../../service/nameFinders";
+import { useApi } from "../../../context/apiContext/ApiContext";
 import ApplicationCoursesComponent from "./ApplicationCoursesComponent";
 
 export default function ApplicationEligiableCourse({ onClick, application }) {
