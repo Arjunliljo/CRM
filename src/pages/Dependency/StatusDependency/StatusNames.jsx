@@ -45,7 +45,12 @@ export default function StatusNames() {
       return;
     }
     try {
-      await apiClient.delete(`/status/substatus/${subStatus}`);
+      await apiClient.delete(`/status/substatus`, {
+        data: {
+          statusId: selectedStatus._id,
+          subStatusId: subStatus,
+        },
+      });
       message.success(`Substatus "${subStatus}" deleted!`);
       refetchStatuses();
     } catch (error) {
