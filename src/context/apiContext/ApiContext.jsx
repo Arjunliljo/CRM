@@ -25,11 +25,16 @@ function ApiProvider({ children }) {
 
   const commonsConfigs = useCommens();
   const campaignsConfigs = useCampaigns();
-  const applicationsConfigs = useApplications();
 
   const universityConfigs = useUniversity(countryConfigs?.countries);
   const qualificationsConfigs = useQualifications();
 
+  const applicationsConfigs = useApplications(
+    statusConfigs?.statuses,
+    branchConfigs?.branches,
+    countryConfigs?.countries,
+    usersConfigs?.users
+  );
   const leadsConfigs = useLeads(
     statusConfigs?.statuses,
     branchConfigs?.branches,
