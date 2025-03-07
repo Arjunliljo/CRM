@@ -118,3 +118,23 @@ export const deleteOne = (Model) => {
     });
   });
 };
+
+export const substatusDelete = (Model) => {
+  return catchAsync(async (req, res, next) => {
+    const { statusId, subStatusId } = req.body;
+    const doc = await Model.findByIdAndUpdate(
+      statusId,
+      { $pull: { subStatuses: subStatusId } },
+      { new: true, runValidators: true }
+    );
+
+    if (!doc) {
+      return next(new AppError("No document found with that ID", 404));
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: doc,
+    });
+  });
+};

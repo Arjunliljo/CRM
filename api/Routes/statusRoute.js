@@ -15,8 +15,7 @@ const router = express.Router();
 router.get("/", getAllStatus);
 router.get("/:id", getStatus);
 router.post("/", createStatus);
+router.delete("/substatus", deleteSubStatus);
 router.patch("/:id", updateStatus);
 router.delete("/:id", deleteStatus);
-
-router.delete("/substatus/:val", deleteSubStatus);
 export default router;
