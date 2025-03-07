@@ -1,8 +1,13 @@
 import s3 from "../config/bucketConfig.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 
-async function uploadFileToS3(bucketName, fileBuffer, contentType, fullPath , fileName) {
-
+async function uploadFileToS3(
+  bucketName,
+  fileBuffer,
+  contentType,
+  fullPath,
+  fileName
+) {
   const params = {
     Bucket: bucketName,
     Key: fullPath,
@@ -19,10 +24,10 @@ async function uploadFileToS3(bucketName, fileBuffer, contentType, fullPath , fi
     return {
       fullPath,
       fileUrl,
-      fileName
+      fileName,
     };
   } catch (err) {
-    console.error('Error uploading file to AWS S3:', err);
+    console.error("Error uploading file to AWS S3:", err);
     throw err;
   }
 }
@@ -30,9 +35,8 @@ async function uploadFileToS3(bucketName, fileBuffer, contentType, fullPath , fi
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 async function deleteFileFromS3(bucketName, documentObj, next) {
-
   // The path will be everything after the bucket name in the URL
-  const filePath = documentObj.url.split('.com/')[1];
+  const filePath = documentObj.url.split(".com/")[1];
 
   const params = {
     Bucket: bucketName,
@@ -42,12 +46,10 @@ async function deleteFileFromS3(bucketName, documentObj, next) {
   try {
     const command = new DeleteObjectCommand(params);
     await s3.send(command);
-
   } catch (err) {
-    console.error('Error deleting file from AWS S3:', err);
+    console.error("Error deleting file from AWS S3:", err);
     throw err;
   }
 }
 
-
-export {uploadFileToS3,deleteFileFromS3};
+export { uploadFileToS3, deleteFileFromS3 };

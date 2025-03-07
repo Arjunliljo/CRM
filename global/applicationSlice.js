@@ -5,8 +5,8 @@ const applicationSlice = createSlice({
   initialState: {
     applicationDetailToggle: false,
     curApplication: {},
-    isApplying: false,
-    toApplyApplications: [],
+    isAssigning: false,
+    toAssignApplications: [],
     curUniversity: {},
     curStatus: "All Status",
     curSource: "All Source",
@@ -17,6 +17,12 @@ const applicationSlice = createSlice({
     curUser: "All User",
   },
   reducers: {
+    setApplicationIsAssigning: (state, action) => {
+      state.isAssigning = action.payload;
+    },
+    setToAssignApplications: (state, action) => {
+      state.toAssignApplications = action.payload;
+    },
     setApplicationDetailToggle: (state, action) => {
       state.applicationDetailToggle = action.payload;
       if (!action.payload) {
@@ -30,7 +36,9 @@ const applicationSlice = createSlice({
         state.applicationDetailToggle = true;
       }
     },
-
+    setCurApplicationStatus: (state, action) => {
+      state.curStatus = action.payload;
+    },
     setCurApplicationSource: (state, action) => {
       state.curSource = action.payload;
     },
@@ -62,6 +70,8 @@ export const {
   setCurApplicationRole,
   setCurApplicationUser,
   setApplicationDetailToggle,
+  setApplicationIsAssigning,
+  setToAssignApplications,
 } = applicationSlice.actions;
 
 export default applicationSlice.reducer;

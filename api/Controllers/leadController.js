@@ -152,7 +152,6 @@ const uploadLeadFile = catchAsync(async (req, res) => {
     { new: true }
   );
 
-  console.log(updatedLead, "updatedLead");
   if (!updatedLead) {
     return res.status(404).json({
       success: false,
@@ -170,12 +169,9 @@ const uploadLeadFile = catchAsync(async (req, res) => {
 const deleteLeadDocument = catchAsync(async (req, res) => {
   const { leadId, documentObj } = req.body;
 
-  console.log(leadId, documentObj, "leadId, documentObj");
-
   await Lead.findByIdAndUpdate(leadId, {
     $pull: { documents: { name: documentObj.name } },
   });
-  console.log("updatedLead");
 
   return res.status(200).json({
     success: true,

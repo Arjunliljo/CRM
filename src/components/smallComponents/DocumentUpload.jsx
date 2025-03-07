@@ -17,7 +17,7 @@ function DocumentUpload({ lead, onUpload, onDelete, onUpdate }) {
   // Initialize default forms if no documents are uploaded
   useEffect(() => {
     if (lead?.documents?.length === 0) {
-      setUploadForms([0, 1, 2, 3]); // Initialize 4 default forms
+      setUploadForms([0, 1, 2, 3]);
     } else {
       // Reduce default forms based on uploaded documents
       const remainingForms = 4 - (lead?.documents?.length || 0);
@@ -194,9 +194,7 @@ function DocumentUpload({ lead, onUpload, onDelete, onUpdate }) {
               </div>
             </div>
 
-            <div
-              className="document-upload-form"
-            >
+            <div className="document-upload-form">
               <input
                 type="text"
                 placeholder="Document content"
@@ -214,7 +212,6 @@ function DocumentUpload({ lead, onUpload, onDelete, onUpdate }) {
               />
 
               <label className="document-upload-form-label-important">
-
                 <input
                   type="checkbox"
                   checked={documentDetails[formIndex]?.isImportant || false}

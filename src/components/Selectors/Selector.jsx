@@ -11,6 +11,8 @@ function Selector({
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
+    console.log(e.target.value, "e.target.value");
+
     if (redux) {
       dispatch(onSet(e.target.value));
     } else {

@@ -5,12 +5,18 @@ import Selector from "../../components/Selectors/Selector";
 import PrimaryBttn from "../../components/buttons/PrimaryBttn";
 import AllLeads from "../../components/buttons/AllLeads";
 import ProfileCard from "../../components/Card/ProfileCard/ProfileCard";
-import StartApplication from "../../components/Card/ProfileCard/StartApplication";
 import ApplicationCard from "./components/ApplicationCard";
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
 import {
   setApplicationDetailToggle,
+  setApplicationIsAssigning,
   setCurApplication,
+  setCurApplicationBranch,
+  setCurApplicationCountry,
+  setCurApplicationRole,
+  setCurApplicationStatus,
+  setCurApplicationUser,
+  setToAssignApplications,
 } from "../../../global/applicationSlice";
 import { useApi } from "../../context/apiContext/ApiContext";
 import ProfileCardApplicationStatus from "./components/ProfileCardApplicationStatus";
@@ -26,21 +32,63 @@ import { refetchStudents } from "../../apiHooks/LeadAndApplicationHooks/useStude
 import ActivityLog from "../../components/Card/ProfileCard/ActivityLog";
 import { handleStatusCardSubmit } from "./applicationHandlers/backendHandlers";
 import { useEffect } from "react";
+import NormalButton from "../../components/buttons/NormalButton";
+import { handleAssignStudents } from "../Students/studentHandlers/assignStudentHandler";
+import {
+  handleDeleteDocument,
+  handleDocumentSubmit,
+  handleUpdateDocument,
+} from "../leads/leadHandlers/documentHandler";
 
 export default function Application() {
   const dispatch = useDispatch();
-  const { countryConfigs, statusConfigs } = useApi();
+  const {
+    countryConfigs,
+    statusConfigs,
+    roleConfigs,
+    branchConfigs,
+    commonsConfigs,
+    campaignsConfigs,
+    usersConfigs,
+  } = useApi();
   const { countries = [] } = countryConfigs;
   const { statuses = [] } = statusConfigs;
-  const { applicationDetailToggle, curApplication } = useSelector(
-    (state) => state.applications
-  );
+  const { roles = [] } = roleConfigs;
+  const { branches = [] } = branchConfigs;
+  const { commons = {} } = commonsConfigs;
+  const { campaigns = [] } = campaignsConfigs;
+  const { users = [] } = usersConfigs;
+
+  const {
+    applicationDetailToggle,
+    curApplication,
+    curStatus,
+    curSource,
+    curBranch,
+    curCountry,
+    curCampaign,
+    curRole,
+    curUser,
+    isAssigning,
+    toAssignApplications,
+  } = useSelector((state) => state.applications);
 
   const { applicationsConfigs } = useApi();
   const { applications = [] } = applicationsConfigs;
   const { lead: curStudent = [] } = curApplication;
 
-  const ISearchBar = <SearchBar />;
+  const IDocumentUpload = curApplication && (
+    <DocumentUpload
+      lead={curApplication}
+      onUpload={(file, details) =>
+        handleDocumentSubmit(file, details, dispatch)
+      }
+      onDelete={(doc) => handleDeleteDocument(doc, curApplication, dispatch)}
+      onUpdate={(doc, updatedData) =>
+        handleUpdateDocument(doc, updatedData, curApplication, dispatch)
+      }
+    />
+  );
 
   const IContents = applications?.map((application, index) => (
     <ApplicationCard
@@ -51,6 +99,9 @@ export default function Application() {
       istoggle={applicationDetailToggle}
       toggle={setApplicationDetailToggle}
       countires={countries}
+      isAssigning={isAssigning}
+      assigninSetter={setToAssignApplications}
+      toAssignApplications={toAssignApplications}
     />
   ));
 
@@ -96,15 +147,56 @@ export default function Application() {
 
   const IActivityLog = <ActivityLog curLead={curStudent} />;
 
-  const ISelector = <Selector />;
   const IPrimaryBttn = <PrimaryBttn>Add Leads</PrimaryBttn>;
-  const IAllLeads = <AllLeads />;
-  const ISelectorOne = <Selector />;
-  const ISelectorTwo = <Selector />;
-  const ISelectorThree = <Selector />;
-  const ISelectorFour = <Selector />;
-  const ISelectorFive = <Selector />;
-  const IDocumentUpload = <DocumentUpload />;
+  const IAllLeads = (
+    <AllLeads text="All Applications" value={applications?.length} />
+  );
+
+  const ISelectorOne = (
+    <Selector
+      key="status"
+      optionsObj={statuses?.filter((val) => val.isApplication)}
+      onSet={setCurApplicationStatus}
+      set={curStatus}
+      placeholder="All Status"
+    />
+  );
+  const ISelectorTwo = (
+    <Selector
+      key="branch"
+      optionsObj={branches}
+      onSet={setCurApplicationBranch}
+      set={curBranch}
+      placeholder="All Branch"
+    />
+  );
+  const ISelectorThree = (
+    <Selector
+      key="country"
+      optionsObj={countries}
+      onSet={setCurApplicationCountry}
+      set={curCountry}
+      placeholder="All Country"
+    />
+  );
+  const ISelectorFour = (
+    <Selector
+      key="roles"
+      placeholder="All Roles"
+      optionsObj={roles}
+      set={curRole}
+      onSet={setCurApplicationRole}
+    />
+  );
+  const ISelectorFive = (
+    <Selector
+      key="users"
+      placeholder="All Users"
+      optionsObj={users}
+      set={curUser}
+      onSet={setCurApplicationUser}
+    />
+  );
 
   const IProfileCard = (
     <ProfileCard
@@ -117,10 +209,52 @@ export default function Application() {
     />
   );
 
+  const handleAppAssignToggle = () => {
+    dispatch(setApplicationIsAssigning(!isAssigning));
+  };
+
   const TopLeft = [
-    <div key="search-bar">{ISearchBar}</div>,
-    <div key="selector">{ISelector}</div>,
-  ];
+    <SearchBar key="search-bar" />,
+    <NormalButton
+      key="assign"
+      style={isAssigning ? { backgroundColor: "lightgray" } : {}}
+      onClick={handleAppAssignToggle}
+    >
+      Assign Leads
+    </NormalButton>,
+    isAssigning && (
+      <>
+        <NormalButton key="allocate" onClick={() => {}}>
+          {`Allocate ${toAssignApplications.length}`}
+        </NormalButton>
+        <NormalButton
+          key="all"
+          onClick={handleAssignStudents("all", applications, dispatch)}
+        >
+          All
+        </NormalButton>
+        <NormalButton
+          key="fifty"
+          onClick={handleAssignStudents(50, applications, dispatch)}
+        >
+          50
+        </NormalButton>
+        <NormalButton
+          key="twenty"
+          onClick={handleAssignStudents(20, applications, dispatch)}
+        >
+          20
+        </NormalButton>
+        <NormalButton
+          key="ten"
+          onClick={handleAssignStudents(10, applications, dispatch)}
+        >
+          10
+        </NormalButton>
+      </>
+    ),
+  ].filter(Boolean);
+
   const TopRight = [<div key="primary-btn">{IPrimaryBttn}</div>];
 
   const BottomLeft = [

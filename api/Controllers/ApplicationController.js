@@ -38,10 +38,45 @@ const getApplication = getOne(Application);
 const updateApplication = updateOne(Application);
 const deleteApplication = deleteOne(Application);
 
+const updateDocuments = catchAsync(async (req, res, next) => {
+  if (!req.s3File) {
+    return res.status(400).json({
+      success: false,
+      message: "No file upload details found",
+    });
+  }
+
+  const { fileUrl, fileName } = req.s3File;
+  const { content, isImportant } = req.body;
+  const { id } = req.params;
+
+  const application = await Application.findById(id);
+
+  if (!application) {
+    return next(new AppError("Application not found", 404));
+  }
+
+  const documentData = {
+    name: content,
+    filename: fileName,
+    url: fileUrl,
+    isImportant: isImportant === "true",
+  };
+
+  application.documents.push(documentData);
+  await application.save();
+
+  res.status(200).json({
+    status: "success",
+    data: application,
+  });
+});
+
 export {
   createApplication,
   getAllApplications,
   getApplication,
   updateApplication,
   deleteApplication,
+  updateDocuments,
 };

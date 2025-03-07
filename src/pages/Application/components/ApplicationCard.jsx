@@ -8,7 +8,15 @@ import { setApplicationDetailToggle } from "../../../../global/applicationSlice"
 import { getCountryName, getStatusName } from "../../../service/nameFinders";
 import { useApi } from "../../../context/apiContext/ApiContext";
 
-function ApplicationCard({ set, onSet, application, toggle }) {
+function ApplicationCard({
+  set,
+  onSet,
+  application,
+  toggle,
+  isAssigning,
+  assigninSetter,
+  toAssignApplications,
+}) {
   const [isSelected, setIsSelected] = useState(
     application?.lead?._id === set?._id
   );
@@ -41,10 +49,35 @@ function ApplicationCard({ set, onSet, application, toggle }) {
     }, 500);
   };
 
+  const handleApplicationSelect = () => {
+    if (isAssigning) {
+      if (toAssignApplications.includes(application)) {
+        dispatch(
+          assigninSetter(
+            toAssignApplications.filter((s) => s._id !== application._id)
+          )
+        );
+      } else {
+        dispatch(assigninSetter([...toAssignApplications, application]));
+      }
+      return;
+    }
+    handleApplicationNormalToggle();
+  };
+
+  const reAssignChecker = () => {
+    if (toAssignApplications.find((val) => val._id === application._id)) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <div
-      className={`cardGeneral ${isSelected ? "selectedCard" : ""}`}
-      onClick={handleApplicationNormalToggle}
+      className={`cardGeneral ${isSelected ? "selectedCard" : ""} ${
+        reAssignChecker() ? "selected-assign" : ""
+      }`}
+      onClick={handleApplicationSelect}
       id={`${application?._id}`}
       ref={targetRef}
     >
@@ -70,9 +103,6 @@ function ApplicationCard({ set, onSet, application, toggle }) {
           <CountryBtn>
             {getCountryName(application?.country, countries)}
           </CountryBtn>
-          {/* <div className="cardGeneral-body-bottom-country-count">
-            {lead?.attemps}
-          </div> */}
         </div>
       </div>
     </div>
