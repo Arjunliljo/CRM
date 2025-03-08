@@ -7,6 +7,7 @@ import {
   getOne,
   updateOne,
   substatusDelete,
+  updateSubStatusColor,
 } from "./handlerFactory.js";
 
 const createStatus = createOne(Status);
@@ -15,6 +16,7 @@ const updateStatus = updateOne(Status);
 const deleteStatus = deleteOne(Status);
 const getAllStatus = getAll(Status);
 const deleteSubStatus = substatusDelete(Status);
+const updateSubStatus = updateSubStatusColor(Status);
 
 export {
   createStatus,
@@ -23,4 +25,5 @@ export {
   updateStatus,
   deleteStatus,
   deleteSubStatus,
+  updateSubStatus,
 };
