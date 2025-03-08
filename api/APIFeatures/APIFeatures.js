@@ -149,6 +149,23 @@ class APIFeatures {
     }
     return this;
   }
+  roleFilter() {
+    if (typeof this.queryStr.role === "string") {
+      this.query.find({ role: this.queryStr.role });
+      return this;
+    }
+    if (this.queryStr.role) {
+      // Handle both single user ID and comma-separated user IDs
+      const roleIds = this.queryStr.role.split(",").map((id) => id.trim());
+
+      // Filter documents where the users array contains any of the specified user IDs
+      this.query = this.query.find({
+        roles: {
+          $in: roleIds,
+        },
+      });
+    }
+  }
   countryFilter() {
     if (this.queryStr.country) {
       // Handle both single user ID and comma-separated user IDs

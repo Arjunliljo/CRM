@@ -34,6 +34,7 @@ const createApplication = catchAsync(async (req, res, next) => {
 });
 
 const getAllApplications = getAll(Application);
+
 const getApplication = getOne(Application);
 const updateApplication = updateOne(Application);
 const deleteApplication = deleteOne(Application);

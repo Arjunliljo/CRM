@@ -7,11 +7,12 @@ import { useUsers } from "../../apiHooks/useUsers";
 import { useChats } from "../../apiHooks/useChats";
 import { useLeads } from "../../apiHooks/LeadAndApplicationHooks/useLeads";
 import { useCommens } from "../../apiHooks/useCommens";
-import { useUniversity } from "../../apiHooks/useUniversity";
-import { useQualifications } from "../../apiHooks/useQualifications";
+
 import { useCampaigns } from "../../apiHooks/useCampaigns";
 import { useStudents } from "../../apiHooks/LeadAndApplicationHooks/useStudents";
 import { useApplications } from "../../apiHooks/LeadAndApplicationHooks/useApplication";
+import { useUniversity } from "../../apiHooks/universityHooks/useUniversity";
+import { useQualifications } from "../../apiHooks/universityHooks/useQualifications";
 
 const ApiContext = createContext();
 

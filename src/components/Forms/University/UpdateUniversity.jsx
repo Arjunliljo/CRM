@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import CancelBtn from "../../buttons/CancelBtn";
 import NextBtn from "../../buttons/NextBtn";
-import CourseSelector from "./CourserSelector";
 import ImageUploader from "./ImageUploader";
 import CountrySelector from "../Leads/CountrySelector";
 import { message } from "antd";
 import apiClient from "../../../../config/axiosInstance";
-import { refetchUniversity } from "../../../apiHooks/useUniversity";
-import { getCountryName } from "../../../service/nameFinders";
+import { refetchUniversity } from "../../../apiHooks/universityHooks/useUniversity";
 
 export default function UpdateUniversity({
   isUpadte,
@@ -38,7 +36,7 @@ export default function UpdateUniversity({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ name, country, image, about }, "newUniversity");
+
     if (!name) {
       message.error("Please fill in the branch name");
       return;
@@ -85,14 +83,6 @@ export default function UpdateUniversity({
       setIsLoading(false);
     }
   };
-
-  // const handleCourseClick = (course) => {
-  //   setSelectedCourses((prev) =>
-  //     prev.some((c) => c.name === course.name)
-  //       ? prev.filter((c) => c.name !== course.name)
-  //       : [...prev, course]
-  //   );
-  // };
 
   return (
     <form onSubmit={handleSubmit} className="modal__form">

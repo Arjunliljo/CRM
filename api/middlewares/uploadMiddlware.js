@@ -8,7 +8,6 @@ const multerUpload = multer({ storage });
 const upload = (req, res, next) => {
   multerUpload.any()(req, res, async (err) => {
     if (err) {
-      console.log(err, "err from upload");
       return res.status(400).json({ error: "File upload error", err });
     }
 
@@ -28,7 +27,7 @@ const upload = (req, res, next) => {
       // Process each file in the request
       for (const file of req.files) {
         const fileName = file.originalname;
-        const fullPath = `${fileName}/${req.body.leadId}/${fileName}`;
+        const fullPath = `${fileName}/${req.body.leadId}`;
 
         const s3UploadResult = await uploadFileToS3(
           process.env.AWS_S3_BUCKET_NAME,

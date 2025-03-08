@@ -1,8 +1,8 @@
-import apiClient from "../../config/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
-import queryClient from "../../config/reactQuery";
-import { getCountryId } from "../service/IdFinders";
 import { useSelector } from "react-redux";
+import apiClient from "../../../config/axiosInstance";
+import queryClient from "../../../config/reactQuery";
+import { getCountryId } from "../../service/IdFinders";
 
 export const useUniversity = (countries) => {
   const { curCountry } = useSelector((state) => state.university);

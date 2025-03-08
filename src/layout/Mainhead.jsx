@@ -1,8 +1,6 @@
-import React from "react";
 import { useLocation } from "react-router-dom";
 import icon from "./../assets/Icons/mlq-01pro.svg";
 import { CiBellOn } from "react-icons/ci";
-import profile from "./../assets/profilepic.avif";
 import { useSelector } from "react-redux";
 
 function Mainhead() {
@@ -42,7 +40,7 @@ function Mainhead() {
       "Feeling fresh today?",
       "Hope you slept well!",
       "Let’s make today amazing!",
-      "Morning! What's the plan?"
+      "Morning! What's the plan?",
     ];
 
     const afternoonGreetings = [
@@ -51,7 +49,7 @@ function Mainhead() {
       "Feeling productive today?",
       "Enjoy your afternoon!",
       "You're doing great!",
-      "Need a quick break?"
+      "Need a quick break?",
     ];
 
     const eveningGreetings = [
@@ -60,19 +58,23 @@ function Mainhead() {
       "Had a good day?",
       "Evening! Enjoy the moment.",
       "Rest up for tomorrow!",
-      "How’s your night going?"
+      "How’s your night going?",
     ];
 
-
     if (hour < 12) {
-      return morningGreetings[Math.floor(Math.random() * morningGreetings.length)];
+      return morningGreetings[
+        Math.floor(Math.random() * morningGreetings.length)
+      ];
     } else if (hour < 18) {
-      return afternoonGreetings[Math.floor(Math.random() * afternoonGreetings.length)];
+      return afternoonGreetings[
+        Math.floor(Math.random() * afternoonGreetings.length)
+      ];
     } else {
-      return eveningGreetings[Math.floor(Math.random() * eveningGreetings.length)];
+      return eveningGreetings[
+        Math.floor(Math.random() * eveningGreetings.length)
+      ];
     }
   };
-
 
   return (
     <div className="logocontainer">
