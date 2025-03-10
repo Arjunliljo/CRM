@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useApi } from "../../../context/apiContext/ApiContext";
-import { getRoleName } from "../../../service/nameFinders";
+import { getCountryName, getRoleName } from "../../../service/nameFinders";
 import Tracker from "../../smallComponents/Tracker";
 
 export default function ProfileCard({
@@ -11,9 +11,11 @@ export default function ProfileCard({
   IActivityLog,
   personalDetails,
   StartOtherApplication,
+  isApp = false,
 }) {
   const {
     roleConfigs: { roles },
+    countryConfigs: { countries },
   } = useApi();
 
   return (
@@ -22,13 +24,13 @@ export default function ProfileCard({
         <div className="profileCard-head-info">
           <div className="profileCard-head-info-details">
             <div className="profileCard-image-container">
-              <img src={lead?.img} alt={lead?.name} />
+              <img src={isApp ? lead?.lead?.img : lead?.img} alt={lead?.name} />
             </div>
             <div className="name-bar-name name-small">
-              <div>{lead?.name}</div>
+              <div>{isApp ? lead?.lead?.name : lead?.name}</div>
               <div className="profileCard-head-info-location-card">
                 <span className="profileCard-head-info-location">
-                  {lead?.country}
+                  {getCountryName(lead?.country, countries)}
                 </span>
                 <span className="profileCard-head-info-underline"></span>
               </div>

@@ -3,18 +3,27 @@ import PrimaryBttn from "../../../../../components/buttons/PrimaryBttn";
 
 export default function StatusRow2({ newStatus, setNewStatus }) {
   const [subStatusInput, setSubStatusInput] = useState("");
-  const handleSubStatusAdd = (subStatus) => {
+  const [subStatusColor, setSubStatusColor] = useState("#000000");
+
+  console.log(newStatus, "ASJGDJKGSJDGJKK");
+  const handleSubStatusAdd = (subStatus, color) => {
     setNewStatus((prev) => ({
       ...prev,
-      subStatuses: [...prev.subStatuses, subStatus],
+      subStatuses: [...prev.subStatuses, { subStatus: subStatus, color }],
     }));
   };
 
   const handleAddSubStatus = () => {
     if (subStatusInput.trim()) {
-      handleSubStatusAdd(subStatusInput.trim());
+      handleSubStatusAdd(subStatusInput.trim(), subStatusColor);
       setSubStatusInput("");
+      setSubStatusColor("#000000");
     }
+  };
+
+  const handleColorChange = (e) => {
+    const { value } = e.target;
+    setSubStatusColor(value);
   };
 
   return (
@@ -28,13 +37,30 @@ export default function StatusRow2({ newStatus, setNewStatus }) {
             alignItems: "center",
           }}
         >
-          <input
-            type="text"
-            placeholder="Sub-status"
-            className="input-formGroup"
-            value={subStatusInput}
-            onChange={(e) => setSubStatusInput(e.target.value)}
-          />
+          <div style={{ position: "relative", width: "100%" }}>
+            <input
+              type="text"
+              placeholder="Sub-status"
+              className="input-formGroup"
+              value={subStatusInput}
+              onChange={(e) => setSubStatusInput(e.target.value)}
+            />
+            <input
+              type="color"
+              value={subStatusColor}
+              onChange={handleColorChange}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                width: "1.2rem",
+                height: "1.3rem",
+                padding: "0",
+              }}
+            />
+          </div>
+
           <PrimaryBttn
             type="button"
             onClick={handleAddSubStatus}
@@ -46,8 +72,12 @@ export default function StatusRow2({ newStatus, setNewStatus }) {
 
         <div className="status-form-group-sub-status">
           {newStatus.subStatuses.map((status, index) => (
-            <div key={index} className="status-form-group-sub-status-element">
-              {status}
+            <div
+              key={index}
+              className="status-form-group-sub-status-element"
+              style={{ backgroundColor: status.color || "#f0f0f0" }}
+            >
+              {status.subStatus}
             </div>
           ))}
         </div>

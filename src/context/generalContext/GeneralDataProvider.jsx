@@ -22,6 +22,7 @@ export default function GeneralDataProvider({ tab }) {
     curGeneral,
     setCurGeneral,
     isToggle,
+    setIsToggle,
   } = useGeneral();
 
   const { data = [] } = genLeadConfigs;
@@ -35,16 +36,17 @@ export default function GeneralDataProvider({ tab }) {
           application={application}
           isAssigning={isAssigning}
           setIsAssigning={setIsAssigning}
+          setIsToggle={setIsToggle}
           toAssignGeneral={toAssignGeneral}
           setToAssignGeneral={setToAssignGeneral}
-          curGeneral={curGeneral}
-          setCurGeneral={setCurGeneral}
+          set={curGeneral}
+          onSet={setCurGeneral}
         />
       ))
     : data?.map((general, index) => (
         <GeneralCard
           key={index}
-          application={general}
+          application={curGeneral}
           isAssigning={isAssigning}
           setIsAssigning={setIsAssigning}
           toAssignGeneral={toAssignGeneral}
@@ -62,7 +64,13 @@ export default function GeneralDataProvider({ tab }) {
   const ISelectorFour = <Selector />;
   const ISelectorFive = <Selector />;
   const IDocumentUpload = <DocumentUpload />;
-  const IProfileCard = <ProfileCard IDocumentUpload={IDocumentUpload} />;
+  const IProfileCard = (
+    <ProfileCard
+      IDocumentUpload={IDocumentUpload}
+      lead={curGeneral}
+      isApp={true}
+    />
+  );
   const IStartApplication = <StartApplication />;
 
   const TopLeft = [

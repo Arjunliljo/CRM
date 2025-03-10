@@ -3,7 +3,6 @@ import Mover from "../../../features/Mover";
 import CountryBtn from "../../../components/buttons/CountryBtn";
 import InfoBtn from "../../../components/buttons/InfoBtn";
 import NameBar from "../../../components/Card/NameBar";
-import { useDispatch } from "react-redux";
 import { getCountryName, getStatusName } from "../../../service/nameFinders";
 import { useApi } from "../../../context/apiContext/ApiContext";
 
@@ -12,7 +11,7 @@ function GeneralApplicationCard({
   onSet = () => {},
   application,
   toggle,
-  setGeneralDetailToggle,
+  setIsToggle,
   isAssigning,
   setToAssignGeneral,
   toAssignGeneral,
@@ -30,12 +29,13 @@ function GeneralApplicationCard({
   }, [set, application]);
 
   const handleApplicationNormalToggle = () => {
-    if (application._id === set?._id) {
-      setGeneralDetailToggle(!toggle);
+    if (application?._id === set?._id) {
+      setIsToggle(false);
+      onSet(null);
     } else {
       onSet(application);
       if (!toggle) {
-        setGeneralDetailToggle(false);
+        setIsToggle(true);
       }
     }
     setTimeout(() => {

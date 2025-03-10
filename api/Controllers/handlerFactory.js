@@ -125,9 +125,27 @@ export const substatusDelete = (Model) => {
     const { statusId, subStatusId } = req.body;
     const doc = await Model.findByIdAndUpdate(
       statusId,
-      { $pull: { subStatuses: subStatusId } },
+      { $pull: { subStatuses: { _id: subStatusId } } },
       { new: true, runValidators: true }
     );
+
+    if (!doc) {
+      return next(new AppError("No document found with that ID", 404));
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: doc,
+    });
+  });
+};
+
+export const updateSubStatusColor = (Model) => {
+  return catchAsync(async (req, res, next) => {
+    const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));

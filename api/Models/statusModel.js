@@ -7,7 +7,18 @@ const statusSchema = mongoose.Schema(
       required: [true, "Status must have a name"],
     },
     subStatuses: {
-      type: [String],
+      type: [
+        {
+          subStatus: {
+            type: String,
+            required: true,
+          },
+          color: {
+            type: String,
+            default: "#000000",
+          },
+        },
+      ],
       required: true,
       validate: {
         validator: (v) => Array.isArray(v),

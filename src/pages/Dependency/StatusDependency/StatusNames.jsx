@@ -37,9 +37,10 @@ export default function StatusNames() {
   }, [statuses]);
 
   const handleDeleteSubstatus = async (subStatus) => {
+    console.log(subStatus, "subStatusdfdfdfdfdf");
     if (
       !window.confirm(
-        `Are you sure you want to delete the substatus "${subStatus}"?`
+        `Are you sure you want to delete the substatus "${subStatus.subStatus}"?`
       )
     ) {
       return;
@@ -48,10 +49,10 @@ export default function StatusNames() {
       await apiClient.delete(`/status/substatus`, {
         data: {
           statusId: selectedStatus._id,
-          subStatusId: subStatus,
+          subStatusId: subStatus._id,
         },
       });
-      message.success(`Substatus "${subStatus}" deleted!`);
+      message.success(`Substatus "${subStatus.subStatus}" deleted!`);
       refetchStatuses();
     } catch (error) {
       message.error("Error deleting status. Please try again.");
@@ -95,6 +96,24 @@ export default function StatusNames() {
     }
     updateStatuses();
   }, [localStatuses]);
+
+  const handleColorChange = async (e, subStatusId) => {
+    const { value } = e.target;
+
+    const updatedStatus = { ...selectedStatus };
+    try {
+      await apiClient.patch(`/status/substatus/${updatedStatus._id}`, {
+        subStatuses: updatedStatus.subStatuses.map((sub) =>
+          sub._id === subStatusId ? { ...sub, color: value } : sub
+        ),
+      });
+      message.success("Substatus color updated successfully");
+      refetchStatuses();
+    } catch (error) {
+      message.error("Failed to update substatus color");
+    }
+  };
+
   return (
     <div className="dependancies">
       <div className="dependancies-branch-names">
@@ -131,9 +150,20 @@ export default function StatusNames() {
           {selectedStatus ? (
             <>
               {selectedStatus.subStatuses.map((subStatus, index) => (
-                <div key={index} className="branch-item">
-                  <div>{subStatus}</div>
+                <div key={subStatus._id || index} className="branch-item">
+                  <div>{subStatus.subStatus}</div>
                   <div className="branch-item-actions">
+                    <input
+                      type="color"
+                      value={subStatus.color || "#000000"}
+                      onChange={(e) => handleColorChange(e, subStatus._id)}
+                      style={{
+                        width: "1.2rem",
+                        height: "1.3rem",
+                        padding: "0",
+                        border: "none",
+                      }}
+                    />
                     <Delete
                       sx={{ color: "darkblue", fontSize: "1.2rem" }}
                       onClick={() => handleDeleteSubstatus(subStatus)}
