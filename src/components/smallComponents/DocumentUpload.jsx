@@ -110,9 +110,12 @@ function DocumentUpload({ lead, onUpload, onDelete, onUpdate }) {
       const a = document.createElement("a");
       a.href = url;
       a.download = docUrl.split("/").pop();
+
       document.body.appendChild(a);
+
       a.click();
       a.remove();
+
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Error downloading document:", error);

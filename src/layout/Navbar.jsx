@@ -9,15 +9,14 @@ export default function Navbar() {
   const dispatch = useDispatch();
 
   const { defaultTabs: defTabs, tabs } = useSelector((state) => state.auth);
+
   const sortedDefaultTabs = defaultTabs
     .filter((obj) => defTabs?.includes(obj.name))
     .map((obj) => obj.name);
 
   const userTabs = tabs.map((tab) => tab.name);
 
-  const visibleTabs = sortedDefaultTabs.filter(
-    (tab) => sortedDefaultTabs.includes(tab) || userTabs.includes(tab)
-  );
+  const visibleTabs = sortedDefaultTabs.concat(userTabs);
 
   const availableIcons = [
     "home",

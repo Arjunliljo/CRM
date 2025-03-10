@@ -11,6 +11,7 @@ import StartApplication from "../../components/Card/ProfileCard/StartApplication
 import { setCurGeneral } from "../../../global/generalSlice";
 import GeneralCard from "../../components/Card/GeneralCard";
 import DocumentUpload from "../../components/smallComponents/DocumentUpload";
+import { GeneralProvider } from "../../context/apiContext/GeneralContext";
 
 const general = {
   num: 3,
@@ -31,7 +32,7 @@ const arr = [...Array(500)].map((_, i) => {
   return obj;
 });
 
-export default function General() {
+export default function General({ tab }) {
   const { autoGeneralsAssign, curGeneral } = useSelector(
     (state) => state.general
   );
@@ -83,15 +84,17 @@ export default function General() {
   ];
 
   return (
-    <MainBody
-      TopLeft={TopLeft}
-      TopRight={TopRight}
-      IContents={IContents}
-      switching={autoGeneralsAssign}
-      BottomLeft={BottomLeft}
-      BottomRight={BottomRight}
-      ProfileCard={IProfileCard}
-      StartApplication={IStartApplication}
-    />
+    <GeneralProvider tab={tab}>
+      <MainBody
+        TopLeft={TopLeft}
+        TopRight={TopRight}
+        IContents={IContents}
+        switching={autoGeneralsAssign}
+        BottomLeft={BottomLeft}
+        BottomRight={BottomRight}
+        ProfileCard={IProfileCard}
+        StartApplication={IStartApplication}
+      />
+    </GeneralProvider>
   );
 }

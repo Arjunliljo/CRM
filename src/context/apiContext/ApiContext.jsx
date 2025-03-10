@@ -12,6 +12,7 @@ import { useCampaigns } from "../../apiHooks/useCampaigns";
 import { useStudents } from "../../apiHooks/LeadAndApplicationHooks/useStudents";
 import { useApplications } from "../../apiHooks/LeadAndApplicationHooks/useApplication";
 import { useUniversity } from "../../apiHooks/universityHooks/useUniversity";
+
 import { useQualifications } from "../../apiHooks/universityHooks/useQualifications";
 
 const ApiContext = createContext();
@@ -32,6 +33,7 @@ function ApiProvider({ children }) {
 
   const applicationsConfigs = useApplications(
     statusConfigs?.statuses,
+
     branchConfigs?.branches,
     countryConfigs?.countries,
     usersConfigs?.users

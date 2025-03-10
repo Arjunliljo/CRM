@@ -4,27 +4,27 @@ import { CiBellOn } from "react-icons/ci";
 import { useSelector } from "react-redux";
 
 function Mainhead() {
-  const location = useLocation(); // Access the current route
+  const location = useLocation();
   const user = useSelector((state) => state.auth.user);
 
   // Map routes to their corresponding titles
   const getPageTitle = () => {
     switch (location.pathname) {
-      case "/dashboard":
+      case "/Dashboard":
         return "Dashboard";
-      case "/leads":
+      case "/Leads":
         return "Leads";
-      case "/student":
-        return "Students";
-      case "/user":
+      case "/Student":
+        return "Student";
+      case "/Documents":
         return "Documents";
-      case "/university":
+      case "/University":
         return "University";
-      case "/dependencies":
+      case "/Dependencies":
         return "Dependencies";
-      case "/profileEdit":
+      case "/ProfileEdit":
         return "Profile";
-      case "/profileCard":
+      case "/ProfileCard":
         return "Settings";
       default:
         return "Page Title";
