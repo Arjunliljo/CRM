@@ -76,7 +76,7 @@ export const router = (tabs) => {
   const dynamicRoutes = tabs?.map((tab) => {
     return {
       path: tab.name,
-      element: <General status={tab} />,
+      element: <General tab={tab} />,
     };
   });
 

@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import Mover from "../../features/Mover";
-import CountryBtn from "../buttons/CountryBtn";
-import InfoBtn from "../buttons/InfoBtn";
-import HomeIcon from "../utils/Icons/HomeIcon";
-import NameBar from "./NameBar";
+
 import { useDispatch } from "react-redux";
+import Mover from "../../../features/Mover";
+import NameBar from "../NameBar";
+import InfoBtn from "../../buttons/InfoBtn";
+import HomeIcon from "../../utils/Icons/HomeIcon";
+import CountryBtn from "../../buttons/CountryBtn";
 
 function GeneralCard({ general, set, onSet }) {
   const [isSelected, setIsSelected] = useState(general?._id === set?._id);
