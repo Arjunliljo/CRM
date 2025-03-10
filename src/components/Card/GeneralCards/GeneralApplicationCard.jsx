@@ -4,7 +4,6 @@ import CountryBtn from "../../../components/buttons/CountryBtn";
 import InfoBtn from "../../../components/buttons/InfoBtn";
 import NameBar from "../../../components/Card/NameBar";
 import { useDispatch } from "react-redux";
-import { setApplicationDetailToggle } from "../../../../global/applicationSlice";
 import { getCountryName, getStatusName } from "../../../service/nameFinders";
 import { useApi } from "../../../context/apiContext/ApiContext";
 
@@ -13,9 +12,10 @@ function GeneralApplicationCard({
   onSet = () => {},
   application,
   toggle,
+  setGeneralDetailToggle,
   isAssigning,
-  assigninSetter,
-  toAssignApplications,
+  setToAssignGeneral,
+  toAssignGeneral,
 }) {
   const [isSelected, setIsSelected] = useState(
     application?.lead?._id === set?._id
@@ -29,15 +29,13 @@ function GeneralApplicationCard({
     setIsSelected(application?._id === set?._id);
   }, [set, application]);
 
-  const dispatch = useDispatch();
-
   const handleApplicationNormalToggle = () => {
     if (application._id === set?._id) {
-      dispatch(setApplicationDetailToggle(!toggle));
+      setGeneralDetailToggle(!toggle);
     } else {
-      dispatch(onSet(application));
+      onSet(application);
       if (!toggle) {
-        dispatch(setApplicationDetailToggle(false));
+        setGeneralDetailToggle(false);
       }
     }
     setTimeout(() => {
@@ -50,14 +48,12 @@ function GeneralApplicationCard({
 
   const handleApplicationSelect = () => {
     if (isAssigning) {
-      if (toAssignApplications.includes(application)) {
-        dispatch(
-          assigninSetter(
-            toAssignApplications.filter((s) => s._id !== application._id)
-          )
+      if (toAssignGeneral.includes(application)) {
+        setToAssignGeneral(
+          toAssignGeneral.filter((s) => s._id !== application._id)
         );
       } else {
-        dispatch(assigninSetter([...toAssignApplications, application]));
+        setToAssignGeneral([...toAssignGeneral, application]);
       }
       return;
     }
@@ -65,7 +61,7 @@ function GeneralApplicationCard({
   };
 
   const reAssignChecker = () => {
-    if (toAssignApplications.find((val) => val._id === application._id)) {
+    if (toAssignGeneral.find((val) => val._id === application._id)) {
       return true;
     }
     return false;

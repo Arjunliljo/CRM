@@ -13,21 +13,45 @@ import GeneralCard from "../../components/Card/GeneralCards/GeneralCard";
 import GeneralApplicationCard from "../../components/Card/GeneralCards/GeneralApplicationCard";
 
 export default function GeneralDataProvider({ tab }) {
-  const { autoGeneralsAssign, curGeneral } = useSelector(
-    (state) => state.general
-  );
+  const {
+    genLeadConfigs,
+    isAssigning,
+    setIsAssigning,
+    toAssignGeneral,
+    setToAssignGeneral,
+    curGeneral,
+    setCurGeneral,
+    isToggle,
+  } = useGeneral();
 
-  const { genLeadConfigs } = useGeneral();
   const { data = [] } = genLeadConfigs;
 
   const ISearchBar = <SearchBar />;
 
   const IContents = tab?.isApplication
     ? data?.map((application, index) => (
-        <GeneralApplicationCard key={index} application={application} />
+        <GeneralApplicationCard
+          key={index}
+          application={application}
+          isAssigning={isAssigning}
+          setIsAssigning={setIsAssigning}
+          toAssignGeneral={toAssignGeneral}
+          setToAssignGeneral={setToAssignGeneral}
+          curGeneral={curGeneral}
+          setCurGeneral={setCurGeneral}
+        />
       ))
     : data?.map((general, index) => (
-        <GeneralCard key={index} general={general} />
+        <GeneralCard
+          key={index}
+          application={general}
+          isAssigning={isAssigning}
+          setIsAssigning={setIsAssigning}
+          toAssignGeneral={toAssignGeneral}
+          setToAssignGeneral={setToAssignGeneral}
+          curGeneral={curGeneral}
+          setCurGeneral={setCurGeneral}
+        />
       ));
 
   const ISelector = <Selector />;
@@ -63,7 +87,7 @@ export default function GeneralDataProvider({ tab }) {
       TopLeft={TopLeft}
       TopRight={TopRight}
       IContents={IContents}
-      switching={autoGeneralsAssign}
+      switching={isToggle}
       BottomLeft={BottomLeft}
       BottomRight={BottomRight}
       ProfileCard={IProfileCard}
